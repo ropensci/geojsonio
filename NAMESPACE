@@ -1,0 +1,7 @@
+S3method(to_geojson,data.frame)
+S3method(to_geojson,default)
+S3method(to_geojson,list)
+S3method(to_geojson,sp)
+export(to_geojson)
+import(rgdal)
+import(sp)

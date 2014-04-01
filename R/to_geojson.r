@@ -1,13 +1,13 @@
 #' Get palette actual name from longer names
 #' 
-#' @import 
+#' @import sp rgdal
 #' @export
 #' @param input
 #' @param lat Latitude name
 #' @param lon Longitude name
 
 to_geojson <- function(...){
-  UseMethod("classification")
+  UseMethod("to_geojson")
 }
 
 #' @method to_geojson default

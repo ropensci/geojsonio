@@ -3,4 +3,13 @@ Title: Convert data to geoJSON
 Description: Convert data to geoJSON
 Version: 0.0.1
 License: MIT
+Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
+    email = "myrmecocystus@gmail.com"),
+    person("Ian", "Munoz", role = "aut",
+    email = "email@gmail.com"),
+    person("Edmund", "Hart", role = "aut",
+    email = "email@gmail.com"))
 LazyData: true
+Imports:
+    sp,
+    rgdal
