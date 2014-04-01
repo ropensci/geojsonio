@@ -12,4 +12,7 @@ Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
 LazyData: true
 Imports:
     sp,
-    rgdal
+    rgdal,
+    httr,
+    maptools,
+    plyr
