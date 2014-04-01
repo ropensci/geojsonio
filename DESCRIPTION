@@ -1,0 +1,6 @@
+Package: togeojson
+Title: Convert data to geoJSON
+Description: Convert data to geoJSON
+Version: 0.0.1
+License: MIT
+LazyData: true
