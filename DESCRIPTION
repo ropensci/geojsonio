@@ -19,4 +19,5 @@ Imports:
     maptools,
     plyr
 Enhances: ggplot2,
-    maps
+    maps,
+    RColorBrewer

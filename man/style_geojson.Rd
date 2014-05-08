@@ -38,8 +38,11 @@ a single alphanumeric character (a-z or 0-9).}
 Style a data.frame prior to converting to geojson.
 }
 \examples{
+\dontrun{
 ## Style geojson - from data.frames
-library(RColorBrewer)
+library("RColorBrewer")
+library("maps")
+data(us.cities)
 smalluscities <- us.cities[ us.cities$country.etc  \%in\% c('OR','CA','NY'), ]
 
 ### Just color
@@ -59,5 +62,6 @@ mylist <- list(list(latitude=30, longitude=120, state="US"),
                list(latitude=40, longitude=128, state="VT"))
 style_geojson(mylist, var = 'state',
    color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))
+}
 }
 

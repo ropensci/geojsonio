@@ -55,6 +55,7 @@ topojson file, multi-layered if needed. This functions needs the \code{topojson}
 \href{https://github.com/mbostock/topojson/wiki/Installation}{CLI utility} to be installed.
 }
 \examples{
+\dontrun{
 to_topojson(shppath='~/Downloads/ne_110m_admin_0_countries', simplification=0)
 to_topojson(shppath='~/Downloads/abieconc', simplification = 0)
 to_topojson(shppath='~/Downloads/abieconc', simplification = 0, projection="gnomonic")
@@ -63,6 +64,7 @@ to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl", simplificatio
 to_topojson(shppath='~/Downloads/querwisl', projection='albers', projargs=list(rotate='[60, -35, 0]'))
 
 to_topojson(shppath='~/Downloads/querwisl', ignoreshp=TRUE)
+}
 }
 \references{
 \href{https://github.com/mbostock/topojson/wiki}{Mike Bostock's wiki}.

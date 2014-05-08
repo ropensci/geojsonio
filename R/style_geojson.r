@@ -1,5 +1,5 @@
 #' Style a data.frame prior to converting to geojson.
-#' 
+#'
 #' @export
 #' @param input A data.frame or a list
 #' @param var A single variable to map colors, symbols, and/or sizes to.
@@ -10,30 +10,33 @@
 #' @param symbol An icon ID from the Maki project \url{http://www.mapbox.com/maki/} or
 #'    a single alphanumeric character (a-z or 0-9).
 #' @param size One of 'small', 'medium', or 'large'
-#' @examples
+#' @examples \dontrun{
 #' ## Style geojson - from data.frames
-#' library(RColorBrewer)
+#' library("RColorBrewer")
+#' library("maps")
+#' data(us.cities)
 #' smalluscities <- us.cities[ us.cities$country.etc  %in% c('OR','CA','NY'), ]
-#' 
+#'
 #' ### Just color
-#' style_geojson(smalluscities, var = 'country.etc', 
+#' style_geojson(smalluscities, var = 'country.etc',
 #'    color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"))
 #' ### Just size
 #' style_geojson(smalluscities, var = 'country.etc', size=c('small','medium','large'))
 #' ### Color and size
-#' style_geojson(smalluscities, var = 'country.etc', 
-#'    color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"), 
+#' style_geojson(smalluscities, var = 'country.etc',
+#'    color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"),
 #'    size=c('small','medium','large'))
-#'    
+#'
 #' ## From lists
-#' mylist <- list(list(latitude=30, longitude=120, state="US"), 
+#' mylist <- list(list(latitude=30, longitude=120, state="US"),
 #'                list(latitude=32, longitude=130, state="OR"),
 #'                list(latitude=38, longitude=125, state="NY"),
 #'                list(latitude=40, longitude=128, state="VT"))
-#' style_geojson(mylist, var = 'state', 
+#' style_geojson(mylist, var = 'state',
 #'    color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))
+#' }
 
-style_geojson <- function(input, var = NULL, var_col = NULL, var_sym = NULL, 
+style_geojson <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
                           var_size = NULL, color = NULL, symbol = NULL, size = NULL){
   UseMethod("style_geojson")
 }
@@ -41,13 +44,13 @@ style_geojson <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
 #' @method style_geojson data.frame
 #' @export
 #' @rdname style_geojson
-style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym = NULL, 
+style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
     var_size = NULL, color = NULL, symbol = NULL, size = NULL) {
-    if (!inherits(input, "data.frame")) 
+    if (!inherits(input, "data.frame"))
         stop("Your input object needs to be a data.frame")
-    if (nrow(input) == 0) 
+    if (nrow(input) == 0)
         stop("Your data.frame has no rows...")
-    if (is.null(var_col) & is.null(var_sym) & is.null(var_size)) 
+    if (is.null(var_col) & is.null(var_sym) & is.null(var_size))
         var_col <- var_sym <- var_size <- var
     if (!is.null(color)) {
         if (length(color) == 1) {
@@ -82,9 +85,9 @@ style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym 
     } else {
         size_vec <- NULL
     }
-    output <- do.call(cbind, togeo_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec, 
+    output <- do.call(cbind, togeo_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec,
         `marker-size` = size_vec)))
-    
+
     return(output)
 }
 
@@ -92,13 +95,13 @@ style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym 
 #' @method style_geojson list
 #' @export
 #' @rdname style_geojson
-style_geojson.list <- function(input, var = NULL, var_col = NULL, var_sym = NULL, 
+style_geojson.list <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
                                      var_size = NULL, color = NULL, symbol = NULL, size = NULL) {
-  if (!inherits(input, "list")) 
+  if (!inherits(input, "list"))
     stop("Your input object needs to be a data.frame")
   if (length(input) == 0)
     stop("Your data.frame has no rows...")
-  if (is.null(var_col) & is.null(var_sym) & is.null(var_size)) 
+  if (is.null(var_col) & is.null(var_sym) & is.null(var_size))
     var_col <- var_sym <- var_size <- var
   if (!is.null(color)) {
     if (length(color) == 1) {
@@ -133,8 +136,8 @@ style_geojson.list <- function(input, var = NULL, var_col = NULL, var_sym = NULL
   } else {
     size_vec <- NULL
   }
-  output <- do.call(cbind, togeo_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec, 
+  output <- do.call(cbind, togeo_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec,
                                         `marker-size` = size_vec)))
-  
+
   return(output)
 }
