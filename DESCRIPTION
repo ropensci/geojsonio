@@ -2,11 +2,13 @@ Package: togeojson
 Title: Convert data to geoJSON or topoJSON
 Description: Convert data to geoJSON or topoJSON from various R classes,
     including vectors, lists, data frames, shape files, and more.
-Version: 0.0.1
-Date: 2014-05-07
+Version: 0.0.5
+Date: 2014-05-08
 License: MIT + file LICENSE
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "myrmecocystus@gmail.com"),
+    person("Gombin", "Joel", role = "aut",
+    email = "joel.gombin@gmail.com")
     person("Ian", "Munoz", role = "aut",
     email = "email@gmail.com"),
     person("Edmund", "Hart", role = "aut",
