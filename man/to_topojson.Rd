@@ -1,0 +1,86 @@
+\name{to_topojson}
+\alias{to_topojson}
+\title{Transform one or several SpatialPolygonsDataFrame into a TopoJSON file}
+\usage{
+to_topojson(shppath, path = getwd(), filename = NULL, simplification = 0,
+  quantisation = "1e4", width = NULL, height = NULL, properties = NULL,
+  id = NULL, projection = NULL, projargs = list(), ignoreshp = FALSE)
+}
+\arguments{
+  \item{shppath}{a named list of
+  \code{SpatialPolygonsDataFrame} objects. The names of the
+  list elements need to be the same as the names of the
+  SPDF objects.}
+
+  \item{path}{the path where the topojson file should be
+  registered. By default, the working directory.}
+
+  \item{filename}{the name of the topojson file, without
+  extension. By default, the name of the first SPDF
+  object.}
+
+  \item{simplification}{the geometry simplification factor.
+  A numeric between 0 and 1, 0 being the maximum
+  simplification, 1 retaining all the subtleties of the
+  geometries. See
+  \link{https://github.com/mbostock/topojson/wiki/Command-Line-Reference}
+  for more details.}
+
+  \item{quantisation}{maximum number of differentiable
+  points along either dimension.}
+
+  \item{width}{width of the desired output (in pixels)}
+
+  \item{height}{height of the desired output (in pixels)}
+
+  \item{properties}{the names of the properties of the
+  SPDFs to be exported to the topojson file. A vector of
+  character strings. If NULL (the default), all columns of
+  the SPDFs dataframes. If "", no properties are included
+  in the TopoJSON file.}
+
+  \item{id}{the name of the SPDF column used as ID. By
+  default, no ID.}
+
+  \item{projection}{Map projection to use. See
+  \code{topojson_properties} for possible values. Raw
+  projections
+  \url{https://github.com/mbostock/d3/wiki/Geo-Projections#raw-projections}
+  are not currently included. See
+  \url{https://github.com/mbostock/d3/wiki/Geo-Projections}
+  for help on projections.}
+
+  \item{projargs}{Further extensions to projection. See
+  \code{topojson_properties} for arguments, and see
+  examples below. For help on projection arguments see
+  \url{https://github.com/mbostock/d3/wiki/Geo-Projections#standard-abstract-projection}.}
+
+  \item{ignoreshp}{(logical) Ignore shapefile properties
+  for faster performance (default: FALSE)}
+}
+\value{
+Nothing. As a side effect, a topojson file is created with
+file extension \code{.json}.
+}
+\description{
+\code{toTopoJSON} takes one or several
+\code{SpatialPolygonsDataFrame} objects and creates a
+topojson file, multi-layered if needed. This functions
+needs the \code{topojson} CLI utility to be installed (see
+\link{https://github.com/mbostock/topojson/wiki/Installation}).
+}
+\examples{
+to_topojson(shppath='~/Downloads/ne_110m_admin_0_countries', simplification=0)
+to_topojson(shppath='~/Downloads/abieconc', simplification = 0)
+to_topojson(shppath='~/Downloads/abieconc', simplification = 0, projection="gnomonic")
+to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl", simplification = 0)
+
+to_topojson(shppath='~/Downloads/querwisl', projection='albers', projargs=list(rotate='[60, -35, 0]'))
+
+to_topojson(shppath='~/Downloads/querwisl', ignoreshp=TRUE)
+}
+\references{
+Mike Bostock's wiki:
+\link{https://github.com/mbostock/topojson/wiki}.
+}
+

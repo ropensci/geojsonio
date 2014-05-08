@@ -10,7 +10,7 @@ to_geojson(...)
   polygon = NULL, output = "list", ...)
 
 \method{to_geojson}{list}(input, lat = "latitude", lon = "longitude",
-  output = "list", ...)
+  polygon = NULL, output = "list", ...)
 }
 \arguments{
   \item{input}{Input list, data.frame, or spatial class}
@@ -46,7 +46,8 @@ res <- to_geojson(input=states, lat='lat', lon='long', group='group')
 list_to_geojson.SpatialPolygonsDataFrame(res)
 
 ## From a list
-mylist <- list(list(latitude=30, longitude=120, marker="red"), list(latitude=30, longitude=130, marker="blue"))
+mylist <- list(list(latitude=30, longitude=120, marker="red"),
+               list(latitude=30, longitude=130, marker="blue"))
 to_geojson(mylist)
 }
 
