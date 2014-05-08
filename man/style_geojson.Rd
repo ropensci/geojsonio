@@ -5,7 +5,8 @@
 \alias{style_geojson.list}
 \title{Style a data.frame prior to converting to geojson.}
 \usage{
-style_geojson(...)
+style_geojson(input, var = NULL, var_col = NULL, var_sym = NULL,
+  var_size = NULL, color = NULL, symbol = NULL, size = NULL)
 
 \method{style_geojson}{data.frame}(input, var = NULL, var_col = NULL,
   var_sym = NULL, var_size = NULL, color = NULL, symbol = NULL,
@@ -16,7 +17,7 @@ style_geojson(...)
   size = NULL)
 }
 \arguments{
-\item{input}{A data.frame}
+\item{input}{A data.frame or a list}
 
 \item{var}{A single variable to map colors, symbols, and/or sizes to.}
 
@@ -31,10 +32,15 @@ style_geojson(...)
 \item{symbol}{An icon ID from the Maki project \url{http://www.mapbox.com/maki/} or
 a single alphanumeric character (a-z or 0-9).}
 
-\item{size}{One of 'small', 'medium', or 'large'
+\item{size}{One of 'small', 'medium', or 'large'}
+}
+\description{
+Style a data.frame prior to converting to geojson.
+}
+\examples{
 ## Style geojson - from data.frames
 library(RColorBrewer)
-smalluscities <- us.cities[ us.cities$country.etc  %in% c('OR','CA','NY'), ]
+smalluscities <- us.cities[ us.cities$country.etc  \%in\% c('OR','CA','NY'), ]
 
 ### Just color
 style_geojson(smalluscities, var = 'country.etc',
@@ -52,9 +58,6 @@ mylist <- list(list(latitude=30, longitude=120, state="US"),
                list(latitude=38, longitude=125, state="NY"),
                list(latitude=40, longitude=128, state="VT"))
 style_geojson(mylist, var = 'state',
-   color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))}
-}
-\description{
-Style a data.frame prior to converting to geojson.
+   color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))
 }
 

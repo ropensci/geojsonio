@@ -18,3 +18,5 @@ Imports:
     httr,
     maptools,
     plyr
+Enhances: ggplot2,
+    maps

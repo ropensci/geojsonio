@@ -1,5 +1,5 @@
 #' Get palette actual name from longer names
-#' 
+#'
 #' @import sp rgdal
 #' @export
 #' @param input Input list, data.frame, or spatial class
@@ -9,12 +9,12 @@
 #' of the polygons in the data.frame
 #' @param output One of 'list' or 'geojson'
 #' @param ... Further args
-#' @examples
+#' @examples \dontrun{
 #' library(maps)
 #' data(us.cities)
 #' head(us.cities)
 #' to_geojson(input=us.cities, lat='lat', lon='long')
-#' 
+#'
 #' # polygons
 #' library(ggplot2)
 #' states <- map_data("state")
@@ -23,11 +23,12 @@
 #' res <- to_geojson(input=states, lat='lat', lon='long', group='group')
 #' ## make geojson from the list
 #' list_to_geojson.SpatialPolygonsDataFrame(res)
-#' 
+#'
 #' ## From a list
-#' mylist <- list(list(latitude=30, longitude=120, marker="red"), 
+#' mylist <- list(list(latitude=30, longitude=120, marker="red"),
 #'                list(latitude=30, longitude=130, marker="blue"))
 #' to_geojson(mylist)
+#' }
 to_geojson <- function(...){
   UseMethod("to_geojson")
 }
@@ -44,8 +45,8 @@ to_geojson.data.frame <- function(input, lat = "latitude", lon = "longitude", po
       }
       type <- ifelse(is.null(polygon), "Point", "Polygon")
       list(type = type,
-           geometry = list(type = "Point", 
-                           coordinates = as.numeric(c(l[[lon]], l[[lat]]))), 
+           geometry = list(type = "Point",
+                           coordinates = as.numeric(c(l[[lon]], l[[lat]]))),
            properties = l[!(names(l) %in% c(lat, lon))])
     })
     setNames(Filter(function(x) !is.null(x), x), NULL)
@@ -70,8 +71,8 @@ to_geojson.list <- function(input, lat = "latitude", lon = "longitude", polygon=
       }
       type <- ifelse(is.null(polygon), "Point", "Polygon")
       list(type = type,
-           geometry = list(type = "Point", 
-                           coordinates = as.numeric(c(l[[lon]], l[[lat]]))), 
+           geometry = list(type = "Point",
+                           coordinates = as.numeric(c(l[[lon]], l[[lat]]))),
            properties = l[!(names(l) %in% c(lat, lon))])
     })
     setNames(Filter(function(x) !is.null(x), x), NULL)
@@ -88,9 +89,9 @@ list_to_geojson <- function(input, destpath = "~/", outfilename = "myfile", poly
     out <- df_to_SpatialPolygonsDataFrame(input)
   }
   unlink(paste0(path.expand(destpath), outfilename, ".geojson"))
-  writeOGR(out, paste0(path.expand(destpath), outfilename, ".geojson"), outfilename, 
+  writeOGR(out, paste0(path.expand(destpath), outfilename, ".geojson"), outfilename,
            driver = "GeoJSON")
-  message(paste0("Success! File is at ", path.expand(destpath), outfilename, 
+  message(paste0("Success! File is at ", path.expand(destpath), outfilename,
                  ".geojson"))
 }
 
@@ -99,7 +100,7 @@ df_to_SpatialPolygonsDataFrame <- function(x){
   res <- lapply(x_split, function(y){
     coordinates(y) <- c("long","lat")
     Polygon(y)
-  })  
+  })
   res <- Polygons(res, "polygons")
   hh <- SpatialPolygons(list(res))
   as(hh, "SpatialPolygonsDataFrame")
@@ -112,8 +113,8 @@ df_to_SpatialPointsDataFrame <- function(x, lon, lat){
 
 SpatialPolygonsDataFrame_togeojson <- function(input, destpath = "~/", outfilename = "myfile"){
   unlink(paste0(path.expand(destpath), outfilename, ".geojson"))
-  writeOGR(input, paste0(path.expand(destpath), outfilename, ".geojson"), outfilename, 
+  writeOGR(input, paste0(path.expand(destpath), outfilename, ".geojson"), outfilename,
            driver = "GeoJSON")
-  message(paste0("Success! File is at ", path.expand(destpath), outfilename, 
+  message(paste0("Success! File is at ", path.expand(destpath), outfilename,
                  ".geojson"))
 }

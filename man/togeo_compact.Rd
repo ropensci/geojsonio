@@ -6,7 +6,7 @@
 togeo_compact(l)
 }
 \arguments{
-\item{l}{}
+\item{l}{Input list}
 }
 \description{
 Compact for togeojson

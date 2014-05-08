@@ -31,6 +31,7 @@ of the polygons in the data.frame}
 Get palette actual name from longer names
 }
 \examples{
+\dontrun{
 library(maps)
 data(us.cities)
 head(us.cities)
@@ -49,5 +50,6 @@ list_to_geojson.SpatialPolygonsDataFrame(res)
 mylist <- list(list(latitude=30, longitude=120, marker="red"),
                list(latitude=30, longitude=130, marker="blue"))
 to_geojson(mylist)
+}
 }
 

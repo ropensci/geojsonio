@@ -1,8 +1,7 @@
 #' Style a data.frame prior to converting to geojson.
 #' 
-#' @importFrom plyr compact
 #' @export
-#' @param input A data.frame
+#' @param input A data.frame or a list
 #' @param var A single variable to map colors, symbols, and/or sizes to.
 #' @param var_col The variable to map colors to.
 #' @param var_sym The variable to map symbols to.
@@ -11,6 +10,7 @@
 #' @param symbol An icon ID from the Maki project \url{http://www.mapbox.com/maki/} or
 #'    a single alphanumeric character (a-z or 0-9).
 #' @param size One of 'small', 'medium', or 'large'
+#' @examples
 #' ## Style geojson - from data.frames
 #' library(RColorBrewer)
 #' smalluscities <- us.cities[ us.cities$country.etc  %in% c('OR','CA','NY'), ]
@@ -33,7 +33,8 @@
 #' style_geojson(mylist, var = 'state', 
 #'    color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))
 
-style_geojson <- function(...){
+style_geojson <- function(input, var = NULL, var_col = NULL, var_sym = NULL, 
+                          var_size = NULL, color = NULL, symbol = NULL, size = NULL){
   UseMethod("style_geojson")
 }
 
@@ -81,7 +82,7 @@ style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym 
     } else {
         size_vec <- NULL
     }
-    output <- do.call(cbind, compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec, 
+    output <- do.call(cbind, togeo_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec, 
         `marker-size` = size_vec)))
     
     return(output)
@@ -132,7 +133,7 @@ style_geojson.list <- function(input, var = NULL, var_col = NULL, var_sym = NULL
   } else {
     size_vec <- NULL
   }
-  output <- do.call(cbind, compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec, 
+  output <- do.call(cbind, togeo_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec, 
                                         `marker-size` = size_vec)))
   
   return(output)
