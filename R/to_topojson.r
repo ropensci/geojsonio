@@ -36,13 +36,11 @@
 #' @return Nothing. As a side effect, a topojson file is created with file extension \code{.json}.
 #' @references \href{https://github.com/mbostock/topojson/wiki}{Mike Bostock's wiki}.
 #' @examples \dontrun{
-#' to_topojson(shppath='~/Downloads/ne_110m_admin_0_countries', simplification=0)
-#' to_topojson(shppath='~/Downloads/abieconc', simplification = 0)
-#' to_topojson(shppath='~/Downloads/abieconc', simplification = 0, projection="gnomonic")
-#' to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl", simplification = 0)
-#'
+#' to_topojson(shppath='~/Downloads/ne_110m_admin_0_countries')
+#' to_topojson(shppath='~/Downloads/abieconc')
+#' to_topojson(shppath='~/Downloads/abieconc', projection="gnomonic")
+#' to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl")
 #' to_topojson(shppath='~/Downloads/querwisl', projection='albers', projargs=list(rotate='[60, -35, 0]'))
-#'
 #' to_topojson(shppath='~/Downloads/querwisl', ignoreshp=TRUE)
 #' }
 
