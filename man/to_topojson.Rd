@@ -56,13 +56,11 @@ topojson file, multi-layered if needed. This functions needs the \code{topojson}
 }
 \examples{
 \dontrun{
-to_topojson(shppath='~/Downloads/ne_110m_admin_0_countries', simplification=0)
-to_topojson(shppath='~/Downloads/abieconc', simplification = 0)
-to_topojson(shppath='~/Downloads/abieconc', simplification = 0, projection="gnomonic")
-to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl", simplification = 0)
-
+to_topojson(shppath='~/Downloads/ne_110m_admin_0_countries')
+to_topojson(shppath='~/Downloads/abieconc')
+to_topojson(shppath='~/Downloads/abieconc', projection="gnomonic")
+to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl")
 to_topojson(shppath='~/Downloads/querwisl', projection='albers', projargs=list(rotate='[60, -35, 0]'))
-
 to_topojson(shppath='~/Downloads/querwisl', ignoreshp=TRUE)
 }
 }

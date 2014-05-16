@@ -59,12 +59,18 @@
 #' # Download from here http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip
 #' file = "~/Downloads/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
 #' file_to_geojson(file, method='local', outfilename='shp_local')
+#' 
+#' # Neighborhoods in the US
+#' url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-OR.zip'
+#' url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-MT.zip'
+#' file_to_geojson(input=url, method='web', outfilename='zillow_mt')
 #' }
 
 file_to_geojson <- function(input, method = "web", destpath = "~/", outfilename = "myfile") {
   method <- match.arg(method, choices = c("web", "local"))
   if (method == "web") {
     url <- "http://ogre.adc4gis.com/convert"
+    input <- handle_remote(input)
     tt <- POST(url, body = list(upload = upload_file(input)))
     stop_for_status(tt)
     out <- content(tt, as = "text")
@@ -91,5 +97,15 @@ file_to_geojson <- function(input, method = "web", destpath = "~/", outfilename 
     } else {
       stop("only .shp and .kml files supported for now")
     }
+  }
+}
+
+# If given a url for a zip file, download it give back a path to the temporary file
+handle_remote <- function(x){
+  if(!grepl('http://', x)){ x } else
+  {
+    tfile <- tempfile(fileext = ".zip")
+    download.file(x, destfile = tfile)
+    tfile
   }
 }

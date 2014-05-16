@@ -35,20 +35,20 @@ rgdal package.
 }
 \examples{
 \dontrun{
-file <- '/Users/sacmac/Downloads/taxon-placemarks-2441176.kml'
+file <- '/Users/sacmac/Downloads/bison-Poa_annua-20140508-151800.kml'
 
 # KML type file - using the web method
-file_to_geojson(file, method='web', outfilename='kml_web')
+file_to_geojson(input=file, method='web', outfilename='kml_web')
 
 # KML type file - using the local method
-file_to_geojson(file, method='local', outfilename='kml_local')
+file_to_geojson(input=file, method='local', outfilename='kml_local')
 
 # Shp type file - using the web method - input is a zipped shp bundle
 file <- '~/github/sac/bison.zip'
 file_to_geojson(file, method='web', outfilename='shp_web')
 
 # Shp type file - using the local method - input is the actual .shp file
-file <- '~/github/sac/bison/bison-Bison_bison-20130704-120856.shp'
+file <- '~/Downloads/bison-Bison_bison-20140508-154311/bison-Bison_bison-20140508-154311.shp'
 file_to_geojson(file, method='local', outfilename='shp_local')
 
 # Get data and save map data
@@ -65,6 +65,16 @@ write.csv(datgeojson, '~/github/sac/mygeojson/rgbif_data.csv')
 file <- '~/github/sac/mygeojson/rgbif_data.csv'
 file_to_geojson(file, method='web', destpath='~/github/sac/mygeojson/',
    outfilename='rgbif_data')
+
+# Natural earth layers
+# Download from here http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip
+file = "~/Downloads/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
+file_to_geojson(file, method='local', outfilename='shp_local')
+
+# Neighborhoods in the US
+url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-OR.zip'
+url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-MT.zip'
+file_to_geojson(input=url, method='web', outfilename='zillow_mt')
 }
 }
 

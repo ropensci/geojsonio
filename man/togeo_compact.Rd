@@ -11,4 +11,5 @@ togeo_compact(l)
 \description{
 Compact for togeojson
 }
+\keyword{internal}
 
