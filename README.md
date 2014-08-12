@@ -1,6 +1,8 @@
 togeojson
 ========
 
+[![Build status](https://ci.appveyor.com/api/projects/status/j3nr7n8nvutit7vh/branch/master)](https://ci.appveyor.com/project/sckott/togeojson/branch/master)
+
 Convert various data formats to geoJSON or topoJSON.
 
 This R package aims to be a utility to only convert geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
