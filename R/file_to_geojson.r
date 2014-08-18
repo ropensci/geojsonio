@@ -56,7 +56,7 @@
 #'    outfilename='rgbif_data')
 #'    
 #' # Natural earth layers
-#' # Download from here http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip
+#' # Download from https://github.com/nvkelso/natural-earth-vector/tree/master/zips/110m_cultural
 #' file = "~/Downloads/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
 #' file_to_geojson(file, method='local', outfilename='shp_local')
 #' 

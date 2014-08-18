@@ -40,7 +40,8 @@
 #' to_topojson(shppath='~/Downloads/abieconc')
 #' to_topojson(shppath='~/Downloads/abieconc', projection="gnomonic")
 #' to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl")
-#' to_topojson(shppath='~/Downloads/querwisl', projection='albers', projargs=list(rotate='[60, -35, 0]'))
+#' to_topojson(shppath='~/Downloads/querwisl', projection='albers', 
+#'    projargs=list(rotate='[60, -35, 0]'))
 #' to_topojson(shppath='~/Downloads/querwisl', ignoreshp=TRUE)
 #' }
 

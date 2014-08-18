@@ -19,7 +19,8 @@ Imports:
     rgdal,
     httr,
     maptools,
-    plyr
+    plyr,
+    RJSONIO
 Enhances: ggplot2,
     maps,
     RColorBrewer
