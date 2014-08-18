@@ -3,6 +3,7 @@
 #' @export
 #' @param geojsonfile Path to a geojson file
 #' @param description Description for the Github gist, or leave to default (=no description)
+#' @param file File name.
 #' @param browse If TRUE (default) the map opens in your default browser.
 #' @param ... Further arguments passed on to \code{togeojson_gist}
 #' @description 

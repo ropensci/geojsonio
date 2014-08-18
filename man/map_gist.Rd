@@ -11,6 +11,8 @@ map_gist(geojsonfile, description = "", file = "gistmap", browse = TRUE,
 
 \item{description}{Description for the Github gist, or leave to default (=no description)}
 
+\item{file}{File name.}
+
 \item{browse}{If TRUE (default) the map opens in your default browser.}
 
 \item{...}{Further arguments passed on to \code{togeojson_gist}}

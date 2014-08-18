@@ -86,7 +86,7 @@ This package is part of the [rOpenSci](http://ropensci.org/packages) project.
 To cite package `togeojson` in publications use:
 
 ```coffee
-To cite package ‘togeojson’ in publications use:
+To cite package 'togeojson' in publications use:
 
   Scott Chamberlain, Joel Gombin, Ian Munoz and Edmund Hart (2014). togeojson: Convert data to geoJSON or topoJSON. R package version
   0.0.5.
