@@ -15,7 +15,8 @@
 #' library("RColorBrewer")
 #' library("maps")
 #' data(us.cities)
-#' smalluscities <- us.cities[ us.cities$country.etc  %in% c('OR','CA','NY'), ]
+#' smalluscities <- 
+#'    subset(us.cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
 #'
 #' ### Just color
 #' style_geojson(smalluscities, var = 'country.etc',
