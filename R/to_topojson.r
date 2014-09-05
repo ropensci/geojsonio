@@ -36,7 +36,7 @@
 #' @return Nothing. As a side effect, a topojson file is created with file extension \code{.json}.
 #' @references \href{https://github.com/mbostock/topojson/wiki}{Mike Bostock's wiki}.
 #' @examples \dontrun{
-#' to_topojson(shppath='~/Downloads/ne_110m_admin_0_countries')
+#' to_topojson(shppath='~/github/ropensci/shapefiles/ne_110m_admin_0_countries')
 #' to_topojson(shppath='~/Downloads/abieconc')
 #' to_topojson(shppath='~/Downloads/abieconc', projection="gnomonic")
 #' to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl")
@@ -45,9 +45,9 @@
 #' to_topojson(shppath='~/Downloads/querwisl', ignoreshp=TRUE)
 #' }
 
-to_topojson <- function(shppath, path=getwd(), filename=NULL, simplification=0, quantisation="1e4",
-                        width=NULL, height=NULL, properties=NULL, id=NULL, projection=NULL,
-                        projargs=list(), ignoreshp=FALSE)
+to_topojson <- function(shppath, path=getwd(), filename=NULL, simplification=0, 
+  quantisation="1e4", width=NULL, height=NULL, properties=NULL, id=NULL, projection=NULL,
+  projargs=list(), ignoreshp=FALSE)
 {
   tmpdir <- tempdir()
   setCPLConfigOption("SHAPE_ENCODING", "UTF-8")

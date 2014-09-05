@@ -56,7 +56,7 @@ topojson file, multi-layered if needed. This functions needs the \code{topojson}
 }
 \examples{
 \dontrun{
-to_topojson(shppath='~/Downloads/ne_110m_admin_0_countries')
+to_topojson(shppath='~/github/ropensci/shapefiles/ne_110m_admin_0_countries')
 to_topojson(shppath='~/Downloads/abieconc')
 to_topojson(shppath='~/Downloads/abieconc', projection="gnomonic")
 to_topojson(shppath='~/Downloads/querwisl', filename = "querwisl")
