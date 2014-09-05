@@ -82,7 +82,13 @@ to_geojson.list <- function(input, lat = "latitude", lon = "longitude", polygon=
 }
 
 list_to_geojson <- function(input, destpath = "~/", outfilename = "myfile", polygon=NULL, lon, lat){
-  input <- do.call(rbind.fill, lapply(input, data.frame))
+  input <- rbind_all(lapply(input, function(x){
+    tmp <- data.frame(type=x$type, geometry_type=x$geometry$type, lon=x$geometry$coordinates[1], lat=x$geometry$coordinates[2],
+               x$properties,
+               stringsAsFactors = FALSE)
+    names(tmp)[5:8] <- paste('properties_', names(tmp)[5:8], sep = "")
+    tmp
+  }))
   if(is.null(polygon)){
     out <- df_to_SpatialPointsDataFrame(input, lon=lon, lat=lat)
   } else {
