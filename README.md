@@ -1,6 +1,7 @@
 togeojson
 ========
 
+[![Build Status](https://api.travis-ci.org/ropensci/togeojson.png)](https://travis-ci.org/ropensci/togeojson)
 [![Build status](https://ci.appveyor.com/api/projects/status/j3nr7n8nvutit7vh/branch/master)](https://ci.appveyor.com/project/sckott/togeojson/branch/master)
 
 Convert various data formats to geoJSON or topoJSON.
