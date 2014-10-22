@@ -37,7 +37,8 @@
 #' file_to_geojson(file, method='web', outfilename='shp_web')
 #'
 #' # Shp type file - using the local method - input is the actual .shp file
-#' file <- '~/github/ropensci/datasets/misc/bison-Bison_bison-20140508-154311/bison-Bison_bison-20140508-154311.shp'
+#' file <- file.path('~/github/ropensci/datasets/misc/bison-Bison_bison-20140508-154311/',
+#' 'bison-Bison_bison-20140508-154311.shp')
 #' file_to_geojson(file, method='local', outfilename='shp_local')
 #'
 #' # Get data and save map data

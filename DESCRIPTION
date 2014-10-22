@@ -20,7 +20,8 @@ Imports:
     httr,
     maptools,
     plyr,
-    RJSONIO
+    RJSONIO,
+    dplyr
 Enhances: ggplot2,
     maps,
     RColorBrewer

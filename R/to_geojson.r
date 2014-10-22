@@ -1,14 +1,21 @@
-#' Get palette actual name from longer names
+#' Convert many input types with spatial data to geojson. 
+#' 
+#' Includes support for lists, data.frame's, etc.
 #'
 #' @import sp rgdal
+#' @importFrom dplyr rbind_all
 #' @export
-#' @param input Input list, data.frame, or spatial class
-#' @param lat Latitude name
-#' @param lon Longitude name
-#' @param polygon If a polygon is defined in a data.frame, this is the column that defines the grouping
-#' of the polygons in the data.frame
-#' @param output One of 'list' or 'geojson'
-#' @param ... Further args
+#' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df} 
+#' class since it inherits from \code{data.frame}.
+#' @param lat Latitude name. Default: latitude
+#' @param lon Longitude name. Default: longitude
+#' @param polygon If a polygon is defined in a data.frame, this is the column that defines the 
+#' grouping of the polygons in the \code{data.frame}
+#' @param output One of 'list' or 'geojson'. The output from a call to \code{to_geojson()}
+#' @param ... Further args, not used.
+#' 
+#' @details description...
+#' 
 #' @examples \dontrun{
 #' library(maps)
 #' data(us.cities)
@@ -16,21 +23,76 @@
 #' to_geojson(input=us.cities, lat='lat', lon='long')
 #'
 #' # polygons
-#' library(ggplot2)
+#' library('ggplot2')
 #' states <- map_data("state")
 #' head(states)
 #' ## make list for input to e.g., rMaps
 #' res <- to_geojson(input=states, lat='lat', lon='long', group='group')
-#' ## make geojson from the list
-#' list_to_geojson.SpatialPolygonsDataFrame(res)
 #'
 #' ## From a list
 #' mylist <- list(list(latitude=30, longitude=120, marker="red"),
 #'                list(latitude=30, longitude=130, marker="blue"))
 #' to_geojson(mylist)
+#' 
+#' # From a numeric vector of length 2
+#' vec <- c(32.45,-99.74)
+#' to_geojson(vec)
+#' 
+#' # From SpatialPolygons class
+#' poly1 <- Polygons(list(Polygon(cbind(c(32.45,-99.74,49.45,32.45), 
+#'    c(32.45,-99.74,32.45,32.45)))), "1")
+#' poly2 <- Polygons(list(Polygon(cbind(c(39.45,-108.74,49.45,39.45), 
+#'    c(39.45,-99.74,32.45,39.45)))), "2")
+#' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+#' to_geojson(sp_poly)
 #' }
 to_geojson <- function(...){
   UseMethod("to_geojson")
+}
+
+#' @method to_geojson SpatialPolygons
+#' @export
+#' @rdname to_geojson
+to_geojson.SpatialPolygons <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, output='list', ...){
+  if(output=='list'){
+    type <- ifelse(is.null(polygon), "Point", "Polygon")
+    res <- tryCatch(as.numeric(input), warning = function(e) e)
+    if(is(res, "simpleWarning")) stop("Coordinates are not numeric", call. = FALSE) else {
+      list(type = type,
+           geometry = list(type = "Point", coordinates = input),
+           properties = NULL)
+    }
+  } else {
+    if(is.null(polygon)){
+      res <- df_to_SpatialPointsDataFrame(input, lon = lon, lat = lat)
+    } else {
+      res <- df_to_SpatialPolygonsDataFrame(input)
+    }
+    SpatialPolygonsDataFrame_togeojson(res)
+  }
+}
+
+
+#' @method to_geojson numeric
+#' @export
+#' @rdname to_geojson
+to_geojson.numeric <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, output='list', ...){
+  if(output=='list'){
+    type <- ifelse(is.null(polygon), "Point", "Polygon")
+    res <- tryCatch(as.numeric(input), warning = function(e) e)
+    if(is(res, "simpleWarning")) stop("Coordinates are not numeric", call. = FALSE) else {
+      list(type = type,
+           geometry = list(type = "Point", coordinates = input),
+           properties = NULL)
+    }
+  } else {
+    if(is.null(polygon)){
+      res <- df_to_SpatialPointsDataFrame(input, lon = lon, lat = lat)
+    } else {
+      res <- df_to_SpatialPolygonsDataFrame(input)
+    }
+    SpatialPolygonsDataFrame_togeojson(res)
+  }
 }
 
 #' @method to_geojson data.frame
