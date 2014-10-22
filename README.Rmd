@@ -14,21 +14,18 @@ This R package aims to be a utility to only convert geographic data to geojson a
 
 Install rgdal - in case you can't get it installed from binary package version, here's what works for me on a Mac machine.
 
-
-```r
+```{r eval=FALSE}
 install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
 Install `togeojson`
 
-
-```r
+```{r eval=FALSE}
 install.packages("devtools")
 devtools::install_github("ropensci/togeojson")
 ```
 
-
-```r
+```{r}
 library("togeojson")
 ```
 
@@ -43,20 +40,14 @@ Then:
 
 Define path to file (change to your path)
 
-
-```r
+```{r}
 file = "~/github/ropensci/shapefiles/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
 ```
 
 Use `file_to_geojson` to convert shp file to
 
-
-```r
+```{r}
 file_to_geojson(file, method='local', outfilename='shp_local')
-```
-
-```
-## Success! File is at /Users/sacmac/shp_local.geojson
 ```
 
 This outputs a `.geojson` file.
@@ -71,26 +62,13 @@ sudo npm install -g topojson
 
 Download a zipped shape fileset, [this one](http://esp.cr.usgs.gov/data/little/querwisl.zip) for distribution of _Quercus wislizeni_. Unzip the zip file to a folder. Then do (changing the path to your path)
 
-
-```r
+```{r}
 to_topojson(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='albers', projargs=list(rotate='[60, -35, 0]'))
-```
-
-```
-## OGR data source with driver: ESRI Shapefile 
-## Source: "/Users/sacmac/Downloads/querwisl", layer: "querwisl"
-## with 35 features and 5 fields
-## Feature type: wkbPolygon with 2 dimensions
-```
-
-```
-## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpveLUrY/querwisl.shp
 ```
 
 Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`
 
-
-```r
+```{r eval=FALSE}
 OGR data source with driver: ESRI Shapefile
 Source: "/Users/sacmac/Downloads/querwisl", layer: "querwisl"
 with 35 features and 5 fields
