@@ -1,10 +1,11 @@
 #' Convert many input types with spatial data to geojson. 
 #' 
-#' Includes support for lists, data.frame's, etc.
+#' Includes support for lists, data.frame's, and more
 #'
 #' @import sp rgdal
 #' @importFrom dplyr rbind_all
 #' @export
+#' 
 #' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df} 
 #' class since it inherits from \code{data.frame}.
 #' @param lat Latitude name. Default: latitude
@@ -12,6 +13,8 @@
 #' @param polygon If a polygon is defined in a data.frame, this is the column that defines the 
 #' grouping of the polygons in the \code{data.frame}
 #' @param output One of 'list' or 'geojson'. The output from a call to \code{to_geojson()}
+#' @param despath A directory path (e.g., ~/mydir)
+#' @param outfilename A file name (e.g., myfile), without the .geojson on the end.
 #' @param ... Further args, not used.
 #' 
 #' @details description...
@@ -77,7 +80,7 @@ to_geojson.SpatialPolygons <- function(input, lat = "latitude", lon = "longitude
 
 #' @export
 #' @rdname to_geojson
-to_geojson.SpatialPolygonsDataFrame <- function(input, destpath = "~/", outfilename = "myfile"){
+to_geojson.SpatialPolygonsDataFrame <- function(input, destpath = "~/", outfilename = "myfile", ...){
   SpatialPolygonsDataFrame_togeojson(input, destpath = destpath, outfilename = outfilename)
 }
 

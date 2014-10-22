@@ -14,7 +14,7 @@ to_geojson(...)
   lon = "longitude", polygon = NULL, output = "list", ...)
 
 \method{to_geojson}{SpatialPolygonsDataFrame}(input, destpath = "~/",
-  outfilename = "myfile")
+  outfilename = "myfile", ...)
 
 \method{to_geojson}{numeric}(input, lat = "latitude", lon = "longitude",
   polygon = NULL, output = "list", ...)
@@ -39,9 +39,13 @@ class since it inherits from \code{data.frame}.}
 grouping of the polygons in the \code{data.frame}}
 
 \item{output}{One of 'list' or 'geojson'. The output from a call to \code{to_geojson()}}
+
+\item{outfilename}{A file name (e.g., myfile), without the .geojson on the end.}
+
+\item{despath}{A directory path (e.g., ~/mydir)}
 }
 \description{
-Includes support for lists, data.frame's, etc.
+Includes support for lists, data.frame's, and more
 }
 \details{
 description...
