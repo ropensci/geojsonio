@@ -118,9 +118,32 @@ df_to_SpatialPointsDataFrame <- function(x, lon, lat){
 }
 
 SpatialPolygonsDataFrame_togeojson <- function(input, destpath = "~/", outfilename = "myfile"){
-  unlink(paste0(path.expand(destpath), outfilename, ".geojson"))
-  writeOGR(input, paste0(path.expand(destpath), outfilename, ".geojson"), outfilename,
-           driver = "GeoJSON")
-  message(paste0("Success! File is at ", path.expand(destpath), outfilename,
-                 ".geojson"))
+  if (!grepl("\\.geojson$",outfilename)) {
+    outfilename <- paste0(outfilename, ".geojson")
+  }
+  
+  destpath <- path.expand(destpath)
+  
+  basefilename <- strsplit(outfilename,"\\.")[[1]][1]
+  
+  unlink(c(file.path(destpath, outfilename), 
+           file.path(destpath, basefilename)))
+  
+  if (!file.exists(destpath)) dir.create(destpath)
+  
+  input@data <- data.frame(lapply(input@data, function(x) {
+    if ("factor" %in% class(x)) {
+      x <- as.character(x)
+      message("Column is a factor, converting to character")
+    }
+    x
+  }), stringsAsFactors = FALSE)
+  
+  dsn <- file.path(destpath, basefilename)
+  writeOGR(input, dsn = dsn, layer = "", driver = "GeoJSON")
+  
+  dest <- file.path(destpath, outfilename)
+  file.rename(dsn, dest)
+  
+  message("Success! File is at ", dest)
 }
