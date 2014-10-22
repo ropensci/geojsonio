@@ -2,6 +2,7 @@
 \name{to_geojson}
 \alias{to_geojson}
 \alias{to_geojson.SpatialPolygons}
+\alias{to_geojson.SpatialPolygonsDataFrame}
 \alias{to_geojson.data.frame}
 \alias{to_geojson.list}
 \alias{to_geojson.numeric}
@@ -11,6 +12,9 @@ to_geojson(...)
 
 \method{to_geojson}{SpatialPolygons}(input, lat = "latitude",
   lon = "longitude", polygon = NULL, output = "list", ...)
+
+\method{to_geojson}{SpatialPolygonsDataFrame}(input, destpath = "~/",
+  outfilename = "myfile")
 
 \method{to_geojson}{numeric}(input, lat = "latitude", lon = "longitude",
   polygon = NULL, output = "list", ...)
@@ -72,6 +76,11 @@ poly2 <- Polygons(list(Polygon(cbind(c(39.45,-108.74,49.45,39.45),
    c(39.45,-99.74,32.45,39.45)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 to_geojson(sp_poly)
+
+# From SpatialPolygonsDataFrame class
+sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
+to_geojson(input = sp_polydf)
+to_geojson(input = sp_polydf, destpath = "~/things/", outfilename = "that")
 }
 }
 

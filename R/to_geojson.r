@@ -45,12 +45,15 @@
 #'    c(39.45,-99.74,32.45,39.45)))), "2")
 #' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 #' to_geojson(sp_poly)
+#' 
+#' # From SpatialPolygonsDataFrame class
+#' sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
+#' to_geojson(input = sp_polydf)
+#' to_geojson(input = sp_polydf, destpath = "~/things/", outfilename = "that")
 #' }
-to_geojson <- function(...){
-  UseMethod("to_geojson")
-}
 
-#' @method to_geojson SpatialPolygons
+to_geojson <- function(...) UseMethod("to_geojson")
+
 #' @export
 #' @rdname to_geojson
 to_geojson.SpatialPolygons <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, output='list', ...){
@@ -72,8 +75,12 @@ to_geojson.SpatialPolygons <- function(input, lat = "latitude", lon = "longitude
   }
 }
 
+#' @export
+#' @rdname to_geojson
+to_geojson.SpatialPolygonsDataFrame <- function(input, destpath = "~/", outfilename = "myfile"){
+  SpatialPolygonsDataFrame_togeojson(input, destpath = destpath, outfilename = outfilename)
+}
 
-#' @method to_geojson numeric
 #' @export
 #' @rdname to_geojson
 to_geojson.numeric <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, output='list', ...){
@@ -95,7 +102,6 @@ to_geojson.numeric <- function(input, lat = "latitude", lon = "longitude", polyg
   }
 }
 
-#' @method to_geojson data.frame
 #' @export
 #' @rdname to_geojson
 to_geojson.data.frame <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, output='list', ...){
@@ -122,7 +128,6 @@ to_geojson.data.frame <- function(input, lat = "latitude", lon = "longitude", po
   }
 }
 
-#' @method to_geojson list
 #' @export
 #' @rdname to_geojson
 to_geojson.list <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, output='list', ...){
