@@ -75,6 +75,13 @@ to_geojson.SpatialPolygonsDataFrame <- function(input, output='list', file = "my
 
 #' @export
 #' @rdname to_geojson
+to_geojson.SpatialPointsDataFrame <- function(input, output='list', file = "myfile.geojson", ...)
+{
+  if(output=='list') sptogeolist(input) else as.geojson(input, file, ...)
+}
+
+#' @export
+#' @rdname to_geojson
 to_geojson.numeric <- function(input, lat = "latitude", lon = "longitude", polygon=NULL,
                                output='list', file = "myfile.geojson", ...)
 {
