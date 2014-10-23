@@ -79,6 +79,7 @@ file_to_geojson <- function(input, method = "web", destpath = "~/", outfilename 
     writeLines(out, fileConn)
     close(fileConn)
     message(paste0("Success! File is at ", destpath, outfilename, ".geojson"))
+    invisible(paste0(path.expand(destpath), outfilename, ".geojson"))
   } else {
     fileext <- strsplit(input, "\\.")[[1]]
     fileext <- fileext[length(fileext)]
@@ -95,6 +96,7 @@ file_to_geojson <- function(input, method = "web", destpath = "~/", outfilename 
                driver = "GeoJSON")
       message(paste0("Success! File is at ", path.expand(destpath), outfilename,
                      ".geojson"))
+      invisible(paste0(path.expand(destpath), outfilename, ".geojson"))
     } else {
       stop("only .shp and .kml files supported for now")
     }

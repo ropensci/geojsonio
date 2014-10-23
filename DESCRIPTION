@@ -21,7 +21,8 @@ Imports:
     maptools,
     plyr,
     RJSONIO,
-    dplyr
+    dplyr,
+    gistr
 Enhances: ggplot2,
     maps,
     RColorBrewer
