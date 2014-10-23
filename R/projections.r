@@ -52,7 +52,7 @@
 #' projections(proj="albers", invert=60)
 #' projections("orthographic")
 #'
-#' @examples \dontest{
+#' @examples \donttest{
 #' projections("alber")
 #' }
 projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NULL,
