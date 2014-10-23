@@ -11,6 +11,7 @@ This package is a utility to convert geographic data to geojson and topojson for
 ## Info
 
 * GeoJSON - [spec](http://geojson.org/geojson-spec.html)
+* [GeoJSON lint](http://geojsonlint.com/)
 * TopoJSON - [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
 * TopoJSON node library - [on NMP](https://www.npmjs.org/package/topojson), [source](https://github.com/mbostock/topojson)
 
@@ -91,7 +92,7 @@ to_topojson(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='al
 ```
 
 ```
-## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpIDzuuc/querwisl.shp
+## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//Rtmp4y3ghG/querwisl.shp
 ```
 
 Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`

@@ -11,6 +11,7 @@ This package is a utility to convert geographic data to geojson and topojson for
 ## Info
 
 * GeoJSON - [spec](http://geojson.org/geojson-spec.html)
+* [GeoJSON lint](http://geojsonlint.com/)
 * TopoJSON - [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
 * TopoJSON node library - [on NMP](https://www.npmjs.org/package/topojson), [source](https://github.com/mbostock/topojson)
 
