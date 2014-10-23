@@ -4,15 +4,15 @@ togeojson
 [![Build Status](https://api.travis-ci.org/ropensci/togeojson.png)](https://travis-ci.org/ropensci/togeojson)
 [![Build status](https://ci.appveyor.com/api/projects/status/j3nr7n8nvutit7vh/branch/master)](https://ci.appveyor.com/project/sckott/togeojson/branch/master)
 
-Convert various data formats to geoJSON or topoJSON.
+__Convert various data formats to geoJSON or topoJSON__
 
-This R package aims to be a utility to only convert geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
+This package is a utility to convert geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
 
 ## Quick start
 
 ### Install
 
-Install rgdal - in case you can't get it installed from binary package version, here's what works for me on a Mac machine.
+Install rgdal - in case you can't get it installed from binary , here's what works on a Mac.
 
 ```{r eval=FALSE}
 install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")

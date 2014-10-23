@@ -4,15 +4,15 @@ togeojson
 [![Build Status](https://api.travis-ci.org/ropensci/togeojson.png)](https://travis-ci.org/ropensci/togeojson)
 [![Build status](https://ci.appveyor.com/api/projects/status/j3nr7n8nvutit7vh/branch/master)](https://ci.appveyor.com/project/sckott/togeojson/branch/master)
 
-Convert various data formats to geoJSON or topoJSON.
+__Convert various data formats to geoJSON or topoJSON__
 
-This R package aims to be a utility to only convert geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
+This package is a utility to convert geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
 
 ## Quick start
 
 ### Install
 
-Install rgdal - in case you can't get it installed from binary package version, here's what works for me on a Mac machine.
+Install rgdal - in case you can't get it installed from binary , here's what works on a Mac.
 
 
 ```r
@@ -85,7 +85,7 @@ to_topojson(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='al
 ```
 
 ```
-## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//Rtmp8Jjs5Z/querwisl.shp
+## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpzvYDqU/querwisl.shp
 ```
 
 Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`
