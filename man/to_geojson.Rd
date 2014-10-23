@@ -35,7 +35,7 @@ to_geojson(...)
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
-\item{output}{One of 'list', 'json', 'file'. The output from a call to this function.}
+\item{output}{One of 'list' or 'geojson'. The output from a call to \code{to_geojson()}}
 
 \item{file}{A path and file name (e.g., myfile), with the .geojson on the end.}
 
@@ -83,13 +83,12 @@ poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
    c(30,40,35,30)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 to_geojson(sp_poly)
-to_geojson(sp_poly, output="json")
-to_geojson(sp_poly, output="file")
+to_geojson(sp_poly, output="geojson")
 
 # From SpatialPolygonsDataFrame class
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
-to_geojson(input = sp_polydf, output = "file")
-to_geojson(input = sp_polydf, output = "file", file = "~/stuff")
+to_geojson(input = sp_polydf, output = "geojson")
+to_geojson(input = sp_polydf, output = "geojson", file = "~/stuff")
 to_geojson(input = sp_polydf, output = "list")
 }
 }
