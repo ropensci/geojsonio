@@ -10,26 +10,30 @@
 \usage{
 to_geojson(...)
 
-\method{to_geojson}{SpatialPolygons}(input, lat = "latitude",
-  lon = "longitude", polygon = NULL, output = "list", ...)
+\method{to_geojson}{SpatialPolygons}(input, output = "list",
+  file = "myfile.geojson", ...)
 
-\method{to_geojson}{SpatialPolygonsDataFrame}(input, destpath = "~/",
-  outfilename = "myfile", ...)
+\method{to_geojson}{SpatialPolygonsDataFrame}(input, output = "list",
+  file = "myfile.geojson", ...)
 
 \method{to_geojson}{numeric}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, output = "list", ...)
+  polygon = NULL, output = "list", file = "myfile.geojson", ...)
 
 \method{to_geojson}{data.frame}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, output = "list", ...)
+  polygon = NULL, output = "list", file = "myfile.geojson", ...)
 
 \method{to_geojson}{list}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, output = "list", ...)
+  polygon = NULL, output = "list", file = "myfile.geojson", ...)
 }
 \arguments{
-\item{...}{Further args, not used.}
+\item{...}{Further args passed on to \code{\link[rgdal]{writeOGR}}}
 
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
+
+\item{output}{One of 'list' or 'geojson'. The output from a call to \code{to_geojson()}}
+
+\item{file}{A path and file name (e.g., myfile), with the .geojson on the end.}
 
 \item{lat}{Latitude name. Default: latitude}
 
@@ -37,12 +41,6 @@ class since it inherits from \code{data.frame}.}
 
 \item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
 grouping of the polygons in the \code{data.frame}}
-
-\item{output}{One of 'list' or 'geojson'. The output from a call to \code{to_geojson()}}
-
-\item{outfilename}{A file name (e.g., myfile), without the .geojson on the end.}
-
-\item{despath}{A directory path (e.g., ~/mydir)}
 }
 \description{
 Includes support for lists, data.frame's, and more
@@ -55,7 +53,7 @@ description...
 library(maps)
 data(us.cities)
 head(us.cities)
-to_geojson(input=us.cities, lat='lat', lon='long')
+to_geojson(us.cities, lat='lat', lon='long')
 
 # polygons
 library('ggplot2')
@@ -67,24 +65,27 @@ res <- to_geojson(input=states, lat='lat', lon='long', group='group')
 ## From a list
 mylist <- list(list(latitude=30, longitude=120, marker="red"),
                list(latitude=30, longitude=130, marker="blue"))
-to_geojson(mylist)
+to_geojson(mylist, output = "geojson")
 
 # From a numeric vector of length 2
 vec <- c(32.45,-99.74)
 to_geojson(vec)
 
 # From SpatialPolygons class
-poly1 <- Polygons(list(Polygon(cbind(c(32.45,-99.74,49.45,32.45),
-   c(32.45,-99.74,32.45,32.45)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(39.45,-108.74,49.45,39.45),
-   c(39.45,-99.74,32.45,39.45)))), "2")
+library('sp')
+poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
+   c(40,50,45,40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
+   c(30,40,35,30)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 to_geojson(sp_poly)
+to_geojson(sp_poly, output="geojson")
 
 # From SpatialPolygonsDataFrame class
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
-to_geojson(input = sp_polydf)
-to_geojson(input = sp_polydf, destpath = "~/things/", outfilename = "that")
+to_geojson(input = sp_polydf, output = "geojson")
+to_geojson(input = sp_polydf, output = "geojson", file = "~/stuff")
+to_geojson(input = sp_polydf, output = "list")
 }
 }
 
