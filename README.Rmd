@@ -38,9 +38,9 @@ library("togeojson")
 ```
 
 
-### Convert to geoJSON
+### Convert to GeoJSON
 
-Convert file to geoJSON
+Convert file to GeoJSON
 
 Download a shape file. For example purposes, download this one -> [https://raw.githubusercontent.com/ropensci/datasets/master/poa_annua_dist/bison-Poa_annua-20140508-151800.kml](https://raw.githubusercontent.com/ropensci/datasets/master/poa_annua_dist/bison-Poa_annua-20140508-151800.kml)
 
