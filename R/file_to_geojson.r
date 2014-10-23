@@ -37,7 +37,8 @@
 #' file_to_geojson(file, method='web', outfilename='shp_web')
 #'
 #' # Shp type file - using the local method - input is the actual .shp file
-#' file <- '~/github/ropensci/datasets/misc/bison-Bison_bison-20140508-154311/bison-Bison_bison-20140508-154311.shp'
+#' file <- file.path('~/github/ropensci/datasets/misc/bison-Bison_bison-20140508-154311/',
+#' 'bison-Bison_bison-20140508-154311.shp')
 #' file_to_geojson(file, method='local', outfilename='shp_local')
 #'
 #' # Get data and save map data
@@ -78,6 +79,7 @@ file_to_geojson <- function(input, method = "web", destpath = "~/", outfilename 
     writeLines(out, fileConn)
     close(fileConn)
     message(paste0("Success! File is at ", destpath, outfilename, ".geojson"))
+    invisible(paste0(path.expand(destpath), outfilename, ".geojson"))
   } else {
     fileext <- strsplit(input, "\\.")[[1]]
     fileext <- fileext[length(fileext)]
@@ -94,6 +96,7 @@ file_to_geojson <- function(input, method = "web", destpath = "~/", outfilename 
                driver = "GeoJSON")
       message(paste0("Success! File is at ", path.expand(destpath), outfilename,
                      ".geojson"))
+      invisible(paste0(path.expand(destpath), outfilename, ".geojson"))
     } else {
       stop("only .shp and .kml files supported for now")
     }
