@@ -2,6 +2,7 @@
 
 S3method(style_geojson,data.frame)
 S3method(style_geojson,list)
+S3method(to_geojson,SpatialPointsDataFrame)
 S3method(to_geojson,SpatialPolygons)
 S3method(to_geojson,SpatialPolygonsDataFrame)
 S3method(to_geojson,data.frame)

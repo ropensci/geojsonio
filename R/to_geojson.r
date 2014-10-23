@@ -75,6 +75,13 @@ to_geojson.SpatialPolygonsDataFrame <- function(input, output='list', file = "my
 
 #' @export
 #' @rdname to_geojson
+to_geojson.SpatialPointsDataFrame <- function(input, output='list', file = "myfile.geojson", ...)
+{
+  if(output=='list') sptogeolist(input) else as.geojson(input, file, ...)
+}
+
+#' @export
+#' @rdname to_geojson
 to_geojson.numeric <- function(input, lat = "latitude", lon = "longitude", polygon=NULL,
                                output='list', file = "myfile.geojson", ...)
 {
@@ -201,7 +208,16 @@ as.geojson <- function(input, file = "myfile.geojson", ...){
 }
 
 write_ogr <- function(input, dir, file, ...){
+  input@data <- convert_ordered(input@data)
   writeOGR(input, dir, "", "GeoJSON", ...)
   file.rename(dir, file)
   message("Success! File is at ", file)
+}
+
+convert_ordered <- function(df) {
+  data.frame(lapply(df, function(x) {
+    if ("ordered" %in% class(x)) x <- as.character(x)
+    x
+  }), 
+  stringsAsFactors = FALSE)
 }
