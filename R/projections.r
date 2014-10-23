@@ -34,7 +34,7 @@
 #' \url{https://github.com/mbostock/d3/wiki/Geo-Projections#standard-projections} for help
 #' @param clipExtent If extent is specified, sets the projection's viewport clip extent to the
 #' specified bounds in pixels and returns the projection. The extent bounds are specified as an
-#' array [[x0, y0], [x1, y1]], where x0 is the left-side of the viewport, y0 is the top, x1 is
+#' array [[x0, y0], [x1, y1]], where x0 is the left-side of the viewport, y0 is the top, x1 is
 #' the right and y1 is the bottom. If extent is null, no viewport clipping is performed. If extent
 #' is not specified, returns the current viewport clip extent which defaults to null. Viewport
 #' clipping is independent of small-circle clipping via clipAngle.
