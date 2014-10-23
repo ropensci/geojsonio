@@ -19,11 +19,12 @@ Install rgdal - in case you can't get it installed from binary package version, 
 install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
-Install `togeojson`
+Install `togeojson`. You'll need `gistr` too from GitHub, not on CRAN yet.
 
 
 ```r
 install.packages("devtools")
+devtools::install_github("ropensci/gistr")
 devtools::install_github("ropensci/togeojson")
 ```
 
@@ -84,7 +85,7 @@ to_topojson(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='al
 ```
 
 ```
-## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpveLUrY/querwisl.shp
+## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//Rtmp8Jjs5Z/querwisl.shp
 ```
 
 Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`
