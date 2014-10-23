@@ -20,7 +20,6 @@ Imports:
     httr,
     maptools,
     plyr,
-    RJSONIO,
     dplyr,
     gistr
 Enhances: ggplot2,
