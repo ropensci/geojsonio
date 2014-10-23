@@ -144,11 +144,11 @@ to_geojson.list <- function(input, lat = "latitude", lon = "longitude", polygon=
   })
   res <- setNames(Filter(function(x) !is.null(x), x), NULL)
   if(output == 'list'){ res } else {
-    list_to_geojson(input, lat=lat, lon=lon, polygon=polygon)
+    list_to_geojson(input, lat=lat, lon=lon, polygon=polygon, ...)
   }
 }
 
-list_to_geojson <- function(input, file = "myfile.geojson", polygon=NULL, lon, lat){
+list_to_geojson <- function(input, file = "myfile.geojson", polygon=NULL, lon, lat, ...){
   input <- data.frame(rbind_all(lapply(input, function(x){
     tmp <- data.frame(type=x$type,
                       geometry_type=x$geometry$type,

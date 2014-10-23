@@ -9,4 +9,4 @@ inst/stuff/
 ^.*\.Rproj$
 ^\.Rproj\.user$
 README.Rmd
-*.geojson
+^.*\.geojson
