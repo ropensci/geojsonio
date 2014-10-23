@@ -201,7 +201,16 @@ as.geojson <- function(input, file = "myfile.geojson", ...){
 }
 
 write_ogr <- function(input, dir, file, ...){
+  input@data <- convert_ordered(input@data)
   writeOGR(input, dir, "", "GeoJSON", ...)
   file.rename(dir, file)
   message("Success! File is at ", file)
+}
+
+convert_ordered <- function(df) {
+  data.frame(lapply(df, function(x) {
+    if ("ordered" %in% class(x)) x <- as.character(x)
+    x
+  }), 
+  stringsAsFactors = FALSE)
 }
