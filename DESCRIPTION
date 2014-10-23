@@ -19,7 +19,9 @@ Imports:
     maptools,
     plyr,
     dplyr,
-    gistr
+    jsonlite,
+    gistr,
+    magrittr
 Enhances: ggplot2,
     maps,
     RColorBrewer
