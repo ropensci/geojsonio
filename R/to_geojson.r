@@ -191,6 +191,7 @@ SpatialPolygonsDataFrame_togeojson <- function(input, outfilename = "myfile.geoj
   if (!grepl("\\.geojson$",outfilename)) {
     outfilename <- paste0(outfilename, ".geojson")
   }
+  outfilename <- path.expand(outfilename)
   unlink(outfilename)
   destpath <- dirname(outfilename)
   if (!file.exists(destpath)) dir.create(destpath)
