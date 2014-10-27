@@ -2,24 +2,30 @@ tg_compact <- function(l) Filter(Negate(is.null), l)
 
 to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., auto_unbox = TRUE), class=c('json','geo_json'))
 
-list_to_geo_list <- function(x, lat, lon, polygon){
+list_to_geo_list <- function(x, lat, lon, polygon, object){
+  nn <- switch(object, FeatureCollection="features", GeometryCollection="geometries")
   z <- lapply(x, function(l) {
     if (is.null(l[[lat]]) || is.null(l[[lon]])) {
       return(NULL)
     }
     type <- ifelse(is.null(polygon), "Point", "Polygon")
+    if(nn == "features"){
     list(type = "Feature",
          geometry = list(type = type,
                          coordinates = as.numeric(c(l[[lon]], l[[lat]]))),
          properties = l[!(names(l) %in% c(lat, lon))])
+    } else {
+      list(type = type,
+          coordinates = as.numeric(c(l[[lon]], l[[lat]])))
+    }
   })
   z <- setNames(Filter(function(x) !is.null(x), z), NULL)
-  list(type = "FeatureCollection", features = z)
+  structure(list(object, z), .Names = c('type',nn))
 }
 
-df_to_geo_list <- function(x, lat, lon, polygon){
+df_to_geo_list <- function(x, lat, lon, polygon, object){
   x <- apply(x, 1, as.list)
-  list_to_geo_list(x, lat, lon, polygon)
+  list_to_geo_list(x, lat, lon, polygon, object)
 }
 
 num_to_geo_list <- function(x, polygon){

@@ -2,7 +2,7 @@
 #'
 #' @import sp rgdal
 #' @importFrom dplyr rbind_all
-#' @importFrom jsonlite toJSON fromJSON
+#' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
 #'
 #' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}

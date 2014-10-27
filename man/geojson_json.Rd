@@ -23,7 +23,7 @@ geojson_json(...)
 \method{geojson_json}{numeric}(input, polygon = NULL, ...)
 
 \method{geojson_json}{data.frame}(input, lat = "latitude",
-  lon = "longitude", polygon = NULL, ...)
+  lon = "longitude", polygon = NULL, object = "FeatureCollection", ...)
 
 \method{geojson_json}{list}(input, lat = "latitude", lon = "longitude",
   polygon = NULL, ...)
@@ -65,6 +65,9 @@ geojson_json(c(32.45,-99.74))
 library('maps')
 data(us.cities)
 geojson_json(us.cities[1:2,], lat='lat', lon='long')
+geojson_json(us.cities[1:2,], lat='lat', lon='long', pretty=TRUE)
+geojson_json(us.cities[1:2,], lat='lat', lon='long',
+   object="GeometryCollection", pretty=TRUE)
 
 # From SpatialPolygons class
 library('sp')
@@ -75,7 +78,6 @@ poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 geojson_json(sp_poly)
 geojson_json(sp_poly, pretty=TRUE)
-geojson_json(sp_poly, pretty=TRUE, auto_unbox=TRUE)
 
 # data.frame to SpatialPolygonsDataFrame
 library('maps')
