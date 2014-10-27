@@ -2,6 +2,8 @@
 #' 
 #' Bla bla
 #' 
+#' @param x Input.
+#' @param ... Further args passed on to \code{\link[rgdal]{readOGR}}
 #' @name conversions
 
 #' @export

@@ -9,6 +9,11 @@ as.SpatialPolygonsDataFrame(x, ...)
 
 \method{as.SpatialPolygonsDataFrame}{geojson}(x, ...)
 }
+\arguments{
+\item{x}{Input.}
+
+\item{...}{Further args passed on to \code{\link[rgdal]{readOGR}}}
+}
 \description{
 Bla bla
 }

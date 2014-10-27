@@ -13,8 +13,10 @@
 #' grouping of the polygons in the \code{data.frame}
 #' @param file A path and file name (e.g., myfile), with the .geojson on the end.
 #' @param ... Further args passed on to \code{\link[rgdal]{writeOGR}}
+#' @param path Path to file
+#' @param type Type of file
 #'
-#' @seealso \code{\link{to_geo_list}}, \code{\link{to_geo_json}}
+#' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}
 #'
 #' @examples \dontrun{
 #' # From a data.frame
@@ -94,7 +96,7 @@ geojson_write.data.frame <- function(input, lat = "latitude", lon = "longitude",
     res <- df_to_SpatialPolygonsDataFrame(input)
   }
   write_geojson(res, file, ...)
-  as.geoson(file, "data.frame")
+  as.geojson(file, "data.frame")
 }
 
 #' @export
@@ -107,7 +109,7 @@ geojson_write.list <- function(input, lat = "latitude", lon = "longitude", polyg
 
 #' @export
 #' @rdname geojson_write
-as.geoson <- function(path, type) structure(list(path=path, type=type), class="geojson")
+as.geojson <- function(path, type) structure(list(path=path, type=type), class="geojson")
 
 #' @export
 print.geojson <- function(x, ...) {
