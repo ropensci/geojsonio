@@ -2,7 +2,6 @@ togeojson
 ========
 
 [![Build Status](https://api.travis-ci.org/ropensci/togeojson.png)](https://travis-ci.org/ropensci/togeojson)
-[![Build status](https://ci.appveyor.com/api/projects/status/j3nr7n8nvutit7vh/branch/master)](https://ci.appveyor.com/project/sckott/togeojson/branch/master)
 
 __Convert various data formats to geoJSON or topoJSON__
 
@@ -38,9 +37,9 @@ library("togeojson")
 ```
 
 
-### Convert to geoJSON
+### Convert to GeoJSON
 
-Convert file to geoJSON
+Convert file to GeoJSON
 
 Download a shape file. For example purposes, download this one -> [https://raw.githubusercontent.com/ropensci/datasets/master/poa_annua_dist/bison-Poa_annua-20140508-151800.kml](https://raw.githubusercontent.com/ropensci/datasets/master/poa_annua_dist/bison-Poa_annua-20140508-151800.kml)
 

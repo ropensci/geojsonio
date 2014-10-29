@@ -2,7 +2,6 @@ togeojson
 ========
 
 [![Build Status](https://api.travis-ci.org/ropensci/togeojson.png)](https://travis-ci.org/ropensci/togeojson)
-[![Build status](https://ci.appveyor.com/api/projects/status/j3nr7n8nvutit7vh/branch/master)](https://ci.appveyor.com/project/sckott/togeojson/branch/master)
 
 __Convert various data formats to geoJSON or topoJSON__
 
@@ -41,9 +40,9 @@ library("togeojson")
 ```
 
 
-### Convert to geoJSON
+### Convert to GeoJSON
 
-Convert file to geoJSON
+Convert file to GeoJSON
 
 Download a shape file. For example purposes, download this one -> [https://raw.githubusercontent.com/ropensci/datasets/master/poa_annua_dist/bison-Poa_annua-20140508-151800.kml](https://raw.githubusercontent.com/ropensci/datasets/master/poa_annua_dist/bison-Poa_annua-20140508-151800.kml)
 
@@ -92,7 +91,7 @@ to_topojson(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='al
 ```
 
 ```
-## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//Rtmp4y3ghG/querwisl.shp
+## topojson -o ~/Downloads/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//RtmpuzzIHC/querwisl.shp
 ```
 
 Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`

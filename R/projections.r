@@ -73,7 +73,7 @@ projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NU
     transverseMercator = 'd3.geo.transverseMercator()'
   )
   got <- vals[[proj]]
-  args <- togeo_compact(list(rotate=rotate, center=center, translate=translate, scale=scale,
+  args <- tg_compact(list(rotate=rotate, center=center, translate=translate, scale=scale,
                              clipAngle=clipAngle, precision=precision, parallels=parallels,
                              clipExtent=clipExtent, invert=invert))
   out <- list()
