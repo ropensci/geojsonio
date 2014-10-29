@@ -70,7 +70,25 @@ geojson_write.SpatialPolygonsDataFrame <- function(input, file = "myfile.geojson
 
 #' @export
 #' @rdname geojson_write
+geojson_write.SpatialPoints <- function(input, file = "myfile.geojson", ...){
+  write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
+}
+
+#' @export
+#' @rdname geojson_write
 geojson_write.SpatialPointsDataFrame <- function(input, file = "myfile.geojson", ...){
+  write_geojson(input, file, ...)
+}
+
+#' @export
+#' @rdname geojson_write
+geojson_write.SpatialLines <- function(input, file = "myfile.geojson", ...){
+  write_geojson(as(input, "SpatialLinesDataFrame"), file, ...)
+}
+
+#' @export
+#' @rdname geojson_write
+geojson_write.SpatialLinesDataFrame <- function(input, file = "myfile.geojson", ...){
   write_geojson(input, file, ...)
 }
 

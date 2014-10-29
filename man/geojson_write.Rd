@@ -2,6 +2,9 @@
 \name{geojson_write}
 \alias{as.geojson}
 \alias{geojson_write}
+\alias{geojson_write.SpatialLines}
+\alias{geojson_write.SpatialLinesDataFrame}
+\alias{geojson_write.SpatialPoints}
 \alias{geojson_write.SpatialPointsDataFrame}
 \alias{geojson_write.SpatialPolygons}
 \alias{geojson_write.SpatialPolygonsDataFrame}
@@ -17,7 +20,14 @@ geojson_write(...)
 \method{geojson_write}{SpatialPolygonsDataFrame}(input,
   file = "myfile.geojson", ...)
 
+\method{geojson_write}{SpatialPoints}(input, file = "myfile.geojson", ...)
+
 \method{geojson_write}{SpatialPointsDataFrame}(input, file = "myfile.geojson",
+  ...)
+
+\method{geojson_write}{SpatialLines}(input, file = "myfile.geojson", ...)
+
+\method{geojson_write}{SpatialLinesDataFrame}(input, file = "myfile.geojson",
   ...)
 
 \method{geojson_write}{numeric}(input, lat = "latitude", lon = "longitude",
