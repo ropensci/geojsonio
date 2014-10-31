@@ -23,8 +23,12 @@ as.location(x, ...)
 Convert a path or URL to a location object.
 }
 \examples{
-as.location("~/zillow_or.geojson")
-url <- "https://gist.githubusercontent.com/sckott/5353e9522a4866729e63/raw/820939552c9dd7cfb7a4dab806e37ee973771533/pleiades245e5de1a252.geojson"
+# A file
+file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
+as.location(file)
+
+# A URL
+url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 as.location(url)
 }
 
