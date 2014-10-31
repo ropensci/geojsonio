@@ -1,4 +1,5 @@
 .Rproj.user
 .Rhistory
 .RData
-*.geojson
+yep.geojson
+myfile.geojson
