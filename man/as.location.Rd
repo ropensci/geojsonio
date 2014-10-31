@@ -23,6 +23,7 @@ as.location(x, ...)
 Convert a path or URL to a location object.
 }
 \examples{
+\donttest{
 # A file
 file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
 as.location(file)
@@ -30,5 +31,6 @@ as.location(file)
 # A URL
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 as.location(url)
+}
 }
 
