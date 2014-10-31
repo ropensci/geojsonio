@@ -17,8 +17,8 @@ topojson_read <- function(...) UseMethod("topojson_read")
 
 #' @export
 #' @rdname topojson_read
-topojson_read.file <- function(input, ...) read_topojson(as.path(input))
+topojson_read.file <- function(input, ...) read_topojson(as.location(input))
 
 #' @export
 #' @rdname topojson_read
-topojson_read.url <- function(input, ...) read_topojson(as.path(input))
+topojson_read.url <- function(input, ...) read_topojson(as.location(input))
