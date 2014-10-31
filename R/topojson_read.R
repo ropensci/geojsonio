@@ -1,24 +1,28 @@
-#' Read a topojson file
+#' Read topojson from a local file or a URL
 #'
 #' @export
 #'
-#' @param file Path to a local file or a URL.
-#' @param ... Further args passed on to \code{\link[jsonlite]{toJSON}}
+#' @param x Path to a local file or a URL.
+#' @param ... Further args passed on to \code{\link[rgdal]{readOGR}}
 #'
-#' @examples \dontrun{
+#' @examples \donttest{
 #' # From a file
-#' topojson_read("~/asdfafaf")
+#' topojson_read("~/zillow_or.topojson")
 #'
 #' # From a URL
-#' topojson_read('<URL>')
+#' url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
+#' topojson_read(url)
+#' 
+#' # Use as.location first if you want
+#' topojson_read(as.location("~/zillow_or.geojson"))
 #' }
 
 topojson_read <- function(...) UseMethod("topojson_read")
 
 #' @export
 #' @rdname topojson_read
-topojson_read.file <- function(input, ...) read_topojson(as.location(input))
+topojson_read.character <- function(x, ...) read_json(as.location(x), ...)
 
 #' @export
 #' @rdname topojson_read
-topojson_read.url <- function(input, ...) read_topojson(as.location(input))
+topojson_read.location <- function(x, ...) read_json(as.location(x))
