@@ -47,6 +47,8 @@ grouping of the polygons in the \code{data.frame}}
 
 \item{lon}{Longitude name. Default: longitude}
 
+\item{object}{The type of collection. One of FeatureCollection (default) or GeometryCollection.}
+
 \item{x}{Ignored}
 }
 \description{

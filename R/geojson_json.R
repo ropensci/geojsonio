@@ -8,6 +8,7 @@
 #' @param lon Longitude name. Default: longitude
 #' @param polygon If a polygon is defined in a data.frame, this is the column that defines the
 #' grouping of the polygons in the \code{data.frame}
+#' @param object The type of collection. One of FeatureCollection (default) or GeometryCollection.
 #' @param ... Further args passed on to \code{\link[jsonlite]{toJSON}}
 #' @param x Ignored
 #'
