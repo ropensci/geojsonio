@@ -3,7 +3,7 @@
 \alias{geojson_read}
 \alias{geojson_read.character}
 \alias{geojson_read.location}
-\title{Read a geojson file}
+\title{Read geojson from a local file or a URL}
 \usage{
 geojson_read(...)
 
@@ -17,10 +17,10 @@ geojson_read(...)
 \item{x}{Path to a local file or a URL.}
 }
 \description{
-Read a geojson file
+Read geojson from a local file or a URL
 }
 \examples{
-\dontrun{
+\donttest{
 # From a file
 geojson_read("~/zillow_or.geojson")
 

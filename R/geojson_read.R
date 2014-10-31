@@ -1,11 +1,11 @@
-#' Read a geojson file
+#' Read geojson from a local file or a URL
 #'
 #' @export
 #'
 #' @param x Path to a local file or a URL.
 #' @param ... Further args passed on to \code{\link[rgdal]{readOGR}}
 #'
-#' @examples \dontrun{
+#' @examples \donttest{
 #' # From a file
 #' geojson_read("~/zillow_or.geojson")
 #'
@@ -22,10 +22,10 @@ geojson_read <- function(...) UseMethod("geojson_read")
 
 #' @export
 #' @rdname geojson_read
-geojson_read.character <- function(x, ...) read_geojson(as.location(x), ...)
+geojson_read.character <- function(x, ...) read_json(as.location(x), ...)
 
 #' @export
 #' @rdname geojson_read
-geojson_read.location <- function(x, ...) read_geojson(x, ...)
+geojson_read.location <- function(x, ...) read_json(x, ...)
 
-read_geojson <- function(x, ...) readOGR(x, ogrListLayers(x), ...)
+read_json <- function(x, ...) readOGR(x, ogrListLayers(x), ...)
