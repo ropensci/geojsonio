@@ -86,7 +86,7 @@ style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym 
     } else {
         size_vec <- NULL
     }
-    output <- do.call(cbind, togeo_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec,
+    output <- do.call(cbind, tg_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec,
         `marker-size` = size_vec)))
 
     return(output)
@@ -137,7 +137,7 @@ style_geojson.list <- function(input, var = NULL, var_col = NULL, var_sym = NULL
   } else {
     size_vec <- NULL
   }
-  output <- do.call(cbind, togeo_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec,
+  output <- do.call(cbind, tg_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec,
                                         `marker-size` = size_vec)))
 
   return(output)
