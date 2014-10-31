@@ -1,6 +1,17 @@
 togeojson
 ========
 
+```{r echo=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  warning = FALSE, 
+  message = FALSE,
+  fig.width = 10,
+  fig.path = "inst/img/"
+)
+```
+
 [![Build Status](https://api.travis-ci.org/ropensci/togeojson.png)](https://travis-ci.org/ropensci/togeojson)
 
 __Convert various data formats to geoJSON or topoJSON__
@@ -37,29 +48,68 @@ library("togeojson")
 ```
 
 
-### Convert to GeoJSON
+### GeoJSON
 
-Convert file to GeoJSON
+#### Convert various formats to geojson
 
-Download a shape file. For example purposes, download this one -> [https://raw.githubusercontent.com/ropensci/datasets/master/poa_annua_dist/bison-Poa_annua-20140508-151800.kml](https://raw.githubusercontent.com/ropensci/datasets/master/poa_annua_dist/bison-Poa_annua-20140508-151800.kml)
-
-Then:
-
-Define path to file (change to your path)
+From a `numeric` vector of length 2, as json or list
 
 ```{r}
-file = "~/github/ropensci/shapefiles/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
+geojson_json(c(32.45,-99.74))
+geojson_list(c(32.45,-99.74))
 ```
 
-Use `file_to_geojson` to convert shp file to
+From a `data.frame`
 
 ```{r}
-file_to_geojson(file, method='local', outfilename='shp_local')
+library('maps')
+data(us.cities)
+geojson_json(us.cities[1:2,], lat='lat', lon='long')
+geojson_list(us.cities[1:2,], lat='lat', lon='long')
 ```
 
-This outputs a `.geojson` file.
+From `SpatialPolygons` class
 
-### Convert to topoJSON
+```{r}
+library('sp')
+poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
+  c(40,50,45,40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
+  c(30,40,35,30)))), "2")
+sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+```
+
+to json
+
+```{r}
+geojson_json(sp_poly)
+```
+
+to list
+
+```{r}
+geojson_list(sp_poly)$coordinates[[1]]
+```
+
+#### Write geojson
+
+```{r}
+library('maps')
+data(us.cities)
+geojson_write(us.cities[1:2,], lat='lat', lon='long')
+```
+
+#### Read geojson
+
+```{r}
+file <- system.file("examples", "california.geojson", package = "togeojson")
+out <- geojson_read(file)
+plot(out)
+```
+
+### TopoJSON
+
+#### Convert to TopoJSON with Node topojson client
 
 For topojson you will need Mike Bostock's command line client. Install it by doing
 
@@ -70,7 +120,7 @@ sudo npm install -g topojson
 Download a zipped shape fileset, [this one](http://esp.cr.usgs.gov/data/little/querwisl.zip) for distribution of _Quercus wislizeni_. Unzip the zip file to a folder. Then do (changing the path to your path)
 
 ```{r}
-to_topojson(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='albers', projargs=list(rotate='[60, -35, 0]'))
+topojson_write(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='albers', projargs=list(rotate='[60, -35, 0]'))
 ```
 
 Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`
@@ -90,7 +140,44 @@ prune: retained 35 / 35 arcs (100%)
 
 You can then use this topojson file wherever. We'll add a function soon to automagically throw this file up as a Github gist to get an interactive map.
 
-### Meta
+#### Read topojson
+
+TopoJSON
+
+```{r}
+url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
+out <- topojson_read(url)
+plot(out)
+```
+
+### Use case: Play with US states
+
+Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
+
+Get some geojson
+
+```{r}
+library('httr')
+res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
+st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
+base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
+st_files <- paste0(base, st_names)
+```
+
+Make a faceted plot
+
+```{r}
+library('ggplot2')
+library('plyr')
+st_use <- st_files[7:13]
+geo <- lapply(st_use, geojson_read, verbose = FALSE)
+df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
+ggplot(df, aes(long, lat, group = group)) +
+  geom_polygon() +
+  facet_wrap(~ .id, scales = "free")
+```
+
+## Meta
 
 * Please report any issues or bugs](https://github.com/ropensci/togeojson/issues).
 * License: MIT
