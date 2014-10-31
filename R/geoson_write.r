@@ -1,6 +1,6 @@
 #' Convert many input types with spatial data to a geojson file
 #'
-#' @import sp rgdal
+#' @import sp rgdal methods
 #' @importFrom dplyr rbind_all
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
