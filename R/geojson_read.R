@@ -12,6 +12,10 @@
 #' # From a URL
 #' url <- "https://gist.githubusercontent.com/sckott/5353e9522a4866729e63/raw/820939552c9dd7cfb7a4dab806e37ee973771533/pleiades245e5de1a252.geojson"
 #' geojson_read(url)
+#' geojson_read(url, stringsAsFactors=FALSE)
+#' 
+#' # Use as.location first if you want
+#' geojson_read(as.location("~/zillow_or.geojson"))
 #' }
 
 geojson_read <- function(...) UseMethod("geojson_read")
@@ -22,6 +26,6 @@ geojson_read.character <- function(x, ...) read_geojson(as.location(x), ...)
 
 #' @export
 #' @rdname geojson_read
-geojson_read.location <- function(x, ...) read_geojson(as.location(x), ...)
+geojson_read.location <- function(x, ...) read_geojson(x, ...)
 
 read_geojson <- function(x, ...) readOGR(x, ogrListLayers(x), ...)
