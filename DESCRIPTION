@@ -13,6 +13,7 @@ Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "joel.gombin@gmail.com"))
 LazyData: true
 Imports:
+    methods,
     sp,
     rgdal,
     httr,
