@@ -22,15 +22,17 @@ Read geojson from a local file or a URL
 \examples{
 \donttest{
 # From a file
-geojson_read("~/zillow_or.geojson")
+file <- system.file("examples", "california.geojson", package = "togeojson")
+out <- geojson_read(file)
+plot(out)
 
 # From a URL
-url <- "https://gist.githubusercontent.com/sckott/5353e9522a4866729e63/raw/820939552c9dd7cfb7a4dab806e37ee973771533/pleiades245e5de1a252.geojson"
+url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 geojson_read(url)
 geojson_read(url, stringsAsFactors=FALSE)
 
 # Use as.location first if you want
-geojson_read(as.location("~/zillow_or.geojson"))
+geojson_read(as.location(file))
 }
 }
 

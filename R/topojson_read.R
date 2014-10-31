@@ -7,7 +7,8 @@
 #'
 #' @examples \donttest{
 #' # From a file
-#' topojson_read("~/zillow_or.topojson")
+#' file <- system.file("examples", "us_states.topojson", package = "togeojson")
+#' geojson_read(file)
 #'
 #' # From a URL
 #' url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
