@@ -2,12 +2,15 @@
 \name{as.location}
 \alias{as.location}
 \alias{as.location.character}
+\alias{as.location.location}
 \alias{print.location}
 \title{Convert a path or URL to a location object.}
 \usage{
 as.location(x, ...)
 
 \method{as.location}{character}(x, ...)
+
+\method{as.location}{location}(x, ...)
 
 \method{print}{location}(x, ...)
 }

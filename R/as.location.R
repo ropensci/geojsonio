@@ -15,6 +15,10 @@ as.location <- function(x, ...) UseMethod("as.location")
 #' @rdname as.location
 as.location.character <- function(x, ...) check_location(x, ...)
 
+#' @export
+#' @rdname as.location
+as.location.location <- function(x, ...) as.location(x, ...)
+
 check_location <- function(x, ...){
   if(is.url(x)){
     as_location(x, "url")
