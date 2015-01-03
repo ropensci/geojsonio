@@ -70,7 +70,7 @@ geojson_list.numeric <- function(input, polygon=NULL, ...) as.geo_list(num_to_ge
 #' @export
 #' @rdname geojson_list
 geojson_list.data.frame <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, ...){
-  as.geo_list(df_to_geo_list(input, lat, lon, polygon))
+  as.geo_list(df_to_geo_list(input, lat, lon, polygon, object = "FeatureCollection"))
 }
 
 #' @export
