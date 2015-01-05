@@ -54,6 +54,29 @@
 #' # From SpatialPointsDataFrame class
 #' s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
 #' geojson_json(s)
+#' 
+#' # From SpatialLines class
+#' library("sp")
+#' c1 <- cbind(c(1,2,3), c(3,2,2))
+#' c2 <- cbind(c1[,1]+.05,c1[,2]+.05)
+#' c3 <- cbind(c(1,2,3),c(1,1.5,1))
+#' L1 <- Line(c1)
+#' L2 <- Line(c2)
+#' L3 <- Line(c3)
+#' Ls1 <- Lines(list(L1), ID = "a")
+#' Ls2 <- Lines(list(L2, L3), ID = "b")
+#' sl1 <- SpatialLines(list(Ls1))
+#' sl12 <- SpatialLines(list(Ls1, Ls2))
+#' geojson_json(sl1)
+#' geojson_json(sl12)
+#'
+#' # From SpatialLinesDataFrame class
+#' dat <- data.frame(X = c("Blue", "Green"),
+#'                  Y = c("Train", "Plane"), 
+#'                  Z = c("Road", "River"), row.names = c("a", "b"))
+#' sldf <- SpatialLinesDataFrame(sl12, dat)
+#' geojson_json(sldf)
+#' geojson_json(sldf, pretty=TRUE)
 #' }
 
 geojson_json <- function(...) UseMethod("geojson_json")
@@ -68,11 +91,19 @@ geojson_json.SpatialPolygonsDataFrame <- function(input, ...) to_json(sppolytoge
 
 #' @export
 #' @rdname geojson_json
+geojson_json.SpatialPoints <- function(input, ...) to_json(spdftogeolist(input), ...)
+
+#' @export
+#' @rdname geojson_json
 geojson_json.SpatialPointsDataFrame <- function(input, ...) to_json(spdftogeolist(input), ...)
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialPoints <- function(input, ...) to_json(spdftogeolist(input), ...)
+geojson_json.SpatialLines <- function(input, ...) to_json(splinestogeolist(input), ...)
+
+#' @export
+#' @rdname geojson_json
+geojson_json.SpatialLinesDataFrame <- function(input, object = "FeatureCollection", ...) to_json(splinestogeolist(input, object), ...)
 
 #' @export
 #' @rdname geojson_json
