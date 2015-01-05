@@ -1,7 +1,10 @@
 Package: togeojson
 Title: Convert Data to geoJSON or topoJSON
 Description: Convert data to geoJSON or topoJSON from various R classes,
-    including vectors, lists, data frames, shape files, and more.
+    including vectors, lists, data frames, shape files, and more. This 
+    package does not aim to replace packages like sp, rgdal, rgeos, but 
+    rather aims to be a high level client to simplify conversions of data
+    from and to geoJSON and topoJSON.
 Version: 0.0.6.99
 Date: 2015-01-05
 License: MIT + file LICENSE
@@ -23,6 +26,7 @@ Imports:
     jsonlite,
     gistr,
     magrittr
-Enhances: ggplot2,
+Enhances: 
+    ggplot2,
     maps,
     RColorBrewer
