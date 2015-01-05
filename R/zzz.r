@@ -119,6 +119,92 @@ sppolytogeolist <- function(x){
   )
 }
 
+lines_to_geo_list <- function(x, object="FeatureCollection"){
+  nn <- switch(object, FeatureCollection="features", GeometryCollection="geometries")
+  if( length(x@lines) == 1 ){
+    list(type = "LineString",
+         bbox = bbox2df(x@bbox),
+         coordinates = apply(x@lines[[1]]@Lines[[1]]@coords, 1, as.list),
+         properties = NULL
+    )
+  } else {
+    z <- lapply(x@lines, function(l) {
+      if(nn == "features"){
+        list(type = "Feature",
+             bbox = bbox2df(x@bbox),
+             geometry = list(type = ifelse(length(l@Lines) == 1, "LineString", "MultiLineString"),
+                             coordinates = 
+                             if(length(l@Lines) == 1){
+                               apply(l@Lines[[1]]@coords, 1, as.list)
+                             } else {
+                               lapply(l@Lines, function(w) {
+                                 apply(w@coords, 1, as.list)
+                               })
+                             }
+             ),
+             properties = datdat(x, l) )
+      } else {
+        list(type = "LineString",
+             bbox = bbox2df(x@bbox),
+             coordinates = l,
+             properties = datdat(x, l) )
+      }
+    })
+    z <- setNames(Filter(function(x) !is.null(x), z), NULL)
+    structure(list(object, z), .Names = c('type',nn))
+  }
+}
+
+datdat <- function(x, l){
+  tmp <- data.frame(x@data)[row.names(data.frame(x@data)) == l@ID , ]
+  lapply(as.list(tmp), as.character)
+}
+
+splinestogeolist <- function(x, object){
+  if(is(x, "SpatialLinesDataFrame")){
+    lines_to_geo_list(x, object)
+#     if( length(x@lines) == 1 ){
+#       list(type = "LineString",
+#            bbox = bbox2df(x@bbox),
+#            coordinates = apply(x@lines[[1]]@Lines[[1]]@coords, 1, as.list),
+#            properties = NULL
+#       )
+#     } else {
+#       list(type = "MultiLineString",
+#            bbox = bbox2df(x@bbox),
+#            coordinates = 
+#            lapply(x@lines, function(l) {
+#              if(length(l@Lines) == 1){
+#                apply(l@Lines[[1]]@coords, 1, as.list)
+#              } else {
+#                lapply(l@Lines, function(w) {
+#                  apply(w@coords, 1, as.list)
+#                })
+#              }
+#            }),
+#            properties = NULL
+#       )  
+#     }
+  } else {
+    if( length(x@lines) == 1 ){
+      list(type = "LineString",
+           bbox = bbox2df(x@bbox),
+           coordinates = apply(x@lines[[1]]@Lines[[1]]@coords, 1, as.list),
+           properties = NULL
+      )
+    } else {
+      list(type = "MultiLineString",
+           bbox = bbox2df(x@bbox),
+           coordinates = 
+           lapply(x@lines, function(l) {
+             apply(l@Lines[[1]]@coords, 1, as.list)
+           }),
+           properties = NULL
+      )  
+    }
+  }
+}
+
 spdftogeolist <- function(x){
   if(is(x, "SpatialPointsDataFrame")){
     nms <- dimnames(coordinates(x))[[2]]

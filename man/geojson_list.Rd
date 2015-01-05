@@ -2,6 +2,8 @@
 % Please edit documentation in R/geojson_list.R
 \name{geojson_list}
 \alias{geojson_list}
+\alias{geojson_list.SpatialLines}
+\alias{geojson_list.SpatialLinesDataFrame}
 \alias{geojson_list.SpatialPoints}
 \alias{geojson_list.SpatialPointsDataFrame}
 \alias{geojson_list.SpatialPolygons}
@@ -17,9 +19,14 @@ geojson_list(...)
 
 \method{geojson_list}{SpatialPolygonsDataFrame}(input, ...)
 
+\method{geojson_list}{SpatialPoints}(input, ...)
+
 \method{geojson_list}{SpatialPointsDataFrame}(input, ...)
 
-\method{geojson_list}{SpatialPoints}(input, ...)
+\method{geojson_list}{SpatialLines}(input, ...)
+
+\method{geojson_list}{SpatialLinesDataFrame}(input,
+  object = "FeatureCollection", ...)
 
 \method{geojson_list}{numeric}(input, polygon = NULL, ...)
 
@@ -35,14 +42,14 @@ geojson_list(...)
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
+\item{object}{(character) One of FeatureCollection, or}
+
 \item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
 grouping of the polygons in the \code{data.frame}}
 
 \item{lat}{Latitude name. Default: latitude}
 
 \item{lon}{Longitude name. Default: longitude}
-
-\item{object}{(character) One of FeatureCollection, or}
 
 \item{unnamed}{(logical) Is lat/long data unnamed? That is, you can pass in a list of
 lat/long pairs as e.g., a polygon or linestring perhaps, and they aren't named. If so, use
@@ -105,6 +112,32 @@ geojson_list(s)
 # From SpatialPointsDataFrame class
 s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
 geojson_list(s)
+
+# From SpatialLines class
+library("sp")
+c1 <- cbind(c(1,2,3), c(3,2,2))
+c2 <- cbind(c1[,1]+.05,c1[,2]+.05)
+c3 <- cbind(c(1,2,3),c(1,1.5,1))
+L1 <- Line(c1)
+L2 <- Line(c2)
+L3 <- Line(c3)
+Ls1 <- Lines(list(L1), ID = "a")
+Ls2 <- Lines(list(L2, L3), ID = "b")
+sl1 <- SpatialLines(list(Ls1))
+sl12 <- SpatialLines(list(Ls1, Ls2))
+geojson_list(sl1)
+geojson_list(sl12)
+as.json(geojson_list(sl12))
+as.json(geojson_list(sl12), pretty=TRUE)
+
+# From SpatialLinesDataFrame class
+dat <- data.frame(X = c("Blue", "Green"),
+                 Y = c("Train", "Plane"),
+                 Z = c("Road", "River"), row.names = c("a", "b"))
+sldf <- SpatialLinesDataFrame(sl12, dat)
+geojson_list(sldf)
+as.json(geojson_list(sldf))
+as.json(geojson_list(sldf), pretty=TRUE)
 }
 }
 
