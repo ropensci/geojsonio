@@ -62,6 +62,10 @@ geojson_json.SpatialPointsDataFrame <- function(input, ...) to_json(sppolytogeol
 
 #' @export
 #' @rdname geojson_json
+geojson_json.SpatialPoints <- function(input, ...) to_json(sppolytogeolist(input), ...)
+
+#' @export
+#' @rdname geojson_json
 geojson_json.numeric <- function(input, polygon=NULL, ...) to_json(num_to_geo_list(input, polygon), ...)
 
 #' @export

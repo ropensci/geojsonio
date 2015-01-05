@@ -117,15 +117,20 @@ sppolytogeolist <- function(x){
          }),
        properties = NULL
   )
-  # setNames(Filter(function(x) !is.null(x), x), NULL)
 }
 
 spdftogeolist <- function(x){
-  list(type = "MultiPoint",
-       bbox = bbox2df(x@bbox),
-       coordinates = apply(x@coords,  1, as.list),
-       properties = NULL
-  )
+  if(is(x, "SpatialPointsDataFrame")){
+    nms <- dimnames(coordinates(x))[[2]]
+    temp <- apply(data.frame(x), 1, as.list)
+    list_to_geo_list(temp, nms[1], nms[2], NULL, object = "FeatureCollection")
+  } else { 
+    list(type = "MultiPoint",
+         bbox = bbox2df(x@bbox),
+         coordinates = unname(apply(x@coords, 1, function(x) unname(as.list(x)))),
+         properties = NULL
+    )
+  }
 }
 
 write_geojson <- function(input, file = "myfile.geojson", ...){

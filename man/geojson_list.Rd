@@ -2,6 +2,7 @@
 % Please edit documentation in R/geojson_list.R
 \name{geojson_list}
 \alias{geojson_list}
+\alias{geojson_list.SpatialPoints}
 \alias{geojson_list.SpatialPointsDataFrame}
 \alias{geojson_list.SpatialPolygons}
 \alias{geojson_list.SpatialPolygonsDataFrame}
@@ -17,6 +18,8 @@ geojson_list(...)
 \method{geojson_list}{SpatialPolygonsDataFrame}(input, ...)
 
 \method{geojson_list}{SpatialPointsDataFrame}(input, ...)
+
+\method{geojson_list}{SpatialPoints}(input, ...)
 
 \method{geojson_list}{numeric}(input, polygon = NULL, ...)
 
@@ -92,6 +95,16 @@ geojson_list(sp_poly)
 # From SpatialPolygonsDataFrame class
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
 geojson_list(input = sp_polydf)
+
+# From SpatialPoints class
+x <- c(1,2,3,4,5)
+y <- c(3,2,5,1,4)
+s <- SpatialPoints(cbind(x,y))
+geojson_list(s)
+
+# From SpatialPointsDataFrame class
+s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
+geojson_list(s)
 }
 }
 

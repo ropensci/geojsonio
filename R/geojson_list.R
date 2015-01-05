@@ -56,6 +56,16 @@
 #' # From SpatialPolygonsDataFrame class
 #' sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
 #' geojson_list(input = sp_polydf)
+#' 
+#' # From SpatialPoints class
+#' x <- c(1,2,3,4,5)
+#' y <- c(3,2,5,1,4)
+#' s <- SpatialPoints(cbind(x,y))
+#' geojson_list(s)
+#' 
+#' # From SpatialPointsDataFrame class
+#' s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
+#' geojson_list(s)
 #' }
 
 geojson_list <- function(...) UseMethod("geojson_list")
@@ -70,7 +80,11 @@ geojson_list.SpatialPolygonsDataFrame <- function(input, ...) as.geo_list(sppoly
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialPointsDataFrame <- function(input, ...) as.geo_list(sppolytogeolist(input))
+geojson_list.SpatialPointsDataFrame <- function(input, ...) as.geo_list(spdftogeolist(input))
+
+#' @export
+#' @rdname geojson_list
+geojson_list.SpatialPoints <- function(input, ...) as.geo_list(spdftogeolist(input))
 
 #' @export
 #' @rdname geojson_list

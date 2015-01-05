@@ -5,6 +5,7 @@
 \alias{as.json.geo_list}
 \alias{as.json.geojson}
 \alias{geojson_json}
+\alias{geojson_json.SpatialPoints}
 \alias{geojson_json.SpatialPointsDataFrame}
 \alias{geojson_json.SpatialPolygons}
 \alias{geojson_json.SpatialPolygonsDataFrame}
@@ -20,6 +21,8 @@ geojson_json(...)
 \method{geojson_json}{SpatialPolygonsDataFrame}(input, ...)
 
 \method{geojson_json}{SpatialPointsDataFrame}(input, ...)
+
+\method{geojson_json}{SpatialPoints}(input, ...)
 
 \method{geojson_json}{numeric}(input, polygon = NULL, ...)
 
