@@ -2,25 +2,61 @@ tg_compact <- function(l) Filter(Negate(is.null), l)
 
 to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., auto_unbox = TRUE), class=c('json','geo_json'))
 
-list_to_geo_list <- function(x, lat, lon, polygon, object){
+list_to_geo_list <- function(x, lat, lon, polygon, object, unnamed=FALSE){
   nn <- switch(object, FeatureCollection="features", GeometryCollection="geometries")
-  z <- lapply(x, function(l) {
-    if (is.null(l[[lat]]) || is.null(l[[lon]])) {
-      return(NULL)
+  type <- ifelse(is.null(polygon), "Point", "Polygon")
+  if(type == "Point"){
+    z <- lapply(x, function(l) {
+      if(!unnamed){
+        if (is.null(l[[lat]]) || is.null(l[[lon]])) {
+          return(NULL)
+        }
+      }
+      if(nn == "features"){
+        list(type = "Feature",
+             geometry = list(type = type,
+                             coordinates = get_vals(l)),
+             properties = l[!(names(l) %in% c(lat, lon))])
+      } else {
+        list(type = type,
+             coordinates = get_vals(l))
+      }
+    })
+    z <- setNames(Filter(function(x) !is.null(x), z), NULL)
+    structure(list(object, z), .Names = c('type',nn))
+  } else {
+    if(!unnamed){
+      if (is.null(x[[lat]]) || is.null(x[[lon]])) {
+        return(NULL)
+      }
     }
-    type <- ifelse(is.null(polygon), "Point", "Polygon")
     if(nn == "features"){
-    list(type = "Feature",
-         geometry = list(type = type,
-                         coordinates = as.numeric(c(l[[lon]], l[[lat]]))),
-         properties = l[!(names(l) %in% c(lat, lon))])
+      list(type = "Feature",
+           geometry = list(type = type, coordinates = get_vals2(x, unnamed)),
+           properties = get_props(x, unnamed))
     } else {
-      list(type = type,
-          coordinates = as.numeric(c(l[[lon]], l[[lat]])))
+      list(type = type, coordinates = get_vals2(x, unnamed))
     }
-  })
-  z <- setNames(Filter(function(x) !is.null(x), z), NULL)
-  structure(list(object, z), .Names = c('type',nn))
+  }
+}
+
+get_props <- function(x, unnamed){
+  if(unnamed) NULL else x[!(names(x) %in% c(lat, lon))]
+}
+
+get_vals2 <- function(v, unnamed){
+  if(unnamed) 
+    list(v)
+  else
+    lapply(v, function(x) unname(x[names(x) %in% c(lat, lon)]))
+}
+
+get_vals <- function(v){
+  tt <- tryCatch(v[[lon]], error = function(e) e)
+  if(is(tt, "simpleError")) 
+    as.numeric(v)
+  else
+    as.numeric(c(v[[lon]], v[[lat]]))
 }
 
 df_to_geo_list <- function(x, lat, lon, polygon, object){

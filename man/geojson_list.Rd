@@ -21,10 +21,10 @@ geojson_list(...)
 \method{geojson_list}{numeric}(input, polygon = NULL, ...)
 
 \method{geojson_list}{data.frame}(input, lat = "latitude",
-  lon = "longitude", polygon = NULL, ...)
+  lon = "longitude", polygon = NULL, object = "FeatureCollection", ...)
 
 \method{geojson_list}{list}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, ...)
+  polygon = NULL, object = "FeatureCollection", unnamed = FALSE, ...)
 }
 \arguments{
 \item{...}{Ignored}
@@ -38,6 +38,13 @@ grouping of the polygons in the \code{data.frame}}
 \item{lat}{Latitude name. Default: latitude}
 
 \item{lon}{Longitude name. Default: longitude}
+
+\item{object}{(character) One of FeatureCollection, or}
+
+\item{unnamed}{(logical) Is lat/long data unnamed? That is, you can pass in a list of
+lat/long pairs as e.g., a polygon or linestring perhaps, and they aren't named. If so, use
+\code{unnamed=TRUE}. The default is \code{FALSE}, that is, when a list is passed, this function
+looks for lat and lon variable names to parse that data.}
 }
 \description{
 Convert many input types with spatial data to geojson specified as a list
@@ -48,13 +55,13 @@ using \code{rgdal} - see \code{\link{geojson_write}} for that.
 }
 \examples{
 \dontrun{
-library('maps')
+library("maps")
 data(us.cities)
 (res <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
 as.json(res)
 
 # polygons
-library('ggplot2')
+library("ggplot2")
 states <- map_data("state")
 head(states)
 ## make list for input to e.g., rMaps
@@ -65,9 +72,13 @@ mylist <- list(list(latitude=30, longitude=120, marker="red"),
                list(latitude=30, longitude=130, marker="blue"))
 geojson_list(mylist)
 
-# From a numeric vector of length 2
+# From a numeric vector of length 2 to a point
 vec <- c(32.45,-99.74)
 geojson_list(vec)
+
+# From a list of numeric vectors to a polygon
+vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+geojson_list(vecs, unnamed=TRUE, polygon=TRUE)
 
 # From SpatialPolygons class
 library('sp')
