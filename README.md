@@ -93,7 +93,67 @@ data(us.cities)
 geojson_json(us.cities[1:2,], lat='lat', lon='long')
 #> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.74,32.45]},"properties":{"name":"Abilene TX","country.etc":"TX","pop":"113888","capital":"0"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-81.52,41.08]},"properties":{"name":"Akron OH","country.etc":"OH","pop":"206634","capital":"0"}}]}
 geojson_list(us.cities[1:2,], lat='lat', lon='long')
-#> Error in list_to_geo_list(x, lat, lon, polygon, object): argument "object" is missing, with no default
+#> $type
+#> [1] "FeatureCollection"
+#> 
+#> $features
+#> $features[[1]]
+#> $features[[1]]$type
+#> [1] "Feature"
+#> 
+#> $features[[1]]$geometry
+#> $features[[1]]$geometry$type
+#> [1] "Point"
+#> 
+#> $features[[1]]$geometry$coordinates
+#> [1] -99.74  32.45
+#> 
+#> 
+#> $features[[1]]$properties
+#> $features[[1]]$properties$name
+#> [1] "Abilene TX"
+#> 
+#> $features[[1]]$properties$country.etc
+#> [1] "TX"
+#> 
+#> $features[[1]]$properties$pop
+#> [1] "113888"
+#> 
+#> $features[[1]]$properties$capital
+#> [1] "0"
+#> 
+#> 
+#> 
+#> $features[[2]]
+#> $features[[2]]$type
+#> [1] "Feature"
+#> 
+#> $features[[2]]$geometry
+#> $features[[2]]$geometry$type
+#> [1] "Point"
+#> 
+#> $features[[2]]$geometry$coordinates
+#> [1] -81.52  41.08
+#> 
+#> 
+#> $features[[2]]$properties
+#> $features[[2]]$properties$name
+#> [1] "Akron OH"
+#> 
+#> $features[[2]]$properties$country.etc
+#> [1] "OH"
+#> 
+#> $features[[2]]$properties$pop
+#> [1] "206634"
+#> 
+#> $features[[2]]$properties$capital
+#> [1] "0"
+#> 
+#> 
+#> 
+#> 
+#> attr(,"class")
+#> [1] "geo_list"
 ```
 
 From `SpatialPolygons` class
@@ -269,8 +329,8 @@ ggplot(df, aes(long, lat, group = group)) +
 
 ## Meta
 
-* Please report any issues or bugs](https://github.com/ropensci/togeojson/issues).
+* [Please report any issues or bugs](https://github.com/ropensci/togeojson/issues).
 * License: MIT
 * Get citation information for `togeojson` in R doing `citation(package = 'togeojson')`
 
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![rofooter](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
