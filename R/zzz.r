@@ -15,11 +15,11 @@ list_to_geo_list <- function(x, lat, lon, polygon, object, unnamed=FALSE){
       if(nn == "features"){
         list(type = "Feature",
              geometry = list(type = type,
-                             coordinates = get_vals(l)),
+                             coordinates = get_vals(l, lat, lon)),
              properties = l[!(names(l) %in% c(lat, lon))])
       } else {
         list(type = type,
-             coordinates = get_vals(l))
+             coordinates = get_vals(l, lat, lon))
       }
     })
     z <- setNames(Filter(function(x) !is.null(x), z), NULL)
@@ -32,26 +32,26 @@ list_to_geo_list <- function(x, lat, lon, polygon, object, unnamed=FALSE){
     }
     if(nn == "features"){
       list(type = "Feature",
-           geometry = list(type = type, coordinates = get_vals2(x, unnamed)),
-           properties = get_props(x, unnamed))
+           geometry = list(type = type, coordinates = get_vals2(x, unnamed, lat, lon)),
+           properties = get_props(x, unnamed, lat, lon))
     } else {
-      list(type = type, coordinates = get_vals2(x, unnamed))
+      list(type = type, coordinates = get_vals2(x, unnamed, lat, lon))
     }
   }
 }
 
-get_props <- function(x, unnamed){
+get_props <- function(x, unnamed, lat, lon){
   if(unnamed) NULL else x[!(names(x) %in% c(lat, lon))]
 }
 
-get_vals2 <- function(v, unnamed){
+get_vals2 <- function(v, unnamed, lat, lon){
   if(unnamed) 
     list(v)
   else
     lapply(v, function(x) unname(x[names(x) %in% c(lat, lon)]))
 }
 
-get_vals <- function(v){
+get_vals <- function(v, lat, lon){
   tt <- tryCatch(v[[lon]], error = function(e) e)
   if(is(tt, "simpleError")) 
     as.numeric(v)
