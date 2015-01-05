@@ -44,6 +44,16 @@
 #'
 #' # data.frame to json (via SpatialPolygonsDataFrame)
 #' geojson_write(us.cities[1:2,], lat='lat', lon='long') %>% as.json
+#' 
+#' # From SpatialPoints class
+#' x <- c(1,2,3,4,5)
+#' y <- c(3,2,5,1,4)
+#' s <- SpatialPoints(cbind(x,y))
+#' geojson_json(s)
+#' 
+#' # From SpatialPointsDataFrame class
+#' s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
+#' geojson_json(s)
 #' }
 
 geojson_json <- function(...) UseMethod("geojson_json")
@@ -58,11 +68,11 @@ geojson_json.SpatialPolygonsDataFrame <- function(input, ...) to_json(sppolytoge
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialPointsDataFrame <- function(input, ...) to_json(sppolytogeolist(input), ...)
+geojson_json.SpatialPointsDataFrame <- function(input, ...) to_json(spdftogeolist(input), ...)
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialPoints <- function(input, ...) to_json(sppolytogeolist(input), ...)
+geojson_json.SpatialPoints <- function(input, ...) to_json(spdftogeolist(input), ...)
 
 #' @export
 #' @rdname geojson_json
