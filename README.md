@@ -40,12 +40,11 @@ Install rgdal - in case you can't get it installed from binary , here's what wor
 install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
-Install `togeojson`. You'll need `gistr` too from GitHub, not on CRAN yet.
+Install `togeojson`
 
 
 ```r
 install.packages("devtools")
-devtools::install_github("ropensci/gistr")
 devtools::install_github("ropensci/togeojson")
 ```
 
@@ -232,7 +231,7 @@ geojson_write(us.cities[1:2,], lat='lat', lon='long')
 file <- system.file("examples", "california.geojson", package = "togeojson")
 out <- geojson_read(file)
 #> OGR data source with driver: GeoJSON 
-#> Source: "/Users/sacmac/Library/R/3.1/library/togeojson/examples/california.geojson", layer: "OGRGeoJSON"
+#> Source: "/Users/sacmac/github/ropensci/togeojson/inst/examples/california.geojson", layer: "OGRGeoJSON"
 #> with 1 features and 11 fields
 #> Feature type: wkbMultiPolygon with 2 dimensions
 plot(out)
