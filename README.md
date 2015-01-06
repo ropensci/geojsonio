@@ -1,9 +1,9 @@
-togeojson
+geojsonio
 ========
 
 
 
-[![Build Status](https://api.travis-ci.org/ropensci/togeojson.png)](https://travis-ci.org/ropensci/togeojson)
+[![Build Status](https://api.travis-ci.org/ropensci/geojsonio.png)](https://travis-ci.org/ropensci/geojsonio)
 
 __Convert various data formats to geoJSON or topoJSON__
 
@@ -16,7 +16,7 @@ Functions in this package are organized first around what you're working with or
 * `geojson_read()``topojson_read()` - read a geojson/topojson file from file path or URL
 * `geojson_write()`/`topojson_write()` - write a geojson/topojson file locally
 
-Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc. 
+Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
 Additional functions:
 
@@ -40,17 +40,17 @@ Install rgdal - in case you can't get it installed from binary , here's what wor
 install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
-Install `togeojson`
+Install `geojsonio`
 
 
 ```r
 install.packages("devtools")
-devtools::install_github("ropensci/togeojson")
+devtools::install_github("ropensci/geojsonio")
 ```
 
 
 ```r
-library("togeojson")
+library("geojsonio")
 ```
 
 
@@ -228,10 +228,10 @@ geojson_write(us.cities[1:2,], lat='lat', lon='long')
 
 
 ```r
-file <- system.file("examples", "california.geojson", package = "togeojson")
+file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
 #> OGR data source with driver: GeoJSON 
-#> Source: "/Users/sacmac/github/ropensci/togeojson/inst/examples/california.geojson", layer: "OGRGeoJSON"
+#> Source: "/Users/sacmac/Library/R/3.1/library/geojsonio/examples/california.geojson", layer: "OGRGeoJSON"
 #> with 1 features and 11 fields
 #> Feature type: wkbMultiPolygon with 2 dimensions
 plot(out)
@@ -328,8 +328,8 @@ ggplot(df, aes(long, lat, group = group)) +
 
 ## Meta
 
-* [Please report any issues or bugs](https://github.com/ropensci/togeojson/issues).
+* [Please report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
 * License: MIT
-* Get citation information for `togeojson` in R doing `citation(package = 'togeojson')`
+* Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
 
 [![rofooter](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
