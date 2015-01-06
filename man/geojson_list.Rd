@@ -2,6 +2,8 @@
 % Please edit documentation in R/geojson_list.R
 \name{geojson_list}
 \alias{geojson_list}
+\alias{geojson_list.SpatialGrid}
+\alias{geojson_list.SpatialGridDataFrame}
 \alias{geojson_list.SpatialLines}
 \alias{geojson_list.SpatialLinesDataFrame}
 \alias{geojson_list.SpatialPoints}
@@ -27,6 +29,10 @@ geojson_list(...)
 
 \method{geojson_list}{SpatialLinesDataFrame}(input,
   object = "FeatureCollection", ...)
+
+\method{geojson_list}{SpatialGrid}(input, ...)
+
+\method{geojson_list}{SpatialGridDataFrame}(input, ...)
 
 \method{geojson_list}{numeric}(input, polygon = NULL, ...)
 
@@ -138,6 +144,17 @@ sldf <- SpatialLinesDataFrame(sl12, dat)
 geojson_list(sldf)
 as.json(geojson_list(sldf))
 as.json(geojson_list(sldf), pretty=TRUE)
+
+# From SpatialGrid
+x <- GridTopology(c(0,0), c(1,1), c(5,5))
+y <- SpatialGrid(x)
+geojson_list(y)
+
+# From SpatialGridDataFrame
+sgdim <- c(3,4)
+sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
+geojson_list(sgdf)
 }
 }
 

@@ -77,6 +77,17 @@
 #' sldf <- SpatialLinesDataFrame(sl12, dat)
 #' geojson_json(sldf)
 #' geojson_json(sldf, pretty=TRUE)
+#' 
+#' # From SpatialGrid
+#' x <- GridTopology(c(0,0), c(1,1), c(5,5))
+#' y <- SpatialGrid(x)
+#' geojson_json(y)
+#' 
+#' # From SpatialGridDataFrame
+#' sgdim <- c(3,4)
+#' sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+#' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
+#' geojson_json(sgdf)
 #' }
 
 geojson_json <- function(...) UseMethod("geojson_json")
@@ -104,6 +115,14 @@ geojson_json.SpatialLines <- function(input, ...) to_json(splinestogeolist(input
 #' @export
 #' @rdname geojson_json
 geojson_json.SpatialLinesDataFrame <- function(input, object = "FeatureCollection", ...) to_json(splinestogeolist(input, object), ...)
+
+#' @export
+#' @rdname geojson_json
+geojson_json.SpatialGrid <- function(input, ...) to_json(spdftogeolist(input), ...)
+
+#' @export
+#' @rdname geojson_json
+geojson_json.SpatialGridDataFrame <- function(input, ...) to_json(spdftogeolist(input), ...)
 
 #' @export
 #' @rdname geojson_json

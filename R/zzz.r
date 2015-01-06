@@ -206,14 +206,14 @@ splinestogeolist <- function(x, object){
 }
 
 spdftogeolist <- function(x){
-  if(is(x, "SpatialPointsDataFrame")){
+  if(is(x, "SpatialPointsDataFrame") || is(x, "SpatialGridDataFrame")){
     nms <- dimnames(coordinates(x))[[2]]
     temp <- apply(data.frame(x), 1, as.list)
     list_to_geo_list(temp, nms[1], nms[2], NULL, object = "FeatureCollection")
   } else { 
     list(type = "MultiPoint",
          bbox = bbox2df(x@bbox),
-         coordinates = unname(apply(x@coords, 1, function(x) unname(as.list(x)))),
+         coordinates = unname(apply(coordinates(x), 1, function(x) unname(as.list(x)))),
          properties = NULL
     )
   }
