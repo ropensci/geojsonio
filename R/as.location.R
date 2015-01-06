@@ -22,7 +22,7 @@ as.location.character <- function(x, ...) check_location(x, ...)
 
 #' @export
 #' @rdname as.location
-as.location.location <- function(x, ...) as.location(x, ...)
+as.location.location <- function(x, ...) x
 
 check_location <- function(x, ...){
   if(is.url(x)){
