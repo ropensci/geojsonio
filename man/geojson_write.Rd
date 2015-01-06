@@ -3,6 +3,8 @@
 \name{geojson_write}
 \alias{as.geojson}
 \alias{geojson_write}
+\alias{geojson_write.SpatialGrid}
+\alias{geojson_write.SpatialGridDataFrame}
 \alias{geojson_write.SpatialLines}
 \alias{geojson_write.SpatialLinesDataFrame}
 \alias{geojson_write.SpatialPoints}
@@ -29,6 +31,11 @@ geojson_write(...)
 \method{geojson_write}{SpatialLines}(input, file = "myfile.geojson", ...)
 
 \method{geojson_write}{SpatialLinesDataFrame}(input, file = "myfile.geojson",
+  ...)
+
+\method{geojson_write}{SpatialGrid}(input, file = "myfile.geojson", ...)
+
+\method{geojson_write}{SpatialGridDataFrame}(input, file = "myfile.geojson",
   ...)
 
 \method{geojson_write}{numeric}(input, lat = "latitude", lon = "longitude",
@@ -99,6 +106,17 @@ geojson_write(sp_poly)
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
 geojson_write(input = sp_polydf, output = "file")
 geojson_write(input = sp_polydf, output = "file", file = "~/stuff")
+
+# From SpatialGrid
+x <- GridTopology(c(0,0), c(1,1), c(5,5))
+y <- SpatialGrid(x)
+geojson_write(y)
+
+# From SpatialGridDataFrame
+sgdim <- c(3,4)
+sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
+geojson_write(sgdf)
 }
 }
 \seealso{

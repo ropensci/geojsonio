@@ -50,8 +50,19 @@
 #'
 #' # From SpatialPolygonsDataFrame class
 #' sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
-#' geojson_write(input = sp_polydf, output = "file")
-#' geojson_write(input = sp_polydf, output = "file", file = "~/stuff")
+#' geojson_write(input = sp_polydf)
+#' geojson_write(input = sp_polydf, file = "~/stuff")
+#' 
+#' # From SpatialGrid
+#' x <- GridTopology(c(0,0), c(1,1), c(5,5))
+#' y <- SpatialGrid(x)
+#' geojson_write(y)
+#' 
+#' # From SpatialGridDataFrame
+#' sgdim <- c(3,4)
+#' sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+#' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
+#' geojson_write(sgdf)
 #' }
 
 geojson_write <- function(...) UseMethod("geojson_write")
@@ -90,6 +101,20 @@ geojson_write.SpatialLines <- function(input, file = "myfile.geojson", ...){
 #' @rdname geojson_write
 geojson_write.SpatialLinesDataFrame <- function(input, file = "myfile.geojson", ...){
   write_geojson(input, file, ...)
+}
+
+#' @export
+#' @rdname geojson_write
+geojson_write.SpatialGrid <- function(input, file = "myfile.geojson", ...){
+  size <- prod(y@grid@cells.dim)
+  input <- SpatialGridDataFrame(input, data.frame(val=rep(1, size)))
+  write_geojson(input, file, ...)
+}
+
+#' @export
+#' @rdname geojson_write
+geojson_write.SpatialGridDataFrame <- function(input, file = "myfile.geojson", ...){
+  write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
 }
 
 #' @export
