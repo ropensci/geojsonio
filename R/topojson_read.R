@@ -26,4 +26,4 @@ topojson_read.character <- function(x, ...) read_json(as.location(x), ...)
 
 #' @export
 #' @rdname topojson_read
-topojson_read.location <- function(x, ...) read_json(as.location(x))
+topojson_read.location <- function(x, ...) read_json(x, ...)
