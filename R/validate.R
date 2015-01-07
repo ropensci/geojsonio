@@ -1,9 +1,11 @@
-#' Validate a geoJSON file
+#' Validate a geoJSON file, json object, list, or Spatial class.
 #' 
 #' @name validate
-#' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
+#' @param x Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 #' class since it inherits from \code{data.frame}.
 #' @param ... Ignored
+#' 
+#' @details Uses the web service at \url{http://geojsonlint.com/}
 #'
 #' @examples \dontrun{
 #' # A file

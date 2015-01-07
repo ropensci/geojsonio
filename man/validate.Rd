@@ -16,7 +16,7 @@
 \alias{validate.list}
 \alias{validate.location}
 \alias{validate.numeric}
-\title{Validate a geoJSON file}
+\title{Validate a geoJSON file, json object, list, or Spatial class.}
 \usage{
 validate(x, ...)
 
@@ -49,13 +49,16 @@ validate(x, ...)
 \method{validate}{list}(x, ...)
 }
 \arguments{
-\item{...}{Ignored}
-
-\item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
+\item{x}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
+
+\item{...}{Ignored}
 }
 \description{
-Validate a geoJSON file
+Validate a geoJSON file, json object, list, or Spatial class.
+}
+\details{
+Uses the web service at \url{http://geojsonlint.com/}
 }
 \examples{
 \dontrun{

@@ -91,7 +91,7 @@ geojson_write.geo_list <- function(input, file = "myfile.geojson", ...){
 #' @export
 #' @rdname geojson_write
 geojson_write.json <- function(input, file = "myfile.geojson", ...){
-  cat(toJSON(jsonlite::fromJSON(x), pretty=TRUE, auto_unbox = TRUE), file=file)
+  cat(toJSON(jsonlite::fromJSON(input), pretty=TRUE, auto_unbox = TRUE), file=file)
   message("Success! File is at ", file)
 }
 
@@ -134,7 +134,7 @@ geojson_write.SpatialLinesDataFrame <- function(input, file = "myfile.geojson", 
 #' @export
 #' @rdname geojson_write
 geojson_write.SpatialGrid <- function(input, file = "myfile.geojson", ...){
-  size <- prod(y@grid@cells.dim)
+  size <- prod(input@grid@cells.dim)
   input <- SpatialGridDataFrame(input, data.frame(val=rep(1, size)))
   write_geojson(input, file, ...)
 }
