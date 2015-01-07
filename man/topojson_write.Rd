@@ -52,7 +52,7 @@ Nothing. As a side effect, a topojson file is created with file extension \code{
 }
 \description{
 \code{toTopoJSON} takes one or several \code{SpatialPolygonsDataFrame} objects and creates a
-topojson file, multi-layered if needed. This functions needs \code{topojson}
+topojson file, multi-layered if needed. This function needs \code{topojson}
 \url{https://github.com/mbostock/topojson/wiki/Installation} to be installed.
 }
 \examples{

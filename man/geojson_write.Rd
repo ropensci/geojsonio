@@ -12,11 +12,17 @@
 \alias{geojson_write.SpatialPolygons}
 \alias{geojson_write.SpatialPolygonsDataFrame}
 \alias{geojson_write.data.frame}
+\alias{geojson_write.geo_list}
+\alias{geojson_write.json}
 \alias{geojson_write.list}
 \alias{geojson_write.numeric}
 \title{Convert many input types with spatial data to a geojson file}
 \usage{
 geojson_write(...)
+
+\method{geojson_write}{geo_list}(input, file = "myfile.geojson", ...)
+
+\method{geojson_write}{json}(input, file = "myfile.geojson", ...)
 
 \method{geojson_write}{SpatialPolygons}(input, file = "myfile.geojson", ...)
 
@@ -104,8 +110,8 @@ geojson_write(sp_poly)
 
 # From SpatialPolygonsDataFrame class
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
-geojson_write(input = sp_polydf, output = "file")
-geojson_write(input = sp_polydf, output = "file", file = "~/stuff")
+geojson_write(input = sp_polydf)
+geojson_write(input = sp_polydf, file = "~/stuff")
 
 # From SpatialGrid
 x <- GridTopology(c(0,0), c(1,1), c(5,5))
@@ -117,6 +123,20 @@ sgdim <- c(3,4)
 sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
 sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 geojson_write(sgdf)
+
+# Write output of geojson_list to file
+library("maps")
+data(us.cities)
+res <- geojson_list(us.cities[1:2,], lat='lat', lon='long')
+class(res)
+geojson_write(res)
+
+# Write output of geojson_json to file
+library("maps")
+data(us.cities)
+res <- geojson_json(us.cities[1:2,], lat='lat', lon='long')
+class(res)
+geojson_write(res)
 }
 }
 \seealso{

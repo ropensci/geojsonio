@@ -63,9 +63,37 @@
 #' sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
 #' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 #' geojson_write(sgdf)
+#' 
+#' # Write output of geojson_list to file
+#' library("maps")
+#' data(us.cities)
+#' res <- geojson_list(us.cities[1:2,], lat='lat', lon='long')
+#' class(res)
+#' geojson_write(res)
+#' 
+#' # Write output of geojson_json to file
+#' library("maps")
+#' data(us.cities)
+#' res <- geojson_json(us.cities[1:2,], lat='lat', lon='long')
+#' class(res)
+#' geojson_write(res)
 #' }
 
 geojson_write <- function(...) UseMethod("geojson_write")
+
+#' @export
+#' @rdname geojson_write
+geojson_write.geo_list <- function(input, file = "myfile.geojson", ...){
+  cat(as.json(input, pretty=TRUE), file=file)
+  message("Success! File is at ", file)
+}
+
+#' @export
+#' @rdname geojson_write
+geojson_write.json <- function(input, file = "myfile.geojson", ...){
+  cat(toJSON(jsonlite::fromJSON(x), pretty=TRUE, auto_unbox = TRUE), file=file)
+  message("Success! File is at ", file)
+}
 
 #' @export
 #' @rdname geojson_write
