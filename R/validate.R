@@ -8,6 +8,10 @@
 #' @details Uses the web service at \url{http://geojsonlint.com/}
 #'
 #' @examples \dontrun{
+#' # From a json character string
+#' validate(x = '{"type": "Point", "coordinates": [-100, 80]}') # good 
+#' validate(x = '{"type": "Rhombus", "coordinates": [[1, 2], [3, 4], [5, 6]]}') # bad
+#' 
 #' # A file
 #' file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
 #' validate(x = as.location(file))
@@ -47,6 +51,15 @@
 #' @export
 #' @rdname validate
 validate <- function(x, ...) UseMethod("validate")
+
+#' @export
+#' @rdname validate
+validate.character <- function(x, ...){
+  if( !jsonlite::validate(x) ) stop("invalid json string")
+  res <- POST(v_url(), body=x)
+  stop_for_status(res)
+  content(res)
+}
 
 #' @export
 #' @rdname validate

@@ -10,6 +10,7 @@
 \alias{validate.SpatialPointsDataFrame}
 \alias{validate.SpatialPolygons}
 \alias{validate.SpatialPolygonsDataFrame}
+\alias{validate.character}
 \alias{validate.data.frame}
 \alias{validate.geo_list}
 \alias{validate.json}
@@ -19,6 +20,8 @@
 \title{Validate a geoJSON file, json object, list, or Spatial class.}
 \usage{
 validate(x, ...)
+
+\method{validate}{character}(x, ...)
 
 \method{validate}{location}(x, ...)
 
@@ -62,6 +65,10 @@ Uses the web service at \url{http://geojsonlint.com/}
 }
 \examples{
 \dontrun{
+# From a json character string
+validate(x = '{"type": "Point", "coordinates": [-100, 80]}') # good
+validate(x = '{"type": "Rhombus", "coordinates": [[1, 2], [3, 4], [5, 6]]}') # bad
+
 # A file
 file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
 validate(x = as.location(file))
