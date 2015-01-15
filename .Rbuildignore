@@ -10,3 +10,4 @@ inst/stuff/
 ^\.Rproj\.user$
 README.Rmd
 ^.*\.geojson
+.V8history
