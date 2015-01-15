@@ -94,35 +94,38 @@ geojson_json <- function(...) UseMethod("geojson_json")
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialPolygons <- function(input, ...) to_json(sppolytogeolist(input), ...)
+geojson_json.SpatialPolygons <- function(input, ...) to_json(geojson_rw(input), ...)
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialPolygonsDataFrame <- function(input, ...) to_json(sppolytogeolist(input), ...)
+geojson_json.SpatialPolygonsDataFrame <- function(input, ...) to_json(geojson_rw(input), ...)
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialPoints <- function(input, ...) to_json(spdftogeolist(input), ...)
+geojson_json.SpatialPoints <- function(input, ...) {
+  dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
+  to_json(geojson_rw(dat))
+}
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialPointsDataFrame <- function(input, ...) to_json(spdftogeolist(input), ...)
+geojson_json.SpatialPointsDataFrame <- function(input, ...) to_json(geojson_rw(input), ...)
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialLines <- function(input, ...) to_json(splinestogeolist(input), ...)
+geojson_json.SpatialLines <- function(input, ...) to_json(geojson_rw(input), ...)
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialLinesDataFrame <- function(input, object = "FeatureCollection", ...) to_json(splinestogeolist(input, object), ...)
+geojson_json.SpatialLinesDataFrame <- function(input, object = "FeatureCollection", ...) to_json(geojson_rw(input), ...)
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialGrid <- function(input, ...) to_json(spdftogeolist(input), ...)
+geojson_json.SpatialGrid <- function(input, ...) to_json(geojson_rw(input), ...)
 
 #' @export
 #' @rdname geojson_json
-geojson_json.SpatialGridDataFrame <- function(input, ...) to_json(spdftogeolist(input), ...)
+geojson_json.SpatialGridDataFrame <- function(input, ...) to_json(geojson_rw(input), ...)
 
 #' @export
 #' @rdname geojson_json
