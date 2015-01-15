@@ -86,6 +86,7 @@ geojson_write <- function(...) UseMethod("geojson_write")
 geojson_write.geo_list <- function(input, file = "myfile.geojson", ...){
   cat(as.json(input, pretty=TRUE), file=file)
   message("Success! File is at ", file)
+  return(file)
 }
 
 #' @export
@@ -93,42 +94,49 @@ geojson_write.geo_list <- function(input, file = "myfile.geojson", ...){
 geojson_write.json <- function(input, file = "myfile.geojson", ...){
   cat(toJSON(jsonlite::fromJSON(input), pretty=TRUE, auto_unbox = TRUE), file=file)
   message("Success! File is at ", file)
+  return(file)
 }
 
 #' @export
 #' @rdname geojson_write
 geojson_write.SpatialPolygons <- function(input, file = "myfile.geojson", ...){
   write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
+  return(file)
 }
 
 #' @export
 #' @rdname geojson_write
 geojson_write.SpatialPolygonsDataFrame <- function(input, file = "myfile.geojson", ...){
   write_geojson(input, file, ...)
+  return(file)
 }
 
 #' @export
 #' @rdname geojson_write
 geojson_write.SpatialPoints <- function(input, file = "myfile.geojson", ...){
   write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
+  return(file)
 }
 
 #' @export
 #' @rdname geojson_write
 geojson_write.SpatialPointsDataFrame <- function(input, file = "myfile.geojson", ...){
   write_geojson(input, file, ...)
+  return(file)
 }
 
 #' @export
 #' @rdname geojson_write
 geojson_write.SpatialLines <- function(input, file = "myfile.geojson", ...){
   write_geojson(as(input, "SpatialLinesDataFrame"), file, ...)
+  return(file)
 }
 
 #' @export
 #' @rdname geojson_write
 geojson_write.SpatialLinesDataFrame <- function(input, file = "myfile.geojson", ...){
   write_geojson(input, file, ...)
+  return(file)
 }
 
 #' @export
@@ -137,12 +145,14 @@ geojson_write.SpatialGrid <- function(input, file = "myfile.geojson", ...){
   size <- prod(input@grid@cells.dim)
   input <- SpatialGridDataFrame(input, data.frame(val=rep(1, size)))
   write_geojson(input, file, ...)
+  return(file)
 }
 
 #' @export
 #' @rdname geojson_write
 geojson_write.SpatialGridDataFrame <- function(input, file = "myfile.geojson", ...){
   write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
+  return(file)
 }
 
 #' @export
@@ -155,6 +165,7 @@ geojson_write.numeric <- function(input, lat = "latitude", lon = "longitude", po
     res <- df_to_SpatialPolygonsDataFrame(input)
   }
   write_geojson(res, file, ...)
+  return(file)
 }
 
 #' @export
@@ -168,6 +179,7 @@ geojson_write.data.frame <- function(input, lat = "latitude", lon = "longitude",
   }
   write_geojson(res, file, ...)
   as.geojson(file, "data.frame")
+  return(file)
 }
 
 #' @export
@@ -176,6 +188,7 @@ geojson_write.list <- function(input, lat = "latitude", lon = "longitude", polyg
                             file = "myfile.geojson", ...){
   res <- list_to_geo_list(input, lat, lon, polygon)
   list_to_geojson(res, lat=lat, lon=lon, polygon=polygon, ...)
+  return(file)
 }
 
 #' @export

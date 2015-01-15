@@ -71,6 +71,7 @@ using \code{rgdal} - see \code{\link{geojson_write}} for that.
 }
 \examples{
 \dontrun{
+# from data.frame
 library("maps")
 data(us.cities)
 (res <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))

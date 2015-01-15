@@ -2,12 +2,64 @@
 % Please edit documentation in R/mapgist.R
 \name{map_gist}
 \alias{map_gist}
+\alias{map_gist.SpatialGrid}
+\alias{map_gist.SpatialGridDataFrame}
+\alias{map_gist.SpatialLines}
+\alias{map_gist.SpatialLinesDataFrame}
+\alias{map_gist.SpatialPoints}
+\alias{map_gist.SpatialPointsDataFrame}
+\alias{map_gist.SpatialPolygons}
+\alias{map_gist.SpatialPolygonsDataFrame}
+\alias{map_gist.data.frame}
+\alias{map_gist.list}
+\alias{map_gist.location}
+\alias{map_gist.numeric}
 \title{Publish an interactive map as a GitHub gist}
 \usage{
-map_gist(geojsonfile, description = "", public = TRUE, browse = TRUE, ...)
+map_gist(...)
+
+\method{map_gist}{location}(file, description = "", public = TRUE,
+  browse = TRUE, ...)
+
+\method{map_gist}{SpatialPointsDataFrame}(input, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{SpatialPoints}(input, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{SpatialPolygons}(input, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{SpatialPolygonsDataFrame}(input, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{SpatialLines}(input, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{SpatialLinesDataFrame}(input, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{SpatialGrid}(input, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{SpatialGridDataFrame}(input, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{numeric}(input, polygon = NULL, file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{data.frame}(input, lat = "lat", lon = "long",
+  polygon = NULL, object = "FeatureCollection", file = "myfile.geojson",
+  description = "", public = TRUE, browse = TRUE, ...)
+
+\method{map_gist}{list}(input, lat = "lat", lon = "long", polygon = NULL,
+  object = "FeatureCollection", file = "myfile.geojson", description = "",
+  public = TRUE, browse = TRUE, ...)
 }
 \arguments{
-\item{geojsonfile}{Path to a geojson file}
+\item{...}{Further arguments passed on to \code{\link[httr]{POST}}}
+
+\item{file}{File name to use to put up as the gist file}
 
 \item{description}{Description for the Github gist, or leave to default (=no description)}
 
@@ -15,7 +67,15 @@ map_gist(geojsonfile, description = "", public = TRUE, browse = TRUE, ...)
 
 \item{browse}{If TRUE (default) the map opens in your default browser.}
 
-\item{...}{Further arguments passed on to \code{\link[httr]{POST}}}
+\item{input}{Input object}
+
+\item{polygon}{(logical) Are polygons in the object}
+
+\item{lat}{Name of latitude variable}
+
+\item{lon}{Name of longitude variable}
+
+\item{object}{One of FeatureCollection or GeometryCollection}
 }
 \description{
 There are two ways to authorize to work with your GitHub account:
@@ -35,9 +95,83 @@ PAT, that will be used, if not, OAuth will be used.
 }
 \examples{
 \donttest{
-url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-MT.zip'
-file <- file_to_geojson(input=url, method='web', outfilename='zillow_mt')
-map_gist(file)
+library('maps')
+data(us.cities)
+file <- "myfile.geojson"
+geojson_write(us.cities[1:2,], lat='lat', lon='long', file = file)
+map_gist(file=as.location(file))
+
+# From SpatialPoints class
+x <- c(1,2,3,4,5)
+y <- c(3,2,5,1,4)
+s <- SpatialPoints(cbind(x,y))
+map_gist(s)
+
+# from SpatialPointsDataFrame class
+x <- c(1,2,3,4,5)
+y <- c(3,2,5,1,4)
+s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
+map_gist(s)
+
+# from SpatialPolygons class
+library('sp')
+poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
+   c(40,50,45,40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
+   c(30,40,35,30)))), "2")
+sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+map_gist(sp_poly)
+
+# From SpatialPolygonsDataFrame class
+sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
+map_gist(sp_poly)
+
+# From SpatialLines class
+library("sp")
+c1 <- cbind(c(1,2,3), c(3,2,2))
+c2 <- cbind(c1[,1]+.05,c1[,2]+.05)
+c3 <- cbind(c(1,2,3),c(1,1.5,1))
+L1 <- Line(c1)
+L2 <- Line(c2)
+L3 <- Line(c3)
+Ls1 <- Lines(list(L1), ID = "a")
+Ls2 <- Lines(list(L2, L3), ID = "b")
+sl1 <- SpatialLines(list(Ls1))
+sl12 <- SpatialLines(list(Ls1, Ls2))
+map_gist(sl1)
+
+# From SpatialLinesDataFrame class
+dat <- data.frame(X = c("Blue", "Green"),
+                 Y = c("Train", "Plane"),
+                 Z = c("Road", "River"), row.names = c("a", "b"))
+sldf <- SpatialLinesDataFrame(sl12, dat)
+map_gist(sldf)
+
+# From SpatialGrid
+x <- GridTopology(c(0,0), c(1,1), c(5,5))
+y <- SpatialGrid(x)
+map_gist(y)
+
+# From SpatialGridDataFrame
+sgdim <- c(3,4)
+sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
+map_gist(sgdf)
+
+# from data.frame
+library("maps")
+data(us.cities)
+map_gist(us.cities)
+
+## From a list
+mylist <- list(list(lat=30, long=120, marker="red"),
+               list(lat=30, long=130, marker="blue"))
+map_gist(mylist, lat="lat", lon="long")
+
+# From a numeric vector of length 2 to a point
+## not working right now
+### vec <- c(32.45,-99.74)
+### map_gist(vec)
 }
 }
 

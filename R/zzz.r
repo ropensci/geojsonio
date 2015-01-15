@@ -60,9 +60,9 @@ get_vals <- function(v, lat, lon){
     as.numeric(c(v[[lon]], v[[lat]]))
 }
 
-df_to_geo_list <- function(x, lat, lon, polygon, object){
+df_to_geo_list <- function(x, lat, lon, polygon, object, ...){
   x <- apply(x, 1, as.list)
-  list_to_geo_list(x, lat, lon, polygon, object)
+  list_to_geo_list(x, lat, lon, polygon, object, ...)
 }
 
 num_to_geo_list <- function(x, polygon){
