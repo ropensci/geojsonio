@@ -255,3 +255,9 @@ convert_ordered <- function(df) {
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 NULL
+
+geojson_rw <- function(input, ...){
+  tmp <- tempfile(fileext = ".geojson")
+  suppressMessages(geojson_write(input, file = tmp))
+  jsonlite::fromJSON(tmp, simplifyDataFrame = FALSE, simplifyMatrix = FALSE, ...)
+}

@@ -109,35 +109,38 @@ geojson_list <- function(...) UseMethod("geojson_list")
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialPolygons <- function(input, ...) as.geo_list(sppolytogeolist(input), "SpatialPolygons")
+geojson_list.SpatialPolygons <- function(input, ...) as.geo_list(geojson_rw(input), "SpatialPolygons")
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialPolygonsDataFrame <- function(input, ...) as.geo_list(sppolytogeolist(input), "SpatialPolygonsDataFrame")
+geojson_list.SpatialPolygonsDataFrame <- function(input, ...) as.geo_list(geojson_rw(input), "SpatialPolygonsDataFrame")
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialPoints <- function(input, ...) as.geo_list(spdftogeolist(input), "SpatialPoints")
+geojson_list.SpatialPoints <- function(input, ...) { 
+  dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
+  as.geo_list(geojson_rw(dat), "SpatialPoints")
+}
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialPointsDataFrame <- function(input, ...) as.geo_list(spdftogeolist(input), "SpatialPointsDataFrame")
+geojson_list.SpatialPointsDataFrame <- function(input, ...) as.geo_list(geojson_rw(input), "SpatialPointsDataFrame")
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialLines <- function(input, ...) as.geo_list(splinestogeolist(input), "SpatialLines")
+geojson_list.SpatialLines <- function(input, ...) as.geo_list(geojson_rw(input), "SpatialLines")
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialLinesDataFrame <- function(input, object = "FeatureCollection", ...) as.geo_list(splinestogeolist(input, object), "SpatialLinesDataFrame")
+geojson_list.SpatialLinesDataFrame <- function(input, object = "FeatureCollection", ...) as.geo_list(geojson_rw(input), "SpatialLinesDataFrame")
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialGrid <- function(input, ...) as.geo_list(spdftogeolist(input), "SpatialGrid")
+geojson_list.SpatialGrid <- function(input, ...) as.geo_list(geojson_rw(input), "SpatialGrid")
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialGridDataFrame <- function(input, ...) as.geo_list(spdftogeolist(input), "SpatialGridDataFrame")
+geojson_list.SpatialGridDataFrame <- function(input, ...) as.geo_list(geojson_rw(input), "SpatialGridDataFrame")
 
 #' @export
 #' @rdname geojson_list
