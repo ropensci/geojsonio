@@ -26,9 +26,8 @@ Imports:
     jsonlite,
     gistr,
     magrittr
-Suggests:
-    cartographer
 Enhances:
+    cartographer,
     ggplot2,
     maps,
     RColorBrewer
