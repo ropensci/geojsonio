@@ -40,11 +40,18 @@ Install rgdal - in case you can't get it installed from binary , here's what wor
 install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
-Install `geojsonio`
+Install `cartographer`. This is a recent dependency, not on CRAN yet, install from Github
 
 
 ```r
 install.packages("devtools")
+devtools::install_github("lmullen/cartographer")
+```
+
+Next, install `geojsonio`
+
+
+```r
 devtools::install_github("ropensci/geojsonio")
 ```
 
@@ -81,6 +88,8 @@ geojson_list(c(32.45,-99.74))
 #> 
 #> attr(,"class")
 #> [1] "geo_list"
+#> attr(,"from")
+#> [1] "numeric"
 ```
 
 From a `data.frame`
@@ -153,6 +162,8 @@ geojson_list(us.cities[1:2,], lat='lat', lon='long')
 #> 
 #> attr(,"class")
 #> [1] "geo_list"
+#> attr(,"from")
+#> [1] "data.frame"
 ```
 
 From `SpatialPolygons` class
@@ -172,7 +183,7 @@ to json
 
 ```r
 geojson_json(sp_poly)
-#> {"type":"Polygon","bbox":[-100,-75,30,50],"coordinates":[[[-100,40],[-90,50],[-85,45],[-100,40]],[[-90,30],[-80,40],[-75,35],[-90,30]]],"properties":{}}
+#> {"type":"FeatureCollection","features":[{"type":"Feature","id":1,"properties":{"dummy":0},"geometry":{"type":"Polygon","coordinates":[[[-100,40],[-90,50],[-85,45],[-100,40]]]}},{"type":"Feature","id":2,"properties":{"dummy":0},"geometry":{"type":"Polygon","coordinates":[[[-90,30],[-80,40],[-75,35],[-90,30]]]}}]}
 ```
 
 to list
@@ -180,36 +191,7 @@ to list
 
 ```r
 geojson_list(sp_poly)$coordinates[[1]]
-#> [[1]]
-#> [[1]][[1]]
-#> [1] -100
-#> 
-#> [[1]][[2]]
-#> [1] 40
-#> 
-#> 
-#> [[2]]
-#> [[2]][[1]]
-#> [1] -90
-#> 
-#> [[2]][[2]]
-#> [1] 50
-#> 
-#> 
-#> [[3]]
-#> [[3]][[1]]
-#> [1] -85
-#> 
-#> [[3]][[2]]
-#> [1] 45
-#> 
-#> 
-#> [[4]]
-#> [[4]][[1]]
-#> [1] -100
-#> 
-#> [[4]][[2]]
-#> [1] 40
+#> NULL
 ```
 
 #### Write geojson
@@ -219,9 +201,7 @@ geojson_list(sp_poly)$coordinates[[1]]
 library('maps')
 data(us.cities)
 geojson_write(us.cities[1:2,], lat='lat', lon='long')
-#> <geojson>
-#>   Path:       myfile.geojson
-#>   From class: data.frame
+#> [1] "myfile.geojson"
 ```
 
 #### Read geojson
@@ -237,7 +217,7 @@ out <- geojson_read(file)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-11](inst/img/unnamed-chunk-11-1.png) 
+![plot of chunk unnamed-chunk-12](inst/img/unnamed-chunk-12-1.png) 
 
 ### TopoJSON
 
@@ -254,10 +234,7 @@ Download a zipped shape fileset, [this one](http://esp.cr.usgs.gov/data/little/q
 
 ```r
 topojson_write(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='albers', projargs=list(rotate='[60, -35, 0]'))
-#> OGR data source with driver: ESRI Shapefile 
-#> Source: "/Users/sacmac/Downloads/querwisl", layer: "querwisl"
-#> with 35 features and 5 fields
-#> Feature type: wkbPolygon with 2 dimensions
+#> Error in ogrListLayers(fullpathtoshp): Cannot open data source
 ```
 
 Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`
@@ -293,7 +270,7 @@ out <- topojson_read(url)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
+![plot of chunk unnamed-chunk-15](inst/img/unnamed-chunk-15-1.png) 
 
 ### Use case: Play with US states
 
@@ -324,7 +301,7 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~ .id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-16](inst/img/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-17](inst/img/unnamed-chunk-17-1.png) 
 
 ## Meta
 

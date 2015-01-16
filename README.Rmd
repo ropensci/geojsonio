@@ -48,10 +48,16 @@ Install rgdal - in case you can't get it installed from binary , here's what wor
 install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
-Install `geojsonio`
+Install `cartographer`. This is a recent dependency, not on CRAN yet, install from Github
 
 ```{r eval=FALSE}
 install.packages("devtools")
+devtools::install_github("lmullen/cartographer")
+```
+
+Next, install `geojsonio`
+
+```{r eval=FALSE}
 devtools::install_github("ropensci/geojsonio")
 ```
 
