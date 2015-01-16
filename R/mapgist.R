@@ -107,6 +107,39 @@
 #' ## not working right now
 #' ### vec <- c(32.45,-99.74)
 #' ### map_gist(vec)
+#' 
+#' 
+#' ## Use the cartographer package to make maps locally
+#' library("cartographer")
+#' 
+#' # From SpatialPolygons class
+#' library('sp')
+#' poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
+#'    c(40,50,45,40)))), "1")
+#' poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
+#'    c(30,40,35,30)))), "2")
+#' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+#' cartographer() %>% 
+#'  tile_layer() %>% 
+#'  geojson_layer(data = geojson_json(sp_poly))
+#'  
+#' # From SpatialPolygonsDataFrame class
+#' sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
+#' cartographer() %>% 
+#'  tile_layer() %>% 
+#'  geojson_layer(data = geojson_json(sp_polydf))
+#' 
+#' # From a file
+#' land <- system.file("extdata", "land.geojson", package = "cartographer")
+#' cartographer() %>% 
+#'  geojson_layer(file = land, label = "land")
+#' 
+#' # Historical usa boundaries
+#' library("USAboundaries")
+#' us_sp <- us_boundaries(as.Date("1800-01-01"))
+#' cartographer(region = "United States") %>% 
+#'  tile_layer() %>% 
+#'  geojson_layer(data = geojson_json(us_sp), label = "US 1800", clickable = TRUE)
 #' }
 
 map_gist <- function(...) UseMethod("map_gist")

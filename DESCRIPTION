@@ -25,7 +25,8 @@ Imports:
     dplyr,
     jsonlite,
     gistr,
-    magrittr,
+    magrittr
+Suggests:
     cartographer
 Enhances:
     ggplot2,
