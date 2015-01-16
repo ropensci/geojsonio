@@ -40,18 +40,11 @@ Install rgdal - in case you can't get it installed from binary , here's what wor
 install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
-Install `cartographer`. This is a recent dependency, not on CRAN yet, install from Github
+Install `geojsonio`
 
 
 ```r
 install.packages("devtools")
-devtools::install_github("lmullen/cartographer")
-```
-
-Next, install `geojsonio`
-
-
-```r
 devtools::install_github("ropensci/geojsonio")
 ```
 
@@ -217,7 +210,7 @@ out <- geojson_read(file)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-12](inst/img/unnamed-chunk-12-1.png) 
+![plot of chunk unnamed-chunk-11](inst/img/unnamed-chunk-11-1.png) 
 
 ### TopoJSON
 
@@ -270,7 +263,7 @@ out <- topojson_read(url)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-15](inst/img/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
 
 ### Use case: Play with US states
 
@@ -301,7 +294,7 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~ .id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-17](inst/img/unnamed-chunk-17-1.png) 
+![plot of chunk unnamed-chunk-16](inst/img/unnamed-chunk-16-1.png) 
 
 ## Meta
 
