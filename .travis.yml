@@ -1,8 +1,5 @@
 language: r
 
-apt_packages:
-  - gdal-bin
-
 r_binary_packages:
   - ggplot2 
   - maps 
