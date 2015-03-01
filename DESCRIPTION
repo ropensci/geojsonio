@@ -26,6 +26,9 @@ Imports:
     jsonlite,
     gistr,
     magrittr
+Suggests:
+    testthat,
+    knitr
 Enhances:
     cartographer,
     ggplot2,
