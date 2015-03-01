@@ -13,7 +13,7 @@ before_install:
   - ./travis-tool.sh install_aptget gdal-bin
   - ./travis-tool.sh bootstrap
   - ./travis-tool.sh r_binary_install ggplot2 maps RColorBrewer
-  - ./travis-tool.sh install_github ropensci/gistr jimhester/covr
+  - ./travis-tool.sh install_github jimhester/covr
 
 install:
   - ./travis-tool.sh install_deps
