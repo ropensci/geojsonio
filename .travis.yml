@@ -1,14 +1,6 @@
 language: r
 
 apt_packages:
-  - libhdf5-7
-  - libhdf5-dev
-  - libhdf5-serial-dev
-  - libgdal-dev 
-  - libgdal1-dev 
-  - netcdf-bin 
-  - libproj-dev 
-  - libgdal1h
   - gdal-bin
 
 r_binary_packages:
