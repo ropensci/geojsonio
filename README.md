@@ -4,6 +4,7 @@ geojsonio
 
 
 [![Build Status](https://api.travis-ci.org/ropensci/geojsonio.png)](https://travis-ci.org/ropensci/geojsonio)
+[![Coverage Status](https://coveralls.io/repos/ropensci/geojsonio/badge.svg)](https://coveralls.io/r/ropensci/geojsonio)
 
 __Convert various data formats to geoJSON or topoJSON__
 
