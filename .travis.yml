@@ -1,7 +1,7 @@
 language: r
 
 r_binary_packages:
-  - r-cran-rgdal
+  - rgdal
   
 r_github_packages:  
   - jimhester/covr
