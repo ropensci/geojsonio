@@ -1,7 +1,7 @@
 context("testing as.location")
 
 # A file
-file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
+file <- system.file("examples", "zillow_or.geojson", package = "geojsonio")
 a <- as.location(file)
 
 # A URL
