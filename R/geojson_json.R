@@ -88,6 +88,10 @@
 #' sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
 #' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 #' geojson_json(sgdf)
+#' 
+#' # from a list
+#' a <- geojson_list(us.cities[1:2,], lat='lat', lon='long')$features[[1]]
+#' geojson_list(a)
 #' }
 
 geojson_json <- function(...) UseMethod("geojson_json")
@@ -142,8 +146,8 @@ geojson_json.data.frame <- function(input, lat = "latitude", lon = "longitude", 
 
 #' @export
 #' @rdname geojson_json
-geojson_json.list <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, ...){
-  res <- list_to_geo_list(input, lat, lon, polygon)
+geojson_json.list <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, object='FeatureCollection', ...){
+  res <- list_to_geo_list(input, lat, lon, polygon, object=object, unnamed = TRUE)
   to_json(res, ...)
 }
 

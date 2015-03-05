@@ -43,7 +43,7 @@ geojson_json(...)
   lon = "longitude", polygon = NULL, object = "FeatureCollection", ...)
 
 \method{geojson_json}{list}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, ...)
+  polygon = NULL, object = "FeatureCollection", ...)
 
 as.json(x, ...)
 
@@ -149,6 +149,10 @@ sgdim <- c(3,4)
 sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
 sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 geojson_json(sgdf)
+
+# from a list
+a <- geojson_list(us.cities[1:2,], lat='lat', lon='long')$features[[1]]
+geojson_list(a)
 }
 }
 
