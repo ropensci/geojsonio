@@ -3,7 +3,7 @@
 #' @name validate
 #' @param x Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 #' class since it inherits from \code{data.frame}.
-#' @param ... Ignored
+#' @param ... Further args passed on to helper functions.
 #' 
 #' @details Uses the web service at \url{http://geojsonlint.com/}
 #'
@@ -121,7 +121,7 @@ validate.numeric <- function(x, ...) validate(geojson_list(x))
 
 #' @export
 #' @rdname validate
-validate.data.frame <- function(x, ...) validate(geojson_list(x))
+validate.data.frame <- function(x, ...) validate(geojson_list(x, ...))
 
 #' @export
 #' @rdname validate

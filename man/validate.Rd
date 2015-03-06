@@ -55,7 +55,7 @@ validate(x, ...)
 \item{x}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
-\item{...}{Ignored}
+\item{...}{Further args passed on to helper functions.}
 }
 \description{
 Validate a geoJSON file, json object, list, or Spatial class.
