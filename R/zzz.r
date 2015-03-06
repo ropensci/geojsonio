@@ -1,7 +1,7 @@
 tg_compact <- function(l) Filter(Negate(is.null), l)
 
 # to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., auto_unbox = TRUE), class=c('json','geo_json'))
-to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., auto_unbox = TRUE), class='json')
+to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., digits = 22, auto_unbox = TRUE), class='json')
 
 list_to_geo_list <- function(x, lat, lon, polygon, object, unnamed=FALSE){
   nn <- switch(object, FeatureCollection="features", GeometryCollection="geometries")
