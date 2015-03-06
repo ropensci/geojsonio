@@ -45,6 +45,17 @@
 #' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 #' geojson_json(sp_poly)
 #' geojson_json(sp_poly, pretty=TRUE)
+#' 
+#' # Another SpatialPolygons
+#' library("sp")
+#' library("rgeos")
+#' pt <- SpatialPoints(coordinates(list(x = 0, y = 0)), CRS("+proj=longlat +datum=WGS84"))
+#' ## transfrom to web mercator becuase geos needs project coords
+#' pt <- spTransform(pt, CRS("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@@null +wktext +no_defs"))
+#' ## buffer
+#' pt <- gBuffer(pt, width = 100)
+#' pt <- spTransform(pt, CRS("+proj=longlat +datum=WGS84"))
+#' geojson_json(pt)
 #'
 #' # data.frame to SpatialPolygonsDataFrame
 #' library('maps')
