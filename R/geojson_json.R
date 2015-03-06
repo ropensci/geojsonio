@@ -16,8 +16,17 @@
 #' write a file using \code{rgdal} - see \code{\link{geojson_write}} for that.
 #'
 #' @examples \dontrun{
-#' # From a numeric vector of length 2
-#' geojson_json(c(32.45,-99.74))
+#' # From a numeric vector of length 2, making a point type
+#' geojson_json(c(-99.74,32.45), pretty=TRUE)
+#' geojson_json(c(-99.74,32.45), type = "GeometryCollection", pretty=TRUE)
+#' ## polygon type 
+#' ### this requires numeric class input, so inputting a list will dispatch on the list method
+#' poly <- c(c(-114.345703125,39.436192999314095),
+#'           c(-114.345703125,43.45291889355468),
+#'           c(-106.61132812499999,43.45291889355468),
+#'           c(-106.61132812499999,39.436192999314095),
+#'           c(-114.345703125,39.436192999314095))
+#' geojson_json(poly, geometry = "polygon", pretty=TRUE)
 #'
 #' # From a data.frame
 #' library('maps')
@@ -91,7 +100,7 @@
 #' 
 #' # from a list
 #' a <- geojson_list(us.cities[1:2,], lat='lat', lon='long')$features[[1]]
-#' geojson_list(a)
+#' geojson_json(a)
 #' }
 
 geojson_json <- function(...) UseMethod("geojson_json")
@@ -133,7 +142,9 @@ geojson_json.SpatialGridDataFrame <- function(input, ...) to_json(geojson_rw(inp
 
 #' @export
 #' @rdname geojson_json
-geojson_json.numeric <- function(input, polygon=NULL, ...) to_json(num_to_geo_list(input, polygon), ...)
+geojson_json.numeric <- function(input, geometry = NULL, type = "FeatureCollection", ...) { 
+  to_json(num_to_geo_list(input, geometry, type), ...)
+}
 
 #' @export
 #' @rdname geojson_json

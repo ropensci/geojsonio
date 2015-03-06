@@ -34,7 +34,8 @@ geojson_list(...)
 
 \method{geojson_list}{SpatialGridDataFrame}(input, ...)
 
-\method{geojson_list}{numeric}(input, polygon = NULL, ...)
+\method{geojson_list}{numeric}(input, geometry = "point",
+  type = "FeatureCollection", ...)
 
 \method{geojson_list}{data.frame}(input, lat = "latitude",
   lon = "longitude", polygon = NULL, object = "FeatureCollection", ...)
@@ -50,12 +51,12 @@ class since it inherits from \code{data.frame}.}
 
 \item{object}{(character) One of FeatureCollection, or}
 
-\item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
-grouping of the polygons in the \code{data.frame}}
-
 \item{lat}{Latitude name. Default: latitude}
 
 \item{lon}{Longitude name. Default: longitude}
+
+\item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
+grouping of the polygons in the \code{data.frame}}
 
 \item{unnamed}{(logical) Is lat/long data unnamed? That is, you can pass in a list of
 lat/long pairs as e.g., a polygon or linestring perhaps, and they aren't named. If so, use
@@ -90,7 +91,7 @@ mylist <- list(list(latitude=30, longitude=120, marker="red"),
 geojson_list(mylist)
 
 # From a numeric vector of length 2 to a point
-vec <- c(32.45,-99.74)
+vec <- c(-99.74,32.45)
 geojson_list(vec)
 
 # From a list of numeric vectors to a polygon

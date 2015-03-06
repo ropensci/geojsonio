@@ -65,14 +65,38 @@ df_to_geo_list <- function(x, lat, lon, polygon, object, ...){
   list_to_geo_list(x, lat, lon, polygon, object, ...)
 }
 
-num_to_geo_list <- function(x, polygon){
-  type <- ifelse(is.null(polygon), "Point", "Polygon")
+num_to_geo_list <- function(x, geometry = "point", type = "FeatureCollection"){
+  geom <- capwords(match.arg(geometry, c("point", "polygon")))
   res <- tryCatch(as.numeric(x), warning = function(e) e)
-  if(is(res, "simpleWarning")) stop("Coordinates are not numeric", call. = FALSE) else {
-    list(type = type,
-         geometry = list(type = "Point", coordinates = x),
-         properties = NULL)
+  if(is(res, "simpleWarning")) {
+    stop("Coordinates are not numeric", call. = FALSE) 
+  } else {
+    switch(type, 
+           FeatureCollection = {
+             list(type = 'FeatureCollection',
+                  features = list(
+                    list(type = "Feature",
+                         geometry = list(type = geom, coordinates = makecoords(x, geom)),
+                         properties = NULL)
+                  )
+             )
+           },
+           GeometryCollection = {
+             list(type = 'GeometryCollection',
+                  geometries = list(
+                    list(type = geom, coordinates = makecoords(x, geom))
+                  )
+             )
+           }
+    )
   }
+}
+
+makecoords <- function(x, y) {
+  switch(y, 
+         Point = x,
+         Polygon = list( unname(split(x, ceiling(seq_along(x)/2))))
+  )
 }
 
 list_to_geojson <- function(input, file = "myfile.geojson", polygon=NULL, lon, lat, ...){
@@ -260,4 +284,18 @@ geojson_rw <- function(input, ...){
   tmp <- tempfile(fileext = ".geojson")
   suppressMessages(geojson_write(input, file = tmp))
   jsonlite::fromJSON(tmp, simplifyDataFrame = FALSE, simplifyMatrix = FALSE, ...)
+}
+
+capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
+  cap <- function(s) paste(toupper(substring(s,1,1)),
+                           {s <- substring(s,2); if(strict) tolower(s) else s}, sep = "", collapse = " " )
+  if(!onlyfirst){
+    sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
+  } else
+  {
+    sapply(s, function(x) 
+      paste(toupper(substring(x,1,1)), 
+            tolower(substring(x,2)), 
+            sep="", collapse=" "), USE.NAMES=F)
+  }
 }

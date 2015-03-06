@@ -38,7 +38,7 @@
 #' geojson_list(mylist)
 #'
 #' # From a numeric vector of length 2 to a point
-#' vec <- c(32.45,-99.74)
+#' vec <- c(-99.74,32.45)
 #' geojson_list(vec)
 #'
 #' # From a list of numeric vectors to a polygon
@@ -145,7 +145,9 @@ geojson_list.SpatialGridDataFrame <- function(input, ...) as.geo_list(geojson_rw
 
 #' @export
 #' @rdname geojson_list
-geojson_list.numeric <- function(input, polygon=NULL, ...) as.geo_list(num_to_geo_list(input, polygon), "numeric")
+geojson_list.numeric <- function(input, geometry = "point", type = "FeatureCollection", ...) { 
+  as.geo_list(num_to_geo_list(input, geometry, type), "numeric")
+}
 
 #' @export
 #' @rdname geojson_list
