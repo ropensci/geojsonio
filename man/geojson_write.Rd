@@ -83,8 +83,6 @@ Convert many input types with spatial data to a geojson file
 geojson_write(us_cities[1:2,], lat='lat', lon='long')
 
 # From polygons in R
-library('ggplot2')
-states <- map_data("state")
 head(states)
 geojson_write(input=states, lat='lat', lon='long', polygon='group')
 

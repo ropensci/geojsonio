@@ -41,8 +41,6 @@
 #' as.json(res)
 #'
 #' # from data.frame to polygons
-#' library("ggplot2")
-#' states <- map_data("state")
 #' head(states)
 #' ## make list for input to e.g., rMaps
 #' geojson_list(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')

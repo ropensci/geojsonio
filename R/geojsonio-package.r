@@ -15,3 +15,10 @@ NULL
 #' @docType data
 #' @keywords data
 NULL
+
+#' This is the same data set from the ggplot2 library
+#'
+#' @name states
+#' @docType data
+#' @keywords data
+NULL
