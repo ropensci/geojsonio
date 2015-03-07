@@ -39,11 +39,9 @@
 #' geojson_json(poly, geometry = "polygon", pretty=TRUE)
 #'
 #' # From a data.frame to points
-#' library('maps')
-#' data(us.cities)
-#' geojson_json(us.cities[1:2,], lat='lat', lon='long')
-#' geojson_json(us.cities[1:2,], lat='lat', lon='long', pretty=TRUE)
-#' geojson_json(us.cities[1:2,], lat='lat', lon='long',
+#' geojson_json(us_cities[1:2,], lat='lat', lon='long')
+#' geojson_json(us_cities[1:2,], lat='lat', lon='long', pretty=TRUE)
+#' geojson_json(us_cities[1:2,], lat='lat', lon='long',
 #'    type="GeometryCollection", pretty=TRUE)
 #'    
 #' # from data.frame to polygons
@@ -59,7 +57,7 @@
 #' geojson_json(mylist, lat='latitude', lon='longitude')
 #'         
 #' # from a geo_list
-#' a <- geojson_list(us.cities[1:2,], lat='lat', lon='long')$features[[1]]
+#' a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')$features[[1]]
 #' geojson_json(a)
 #'
 #' # sp classes
@@ -86,12 +84,10 @@
 #' geojson_json(pt)
 #'
 #' ## data.frame to SpatialPolygonsDataFrame
-#' library('maps')
-#' data(us.cities)
-#' geojson_write(us.cities[1:2,], lat='lat', lon='long') %>% as.SpatialPolygonsDataFrame
+#' geojson_write(us_cities[1:2,], lat='lat', lon='long') %>% as.SpatialPolygonsDataFrame
 #'
 #' ## data.frame to json (via SpatialPolygonsDataFrame)
-#' geojson_write(us.cities[1:2,], lat='lat', lon='long') %>% as.json
+#' geojson_write(us_cities[1:2,], lat='lat', lon='long') %>% as.json
 #' 
 #' # From SpatialPoints class
 #' x <- c(1,2,3,4,5)

@@ -92,9 +92,7 @@ vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0
 geojson_list(vecs, unnamed=TRUE, polygon=TRUE)
 
 # from data.frame to points
-library("maps")
-data(us.cities)
-(res <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
+(res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
 as.json(res)
 
 # from data.frame to polygons

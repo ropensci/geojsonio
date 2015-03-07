@@ -95,10 +95,8 @@ PAT, that will be used, if not, OAuth will be used.
 }
 \examples{
 \donttest{
-library('maps')
-data(us.cities)
 file <- "myfile.geojson"
-geojson_write(us.cities[1:2,], lat='lat', lon='long', file = file)
+geojson_write(us_cities[1:2,], lat='lat', lon='long', file = file)
 map_gist(file=as.location(file))
 
 # From SpatialPoints class
@@ -159,9 +157,7 @@ sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 map_gist(sgdf)
 
 # from data.frame
-library("maps")
-data(us.cities)
-map_gist(us.cities)
+map_gist(us_cities)
 
 ## From a list
 mylist <- list(list(lat=30, long=120, marker="red"),

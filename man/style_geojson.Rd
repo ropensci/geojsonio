@@ -42,10 +42,8 @@ Style a data.frame prior to converting to geojson.
 \dontrun{
 ## Style geojson - from data.frames
 library("RColorBrewer")
-library("maps")
-data(us.cities)
 smalluscities <-
-   subset(us.cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
+   subset(us_cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
 
 ### Just color
 style_geojson(smalluscities, var = 'country.etc',

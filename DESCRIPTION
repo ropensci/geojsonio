@@ -33,5 +33,4 @@ Suggests:
 Enhances:
     cartographer,
     ggplot2,
-    maps,
     RColorBrewer

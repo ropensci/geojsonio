@@ -80,9 +80,7 @@ Convert many input types with spatial data to a geojson file
 \examples{
 \dontrun{
 # From a data.frame
-library('maps')
-data(us.cities)
-geojson_write(us.cities[1:2,], lat='lat', lon='long')
+geojson_write(us_cities[1:2,], lat='lat', lon='long')
 
 # From polygons in R
 library('ggplot2')
@@ -125,16 +123,12 @@ sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 geojson_write(sgdf)
 
 # Write output of geojson_list to file
-library("maps")
-data(us.cities)
-res <- geojson_list(us.cities[1:2,], lat='lat', lon='long')
+res <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
 class(res)
 geojson_write(res)
 
 # Write output of geojson_json to file
-library("maps")
-data(us.cities)
-res <- geojson_json(us.cities[1:2,], lat='lat', lon='long')
+res <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
 class(res)
 geojson_write(res)
 }

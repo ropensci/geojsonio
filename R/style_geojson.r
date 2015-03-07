@@ -13,10 +13,8 @@
 #' @examples \dontrun{
 #' ## Style geojson - from data.frames
 #' library("RColorBrewer")
-#' library("maps")
-#' data(us.cities)
-#' smalluscities <- 
-#'    subset(us.cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
+#' smalluscities <-
+#'    subset(us_cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
 #'
 #' ### Just color
 #' style_geojson(smalluscities, var = 'country.etc',
