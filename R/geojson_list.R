@@ -17,6 +17,15 @@
 #'
 #' @details This function creates a geojson structure as an R list; it does not write a file
 #' using \code{rgdal} - see \code{\link{geojson_write}} for that.
+#' 
+#' Note that all sp class objects will output as \code{FeatureCollection} objects, while other
+#' classes (numeric, list, data.frame) can be output as \code{FeatureCollection} or 
+#' \code{GeometryCollection} objects. We're working on allowing \code{GeometryCollection}
+#' option for sp class objects.
+#' 
+#' Also note that with sp classes we do make a round-trip, using \code{\link[rgdal]{writeOGR}}
+#' to write GeoJSON to disk, then read it back in. This is fast and we don't have to think 
+#' about it too much, but this disk round-trip is not ideal.
 #'
 #' @examples \dontrun{
 #' # From a numeric vector of length 2 to a point
