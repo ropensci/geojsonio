@@ -6,9 +6,10 @@
 #' class since it inherits from \code{data.frame}.
 #' @param lat Latitude name. Default: latitude
 #' @param lon Longitude name. Default: longitude
-#' @param polygon If a polygon is defined in a data.frame, this is the column that defines the
-#' grouping of the polygons in the \code{data.frame}
+#' @param geometry (character) One of point (Default) or polygon. 
 #' @param type The type of collection. One of FeatureCollection (default) or GeometryCollection.
+#' @param group (character) A grouping variable to perform grouping for polygons - doesn't 
+#' apply for points
 #' @param ... Further args passed on to \code{\link[jsonlite]{toJSON}}
 #' @param x Ignored
 #'

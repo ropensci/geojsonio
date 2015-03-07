@@ -27,8 +27,7 @@ geojson_list(...)
 
 \method{geojson_list}{SpatialLines}(input, ...)
 
-\method{geojson_list}{SpatialLinesDataFrame}(input,
-  object = "FeatureCollection", ...)
+\method{geojson_list}{SpatialLinesDataFrame}(input, ...)
 
 \method{geojson_list}{SpatialGrid}(input, ...)
 
@@ -51,19 +50,20 @@ geojson_list(...)
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
-\item{object}{(character) One of FeatureCollection, or}
+\item{geometry}{(character) One of point (Default) or polygon.}
+
+\item{type}{The type of collection. One of FeatureCollection (default) or GeometryCollection.}
 
 \item{lat}{Latitude name. Default: latitude}
 
 \item{lon}{Longitude name. Default: longitude}
 
+\item{group}{A grouping variable to perform grouping for polygons - doesn't apply for points}
+
 \item{unnamed}{(logical) Is lat/long data unnamed? That is, you can pass in a list of
 lat/long pairs as e.g., a polygon or linestring perhaps, and they aren't named. If so, use
 \code{unnamed=TRUE}. The default is \code{FALSE}, that is, when a list is passed, this function
 looks for lat and lon variable names to parse that data.}
-
-\item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
-grouping of the polygons in the \code{data.frame}}
 }
 \description{
 Convert many input types with spatial data to geojson specified as a list

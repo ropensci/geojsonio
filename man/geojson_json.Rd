@@ -64,14 +64,16 @@ class since it inherits from \code{data.frame}.}
 
 \item{type}{The type of collection. One of FeatureCollection (default) or GeometryCollection.}
 
+\item{geometry}{(character) One of point (Default) or polygon.}
+
 \item{lat}{Latitude name. Default: latitude}
 
 \item{lon}{Longitude name. Default: longitude}
 
-\item{x}{Ignored}
+\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't
+apply for points}
 
-\item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
-grouping of the polygons in the \code{data.frame}}
+\item{x}{Ignored}
 }
 \description{
 Convert many input types with spatial data to geojson specified as a json string

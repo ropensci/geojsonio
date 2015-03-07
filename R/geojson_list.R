@@ -6,9 +6,9 @@
 #' class since it inherits from \code{data.frame}.
 #' @param lat Latitude name. Default: latitude
 #' @param lon Longitude name. Default: longitude
-#' @param polygon If a polygon is defined in a data.frame, this is the column that defines the
-#' grouping of the polygons in the \code{data.frame}
-#' @param object (character) One of FeatureCollection, or
+#' @param geometry (character) One of point (Default) or polygon. 
+#' @param type The type of collection. One of FeatureCollection (default) or GeometryCollection.
+#' @param group A grouping variable to perform grouping for polygons - doesn't apply for points
 #' @param unnamed (logical) Is lat/long data unnamed? That is, you can pass in a list of
 #' lat/long pairs as e.g., a polygon or linestring perhaps, and they aren't named. If so, use
 #' \code{unnamed=TRUE}. The default is \code{FALSE}, that is, when a list is passed, this function
@@ -133,7 +133,7 @@ geojson_list.SpatialLines <- function(input, ...) as.geo_list(geojson_rw(input),
 
 #' @export
 #' @rdname geojson_list
-geojson_list.SpatialLinesDataFrame <- function(input, object = "FeatureCollection", ...) as.geo_list(geojson_rw(input), "SpatialLinesDataFrame")
+geojson_list.SpatialLinesDataFrame <- function(input, ...) as.geo_list(geojson_rw(input), "SpatialLinesDataFrame")
 
 #' @export
 #' @rdname geojson_list
