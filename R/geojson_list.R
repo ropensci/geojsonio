@@ -19,24 +19,6 @@
 #' using \code{rgdal} - see \code{\link{geojson_write}} for that.
 #'
 #' @examples \dontrun{
-#' # from data.frame
-#' library("maps")
-#' data(us.cities)
-#' (res <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
-#' as.json(res)
-#'
-#' # polygons
-#' library("ggplot2")
-#' states <- map_data("state")
-#' head(states)
-#' ## make list for input to e.g., rMaps
-#' res <- geojson_list(input=states, lat='lat', lon='long', group='group')
-#'
-#' ## From a list
-#' mylist <- list(list(latitude=30, longitude=120, marker="red"),
-#'                list(latitude=30, longitude=130, marker="blue"))
-#' geojson_list(mylist)
-#'
 #' # From a numeric vector of length 2 to a point
 #' vec <- c(-99.74,32.45)
 #' geojson_list(vec)
@@ -44,6 +26,24 @@
 #' # From a list of numeric vectors to a polygon
 #' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
 #' geojson_list(vecs, unnamed=TRUE, polygon=TRUE)
+#' 
+#' # from data.frame to points
+#' library("maps")
+#' data(us.cities)
+#' (res <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
+#' as.json(res)
+#'
+#' # from data.frame to polygons
+#' library("ggplot2")
+#' states <- map_data("state")
+#' head(states)
+#' ## make list for input to e.g., rMaps
+#' geojson_list(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
+#'
+#' ## From a list
+#' mylist <- list(list(latitude=30, longitude=120, marker="red"),
+#'                list(latitude=30, longitude=130, marker="blue"))
+#' geojson_list(mylist)
 #'
 #' # From SpatialPolygons class
 #' library('sp')
@@ -151,14 +151,14 @@ geojson_list.numeric <- function(input, geometry = "point", type = "FeatureColle
 
 #' @export
 #' @rdname geojson_list
-geojson_list.data.frame <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, object = "FeatureCollection", ...){
-  as.geo_list(df_to_geo_list(input, lat, lon, polygon, object), "data.frame")
+geojson_list.data.frame <- function(input, lat = "latitude", lon = "longitude", group = NULL, geometry = "point", type = "FeatureCollection", ...){
+  as.geo_list(df_to_geo_list(x=input, lat=lat, lon=lon, geometry=geometry, type=type, group=group), "data.frame")
 }
 
 #' @export
 #' @rdname geojson_list
-geojson_list.list <- function(input, lat = "latitude", lon = "longitude", polygon=NULL, object = "FeatureCollection", unnamed=FALSE, ...){
-  as.geo_list(list_to_geo_list(input, lat, lon, polygon, object, unnamed), "list")
+geojson_list.list <- function(input, lat = "latitude", lon = "longitude", group = NULL, geometry = "point", type = "FeatureCollection", unnamed=FALSE, ...){
+  as.geo_list(list_to_geo_list(input, lat, lon, geometry, type, unnamed, group), "list")
 }
 
 as.geo_list <- function(x, from) structure(x, class="geo_list", from=from)

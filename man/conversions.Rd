@@ -2,6 +2,7 @@
 % Please edit documentation in R/conversions.R
 \name{conversions}
 \alias{as.SpatialPolygonsDataFrame}
+\alias{as.SpatialPolygonsDataFrame.character}
 \alias{as.SpatialPolygonsDataFrame.geojson}
 \alias{conversions}
 \title{Convert to various sp classes from geojson files}
@@ -9,6 +10,8 @@
 as.SpatialPolygonsDataFrame(x, ...)
 
 \method{as.SpatialPolygonsDataFrame}{geojson}(x, ...)
+
+\method{as.SpatialPolygonsDataFrame}{character}(x, ...)
 }
 \arguments{
 \item{x}{Input.}

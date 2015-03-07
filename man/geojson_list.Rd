@@ -38,10 +38,12 @@ geojson_list(...)
   type = "FeatureCollection", ...)
 
 \method{geojson_list}{data.frame}(input, lat = "latitude",
-  lon = "longitude", polygon = NULL, object = "FeatureCollection", ...)
+  lon = "longitude", group = NULL, geometry = "point",
+  type = "FeatureCollection", ...)
 
 \method{geojson_list}{list}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, object = "FeatureCollection", unnamed = FALSE, ...)
+  group = NULL, geometry = "point", type = "FeatureCollection",
+  unnamed = FALSE, ...)
 }
 \arguments{
 \item{...}{Ignored}
@@ -55,13 +57,13 @@ class since it inherits from \code{data.frame}.}
 
 \item{lon}{Longitude name. Default: longitude}
 
-\item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
-grouping of the polygons in the \code{data.frame}}
-
 \item{unnamed}{(logical) Is lat/long data unnamed? That is, you can pass in a list of
 lat/long pairs as e.g., a polygon or linestring perhaps, and they aren't named. If so, use
 \code{unnamed=TRUE}. The default is \code{FALSE}, that is, when a list is passed, this function
 looks for lat and lon variable names to parse that data.}
+
+\item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
+grouping of the polygons in the \code{data.frame}}
 }
 \description{
 Convert many input types with spatial data to geojson specified as a list
@@ -72,24 +74,6 @@ using \code{rgdal} - see \code{\link{geojson_write}} for that.
 }
 \examples{
 \dontrun{
-# from data.frame
-library("maps")
-data(us.cities)
-(res <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
-as.json(res)
-
-# polygons
-library("ggplot2")
-states <- map_data("state")
-head(states)
-## make list for input to e.g., rMaps
-res <- geojson_list(input=states, lat='lat', lon='long', group='group')
-
-## From a list
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-               list(latitude=30, longitude=130, marker="blue"))
-geojson_list(mylist)
-
 # From a numeric vector of length 2 to a point
 vec <- c(-99.74,32.45)
 geojson_list(vec)
@@ -97,6 +81,24 @@ geojson_list(vec)
 # From a list of numeric vectors to a polygon
 vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
 geojson_list(vecs, unnamed=TRUE, polygon=TRUE)
+
+# from data.frame to points
+library("maps")
+data(us.cities)
+(res <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
+as.json(res)
+
+# from data.frame to polygons
+library("ggplot2")
+states <- map_data("state")
+head(states)
+## make list for input to e.g., rMaps
+geojson_list(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
+
+## From a list
+mylist <- list(list(latitude=30, longitude=120, marker="red"),
+               list(latitude=30, longitude=130, marker="blue"))
+geojson_list(mylist)
 
 # From SpatialPolygons class
 library('sp')
