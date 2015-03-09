@@ -96,6 +96,7 @@ about it too much, but this disk round-trip is not ideal.
 # From a numeric vector of length 2, making a point type
 geojson_json(c(-99.74,32.45), pretty=TRUE)
 geojson_json(c(-99.74,32.45), type = "GeometryCollection", pretty=TRUE)
+
 ## polygon type
 ### this requires numeric class input, so inputting a list will dispatch on the list method
 poly <- c(c(-114.345703125,39.436192999314095),
@@ -142,7 +143,9 @@ library("sp")
 library("rgeos")
 pt <- SpatialPoints(coordinates(list(x = 0, y = 0)), CRS("+proj=longlat +datum=WGS84"))
 ## transfrom to web mercator becuase geos needs project coords
-pt <- spTransform(pt, CRS("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs"))
+crs <- gsub("\\n", "", paste0("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0
+   +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs", collapse = ""))
+pt <- spTransform(pt, CRS(crs))
 ## buffer
 pt <- gBuffer(pt, width = 100)
 pt <- spTransform(pt, CRS("+proj=longlat +datum=WGS84"))

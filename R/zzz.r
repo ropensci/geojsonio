@@ -111,37 +111,55 @@ makecoords <- function(x, y) {
   )
 }
 
-list_to_geojson <- function(input, file = "myfile.geojson", polygon=NULL, lon, lat, ...){
-  input <- data.frame(rbind_all(lapply(input, function(x){
-    tmp <- data.frame(type=x$type,
-                      geometry_type=x$geometry$type,
-                      longitude=x$geometry$coordinates[1],
-                      latitude=x$geometry$coordinates[2],
-                      x$properties,
-                      stringsAsFactors = FALSE)
-    #     names(tmp)[5:8] <- paste('properties_', names(tmp)[5:8], sep = "")
-    tmp
+list_to_geojson <- function(input, file = "myfile.geojson", geometry="point", lon, lat, ...){
+  input <- data.frame(rbind_all(lapply(input$features, function(x){
+    data.frame(geometry_type=x$geometry$type,
+               longitude=x$geometry$coordinates[1],
+               latitude=x$geometry$coordinates[2],
+               x$properties,
+               stringsAsFactors = FALSE)
   })))
-  if(is.null(polygon)){
-    out <- df_to_SpatialPointsDataFrame(input, lon=lon, lat=lat)
+  if(geometry == "point"){
+    out <- df_to_SpatialPointsDataFrame(input, lon, lat)
   } else {
     out <- df_to_SpatialPolygonsDataFrame(input)
   }
   write_geojson(out, file, ...)
 }
 
-df_to_SpatialPolygonsDataFrame <- function(x){
-  x_split <- split(x, f = x$group)
-  res <- lapply(x_split, function(y){
-    coordinates(y) <- c("long","lat")
-    Polygon(y)
-  })
-  res <- Polygons(res, "polygons")
-  hh <- SpatialPolygons(list(res))
+df_to_SpatialPolygonsDataFrame <- function(x, lat, lon){
+  x <- makecoords(x, "Polygon")[[1]]
+  res <- Polygon(cbind(sapply(x, function(z) z[1]), sapply(x, function(z) z[2])))
+  hh <- SpatialPolygons(list(Polygons(list(res), "polygons")))
   as(hh, "SpatialPolygonsDataFrame")
 }
 
-df_to_SpatialPointsDataFrame <- function(x, lon, lat) { coordinates(x) <- c(lon,lat); x }
+df_to_SpatialPolygonsDataFrame2 <- function(x, lat, lon, group) {
+  xsplit <- split(x, x[group])
+  polys <- lapply(xsplit, function(z){
+    Polygon(cbind(z[lon], z[lat]))
+  })
+  bb <- SpatialPolygons(list(Polygons(polys, ID = "s1")))
+  as(bb, "SpatialPolygonsDataFrame")
+}
+
+list_to_SpatialPolygonsDataFrame <- function(x, lat, lon) {
+  res <- Polygon(cbind(sapply(x, function(z) z[1]), sapply(x, function(z) z[2])))
+  hh <- SpatialPolygons(list(Polygons(list(res), "polygons")))
+  as(hh, "SpatialPolygonsDataFrame")
+}
+
+list_to_SpatialPointsDataFrame <- function(x, lat, lon){
+  df <- data.frame(cbind(sapply(x, function(z) z[1]), sapply(x, function(z) z[2])))
+  res <- SpatialPoints(df)
+  SpatialPointsDataFrame(res, df)
+}
+
+df_to_SpatialPointsDataFrame <- function(x, lon, lat) {
+  x2 <- x
+  coordinates(x2) <- c(lon,lat)
+  SpatialPointsDataFrame(x2, x)
+}
 
 bbox2df <- function(x) c(x[1,1], x[1,2], x[2,1], x[2,2])
 
@@ -200,28 +218,6 @@ datdat <- function(x, l){
 splinestogeolist <- function(x, object){
   if(is(x, "SpatialLinesDataFrame")){
     lines_to_geo_list(x, object)
-#     if( length(x@lines) == 1 ){
-#       list(type = "LineString",
-#            bbox = bbox2df(x@bbox),
-#            coordinates = apply(x@lines[[1]]@Lines[[1]]@coords, 1, as.list),
-#            properties = NULL
-#       )
-#     } else {
-#       list(type = "MultiLineString",
-#            bbox = bbox2df(x@bbox),
-#            coordinates = 
-#            lapply(x@lines, function(l) {
-#              if(length(l@Lines) == 1){
-#                apply(l@Lines[[1]]@coords, 1, as.list)
-#              } else {
-#                lapply(l@Lines, function(w) {
-#                  apply(w@coords, 1, as.list)
-#                })
-#              }
-#            }),
-#            properties = NULL
-#       )  
-#     }
   } else {
     if( length(x@lines) == 1 ){
       list(type = "LineString",

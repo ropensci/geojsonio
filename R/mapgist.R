@@ -228,11 +228,3 @@ gc <- function(input, file, description, public, browse, ...){
               public = public,
               browse = browse, ...)
 }
-
-
-# x <- vec
-# x <- data.frame(t(x))
-# x <- setNames(x, c(lat, lon))
-# out <- df_to_SpatialPointsDataFrame(x, lat, lon)
-# SpatialPixelsDataFrame(out, data.frame(dat=1:NROW(out)))
-# geojson_write(out)

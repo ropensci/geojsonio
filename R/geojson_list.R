@@ -156,13 +156,17 @@ geojson_list.numeric <- function(input, geometry = "point", type = "FeatureColle
 
 #' @export
 #' @rdname geojson_list
-geojson_list.data.frame <- function(input, lat = "latitude", lon = "longitude", group = NULL, geometry = "point", type = "FeatureCollection", ...){
+geojson_list.data.frame <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+                                    geometry = "point", type = "FeatureCollection", ...){
+  
   as.geo_list(df_to_geo_list(x=input, lat=lat, lon=lon, geometry=geometry, type=type, group=group), "data.frame")
 }
 
 #' @export
 #' @rdname geojson_list
-geojson_list.list <- function(input, lat = "latitude", lon = "longitude", group = NULL, geometry = "point", type = "FeatureCollection", unnamed=FALSE, ...){
+geojson_list.list <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+                              geometry = "point", type = "FeatureCollection", unnamed=FALSE, ...){
+  
   as.geo_list(list_to_geo_list(input, lat, lon, geometry, type, unnamed, group), "list")
 }
 
