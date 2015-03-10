@@ -78,15 +78,11 @@ url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/calif
 validate(as.location(url))
 
 # From output of geojson_list
-library("maps")
-data(us.cities)
-(x <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
+(x <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
 validate(x)
 
 # From output of geojson_json
-library('maps')
-data(us.cities)
-(x <- geojson_json(us.cities[1:2,], lat='lat', lon='long'))
+(x <- geojson_json(us_cities[1:2,], lat='lat', lon='long'))
 validate(x)
 
 # From a list turned into geo_list

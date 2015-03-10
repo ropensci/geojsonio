@@ -64,21 +64,28 @@ From a `numeric` vector of length 2, as json or list
 
 ```r
 geojson_json(c(32.45,-99.74))
-#> {"type":"Point","geometry":{"type":"Point","coordinates":[32.45,-99.74]},"properties":{}}
+#> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[32.45,-99.74]},"properties":{}}]}
 geojson_list(c(32.45,-99.74))
 #> $type
+#> [1] "FeatureCollection"
+#> 
+#> $features
+#> $features[[1]]
+#> $features[[1]]$type
+#> [1] "Feature"
+#> 
+#> $features[[1]]$geometry
+#> $features[[1]]$geometry$type
 #> [1] "Point"
 #> 
-#> $geometry
-#> $geometry$type
-#> [1] "Point"
-#> 
-#> $geometry$coordinates
+#> $features[[1]]$geometry$coordinates
 #> [1]  32.45 -99.74
 #> 
 #> 
-#> $properties
+#> $features[[1]]$properties
 #> NULL
+#> 
+#> 
 #> 
 #> attr(,"class")
 #> [1] "geo_list"
@@ -205,7 +212,7 @@ geojson_write(us.cities[1:2,], lat='lat', lon='long')
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
 #> OGR data source with driver: GeoJSON 
-#> Source: "/Users/sacmac/Library/R/3.1/library/geojsonio/examples/california.geojson", layer: "OGRGeoJSON"
+#> Source: "/Users/sacmac/github/ropensci/geojsonio/inst/examples/california.geojson", layer: "OGRGeoJSON"
 #> with 1 features and 11 fields
 #> Feature type: wkbMultiPolygon with 2 dimensions
 plot(out)
@@ -228,7 +235,10 @@ Download a zipped shape fileset, [this one](http://esp.cr.usgs.gov/data/little/q
 
 ```r
 topojson_write(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='albers', projargs=list(rotate='[60, -35, 0]'))
-#> Error in ogrListLayers(fullpathtoshp): Cannot open data source
+#> OGR data source with driver: ESRI Shapefile 
+#> Source: "/Users/sacmac/Downloads/querwisl", layer: "querwisl"
+#> with 35 features and 5 fields
+#> Feature type: wkbPolygon with 2 dimensions
 ```
 
 Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`

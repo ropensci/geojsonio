@@ -45,13 +45,14 @@ geojson_write(...)
   ...)
 
 \method{geojson_write}{numeric}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, file = "myfile.geojson", ...)
+  geometry = "point", file = "myfile.geojson", ...)
 
 \method{geojson_write}{data.frame}(input, lat = "latitude",
-  lon = "longitude", polygon = NULL, file = "myfile.geojson", ...)
+  lon = "longitude", group = NULL, geometry = "point",
+  file = "myfile.geojson", ...)
 
 \method{geojson_write}{list}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, file = "myfile.geojson", ...)
+  geometry = "point", file = "myfile.geojson", ...)
 
 as.geojson(path, type)
 }
@@ -67,8 +68,9 @@ class since it inherits from \code{data.frame}.}
 
 \item{lon}{Longitude name. Default: longitude}
 
-\item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
-grouping of the polygons in the \code{data.frame}}
+\item{geometry}{(character) One of point (Default) or polygon.}
+
+\item{group}{A grouping variable to perform grouping for polygons - doesn't apply for points}
 
 \item{path}{Path to file}
 
@@ -80,24 +82,43 @@ Convert many input types with spatial data to a geojson file
 \examples{
 \dontrun{
 # From a data.frame
-library('maps')
-data(us.cities)
-geojson_write(us.cities[1:2,], lat='lat', lon='long')
+## to points
+geojson_write(us_cities[1:2,], lat='lat', lon='long')
 
-# From polygons in R
-library('ggplot2')
-states <- map_data("state")
+## to polygons
 head(states)
-geojson_write(input=states, lat='lat', lon='long', polygon='group')
+geojson_write(input=states, lat='lat', lon='long', geometry='group', group="group")
+
+## partial states dataset to points (defaults to points)
+geojson_write(input=states, lat='lat', lon='long')
 
 ## From a list
+### with lat/lon specified with named vars
 mylist <- list(list(latitude=30, longitude=120, marker="red"),
                list(latitude=30, longitude=130, marker="blue"))
 geojson_write(mylist)
 
+### list of numeric pairs
+poly <- list(c(-114.345703125,39.436192999314095),
+          c(-114.345703125,43.45291889355468),
+          c(-106.61132812499999,43.45291889355468),
+          c(-106.61132812499999,39.436192999314095),
+          c(-114.345703125,39.436192999314095))
+geojson_write(poly, geometry = "polygon")
+
 # From a numeric vector of length 2
-vec <- c(32.45,-99.74)
+vec <- c(-99.74, 32.45)
 geojson_write(vec)
+
+## polygon from a series of numeric pairs
+### this requires numeric class input, so inputting a list will
+### dispatch on the list method
+poly <- c(c(-114.345703125,39.436192999314095),
+          c(-114.345703125,43.45291889355468),
+          c(-106.61132812499999,43.45291889355468),
+          c(-106.61132812499999,39.436192999314095),
+          c(-114.345703125,39.436192999314095))
+geojson_write(poly, geometry = "polygon")
 
 # From SpatialPolygons class
 library('sp')
@@ -125,16 +146,12 @@ sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 geojson_write(sgdf)
 
 # Write output of geojson_list to file
-library("maps")
-data(us.cities)
-res <- geojson_list(us.cities[1:2,], lat='lat', lon='long')
+res <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
 class(res)
 geojson_write(res)
 
 # Write output of geojson_json to file
-library("maps")
-data(us.cities)
-res <- geojson_json(us.cities[1:2,], lat='lat', lon='long')
+res <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
 class(res)
 geojson_write(res)
 }

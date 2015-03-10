@@ -8,3 +8,17 @@
 #' @author Scott Chamberlain
 #' @docType package
 NULL
+
+#' This is the same data set from the maps library, named differently
+#'
+#' @name us_cities
+#' @docType data
+#' @keywords data
+NULL
+
+#' This is the same data set from the ggplot2 library
+#'
+#' @name states
+#' @docType data
+#' @keywords data
+NULL

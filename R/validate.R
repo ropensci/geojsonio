@@ -1,17 +1,17 @@
 #' Validate a geoJSON file, json object, list, or Spatial class.
-#' 
+#'
 #' @name validate
 #' @param x Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 #' class since it inherits from \code{data.frame}.
 #' @param ... Further args passed on to helper functions.
-#' 
+#'
 #' @details Uses the web service at \url{http://geojsonlint.com/}
 #'
 #' @examples \dontrun{
 #' # From a json character string
-#' validate(x = '{"type": "Point", "coordinates": [-100, 80]}') # good 
+#' validate(x = '{"type": "Point", "coordinates": [-100, 80]}') # good
 #' validate(x = '{"type": "Rhombus", "coordinates": [[1, 2], [3, 4], [5, 6]]}') # bad
-#' 
+#'
 #' # A file
 #' file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
 #' validate(x = as.location(file))
@@ -21,15 +21,11 @@
 #' validate(as.location(url))
 #'
 #' # From output of geojson_list
-#' library("maps")
-#' data(us.cities)
-#' (x <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
+#' (x <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
 #' validate(x)
 #'
 #' # From output of geojson_json
-#' library('maps')
-#' data(us.cities)
-#' (x <- geojson_json(us.cities[1:2,], lat='lat', lon='long'))
+#' (x <- geojson_json(us_cities[1:2,], lat='lat', lon='long'))
 #' validate(x)
 #'
 #' # From a list turned into geo_list

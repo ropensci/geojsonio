@@ -50,9 +50,7 @@ lint(x)
 
 # From a data.frame
 ## need to specify what columns are lat and long with a data.frame
-library('maps')
-data(us.cities)
-lint(us.cities[1:2,], lat='lat', lon='long')
+lint(us_cities[1:2,], lat='lat', lon='long')
 
 # From numeric
 vec <- c(32.45,-99.74)

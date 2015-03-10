@@ -5,7 +5,7 @@
 #'
 #' @param x Input, a geojson character string or list
 #' @param ... Further args passed on to helper functions.
-#' 
+#'
 #' @examples \dontrun{
 #' lint('{"type": "FooBar"}')
 #' lint('{ "type": "FeatureCollection" }')
@@ -30,7 +30,7 @@
 #' x <- minify('{ "type": "FeatureCollection" }')
 #' class(x)
 #' lint(x)
-#' 
+#'
 #' # From SpatialPoints class
 #' library("sp")
 #' a <- c(1,2,3,4,5)
@@ -38,13 +38,11 @@
 #' (x <- SpatialPoints(cbind(a,b)))
 #' class(x)
 #' lint(x)
-#' 
+#'
 #' # From a data.frame
 #' ## need to specify what columns are lat and long with a data.frame
-#' library('maps')
-#' data(us.cities)
-#' lint(us.cities[1:2,], lat='lat', lon='long')
-#' 
+#' lint(us_cities[1:2,], lat='lat', lon='long')
+#'
 #' # From numeric
 #' vec <- c(32.45,-99.74)
 #' lint(vec)
@@ -127,34 +125,34 @@ lintit <- function(x) {
 
 # # from lincoln
 # x <- '{"type":"Point","geometry":{"type":"Point","coordinates":[-80,40]},"properties":{}}'
-# 
+#
 # # bad
 # x <- '{
 # "type": "Point",
 # "coordinates": [2, 2],
 # "bbox": [1, 2, "string"]
 # }'
-# 
+#
 # # bad, fails on minify() call i think cause bad json
 # x <- '{
 # "type": "MultiPoint"
 # "coordinates": [["foo", "bar"]]
 # }'
-# 
+#
 # # bad
 # x <- '{
 # "type": "FooBar"
 # }'
-# 
+#
 # # bad
 # x <- '{ "type": "FeatureCollection" }'
-# 
+#
 # # bad
 # x <- '{
 # "type": "Point",
 # "coordinates": [2]
 # }'
-# 
+#
 # # good
 # x <- '{
 # "type": "Feature",
@@ -162,7 +160,7 @@ lintit <- function(x) {
 # "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
 # "properties": {"prop0": "value0"}
 # }'
-# 
+#
 # # good
 # x <- '{ "type": "FeatureCollection",
 # "features": [

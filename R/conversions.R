@@ -15,3 +15,9 @@ as.SpatialPolygonsDataFrame <- function(x, ...) UseMethod("as.SpatialPolygonsDat
 as.SpatialPolygonsDataFrame.geojson <- function(x, ...) {
   readOGR(x$path, "OGRGeoJSON", ...)
 }
+
+#' @export
+#' @rdname conversions
+as.SpatialPolygonsDataFrame.character <- function(x, ...) {
+  readOGR(x, "OGRGeoJSON", ...)
+}

@@ -27,20 +27,22 @@ geojson_list(...)
 
 \method{geojson_list}{SpatialLines}(input, ...)
 
-\method{geojson_list}{SpatialLinesDataFrame}(input,
-  object = "FeatureCollection", ...)
+\method{geojson_list}{SpatialLinesDataFrame}(input, ...)
 
 \method{geojson_list}{SpatialGrid}(input, ...)
 
 \method{geojson_list}{SpatialGridDataFrame}(input, ...)
 
-\method{geojson_list}{numeric}(input, polygon = NULL, ...)
+\method{geojson_list}{numeric}(input, geometry = "point",
+  type = "FeatureCollection", ...)
 
 \method{geojson_list}{data.frame}(input, lat = "latitude",
-  lon = "longitude", polygon = NULL, object = "FeatureCollection", ...)
+  lon = "longitude", group = NULL, geometry = "point",
+  type = "FeatureCollection", ...)
 
 \method{geojson_list}{list}(input, lat = "latitude", lon = "longitude",
-  polygon = NULL, object = "FeatureCollection", unnamed = FALSE, ...)
+  group = NULL, geometry = "point", type = "FeatureCollection",
+  unnamed = FALSE, ...)
 }
 \arguments{
 \item{...}{Ignored}
@@ -48,14 +50,15 @@ geojson_list(...)
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
-\item{object}{(character) One of FeatureCollection, or}
+\item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{polygon}{If a polygon is defined in a data.frame, this is the column that defines the
-grouping of the polygons in the \code{data.frame}}
+\item{type}{The type of collection. One of FeatureCollection (default) or GeometryCollection.}
 
 \item{lat}{Latitude name. Default: latitude}
 
 \item{lon}{Longitude name. Default: longitude}
+
+\item{group}{A grouping variable to perform grouping for polygons - doesn't apply for points}
 
 \item{unnamed}{(logical) Is lat/long data unnamed? That is, you can pass in a list of
 lat/long pairs as e.g., a polygon or linestring perhaps, and they aren't named. If so, use
@@ -68,34 +71,39 @@ Convert many input types with spatial data to geojson specified as a list
 \details{
 This function creates a geojson structure as an R list; it does not write a file
 using \code{rgdal} - see \code{\link{geojson_write}} for that.
+
+Note that all sp class objects will output as \code{FeatureCollection} objects, while other
+classes (numeric, list, data.frame) can be output as \code{FeatureCollection} or
+\code{GeometryCollection} objects. We're working on allowing \code{GeometryCollection}
+option for sp class objects.
+
+Also note that with sp classes we do make a round-trip, using \code{\link[rgdal]{writeOGR}}
+to write GeoJSON to disk, then read it back in. This is fast and we don't have to think
+about it too much, but this disk round-trip is not ideal.
 }
 \examples{
 \dontrun{
-# from data.frame
-library("maps")
-data(us.cities)
-(res <- geojson_list(us.cities[1:2,], lat='lat', lon='long'))
-as.json(res)
-
-# polygons
-library("ggplot2")
-states <- map_data("state")
-head(states)
-## make list for input to e.g., rMaps
-res <- geojson_list(input=states, lat='lat', lon='long', group='group')
-
-## From a list
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-               list(latitude=30, longitude=130, marker="blue"))
-geojson_list(mylist)
-
 # From a numeric vector of length 2 to a point
-vec <- c(32.45,-99.74)
+vec <- c(-99.74,32.45)
 geojson_list(vec)
 
 # From a list of numeric vectors to a polygon
 vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
 geojson_list(vecs, unnamed=TRUE, polygon=TRUE)
+
+# from data.frame to points
+(res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
+as.json(res)
+
+# from data.frame to polygons
+head(states)
+## make list for input to e.g., rMaps
+geojson_list(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
+
+## From a list
+mylist <- list(list(latitude=30, longitude=120, marker="red"),
+               list(latitude=30, longitude=130, marker="blue"))
+geojson_list(mylist)
 
 # From SpatialPolygons class
 library('sp')
