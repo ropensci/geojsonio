@@ -45,16 +45,18 @@ map_gist(...)
 \method{map_gist}{SpatialGridDataFrame}(input, file = "myfile.geojson",
   description = "", public = TRUE, browse = TRUE, ...)
 
-\method{map_gist}{numeric}(input, polygon = NULL, file = "myfile.geojson",
+\method{map_gist}{numeric}(input, geometry = NULL, file = "myfile.geojson",
   description = "", public = TRUE, browse = TRUE, ...)
 
 \method{map_gist}{data.frame}(input, lat = "lat", lon = "long",
-  polygon = NULL, object = "FeatureCollection", file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
+  geometry = "point", group = NULL, type = "FeatureCollection",
+  file = "myfile.geojson", description = "", public = TRUE,
+  browse = TRUE, ...)
 
-\method{map_gist}{list}(input, lat = "lat", lon = "long", polygon = NULL,
-  object = "FeatureCollection", file = "myfile.geojson", description = "",
-  public = TRUE, browse = TRUE, ...)
+\method{map_gist}{list}(input, lat = "lat", lon = "long",
+  geometry = "point", group = NULL, type = "FeatureCollection",
+  file = "myfile.geojson", description = "", public = TRUE,
+  browse = TRUE, ...)
 }
 \arguments{
 \item{...}{Further arguments passed on to \code{\link[httr]{POST}}}
@@ -69,13 +71,16 @@ map_gist(...)
 
 \item{input}{Input object}
 
-\item{polygon}{(logical) Are polygons in the object}
+\item{geometry}{(character) Are polygons in the object}
 
 \item{lat}{Name of latitude variable}
 
 \item{lon}{Name of longitude variable}
 
-\item{object}{One of FeatureCollection or GeometryCollection}
+\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't
+apply for points}
+
+\item{type}{(character) One of FeatureCollection or GeometryCollection}
 }
 \description{
 There are two ways to authorize to work with your GitHub account:
@@ -95,11 +100,13 @@ PAT, that will be used, if not, OAuth will be used.
 }
 \examples{
 \donttest{
+# From file
 file <- "myfile.geojson"
 geojson_write(us_cities[1:2,], lat='lat', lon='long', file = file)
 map_gist(file=as.location(file))
 
 # From SpatialPoints class
+library("sp")
 x <- c(1,2,3,4,5)
 y <- c(3,2,5,1,4)
 s <- SpatialPoints(cbind(x,y))
@@ -112,7 +119,6 @@ s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
 map_gist(s)
 
 # from SpatialPolygons class
-library('sp')
 poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
    c(40,50,45,40)))), "1")
 poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
@@ -125,7 +131,6 @@ sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
 map_gist(sp_poly)
 
 # From SpatialLines class
-library("sp")
 c1 <- cbind(c(1,2,3), c(3,2,2))
 c2 <- cbind(c1[,1]+.05,c1[,2]+.05)
 c3 <- cbind(c(1,2,3),c(1,1.5,1))
@@ -157,18 +162,30 @@ sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 map_gist(sgdf)
 
 # from data.frame
+## to points
 map_gist(us_cities)
+
+## to polygons
+head(states)
+map_gist(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
 
 ## From a list
 mylist <- list(list(lat=30, long=120, marker="red"),
                list(lat=30, long=130, marker="blue"))
 map_gist(mylist, lat="lat", lon="long")
 
-# From a numeric vector of length 2 to a point
-## not working right now
-### vec <- c(32.45,-99.74)
-### map_gist(vec)
+# From a numeric vector
+## of length 2 to a point
+vec <- c(-99.74,32.45)
+map_gist(vec)
 
+## this requires numeric class input, so inputting a list will dispatch on the list method
+poly <- c(c(-114.345703125,39.436192999314095),
+          c(-114.345703125,43.45291889355468),
+          c(-106.61132812499999,43.45291889355468),
+          c(-106.61132812499999,39.436192999314095),
+          c(-114.345703125,39.436192999314095))
+map_gist(poly, geometry = "polygon")
 
 ## Use the cartographer package to make maps locally
 library("cartographer")

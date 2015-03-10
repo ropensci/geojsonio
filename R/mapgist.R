@@ -6,8 +6,10 @@
 #' @param input Input object
 #' @param lat Name of latitude variable
 #' @param lon Name of longitude variable
-#' @param polygon (logical) Are polygons in the object
-#' @param object One of FeatureCollection or GeometryCollection
+#' @param geometry (character) Are polygons in the object
+#' @param type (character) One of FeatureCollection or GeometryCollection
+#' @param group (character) A grouping variable to perform grouping for polygons - doesn't 
+#' apply for points
 #' @param file File name to use to put up as the gist file
 #' @param description Description for the Github gist, or leave to default (=no description)
 #' @param public (logical) Want gist to be public or not? Default: TRUE
@@ -30,11 +32,13 @@
 #' PAT, that will be used, if not, OAuth will be used.
 #'
 #' @examples \donttest{
+#' # From file
 #' file <- "myfile.geojson"
 #' geojson_write(us_cities[1:2,], lat='lat', lon='long', file = file)
 #' map_gist(file=as.location(file))
 #'
 #' # From SpatialPoints class
+#' library("sp")
 #' x <- c(1,2,3,4,5)
 #' y <- c(3,2,5,1,4)
 #' s <- SpatialPoints(cbind(x,y))
@@ -47,7 +51,6 @@
 #' map_gist(s)
 #'
 #' # from SpatialPolygons class
-#' library('sp')
 #' poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
 #'    c(40,50,45,40)))), "1")
 #' poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
@@ -60,7 +63,6 @@
 #' map_gist(sp_poly)
 #'
 #' # From SpatialLines class
-#' library("sp")
 #' c1 <- cbind(c(1,2,3), c(3,2,2))
 #' c2 <- cbind(c1[,1]+.05,c1[,2]+.05)
 #' c3 <- cbind(c(1,2,3),c(1,1.5,1))
@@ -92,18 +94,30 @@
 #' map_gist(sgdf)
 #'
 #' # from data.frame
+#' ## to points
 #' map_gist(us_cities)
+#' 
+#' ## to polygons
+#' head(states)
+#' map_gist(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
 #'
 #' ## From a list
 #' mylist <- list(list(lat=30, long=120, marker="red"),
 #'                list(lat=30, long=130, marker="blue"))
 #' map_gist(mylist, lat="lat", lon="long")
 #'
-#' # From a numeric vector of length 2 to a point
-#' ## not working right now
-#' ### vec <- c(32.45,-99.74)
-#' ### map_gist(vec)
-#'
+#' # From a numeric vector 
+#' ## of length 2 to a point
+#' vec <- c(-99.74,32.45)
+#' map_gist(vec)
+#' 
+#' ## this requires numeric class input, so inputting a list will dispatch on the list method
+#' poly <- c(c(-114.345703125,39.436192999314095),
+#'           c(-114.345703125,43.45291889355468),
+#'           c(-106.61132812499999,43.45291889355468),
+#'           c(-106.61132812499999,39.436192999314095),
+#'           c(-114.345703125,39.436192999314095))
+#' map_gist(poly, geometry = "polygon")
 #'
 #' ## Use the cartographer package to make maps locally
 #' library("cartographer")
@@ -142,83 +156,92 @@ map_gist <- function(...) UseMethod("map_gist")
 
 #' @export
 #' @rdname map_gist
-map_gist.location <- function(file, description = "", public = TRUE, browse = TRUE, ...){
+map_gist.location <- function(file, description = "", public = TRUE, browse = TRUE, ...) {
   gist_create(files = file[[1]],  description = description, public = public, browse = browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.SpatialPointsDataFrame <- function(input, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
+map_gist.SpatialPointsDataFrame <- function(input, file = "myfile.geojson", description = "",
+                                            public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.SpatialPoints <- function(input, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
+map_gist.SpatialPoints <- function(input, file = "myfile.geojson", description = "",
+                                   public = TRUE, browse = TRUE, ...){
   dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
   gc(dat, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.SpatialPolygons <- function(input, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
+map_gist.SpatialPolygons <- function(input, file = "myfile.geojson", description = "",
+                                     public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.SpatialPolygonsDataFrame <- function(input, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
+map_gist.SpatialPolygonsDataFrame <- function(input, file = "myfile.geojson", description = "",
+                                              public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.SpatialLines <- function(input, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
+map_gist.SpatialLines <- function(input, file = "myfile.geojson", description = "",
+                                  public = TRUE, browse = TRUE, ...){
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.SpatialLinesDataFrame <- function(input, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
+map_gist.SpatialLinesDataFrame <- function(input, file = "myfile.geojson", description = "",
+                                           public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.SpatialGrid <- function(input, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
+map_gist.SpatialGrid <- function(input, file = "myfile.geojson", description = "",
+                                 public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.SpatialGridDataFrame <- function(input, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
+map_gist.SpatialGridDataFrame <- function(input, file = "myfile.geojson", description = "",
+                                          public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.numeric <- function(input, polygon = NULL, file="myfile.geojson", description = "", public = TRUE, browse = TRUE, ...){
-  input <- as.geo_list(num_to_geo_list(input, polygon), "numeric")
+map_gist.numeric <- function(input, geometry = NULL, file = "myfile.geojson", description = "",
+                             public = TRUE, browse = TRUE, ...) {
+  input <- as.geo_list(num_to_geo_list(input, geometry), "numeric")
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.data.frame <- function(input, lat = "lat", lon = "long", polygon=NULL,
-  object = "FeatureCollection", file="myfile.geojson", description = "",
-  public = TRUE, browse = TRUE, ...)
-{
-  input <- as.geo_list(df_to_geo_list(input, lat, lon, polygon, object, unnamed=TRUE), "data.frame")
+map_gist.data.frame <- function(input, lat = "lat", lon = "long", geometry = "point", group = NULL,
+                                type = "FeatureCollection", file = "myfile.geojson", description = "",
+                                public = TRUE, browse = TRUE, ...) {
+
+  input <- as.geo_list(df_to_geo_list(input, lat, lon, geometry, type, group), "data.frame")
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
 #' @rdname map_gist
-map_gist.list <- function(input, lat = "lat", lon = "long", polygon=NULL,
-  object = "FeatureCollection", file="myfile.geojson", description = "",
-  public = TRUE, browse = TRUE, ...)
-{
-  input <- as.geo_list(list_to_geo_list(input, lat, lon, polygon, object), "list")
+map_gist.list <- function(input, lat = "lat", lon = "long", geometry = "point", group = NULL,
+                          type = "FeatureCollection", file = "myfile.geojson", description = "",
+                          public = TRUE, browse = TRUE, ...) {
+
+  input <- as.geo_list(list_to_geo_list(input, lat, lon, geometry, type, group=group), "list")
   gc(input, file, description, public, browse, ...)
 }
 
