@@ -4,10 +4,10 @@
 #'
 #' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 #' class since it inherits from \code{data.frame}.
-#' @param lat Latitude name. Default: latitude
-#' @param lon Longitude name. Default: longitude
+#' @param lat (character) Latitude name. The default is \code{NULL}, and we attempt to guess.
+#' @param lon (character) Longitude name. The default is \code{NULL}, and we attempt to guess.
 #' @param geometry (character) One of point (Default) or polygon.
-#' @param type The type of collection. One of FeatureCollection (default) or GeometryCollection.
+#' @param type  (character)The type of collection. One of FeatureCollection (default) or GeometryCollection.
 #' @param group (character) A grouping variable to perform grouping for polygons - doesn't
 #' apply for points
 #' @param ... Further args passed on to \code{\link[jsonlite]{toJSON}}
@@ -38,8 +38,17 @@
 #'           c(-114.345703125,39.436192999314095))
 #' geojson_json(poly, geometry = "polygon", pretty=TRUE)
 #'
+#' # Lists
+#' ## From a list of numeric vectors to a polygon
+#' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+#' geojson_json(vecs, geometry="polygon", pretty=TRUE)
+#' 
+#' ## from a named list
+#' mylist <- list(list(latitude=30, longitude=120, marker="red"),
+#'                list(latitude=30, longitude=130, marker="blue"))
+#' geojson_json(mylist, lat='latitude', lon='longitude')
+#'
 #' # From a data.frame to points
-#' geojson_json(us_cities[1:2,], lat='lat', lon='long')
 #' geojson_json(us_cities[1:2,], lat='lat', lon='long', pretty=TRUE)
 #' geojson_json(us_cities[1:2,], lat='lat', lon='long',
 #'    type="GeometryCollection", pretty=TRUE)
@@ -48,11 +57,6 @@
 #' head(states)
 #' ## make list for input to e.g., rMaps
 #' geojson_json(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
-#'
-#' # from a list
-#' mylist <- list(list(latitude=30, longitude=120, marker="red"),
-#'                list(latitude=30, longitude=130, marker="blue"))
-#' geojson_json(mylist, lat='latitude', lon='longitude')
 #'
 #' # from a geo_list
 #' a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')$features[[1]]
@@ -133,76 +137,82 @@
 #' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 #' geojson_json(sgdf)
 #' }
-geojson_json <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
-                         geometry = "point",  type='FeatureCollection', ...) {
+geojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
+                         geometry = "point", type='FeatureCollection', ...) {
   UseMethod("geojson_json")
 }
 
 #' @export
-geojson_json.SpatialPolygons <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
                                          geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
-geojson_json.SpatialPolygonsDataFrame <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                   geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
-geojson_json.SpatialPoints <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point",  type='FeatureCollection', ...) {
   dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
   to_json(geojson_rw(dat))
 }
 
 #' @export
-geojson_json.SpatialPointsDataFrame <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                 geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
-geojson_json.SpatialLines <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
-geojson_json.SpatialLinesDataFrame <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
-geojson_json.SpatialGrid <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL,
                                      geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
-geojson_json.SpatialGridDataFrame <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                               geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
-geojson_json.numeric <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
                                  geometry = "point",  type='FeatureCollection', ...) {
   to_json(num_to_geo_list(input, geometry, type), ...)
 }
 
 #' @export
-geojson_json.data.frame <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                     geometry = "point", type='FeatureCollection', ...) {
-  res <- df_to_geo_list(input, lat, lon, geometry, type, group)
+  tmp <- guess_latlon(names(input), lat, lon)
+  res <- df_to_geo_list(input, tmp$lat, tmp$lon, geometry, type, group)
   to_json(res, ...)
 }
 
 #' @export
-geojson_json.list <- function(input, lat = "latitude", lon = "longitude", group = NULL, 
+geojson_json.list <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point",  type='FeatureCollection', ...){
-  res <- list_to_geo_list(input, lat, lon, geometry, type, unnamed = TRUE, group)
+  tmp <- if(!is.named(input)) {
+    list(lon = NULL, lat = NULL)
+  } else {
+    guess_latlon(names(input[[1]]), lat, lon)
+  }
+  res <- list_to_geo_list(input, tmp$lat, tmp$lon, geometry, type, unnamed = !is.named(input), group)
   to_json(res, ...)
 }

@@ -45,7 +45,9 @@
 #' }
 
 #' @export
-validate <- function(x, ...) UseMethod("validate")
+validate <- function(x, ...) {
+  UseMethod("validate")
+}
 
 #' @export
 validate.character <- function(x, ...){

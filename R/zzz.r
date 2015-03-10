@@ -33,9 +33,9 @@ list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCol
     }
     if(nn == "features"){
       if(is.null(group)) {
-        z <- list(type = "Feature",
-                  geometry = list(type = geom, coordinates = get_vals2(x, FALSE, lat, lon)),
-                  properties = get_props(x, lat, lon))
+        z <- list(list(type = "Feature",
+                  geometry = list(type = geom, coordinates = get_vals2(x, unnamed, lat, lon)),
+                  properties = get_props(x, lat, lon)))
       } else {
         grps <- unique(pluck(x, group, ""))
         z <- lapply(grps, function(w) {
@@ -66,7 +66,7 @@ get_vals2 <- function(v, unnamed, lat, lon){
 
 get_vals <- function(v, lat, lon){
   tt <- tryCatch(v[[lon]], error = function(e) e)
-  if(is(tt, "simpleError")) 
+  if(is(tt, "simpleError"))
     as.numeric(v)
   else
     as.numeric(c(v[[lon]], v[[lat]]))
@@ -81,9 +81,9 @@ num_to_geo_list <- function(x, geometry = "point", type = "FeatureCollection"){
   geom <- capwords(match.arg(geometry, c("point", "polygon")))
   res <- tryCatch(as.numeric(x), warning = function(e) e)
   if(is(res, "simpleWarning")) {
-    stop("Coordinates are not numeric", call. = FALSE) 
+    stop("Coordinates are not numeric", call. = FALSE)
   } else {
-    switch(type, 
+    switch(type,
            FeatureCollection = {
              list(type = 'FeatureCollection',
                   features = list(
@@ -105,7 +105,7 @@ num_to_geo_list <- function(x, geometry = "point", type = "FeatureCollection"){
 }
 
 makecoords <- function(x, y) {
-  switch(y, 
+  switch(y,
          Point = x,
          Polygon = list( unname(split(x, ceiling(seq_along(x)/2))))
   )
@@ -188,7 +188,7 @@ lines_to_geo_list <- function(x, object="FeatureCollection"){
         list(type = "Feature",
              bbox = bbox2df(x@bbox),
              geometry = list(type = ifelse(length(l@Lines) == 1, "LineString", "MultiLineString"),
-                             coordinates = 
+                             coordinates =
                              if(length(l@Lines) == 1){
                                apply(l@Lines[[1]]@coords, 1, as.list)
                              } else {
@@ -228,12 +228,12 @@ splinestogeolist <- function(x, object){
     } else {
       list(type = "MultiLineString",
            bbox = bbox2df(x@bbox),
-           coordinates = 
+           coordinates =
            lapply(x@lines, function(l) {
              apply(l@Lines[[1]]@coords, 1, as.list)
            }),
            properties = NULL
-      )  
+      )
     }
   }
 }
@@ -243,7 +243,7 @@ spdftogeolist <- function(x){
     nms <- dimnames(coordinates(x))[[2]]
     temp <- apply(data.frame(x), 1, as.list)
     list_to_geo_list(temp, nms[1], nms[2], NULL, type = "FeatureCollection")
-  } else { 
+  } else {
     list(type = "MultiPoint",
          bbox = bbox2df(x@bbox),
          coordinates = unname(apply(coordinates(x), 1, function(x) unname(as.list(x)))),
@@ -301,9 +301,9 @@ capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
     sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
   } else
   {
-    sapply(s, function(x) 
-      paste(toupper(substring(x,1,1)), 
-            tolower(substring(x,2)), 
+    sapply(s, function(x)
+      paste(toupper(substring(x,1,1)),
+            tolower(substring(x,2)),
             sep="", collapse=" "), USE.NAMES=F)
   }
 }
@@ -316,3 +316,28 @@ pluck <- function(x, name, type) {
     vapply(x, "[[", name, FUN.VALUE = type)
   }
 }
+
+###### code adapted from the leaflet package - source at github.com/rstudio/leaflet
+guess_latlon <- function(x, lat=NULL, lon=NULL) {
+  if(is.null(lat) && is.null(lon)){
+    lats <- x[grep("^(lat|latitude)$", x, ignore.case = TRUE)]
+    lngs <- x[grep("^(lon|lng|long|longitude)$", x, ignore.case = TRUE)]
+
+    if (length(lats) == 1 && length(lngs) == 1) {
+      if (length(x) > 2) {
+        message("Assuming '", lngs, "' and '", lats,
+                "' are longitude and latitude, respectively")
+      }
+      return(list(lon = lngs, lat = lats))
+    } else {
+      stop("Couldn't infer longitude/latitude columns, please specify with 'lat'/'lon' parameters", call. = FALSE)
+    }
+  } else {
+    return(list(lon = lon, lat = lat))
+  }
+}
+
+is.named <- function(x) {
+  is.character(names(x[[1]]))
+}
+

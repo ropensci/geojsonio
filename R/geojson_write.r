@@ -7,11 +7,11 @@
 #'
 #' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 #' class since it inherits from \code{data.frame}.
-#' @param lat Latitude name. Default: latitude
-#' @param lon Longitude name. Default: longitude
+#' @param lat (character) Latitude name. The default is \code{NULL}, and we attempt to guess.
+#' @param lon (character) Longitude name. The default is \code{NULL}, and we attempt to guess.
 #' @param geometry (character) One of point (Default) or polygon.
-#' @param group A grouping variable to perform grouping for polygons - doesn't apply for points
-#' @param file A path and file name (e.g., myfile), with the .geojson on the end.
+#' @param group (character) A grouping variable to perform grouping for polygons - doesn't apply for points
+#' @param file (character) A path and file name (e.g., myfile), with the \code{.geojson} file extension
 #' @param ... Further args passed on to \code{\link[rgdal]{writeOGR}}
 #'
 #' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}
@@ -28,12 +28,7 @@
 #' ## partial states dataset to points (defaults to points)
 #' geojson_write(input=states, lat='lat', lon='long')
 #'
-#' ## From a list
-#' ### with lat/lon specified with named vars
-#' mylist <- list(list(latitude=30, longitude=120, marker="red"),
-#'                list(latitude=30, longitude=130, marker="blue"))
-#' geojson_write(mylist)
-#'
+#' ## Lists
 #' ### list of numeric pairs
 #' poly <- list(c(-114.345703125,39.436192999314095),
 #'           c(-114.345703125,43.45291889355468),
@@ -41,6 +36,11 @@
 #'           c(-106.61132812499999,39.436192999314095),
 #'           c(-114.345703125,39.436192999314095))
 #' geojson_write(poly, geometry = "polygon")
+#' 
+#' ### named list
+#' mylist <- list(list(latitude=30, longitude=120, marker="red"),
+#'                list(latitude=30, longitude=130, marker="blue"))
+#' geojson_write(mylist)
 #'
 #' # From a numeric vector of length 2
 #' vec <- c(-99.74, 32.45)
@@ -92,13 +92,13 @@
 #' geojson_write(res)
 #' }
 
-geojson_write <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
                           group = NULL, file = "myfile.geojson", ...) {
   UseMethod("geojson_write")
 }
 
 #' @export
-geojson_write.geo_list <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                    group = NULL, file = "myfile.geojson", ...) {
   cat(as.json(input, pretty=TRUE), file=file)
   message("Success! File is at ", file)
@@ -106,7 +106,7 @@ geojson_write.geo_list <- function(input, lat = "latitude", lon = "longitude", g
 }
 
 #' @export
-geojson_write.json <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.json <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                group = NULL, file = "myfile.geojson", ...) {
   cat(toJSON(jsonlite::fromJSON(input), pretty=TRUE, auto_unbox = TRUE), file=file)
   message("Success! File is at ", file)
@@ -114,49 +114,49 @@ geojson_write.json <- function(input, lat = "latitude", lon = "longitude", geome
 }
 
 #' @export
-geojson_write.SpatialPolygons <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.SpatialPolygons <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                           group = NULL, file = "myfile.geojson", ...) {
   write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
   return(file)
 }
 
 #' @export
-geojson_write.SpatialPolygonsDataFrame <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                    group = NULL, file = "myfile.geojson", ...) {
   write_geojson(input, file, ...)
   return(file)
 }
 
 #' @export
-geojson_write.SpatialPoints <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.SpatialPoints <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                         group = NULL, file = "myfile.geojson", ...) {
   write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
   return(file)
 }
 
 #' @export
-geojson_write.SpatialPointsDataFrame <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                  group = NULL, file = "myfile.geojson", ...) {
   write_geojson(input, file, ...)
   return(file)
 }
 
 #' @export
-geojson_write.SpatialLines <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.SpatialLines <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                        group = NULL, file = "myfile.geojson", ...) {
   write_geojson(as(input, "SpatialLinesDataFrame"), file, ...)
   return(file)
 }
 
 #' @export
-geojson_write.SpatialLinesDataFrame <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                 group = NULL, file = "myfile.geojson", ...) {
   write_geojson(input, file, ...)
   return(file)
 }
 
 #' @export
-geojson_write.SpatialGrid <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.SpatialGrid <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                       group = NULL, file = "myfile.geojson", ...) {
   size <- prod(input@grid@cells.dim)
   input <- SpatialGridDataFrame(input, data.frame(val=rep(1, size)))
@@ -165,14 +165,14 @@ geojson_write.SpatialGrid <- function(input, lat = "latitude", lon = "longitude"
 }
 
 #' @export
-geojson_write.SpatialGridDataFrame <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                group = NULL, file = "myfile.geojson", ...) {
   write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
   return(file)
 }
 
 #' @export
-geojson_write.numeric <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                   group = NULL, file = "myfile.geojson", ...) {
   if(geometry == "point") {
     res <- df_to_SpatialPointsDataFrame(num2df(input, lat, lon), lon = lon, lat = lat)
@@ -188,12 +188,13 @@ num2df <- function(x, lat, lon) {
 }
 
 #' @export
-geojson_write.data.frame <- function(input, lat = "latitude", lon = "longitude", geometry = "point", 
+geojson_write.data.frame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                      group = NULL, file = "myfile.geojson", ...) {
+  tmp <- guess_latlon(names(input), lat, lon)
   if(geometry == "point") {
-    res <- df_to_SpatialPointsDataFrame(input, lon = lon, lat = lat)
+    res <- df_to_SpatialPointsDataFrame(input, tmp$lon, tmp$lat)
   } else {
-    res <- df_to_SpatialPolygonsDataFrame2(input, lat, lon, group)
+    res <- df_to_SpatialPolygonsDataFrame2(input, tmp$lat, tmp$lon, group)
   }
   write_geojson(res, file, ...)
   as.geojson(file, "data.frame")
@@ -201,11 +202,12 @@ geojson_write.data.frame <- function(input, lat = "latitude", lon = "longitude",
 }
 
 #' @export
-geojson_write.list <- function(input, lat = "latitude", lon = "longitude", geometry="point", 
+geojson_write.list <- function(input, lat = NULL, lon = NULL, geometry="point",
                                group = NULL, file = "myfile.geojson", ...) {
   if(is.named(input)) {
-    res <- list_to_geo_list(input, lat, lon, geometry)
-    list_to_geojson(res, lat=lat, lon=lon, geometry=geometry, ...)
+    tmp <- guess_latlon(names(input[[1]]), lat, lon)
+    res <- list_to_geo_list(input, tmp$lat, tmp$lon, geometry)
+    list_to_geojson(res, lat=tmp$lat, lon=tmp$lon, geometry=geometry, ...)
   } else {
     if(geometry == "point") {
       res <- list_to_SpatialPointsDataFrame(input, lon = lon, lat = lat)
@@ -215,10 +217,6 @@ geojson_write.list <- function(input, lat = "latitude", lon = "longitude", geome
     write_geojson(res, file, ...)
   }
   return(file)
-}
-
-is.named <- function(x) {
-  is.character(names(x[[1]]))
 }
 
 #' @export

@@ -4,22 +4,22 @@
 \alias{geojson_write}
 \title{Convert many input types with spatial data to a geojson file}
 \usage{
-geojson_write(input, lat = "latitude", lon = "longitude",
-  geometry = "point", group = NULL, file = "myfile.geojson", ...)
+geojson_write(input, lat = NULL, lon = NULL, geometry = "point",
+  group = NULL, file = "myfile.geojson", ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
-\item{lat}{Latitude name. Default: latitude}
+\item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt to guess.}
 
-\item{lon}{Longitude name. Default: longitude}
+\item{lon}{(character) Longitude name. The default is \code{NULL}, and we attempt to guess.}
 
 \item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{group}{A grouping variable to perform grouping for polygons - doesn't apply for points}
+\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't apply for points}
 
-\item{file}{A path and file name (e.g., myfile), with the .geojson on the end.}
+\item{file}{(character) A path and file name (e.g., myfile), with the \code{.geojson} file extension}
 
 \item{...}{Further args passed on to \code{\link[rgdal]{writeOGR}}}
 }
@@ -39,12 +39,7 @@ geojson_write(input=states, lat='lat', lon='long', geometry='group', group="grou
 ## partial states dataset to points (defaults to points)
 geojson_write(input=states, lat='lat', lon='long')
 
-## From a list
-### with lat/lon specified with named vars
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-               list(latitude=30, longitude=130, marker="blue"))
-geojson_write(mylist)
-
+## Lists
 ### list of numeric pairs
 poly <- list(c(-114.345703125,39.436192999314095),
           c(-114.345703125,43.45291889355468),
@@ -52,6 +47,11 @@ poly <- list(c(-114.345703125,39.436192999314095),
           c(-106.61132812499999,39.436192999314095),
           c(-114.345703125,39.436192999314095))
 geojson_write(poly, geometry = "polygon")
+
+### named list
+mylist <- list(list(latitude=30, longitude=120, marker="red"),
+               list(latitude=30, longitude=130, marker="blue"))
+geojson_write(mylist)
 
 # From a numeric vector of length 2
 vec <- c(-99.74, 32.45)

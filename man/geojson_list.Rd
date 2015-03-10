@@ -4,22 +4,24 @@
 \alias{geojson_list}
 \title{Convert many input types with spatial data to geojson specified as a list}
 \usage{
-geojson_list(input, lat = "latitude", lon = "longitude", group = NULL,
+geojson_list(input, lat = NULL, lon = NULL, group = NULL,
   geometry = "point", type = "FeatureCollection", ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
-\item{lat}{Latitude name. Default: latitude}
+\item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt to guess.}
 
-\item{lon}{Longitude name. Default: longitude}
+\item{lon}{(character) Longitude name. The default is \code{NULL}, and we attempt to guess.}
 
-\item{group}{A grouping variable to perform grouping for polygons - doesn't apply for points}
+\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't apply
+for points}
 
 \item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{type}{The type of collection. One of FeatureCollection (default) or GeometryCollection.}
+\item{type}{(character) The type of collection. One of FeatureCollection (default) or
+GeometryCollection.}
 
 \item{...}{Ignored}
 }
@@ -38,6 +40,11 @@ option for sp class objects.
 Also note that with sp classes we do make a round-trip, using \code{\link[rgdal]{writeOGR}}
 to write GeoJSON to disk, then read it back in. This is fast and we don't have to think
 about it too much, but this disk round-trip is not ideal.
+
+For \code{list} and \code{data.frame} objects, you don't have to pass in \code{lat} and
+\code{lon} parameters if they are named appropriately (e.g., lat/latitude, lon/long/longitude),
+as they will be auto-detected. If they can not be found, the function will stop and warn
+you to specify the parameters specifically.
 }
 \examples{
 \dontrun{
@@ -45,23 +52,33 @@ about it too much, but this disk round-trip is not ideal.
 vec <- c(-99.74,32.45)
 geojson_list(vec)
 
-# From a list of numeric vectors to a polygon
-vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
-geojson_list(vecs, unnamed=TRUE, polygon=TRUE)
 
-# from data.frame to points
-(res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
-as.json(res)
-
-# from data.frame to polygons
-head(states)
-## make list for input to e.g., rMaps
-geojson_list(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
-
+# Lists
 ## From a list
 mylist <- list(list(latitude=30, longitude=120, marker="red"),
                list(latitude=30, longitude=130, marker="blue"))
 geojson_list(mylist)
+
+## From a list of numeric vectors to a polygon
+vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+geojson_list(vecs, geometry="polygon")
+
+# from data.frame to points
+(res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
+as.json(res)
+## guess lat/long columns
+geojson_list(us_cities[1:2,])
+geojson_list(states[1:3,])
+geojson_list(states[1:351,], geometry="polygon", group='group')
+geojson_list(world_cities[1:30,])
+## a data.frame with columsn not named appropriately, but you can specify them
+# dat <- data.frame(a = c(31, 41), b = c(-120, -110))
+# geojson_list(dat)
+# geojson_list(dat, lat="a", lon="b")
+
+# from data.frame to polygons
+head(states)
+geojson_list(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
 
 # From SpatialPolygons class
 library('sp')
