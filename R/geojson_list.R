@@ -204,4 +204,11 @@ geojson_list.list <- function(input, lat = NULL, lon = NULL, group = NULL,
   as.geo_list(list_to_geo_list(input, lat=tmp$lat, lon=tmp$lon, geometry, type, !is.named(input), group), "list")
 }
 
+#' @export
+geojson_list.geo_list <- function(input, lat = NULL, lon = NULL, group = NULL,
+                              geometry = "point", type = "FeatureCollection", ...) {
+  
+  return(input)
+}
+
 as.geo_list <- function(x, from) structure(x, class="geo_list", from=from)
