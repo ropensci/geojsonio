@@ -40,9 +40,7 @@ style_geojson <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
   UseMethod("style_geojson")
 }
 
-#' @method style_geojson data.frame
 #' @export
-#' @rdname style_geojson
 style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
     var_size = NULL, color = NULL, symbol = NULL, size = NULL) {
     if (!inherits(input, "data.frame"))
@@ -91,9 +89,7 @@ style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym 
 }
 
 
-#' @method style_geojson list
 #' @export
-#' @rdname style_geojson
 style_geojson.list <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
                                      var_size = NULL, color = NULL, symbol = NULL, size = NULL) {
   if (!inherits(input, "list"))

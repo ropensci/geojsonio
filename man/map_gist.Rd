@@ -2,64 +2,25 @@
 % Please edit documentation in R/mapgist.R
 \name{map_gist}
 \alias{map_gist}
-\alias{map_gist.SpatialGrid}
-\alias{map_gist.SpatialGridDataFrame}
-\alias{map_gist.SpatialLines}
-\alias{map_gist.SpatialLinesDataFrame}
-\alias{map_gist.SpatialPoints}
-\alias{map_gist.SpatialPointsDataFrame}
-\alias{map_gist.SpatialPolygons}
-\alias{map_gist.SpatialPolygonsDataFrame}
-\alias{map_gist.data.frame}
-\alias{map_gist.list}
-\alias{map_gist.location}
-\alias{map_gist.numeric}
 \title{Publish an interactive map as a GitHub gist}
 \usage{
-map_gist(...)
-
-\method{map_gist}{location}(file, description = "", public = TRUE,
-  browse = TRUE, ...)
-
-\method{map_gist}{SpatialPointsDataFrame}(input, file = "myfile.geojson",
+map_gist(input, lat = "lat", lon = "long", geometry = "point",
+  group = NULL, type = "FeatureCollection", file = "myfile.geojson",
   description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{SpatialPoints}(input, file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{SpatialPolygons}(input, file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{SpatialPolygonsDataFrame}(input, file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{SpatialLines}(input, file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{SpatialLinesDataFrame}(input, file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{SpatialGrid}(input, file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{SpatialGridDataFrame}(input, file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{numeric}(input, geometry = NULL, file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
-
-\method{map_gist}{data.frame}(input, lat = "lat", lon = "long",
-  geometry = "point", group = NULL, type = "FeatureCollection",
-  file = "myfile.geojson", description = "", public = TRUE,
-  browse = TRUE, ...)
-
-\method{map_gist}{list}(input, lat = "lat", lon = "long",
-  geometry = "point", group = NULL, type = "FeatureCollection",
-  file = "myfile.geojson", description = "", public = TRUE,
-  browse = TRUE, ...)
 }
 \arguments{
-\item{...}{Further arguments passed on to \code{\link[httr]{POST}}}
+\item{input}{Input object}
+
+\item{lat}{Name of latitude variable}
+
+\item{lon}{Name of longitude variable}
+
+\item{geometry}{(character) Are polygons in the object}
+
+\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't
+apply for points}
+
+\item{type}{(character) One of FeatureCollection or GeometryCollection}
 
 \item{file}{File name to use to put up as the gist file}
 
@@ -69,18 +30,7 @@ map_gist(...)
 
 \item{browse}{If TRUE (default) the map opens in your default browser.}
 
-\item{input}{Input object}
-
-\item{geometry}{(character) Are polygons in the object}
-
-\item{lat}{Name of latitude variable}
-
-\item{lon}{Name of longitude variable}
-
-\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't
-apply for points}
-
-\item{type}{(character) One of FeatureCollection or GeometryCollection}
+\item{...}{Further arguments passed on to \code{\link[httr]{POST}}}
 }
 \description{
 There are two ways to authorize to work with your GitHub account:

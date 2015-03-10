@@ -45,11 +45,9 @@
 #' }
 
 #' @export
-#' @rdname validate
 validate <- function(x, ...) UseMethod("validate")
 
 #' @export
-#' @rdname validate
 validate.character <- function(x, ...){
   if( !jsonlite::validate(x) ) stop("invalid json string")
   res <- POST(v_url(), body=x)
@@ -58,7 +56,6 @@ validate.character <- function(x, ...){
 }
 
 #' @export
-#' @rdname validate
 validate.location <- function(x, ...){
   res <- switch(attr(x, "type"),
                 file = POST(v_url(), body=upload_file(x[[1]])),
@@ -68,59 +65,46 @@ validate.location <- function(x, ...){
 }
 
 #' @export
-#' @rdname validate
 validate.geo_list <- function(x, ...){
   val_fxn(x)
 }
 
 #' @export
-#' @rdname validate
 validate.json <- function(x, ...){
   val_fxn(x)
 }
 
 #' @export
-#' @rdname validate
 validate.SpatialPolygons <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.SpatialPolygonsDataFrame <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.SpatialPoints <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.SpatialPointsDataFrame <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.SpatialLines <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.SpatialLinesDataFrame <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.SpatialGrid <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.SpatialGridDataFrame <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.numeric <- function(x, ...) validate(geojson_list(x))
 
 #' @export
-#' @rdname validate
 validate.data.frame <- function(x, ...) validate(geojson_list(x, ...))
 
 #' @export
-#' @rdname validate
 validate.list <- function(x, ...) validate(geojson_list(x))
 
 val_fxn <- function(x){

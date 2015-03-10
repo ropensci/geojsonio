@@ -19,15 +19,20 @@
 #' # Use as.location first if you want
 #' geojson_read(as.location(file))
 #' }
-
-geojson_read <- function(...) UseMethod("geojson_read")
-
-#' @export
-#' @rdname geojson_read
-geojson_read.character <- function(x, ...) read_json(as.location(x), ...)
+geojson_read <- function(x, ...) {
+  UseMethod("geojson_read")
+}
 
 #' @export
-#' @rdname geojson_read
-geojson_read.location <- function(x, ...) read_json(x, ...)
+geojson_read.character <- function(x, ...) { 
+  read_json(as.location(x), ...)
+}
 
-read_json <- function(x, ...) readOGR(x, ogrListLayers(x), ...)
+#' @export
+geojson_read.location <- function(x, ...) {
+  read_json(x, ...)
+}
+
+read_json <- function(x, ...) {
+  readOGR(x, ogrListLayers(x), ...)
+}

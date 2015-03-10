@@ -8,7 +8,7 @@
 #' @param lon Name of longitude variable
 #' @param geometry (character) Are polygons in the object
 #' @param type (character) One of FeatureCollection or GeometryCollection
-#' @param group (character) A grouping variable to perform grouping for polygons - doesn't 
+#' @param group (character) A grouping variable to perform grouping for polygons - doesn't
 #' apply for points
 #' @param file File name to use to put up as the gist file
 #' @param description Description for the Github gist, or leave to default (=no description)
@@ -96,7 +96,7 @@
 #' # from data.frame
 #' ## to points
 #' map_gist(us_cities)
-#' 
+#'
 #' ## to polygons
 #' head(states)
 #' map_gist(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
@@ -106,11 +106,11 @@
 #'                list(lat=30, long=130, marker="blue"))
 #' map_gist(mylist, lat="lat", lon="long")
 #'
-#' # From a numeric vector 
+#' # From a numeric vector
 #' ## of length 2 to a point
 #' vec <- c(-99.74,32.45)
 #' map_gist(vec)
-#' 
+#'
 #' ## this requires numeric class input, so inputting a list will dispatch on the list method
 #' poly <- c(c(-114.345703125,39.436192999314095),
 #'           c(-114.345703125,43.45291889355468),
@@ -152,81 +152,91 @@
 #'  geojson_layer(data = geojson_json(us_sp), label = "US 1800", clickable = TRUE)
 #' }
 
-map_gist <- function(...) UseMethod("map_gist")
+map_gist <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                     group = NULL, type = "FeatureCollection", 
+                     file = "myfile.geojson", description = "",
+                     public = TRUE, browse = TRUE, ...) {
+  UseMethod("map_gist")
+}
 
 #' @export
-#' @rdname map_gist
-map_gist.location <- function(file, description = "", public = TRUE, browse = TRUE, ...) {
+map_gist.location <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                              group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
+                              description = "", public = TRUE, browse = TRUE, ...) {
   gist_create(files = file[[1]],  description = description, public = public, browse = browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.SpatialPointsDataFrame <- function(input, file = "myfile.geojson", description = "",
+map_gist.SpatialPointsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                                            group = NULL, type = "FeatureCollection", 
+                                            file = "myfile.geojson", description = "",
                                             public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.SpatialPoints <- function(input, file = "myfile.geojson", description = "",
-                                   public = TRUE, browse = TRUE, ...){
+map_gist.SpatialPoints <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                                   group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
+                                   description = "", public = TRUE, browse = TRUE, ...){
   dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
   gc(dat, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.SpatialPolygons <- function(input, file = "myfile.geojson", description = "",
-                                     public = TRUE, browse = TRUE, ...) {
+map_gist.SpatialPolygons <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                                     group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
+                                     description = "", public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.SpatialPolygonsDataFrame <- function(input, file = "myfile.geojson", description = "",
+map_gist.SpatialPolygonsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                                              group = NULL, type = "FeatureCollection", 
+                                              file = "myfile.geojson", description = "",
                                               public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.SpatialLines <- function(input, file = "myfile.geojson", description = "",
-                                  public = TRUE, browse = TRUE, ...){
+map_gist.SpatialLines <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                                  group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
+                                  description = "", public = TRUE, browse = TRUE, ...){
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.SpatialLinesDataFrame <- function(input, file = "myfile.geojson", description = "",
+map_gist.SpatialLinesDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                                           group = NULL, type = "FeatureCollection", 
+                                           file = "myfile.geojson", description = "",
                                            public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.SpatialGrid <- function(input, file = "myfile.geojson", description = "",
+map_gist.SpatialGrid <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                                 group = NULL, type = "FeatureCollection", 
+                                 file = "myfile.geojson", description = "",
                                  public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.SpatialGridDataFrame <- function(input, file = "myfile.geojson", description = "",
+map_gist.SpatialGridDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point", 
+                                          group = NULL, type = "FeatureCollection", 
+                                          file = "myfile.geojson", description = "",
                                           public = TRUE, browse = TRUE, ...) {
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
-map_gist.numeric <- function(input, geometry = NULL, file = "myfile.geojson", description = "",
+map_gist.numeric <- function(input, lat = "lat", lon = "long", geometry = "point", group = NULL,
+                             type = "FeatureCollection", file = "myfile.geojson", description = "",
                              public = TRUE, browse = TRUE, ...) {
   input <- as.geo_list(num_to_geo_list(input, geometry), "numeric")
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-#' @rdname map_gist
 map_gist.data.frame <- function(input, lat = "lat", lon = "long", geometry = "point", group = NULL,
                                 type = "FeatureCollection", file = "myfile.geojson", description = "",
                                 public = TRUE, browse = TRUE, ...) {
@@ -236,7 +246,6 @@ map_gist.data.frame <- function(input, lat = "lat", lon = "long", geometry = "po
 }
 
 #' @export
-#' @rdname map_gist
 map_gist.list <- function(input, lat = "lat", lon = "long", geometry = "point", group = NULL,
                           type = "FeatureCollection", file = "myfile.geojson", description = "",
                           public = TRUE, browse = TRUE, ...) {

@@ -2,57 +2,14 @@
 % Please edit documentation in R/geojson_list.R
 \name{geojson_list}
 \alias{geojson_list}
-\alias{geojson_list.SpatialGrid}
-\alias{geojson_list.SpatialGridDataFrame}
-\alias{geojson_list.SpatialLines}
-\alias{geojson_list.SpatialLinesDataFrame}
-\alias{geojson_list.SpatialPoints}
-\alias{geojson_list.SpatialPointsDataFrame}
-\alias{geojson_list.SpatialPolygons}
-\alias{geojson_list.SpatialPolygonsDataFrame}
-\alias{geojson_list.data.frame}
-\alias{geojson_list.list}
-\alias{geojson_list.numeric}
 \title{Convert many input types with spatial data to geojson specified as a list}
 \usage{
-geojson_list(...)
-
-\method{geojson_list}{SpatialPolygons}(input, ...)
-
-\method{geojson_list}{SpatialPolygonsDataFrame}(input, ...)
-
-\method{geojson_list}{SpatialPoints}(input, ...)
-
-\method{geojson_list}{SpatialPointsDataFrame}(input, ...)
-
-\method{geojson_list}{SpatialLines}(input, ...)
-
-\method{geojson_list}{SpatialLinesDataFrame}(input, ...)
-
-\method{geojson_list}{SpatialGrid}(input, ...)
-
-\method{geojson_list}{SpatialGridDataFrame}(input, ...)
-
-\method{geojson_list}{numeric}(input, geometry = "point",
-  type = "FeatureCollection", ...)
-
-\method{geojson_list}{data.frame}(input, lat = "latitude",
-  lon = "longitude", group = NULL, geometry = "point",
-  type = "FeatureCollection", ...)
-
-\method{geojson_list}{list}(input, lat = "latitude", lon = "longitude",
-  group = NULL, geometry = "point", type = "FeatureCollection",
-  unnamed = FALSE, ...)
+geojson_list(input, lat = "latitude", lon = "longitude", group = NULL,
+  geometry = "point", type = "FeatureCollection", ...)
 }
 \arguments{
-\item{...}{Ignored}
-
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
-
-\item{geometry}{(character) One of point (Default) or polygon.}
-
-\item{type}{The type of collection. One of FeatureCollection (default) or GeometryCollection.}
 
 \item{lat}{Latitude name. Default: latitude}
 
@@ -60,10 +17,11 @@ class since it inherits from \code{data.frame}.}
 
 \item{group}{A grouping variable to perform grouping for polygons - doesn't apply for points}
 
-\item{unnamed}{(logical) Is lat/long data unnamed? That is, you can pass in a list of
-lat/long pairs as e.g., a polygon or linestring perhaps, and they aren't named. If so, use
-\code{unnamed=TRUE}. The default is \code{FALSE}, that is, when a list is passed, this function
-looks for lat and lon variable names to parse that data.}
+\item{geometry}{(character) One of point (Default) or polygon.}
+
+\item{type}{The type of collection. One of FeatureCollection (default) or GeometryCollection.}
+
+\item{...}{Ignored}
 }
 \description{
 Convert many input types with spatial data to geojson specified as a list

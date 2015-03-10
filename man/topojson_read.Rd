@@ -2,20 +2,14 @@
 % Please edit documentation in R/topojson_read.R
 \name{topojson_read}
 \alias{topojson_read}
-\alias{topojson_read.character}
-\alias{topojson_read.location}
 \title{Read topojson from a local file or a URL}
 \usage{
-topojson_read(...)
-
-\method{topojson_read}{character}(x, ...)
-
-\method{topojson_read}{location}(x, ...)
+topojson_read(x, ...)
 }
 \arguments{
-\item{...}{Further args passed on to \code{\link[rgdal]{readOGR}}}
-
 \item{x}{Path to a local file or a URL.}
+
+\item{...}{Further args passed on to \code{\link[rgdal]{readOGR}}}
 }
 \description{
 Read topojson from a local file or a URL

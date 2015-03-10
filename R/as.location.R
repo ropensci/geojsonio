@@ -17,11 +17,9 @@
 as.location <- function(x, ...) UseMethod("as.location")
 
 #' @export
-#' @rdname as.location
 as.location.character <- function(x, ...) check_location(x, ...)
 
 #' @export
-#' @rdname as.location
 as.location.location <- function(x, ...) x
 
 check_location <- function(x, ...){
@@ -38,7 +36,6 @@ as_location <- function(x, type){
 }
 
 #' @export
-#' @rdname as.location
 print.location <- function(x, ...){
   cat("<location>", "\n")
   cat("   Type: ", attr(x, "type"), "\n")

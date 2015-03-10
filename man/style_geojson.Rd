@@ -2,20 +2,10 @@
 % Please edit documentation in R/style_geojson.r
 \name{style_geojson}
 \alias{style_geojson}
-\alias{style_geojson.data.frame}
-\alias{style_geojson.list}
 \title{Style a data.frame prior to converting to geojson.}
 \usage{
 style_geojson(input, var = NULL, var_col = NULL, var_sym = NULL,
   var_size = NULL, color = NULL, symbol = NULL, size = NULL)
-
-\method{style_geojson}{data.frame}(input, var = NULL, var_col = NULL,
-  var_sym = NULL, var_size = NULL, color = NULL, symbol = NULL,
-  size = NULL)
-
-\method{style_geojson}{list}(input, var = NULL, var_col = NULL,
-  var_sym = NULL, var_size = NULL, color = NULL, symbol = NULL,
-  size = NULL)
 }
 \arguments{
 \item{input}{A data.frame or a list}

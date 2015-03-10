@@ -2,54 +2,9 @@
 % Please edit documentation in R/validate.R
 \name{validate}
 \alias{validate}
-\alias{validate.SpatialGrid}
-\alias{validate.SpatialGridDataFrame}
-\alias{validate.SpatialLines}
-\alias{validate.SpatialLinesDataFrame}
-\alias{validate.SpatialPoints}
-\alias{validate.SpatialPointsDataFrame}
-\alias{validate.SpatialPolygons}
-\alias{validate.SpatialPolygonsDataFrame}
-\alias{validate.character}
-\alias{validate.data.frame}
-\alias{validate.geo_list}
-\alias{validate.json}
-\alias{validate.list}
-\alias{validate.location}
-\alias{validate.numeric}
 \title{Validate a geoJSON file, json object, list, or Spatial class.}
 \usage{
 validate(x, ...)
-
-\method{validate}{character}(x, ...)
-
-\method{validate}{location}(x, ...)
-
-\method{validate}{geo_list}(x, ...)
-
-\method{validate}{json}(x, ...)
-
-\method{validate}{SpatialPolygons}(x, ...)
-
-\method{validate}{SpatialPolygonsDataFrame}(x, ...)
-
-\method{validate}{SpatialPoints}(x, ...)
-
-\method{validate}{SpatialPointsDataFrame}(x, ...)
-
-\method{validate}{SpatialLines}(x, ...)
-
-\method{validate}{SpatialLinesDataFrame}(x, ...)
-
-\method{validate}{SpatialGrid}(x, ...)
-
-\method{validate}{SpatialGridDataFrame}(x, ...)
-
-\method{validate}{numeric}(x, ...)
-
-\method{validate}{data.frame}(x, ...)
-
-\method{validate}{list}(x, ...)
 }
 \arguments{
 \item{x}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}

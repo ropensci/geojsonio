@@ -13,17 +13,21 @@
 #' # From a URL
 #' url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
 #' topojson_read(url)
-#' 
+#'
 #' # Use as.location first if you want
 #' topojson_read(as.location("~/zillow_or.geojson"))
 #' }
 
-topojson_read <- function(...) UseMethod("topojson_read")
+topojson_read <- function(x, ...) {
+  UseMethod("topojson_read")
+}
 
 #' @export
-#' @rdname topojson_read
-topojson_read.character <- function(x, ...) read_json(as.location(x), ...)
+topojson_read.character <- function(x, ...) {
+  read_json(as.location(x), ...)
+}
 
 #' @export
-#' @rdname topojson_read
-topojson_read.location <- function(x, ...) read_json(x, ...)
+topojson_read.location <- function(x, ...) {
+  read_json(x, ...)
+}

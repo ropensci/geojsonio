@@ -2,20 +2,14 @@
 % Please edit documentation in R/geojson_read.R
 \name{geojson_read}
 \alias{geojson_read}
-\alias{geojson_read.character}
-\alias{geojson_read.location}
 \title{Read geojson from a local file or a URL}
 \usage{
-geojson_read(...)
-
-\method{geojson_read}{character}(x, ...)
-
-\method{geojson_read}{location}(x, ...)
+geojson_read(x, ...)
 }
 \arguments{
-\item{...}{Further args passed on to \code{\link[rgdal]{readOGR}}}
-
 \item{x}{Path to a local file or a URL.}
+
+\item{...}{Further args passed on to \code{\link[rgdal]{readOGR}}}
 }
 \description{
 Read geojson from a local file or a URL
