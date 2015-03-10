@@ -216,3 +216,10 @@ geojson_json.list <- function(input, lat = NULL, lon = NULL, group = NULL,
   res <- list_to_geo_list(input, tmp$lat, tmp$lon, geometry, type, unnamed = !is.named(input), group)
   to_json(res, ...)
 }
+
+#' @export
+geojson_json.geo_list <- function(input, lat = NULL, lon = NULL, group = NULL,
+                                  geometry = "point", type = "FeatureCollection", ...) {
+  
+  to_json(unclass(input), ...)
+}

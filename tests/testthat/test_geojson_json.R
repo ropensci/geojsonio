@@ -53,9 +53,9 @@ test_that("geojson_json works with data.frame inputs", {
   )
 
   # from a geo_list
-  a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')$features[[1]]
+  a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
   expect_equal(
-    unclass(suppressWarnings(geojson_json(a))),
-    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":\"NA\"},\"properties\":[]},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[]},\"properties\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[]},\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":\"113888\",\"capital\":\"0\"}}]}"
+    unclass(geojson_json(a)),
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":\"113888\",\"capital\":\"0\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-81.52,41.08]},\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":\"206634\",\"capital\":\"0\"}}]}"
   )
 })
