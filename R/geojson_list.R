@@ -36,12 +36,12 @@
 #' geojson_list(vec)
 #'
 #'
-#' # Lists 
+#' # Lists
 #' ## From a list
 #' mylist <- list(list(latitude=30, longitude=120, marker="red"),
 #'                list(latitude=30, longitude=130, marker="blue"))
 #' geojson_list(mylist)
-#' 
+#'
 #' ## From a list of numeric vectors to a polygon
 #' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
 #' geojson_list(vecs, geometry="polygon")
@@ -53,7 +53,7 @@
 #' geojson_list(us_cities[1:2,])
 #' geojson_list(states[1:3,])
 #' geojson_list(states[1:351,], geometry="polygon", group='group')
-#' geojson_list(world_cities[1:30,])
+#' geojson_list(canada_cities[1:30,])
 #' ## a data.frame with columsn not named appropriately, but you can specify them
 #' # dat <- data.frame(a = c(31, 41), b = c(-120, -110))
 #' # geojson_list(dat)

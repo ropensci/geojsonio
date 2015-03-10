@@ -25,14 +25,14 @@ NULL
 
 #' This is the same data set from the maps library, named differently
 #' 
-#' This database is primarily of world cities of population greater than about 40,000. Also 
-#' included are capital cities of any population size, and many smaller towns.
+#' This database is of Canadian cities of population greater than about 1,000. Also included 
+#' are province capitals of any population size.
 #'
-#' @name world_cities
-#' @format A list with 6 components, namely "name", "country.etc", "pop", "lat", "long", and 
-#' "capital", containing the city name, the country name, approximate population 
+#' @name canada_cities
+#' @format A list with 6 components, namely "name", "country.etc", "pop", "lat", "long", 
+#' and "capital", containing the city name, the province abbreviation, approximate population 
 #' (as at January 2006), latitude, longitude and capital status indication (0 for non-capital, 
-#' 1 for capital, 2 for China Municipalities, and 3 for China Provincial capitals)
+#' 1 for capital, 2 for provincial
 #' @docType data
 #' @keywords data
 NULL

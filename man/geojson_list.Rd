@@ -70,7 +70,7 @@ as.json(res)
 geojson_list(us_cities[1:2,])
 geojson_list(states[1:3,])
 geojson_list(states[1:351,], geometry="polygon", group='group')
-geojson_list(world_cities[1:30,])
+geojson_list(canada_cities[1:30,])
 ## a data.frame with columsn not named appropriately, but you can specify them
 # dat <- data.frame(a = c(31, 41), b = c(-120, -110))
 # geojson_list(dat)
