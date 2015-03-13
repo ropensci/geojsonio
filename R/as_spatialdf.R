@@ -47,3 +47,13 @@ as.SpatialPolygonsDataFrame.SpatialRingsDataFrame <- function (from) {
 
 setAs("SpatialRingsDataFrame", "SpatialPolygonsDataFrame",
       as.SpatialPolygonsDataFrame.SpatialRingsDataFrame)
+
+
+## SpatialPixels to SpatialPointsDataFrame
+as.SpatialPointsDataFrame.SpatialPixels <- function (from) {
+  df <- data.frame(id = 1:NROW(from@coords), stringsAsFactors = FALSE)
+  SpatialPointsDataFrame(from, data = df)
+}
+
+setAs("SpatialPixels", "SpatialPointsDataFrame",
+      as.SpatialPointsDataFrame.SpatialPixels)

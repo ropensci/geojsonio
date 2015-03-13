@@ -151,6 +151,19 @@ geojson_list(r1r2)
 dat <- data.frame(id = c(1,2), value = 3:4)
 r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
 geojson_list(r1r2df)
+
+# From SpatialPixels
+library("sp")
+pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
+summary(pixels)
+geojson_list(pixels)
+
+# From SpatialPixelsDataFrame
+library("sp")
+pixelsdf <- suppressWarnings(
+ SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
+)
+geojson_list(pixelsdf)
 }
 }
 

@@ -59,7 +59,7 @@ lint.character <- function(x, ...) {
 
 #' @export
 lint.geo_list <- function(x, ...){
-  lintit(toJSON(unclass(x), auto_unbox = TRUE))
+  lintit(jsonlite::toJSON(unclass(x), auto_unbox = TRUE))
 }
 
 #' @export
