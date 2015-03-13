@@ -122,6 +122,18 @@
 #' sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
 #' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 #' geojson_list(sgdf)
+#' 
+#' # From SpatialRings
+#' library("rgeos")
+#' r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
+#' r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
+#' r1r2 <- SpatialRings(list(r1, r2))
+#' geojson_list(r1r2)
+#' 
+#' # From SpatialRingsDataFrame
+#' dat <- data.frame(id = c(1,2), value = 3:4)
+#' r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
+#' geojson_list(r1r2df)
 #' }
 
 geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
@@ -178,6 +190,20 @@ geojson_list.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, gro
   as.geo_list(geojson_rw(input), "SpatialGridDataFrame")
 }
 
+#' @export
+geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
+                                      geometry = "point",  type='FeatureCollection', ...) {
+  as.geo_list(geojson_rw(input), "SpatialRings")
+}
+
+#' @export
+geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
+                                               geometry = "point",  type='FeatureCollection', ...) {
+  as.geo_list(geojson_rw(input), "SpatialRingsDataFrame")
+}
+
+
+# regular R classes --------------------------
 #' @export
 geojson_list.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
                                  geometry = "point", type = "FeatureCollection", ...) {

@@ -1,6 +1,6 @@
 #' Convert many input types with spatial data to a geojson file
 #'
-#' @import sp rgdal methods
+#' @import sp rgdal methods rgeos
 #' @importFrom dplyr rbind_all
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
@@ -55,6 +55,16 @@
 #'           c(-106.61132812499999,39.436192999314095),
 #'           c(-114.345703125,39.436192999314095))
 #' geojson_write(poly, geometry = "polygon")
+#' 
+#' # Write output of geojson_list to file
+#' res <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
+#' class(res)
+#' geojson_write(res)
+#'
+#' # Write output of geojson_json to file
+#' res <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
+#' class(res)
+#' geojson_write(res)
 #'
 #' # From SpatialPolygons class
 #' library('sp')
@@ -80,16 +90,17 @@
 #' sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
 #' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 #' geojson_write(sgdf)
-#'
-#' # Write output of geojson_list to file
-#' res <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
-#' class(res)
-#' geojson_write(res)
-#'
-#' # Write output of geojson_json to file
-#' res <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
-#' class(res)
-#' geojson_write(res)
+#' 
+#' ## From SpatialRings
+#' r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
+#' r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
+#' r1r2 <- SpatialRings(list(r1, r2))
+#' geojson_write(r1r2)
+#' 
+#' ## From SpatialRingsDataFrame
+#' dat <- data.frame(id = c(1,2), value = 3:4)
+#' r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
+#' geojson_write(r1r2df)
 #' }
 
 geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
@@ -97,22 +108,7 @@ geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
   UseMethod("geojson_write")
 }
 
-#' @export
-geojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                   group = NULL, file = "myfile.geojson", ...) {
-  cat(as.json(input, pretty=TRUE), file=file)
-  message("Success! File is at ", file)
-  return(file)
-}
-
-#' @export
-geojson_write.json <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                               group = NULL, file = "myfile.geojson", ...) {
-  cat(toJSON(jsonlite::fromJSON(input), pretty=TRUE, auto_unbox = TRUE), file=file)
-  message("Success! File is at ", file)
-  return(file)
-}
-
+## sp R classes -----------------
 #' @export
 geojson_write.SpatialPolygons <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                           group = NULL, file = "myfile.geojson", ...) {
@@ -172,6 +168,28 @@ geojson_write.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, ge
 }
 
 #' @export
+geojson_write.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                                               group = NULL, file = "myfile.geojson", ...) {
+  write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
+  return(file)
+}
+
+#' @export
+geojson_write.SpatialRings <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                                               group = NULL, file = "myfile.geojson", ...) {
+  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
+  return(file)
+}
+
+#' @export
+geojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                                       group = NULL, file = "myfile.geojson", ...) {
+  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
+  return(file)
+}
+
+## normal R classes -----------------
+#' @export
 geojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                   group = NULL, file = "myfile.geojson", ...) {
   if(geometry == "point") {
@@ -216,6 +234,22 @@ geojson_write.list <- function(input, lat = NULL, lon = NULL, geometry="point",
     }
     write_geojson(res, file, ...)
   }
+  return(file)
+}
+
+#' @export
+geojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                                   group = NULL, file = "myfile.geojson", ...) {
+  cat(as.json(input, pretty=TRUE), file=file)
+  message("Success! File is at ", file)
+  return(file)
+}
+
+#' @export
+geojson_write.json <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                               group = NULL, file = "myfile.geojson", ...) {
+  cat(toJSON(jsonlite::fromJSON(input), pretty=TRUE, auto_unbox = TRUE), file=file)
+  message("Success! File is at ", file)
   return(file)
 }
 

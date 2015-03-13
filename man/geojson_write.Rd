@@ -67,6 +67,16 @@ poly <- c(c(-114.345703125,39.436192999314095),
           c(-114.345703125,39.436192999314095))
 geojson_write(poly, geometry = "polygon")
 
+# Write output of geojson_list to file
+res <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
+class(res)
+geojson_write(res)
+
+# Write output of geojson_json to file
+res <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
+class(res)
+geojson_write(res)
+
 # From SpatialPolygons class
 library('sp')
 poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
@@ -92,15 +102,16 @@ sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
 sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 geojson_write(sgdf)
 
-# Write output of geojson_list to file
-res <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
-class(res)
-geojson_write(res)
+## From SpatialRings
+r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
+r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
+r1r2 <- SpatialRings(list(r1, r2))
+geojson_write(r1r2)
 
-# Write output of geojson_json to file
-res <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
-class(res)
-geojson_write(res)
+## From SpatialRingsDataFrame
+dat <- data.frame(id = c(1,2), value = 3:4)
+r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
+geojson_write(r1r2df)
 }
 }
 \seealso{
