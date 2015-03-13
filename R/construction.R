@@ -33,7 +33,6 @@
 #' I eventually want to solve adding \code{geojson_list} and \code{json}
 #' together.
 #' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}
-
 #' @method + geo_list
 #' @rdname geojson-add
 `+.geo_list` <- function(x1, x2) {
@@ -45,6 +44,7 @@
   }
 }
 
+#' @export
 #' @method + json
 #' @rdname geojson-add
 `+.json` <- function(x1, x2) {
@@ -63,8 +63,10 @@ add_geolist <- function (t1, t2, t2name) {
   if(class(t2) == "geo_list") { 
     t1$features <- c(t1$features, t2$features)
     att1 <- attr(t1, "from")
+    att2 <- attr(t2, "from")
   } else {
     t1$features <- c(t1$features, geojson_list(t2)$features) 
+    att1 <- attr(t1, "from")
     att2 <- "json"
   }
   structure(t1, from = c(att1, att2))
