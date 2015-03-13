@@ -52,7 +52,6 @@ you to specify the parameters specifically.
 vec <- c(-99.74,32.45)
 geojson_list(vec)
 
-
 # Lists
 ## From a list
 mylist <- list(list(latitude=30, longitude=120, marker="red"),

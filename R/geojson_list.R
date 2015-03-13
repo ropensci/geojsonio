@@ -35,7 +35,6 @@
 #' vec <- c(-99.74,32.45)
 #' geojson_list(vec)
 #'
-#'
 #' # Lists
 #' ## From a list
 #' mylist <- list(list(latitude=30, longitude=120, marker="red"),
@@ -248,6 +247,13 @@ geojson_list.geo_list <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point", type = "FeatureCollection", ...) {
   
   return(input)
+}
+
+#' @export
+geojson_list.json <- function(input, lat = NULL, lon = NULL, group = NULL,
+                              geometry = "point", type = "FeatureCollection", ...) {
+  
+  jsonlite::fromJSON(input, FALSE, ...)
 }
 
 as.geo_list <- function(x, from) structure(x, class="geo_list", from=from)
