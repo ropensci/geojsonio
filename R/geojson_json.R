@@ -170,6 +170,10 @@
 #' poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 #' dat <- SpatialCollections(pts, polygons = poly)
 #' geojson_json(dat)
+#' 
+#' ## Pretty print a json string
+#' geojson_json(c(-99.74,32.45))
+#' geojson_json(c(-99.74,32.45)) %>% pretty
 #' }
 geojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
                          geometry = "point", type='FeatureCollection', ...) {

@@ -187,6 +187,10 @@ poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
 poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 dat <- SpatialCollections(pts, polygons = poly)
 geojson_json(dat)
+
+## Pretty print a json string
+geojson_json(c(-99.74,32.45))
+geojson_json(c(-99.74,32.45)) \%>\% pretty
 }
 }
 

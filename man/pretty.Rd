@@ -2,7 +2,7 @@
 % Please edit documentation in R/pretty.R
 \name{pretty}
 \alias{pretty}
-\title{Convert inputs to JSON}
+\title{Convert json input to pretty printed output}
 \usage{
 pretty(x, indent = 4)
 }
@@ -12,6 +12,10 @@ pretty(x, indent = 4)
 \item{indent}{(integer) Number of spaces to indent}
 }
 \description{
-Convert inputs to JSON
+Convert json input to pretty printed output
+}
+\details{
+Only works with json class input. This is a simple wrapper around
+\code{\link[jsonlite]{prettify}}, so you can easily use that yourself.
 }
 
