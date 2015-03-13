@@ -178,6 +178,15 @@ pixelsdf <- suppressWarnings(
  SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
 )
 geojson_json(pixelsdf)
+
+# From SpatialCollections
+library("sp")
+pts <- SpatialPoints(cbind(c(1,2,3,4,5), c(3,2,5,1,4)))
+poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
+poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+dat <- SpatialCollections(pts, polygons = poly)
+geojson_json(dat)
 }
 }
 
