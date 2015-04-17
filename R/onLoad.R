@@ -4,3 +4,9 @@ ct <- NULL
   ct <<- new_context();
   ct$source(system.file("js/geojsonhint.js", package = pkgname))
 }
+
+# buf <- NULL
+# .onLoad <- function(libname, pkgname){
+#   buf <<- new_context();
+#   buf$source(system.file("js/geobuf.js", package = pkgname))
+# }

@@ -1,4 +1,4 @@
-#' Modify a geo_list or json object
+#' Add together geo_list or json objects
 #'
 #' @export
 #' @name geojson-add
