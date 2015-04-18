@@ -158,6 +158,7 @@ cartographer() \%>\%
  geojson_layer(data = geojson_json(sp_polydf))
 
 # From a file
+library("cartographer")
 land <- system.file("extdata", "land.geojson", package = "cartographer")
 cartographer() \%>\%
  geojson_layer(file = land, label = "land")

@@ -24,11 +24,10 @@ another object of class \code{geo_list} or of class \code{json}, and will result
 in a \code{geo_list} object.
 
 If the first object is an object of class \code{json}, you can add
-another object of class \code{geo_list} or of class \code{json}, and will result
+another object of class \code{json} or of class \code{geo_list}, and will result
 in a \code{json} object.
 
-I eventually want to solve adding \code{geojson_list} and \code{json}
-together.
+TODO: Eventually solve adding \code{geojson_list} and \code{json} together
 }
 \examples{
 \dontrun{

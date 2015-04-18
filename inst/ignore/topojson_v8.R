@@ -3,12 +3,13 @@
 # ct$get(I('Object.keys(global)'))
 
 topojson <- 'http://d3js.org/topojson.v1.min.js'
-ct <- new_context()
-ct$source(topojson)
-ct$get(I('Object.keys(global)'))
+tp <- new_context()
+tp$source(topojson)
+tp$get(I('Object.keys(global)'))
 
-ct$assign('topojson', 'require("topojson");')
-ct$assign('collection', '{"type":"Point","geometry":{"type":"Point","coordinates":[32.45,-99.74]},"properties":{}};')
-ct$assign('topology', 'topojson.topology({collection: collection});')
-ct$console()
-ct$eval("console.log(topology.objects.collection)")
+tp$assign('topojson', 'require("topojson");')
+tp$assign('collection', '{"type":"Point","geometry":{"type":"Point","coordinates":[32.45,-99.74]},"properties":{}};')
+tp$eval('topology = topojson.topology({collection: collection});')
+tp$get("topology")
+tp$console()
+tp$eval("console.log(topology.objects.collection)")
