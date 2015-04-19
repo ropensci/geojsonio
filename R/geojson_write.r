@@ -114,6 +114,15 @@
 #'  SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
 #' )
 #' geojson_write(pixelsdf)
+#' 
+#' # From SpatialCollections
+#' library("sp")
+#' poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
+#' poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
+#' poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+#' coordinates(us_cities) <- ~long+lat
+#' dat <- SpatialCollections(points = us_cities, polygons = poly)
+#' geojson_write(dat)
 #' }
 
 geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
@@ -215,11 +224,28 @@ geojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, 
   return(file)
 }
 
+#' @export
+geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                                                 group = NULL, file = "myfile.geojson", ...) {
+  ptfile <- iter_spatialcoll(input@pointobj, file, ...)
+  lfile <- iter_spatialcoll(input@lineobj, file, ...)
+  rfile <- iter_spatialcoll(input@ringobj, file, ...)
+  pyfile <- iter_spatialcoll(input@polyobj, file, ...)
+  return(c(ptfile, lfile, rfile, pyfile))
+}
+
+iter_spatialcoll <- function(z, file, ...) {
+  wfile <- paste0(class(z)[1], "_", file)
+  if (!is.null(z)) {
+    geojson_write(z, file = wfile, ...)
+  }
+}
+
 ## normal R classes -----------------
 #' @export
 geojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                   group = NULL, file = "myfile.geojson", ...) {
-  if(geometry == "point") {
+  if (geometry == "point") {
     res <- df_to_SpatialPointsDataFrame(num2df(input, lat, lon), lon = lon, lat = lat)
   } else {
     res <- df_to_SpatialPolygonsDataFrame(input)
@@ -236,7 +262,7 @@ num2df <- function(x, lat, lon) {
 geojson_write.data.frame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                      group = NULL, file = "myfile.geojson", ...) {
   tmp <- guess_latlon(names(input), lat, lon)
-  if(geometry == "point") {
+  if (geometry == "point") {
     res <- df_to_SpatialPointsDataFrame(input, tmp$lon, tmp$lat)
   } else {
     res <- df_to_SpatialPolygonsDataFrame2(input, tmp$lat, tmp$lon, group)

@@ -125,6 +125,15 @@ pixelsdf <- suppressWarnings(
  SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
 )
 geojson_write(pixelsdf)
+
+# From SpatialCollections
+library("sp")
+poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
+poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+coordinates(us_cities) <- ~long+lat
+dat <- SpatialCollections(points = us_cities, polygons = poly)
+geojson_write(dat)
 }
 }
 \seealso{

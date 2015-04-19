@@ -146,6 +146,17 @@
 #'  SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
 #' )
 #' geojson_list(pixelsdf)
+#' 
+#' # From SpatialCollections
+#' library("sp")
+#' poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
+#' poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
+#' poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+#' coordinates(us_cities) <- ~long+lat
+#' dat <- SpatialCollections(points = us_cities, polygons = poly)
+#' out <- geojson_list(dat)
+#' out$SpatialPoints
+#' out$SpatialPolygons
 #' }
 
 geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
@@ -168,7 +179,7 @@ geojson_list.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_list.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point", type = "FeatureCollection", ...) {
-  dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
+  dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
   as.geo_list(geojson_rw(dat), "SpatialPoints")
 }
 
@@ -214,6 +225,25 @@ geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, gr
   as.geo_list(geojson_rw(input), "SpatialRingsDataFrame")
 }
 
+#' @export
+geojson_list.SpatialCollections <- function(input, lat = NULL, lon = NULL, group = NULL,
+                                            geometry = "point",  type='FeatureCollection', ...) {
+  pt <- donotnull(input@pointobj, geojson_rw)
+  ln <- donotnull(input@lineobj, geojson_rw)
+  rg <- donotnull(input@ringobj, geojson_rw)
+  py <- donotnull(input@polyobj, geojson_rw)
+  alldat <- tg_compact(list(SpatialPoints = pt, SpatialLines = ln, 
+                            SpatialRings = rg, SpatialPolygons = py))
+  as.geo_list(alldat, "SpatialCollections")
+}
+
+donotnull <- function(x, fun) {
+  if (!is.null(x)) {
+    fun(x)
+  } else {
+    NULL
+  }
+}
 
 # regular R classes --------------------------
 #' @export
@@ -227,19 +257,21 @@ geojson_list.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                     geometry = "point", type = "FeatureCollection", ...) {
 
   tmp <- guess_latlon(names(input), lat, lon)
-  as.geo_list(df_to_geo_list(x=input, lat=tmp$lat, lon=tmp$lon, geometry=geometry, type=type, group=group), "data.frame")
+  as.geo_list(df_to_geo_list(x = input, lat = tmp$lat, lon = tmp$lon, 
+                             geometry = geometry, type = type, group = group), "data.frame")
 }
 
 #' @export
 geojson_list.list <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point", type = "FeatureCollection", ...) {
 
-  tmp <- if(!is.named(input)) {
+  tmp <- if (!is.named(input)) {
     list(lon = NULL, lat = NULL)
   } else {
     guess_latlon(names(input[[1]]), lat, lon)
   }
-  as.geo_list(list_to_geo_list(input, lat=tmp$lat, lon=tmp$lon, geometry, type, !is.named(input), group), "list")
+  as.geo_list(list_to_geo_list(input, lat = tmp$lat, lon = tmp$lon, 
+                               geometry, type, !is.named(input), group), "list")
 }
 
 #' @export
@@ -256,4 +288,4 @@ geojson_list.json <- function(input, lat = NULL, lon = NULL, group = NULL,
   jsonlite::fromJSON(input, FALSE, ...)
 }
 
-as.geo_list <- function(x, from) structure(x, class="geo_list", from=from)
+as.geo_list <- function(x, from) structure(x, class = "geo_list", from = from)
