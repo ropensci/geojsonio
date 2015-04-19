@@ -15,6 +15,7 @@ Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     person("Joel", "Gombin", role = "aut",
     email = "joel.gombin@gmail.com"))
 LazyData: true
+VignetteBuilder: knitr
 Imports:
     methods,
     sp,
