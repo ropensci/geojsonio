@@ -3,11 +3,37 @@
 %\VignetteIndexEntry{geojsonio vignette}
 -->
 
-```{r, eval=TRUE, echo=FALSE}
+```{r echo=FALSE}
+library("knitr")
+hook_output <- knitr::knit_hooks$get("output")
+knitr::knit_hooks$set(output = function(x, options) {
+   lines <- options$output.lines
+   if (is.null(lines)) {
+     return(hook_output(x, options))  # pass to default hook
+   }
+   x <- unlist(strsplit(x, "\n"))
+   more <- "..."
+   if (length(lines)==1) {        # first n lines
+     if (length(x) > lines) {
+       # truncate the output, but add ....
+       x <- c(head(x, lines), more)
+     }
+   } else {
+     x <- c(if (abs(lines[1])>1) more else NULL, 
+            x[lines], 
+            if (length(x)>lines[abs(length(lines))]) more else NULL
+           )
+   }
+   # paste these lines together
+   x <- paste(c(x, ""), collapse = "\n")
+   hook_output(x, options)
+ })
+
 knitr::opts_chunk$set(
-	message = FALSE,
-	warning = FALSE,
-	comment = "#>"
+  comment = "#>",
+  collapse = TRUE,
+  warning = FALSE, 
+  message = FALSE
 )
 ```
 
@@ -57,19 +83,33 @@ library("geojsonio")
 
 ### Convert various formats to geojson
 
-From a `numeric` vector of length 2, as json or list
+From a `numeric` vector of length 2
+
+as _json_
 
 ```{r}
 geojson_json(c(32.45, -99.74))
+```
+
+as a __list__
+
+```{r output.lines=1:10}
 geojson_list(c(32.45, -99.74))
 ```
 
 From a `data.frame`
 
+as __json__
+
 ```{r}
 library('maps')
 data(us.cities)
 geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
+```
+
+as a __list__
+
+```{r output.lines=1:10}
 geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
@@ -84,16 +124,16 @@ poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 ```
 
-to json
+to __json__
 
 ```{r}
 geojson_json(sp_poly)
 ```
 
-to list
+to a __list__
 
-```{r}
-geojson_list(sp_poly)$coordinates[[1]]
+```{r output.lines=1:10}
+geojson_list(sp_poly)
 ```
 
 ### Write geojson

@@ -55,22 +55,21 @@ library("geojsonio")
 
 ### Convert various formats to geojson
 
-From a `numeric` vector of length 2, as json or list
+From a `numeric` vector of length 2
+
+as _json_
 
 
 ```r
 geojson_json(c(32.45, -99.74))
-```
-
-```
 #> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[32.45,-99.74]},"properties":{}}]}
 ```
 
+as a __list__
+
+
 ```r
 geojson_list(c(32.45, -99.74))
-```
-
-```
 #> $type
 #> [1] "FeatureCollection"
 #> 
@@ -81,41 +80,26 @@ geojson_list(c(32.45, -99.74))
 #> 
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
-#> [1] "Point"
-#> 
-#> $features[[1]]$geometry$coordinates
-#> [1]  32.45 -99.74
-#> 
-#> 
-#> $features[[1]]$properties
-#> NULL
-#> 
-#> 
-#> 
-#> attr(,"class")
-#> [1] "geo_list"
-#> attr(,"from")
-#> [1] "numeric"
+...
 ```
 
 From a `data.frame`
+
+as __json__
 
 
 ```r
 library('maps')
 data(us.cities)
 geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
-```
-
-```
 #> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.74,32.45]},"properties":{"name":"Abilene TX","country.etc":"TX","pop":"113888","capital":"0"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-81.52,41.08]},"properties":{"name":"Akron OH","country.etc":"OH","pop":"206634","capital":"0"}}]}
 ```
 
+as a __list__
+
+
 ```r
 geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
-```
-
-```
 #> $type
 #> [1] "FeatureCollection"
 #> 
@@ -126,59 +110,7 @@ geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> 
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
-#> [1] "Point"
-#> 
-#> $features[[1]]$geometry$coordinates
-#> [1] -99.74  32.45
-#> 
-#> 
-#> $features[[1]]$properties
-#> $features[[1]]$properties$name
-#> [1] "Abilene TX"
-#> 
-#> $features[[1]]$properties$country.etc
-#> [1] "TX"
-#> 
-#> $features[[1]]$properties$pop
-#> [1] "113888"
-#> 
-#> $features[[1]]$properties$capital
-#> [1] "0"
-#> 
-#> 
-#> 
-#> $features[[2]]
-#> $features[[2]]$type
-#> [1] "Feature"
-#> 
-#> $features[[2]]$geometry
-#> $features[[2]]$geometry$type
-#> [1] "Point"
-#> 
-#> $features[[2]]$geometry$coordinates
-#> [1] -81.52  41.08
-#> 
-#> 
-#> $features[[2]]$properties
-#> $features[[2]]$properties$name
-#> [1] "Akron OH"
-#> 
-#> $features[[2]]$properties$country.etc
-#> [1] "OH"
-#> 
-#> $features[[2]]$properties$pop
-#> [1] "206634"
-#> 
-#> $features[[2]]$properties$capital
-#> [1] "0"
-#> 
-#> 
-#> 
-#> 
-#> attr(,"class")
-#> [1] "geo_list"
-#> attr(,"from")
-#> [1] "data.frame"
+...
 ```
 
 From `SpatialPolygons` class
@@ -193,26 +125,30 @@ poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 ```
 
-to json
+to __json__
 
 
 ```r
 geojson_json(sp_poly)
-```
-
-```
 #> {"type":"FeatureCollection","features":[{"type":"Feature","id":1,"properties":{"dummy":0},"geometry":{"type":"Polygon","coordinates":[[[-100,40],[-90,50],[-85,45],[-100,40]]]}},{"type":"Feature","id":2,"properties":{"dummy":0},"geometry":{"type":"Polygon","coordinates":[[[-90,30],[-80,40],[-75,35],[-90,30]]]}}]}
 ```
 
-to list
+to a __list__
 
 
 ```r
-geojson_list(sp_poly)$coordinates[[1]]
-```
-
-```
-#> NULL
+geojson_list(sp_poly)
+#> $type
+#> [1] "FeatureCollection"
+#> 
+#> $features
+#> $features[[1]]
+#> $features[[1]]$type
+#> [1] "Feature"
+#> 
+#> $features[[1]]$id
+#> [1] 1
+...
 ```
 
 ### Write geojson
@@ -222,9 +158,6 @@ geojson_list(sp_poly)$coordinates[[1]]
 library('maps')
 data(us.cities)
 geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-```
-
-```
 #> [1] "myfile.geojson"
 ```
 
@@ -234,29 +167,16 @@ geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```r
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
-```
-
-```
-#> OGR data source with driver: GeoJSON 
-#> Source: "/Users/sacmac/github/ropensci/geojsonio/inst/examples/california.geojson", layer: "OGRGeoJSON"
-#> with 1 features and 11 fields
-#> Feature type: wkbMultiPolygon with 2 dimensions
-```
-
-```r
+#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
 plot(out)
+#> Error in plot(out): error in evaluating the argument 'x' in selecting a method for function 'plot': Error: object 'out' not found
 ```
-
-![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 
 
 ## Topojson
 
 
 ```r
 "Asdfasdf"
-```
-
-```
 #> [1] "Asdfasdf"
 ```
 
@@ -289,4 +209,4 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~ .id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png) 
