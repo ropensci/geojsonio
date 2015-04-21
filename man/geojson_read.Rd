@@ -4,30 +4,41 @@
 \alias{geojson_read}
 \title{Read geojson from a local file or a URL}
 \usage{
-geojson_read(x, ...)
+geojson_read(x, method = "web", parse = FALSE, ...)
 }
 \arguments{
 \item{x}{Path to a local file or a URL.}
 
-\item{...}{Further args passed on to \code{\link[rgdal]{readOGR}}}
+\item{method}{One of web or local. Matches on partial strings.}
+
+\item{parse}{(logical) To parse geojson to data.frame like structures if possible.
+Default: \code{FALSE}}
+
+\item{...}{Ignored}
 }
 \description{
 Read geojson from a local file or a URL
 }
+\details{
+Uses \code{\link{file_to_geojson}} internally.
+}
 \examples{
 \donttest{
 # From a file
-file <- system.file("examples", "california.geojson", package = "togeojson")
+file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
 plot(out)
 
 # From a URL
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
-geojson_read(url)
-geojson_read(url, stringsAsFactors=FALSE)
+geojson_read(url, method = "local")
 
 # Use as.location first if you want
 geojson_read(as.location(file))
+
+# use jsonlite to parse to data.frame structures where possible
+url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
+geojson_read(url, method = "local", parse = TRUE)
 }
 }
 

@@ -4,18 +4,17 @@
 \alias{file_to_geojson}
 \title{Convert spatial data files to GeoJSON from various formats.}
 \usage{
-file_to_geojson(input, method = "web", destpath = "~/",
-  outfilename = "myfile")
+file_to_geojson(input, method = "web", output = "~/", parse = FALSE)
 }
 \arguments{
 \item{input}{The file being uploaded, path to the file on your machine.}
 
 \item{method}{One of web or local. Matches on partial strings.}
 
-\item{destpath}{Destination for output geojson file. Defaults to your root
-directory ('~/').}
+\item{output}{Destination for output geojson file. Defaults to root directory \code{~/}}
 
-\item{outfilename}{The output file name, without file extension.}
+\item{parse}{(logical) To parse geojson to data.frame like structures if possible.
+Default: \code{FALSE}}
 }
 \description{
 The web option uses the Ogre web API. Ogre currently has an output size limit of 15MB.
@@ -36,22 +35,29 @@ rgdal package.
 }
 \examples{
 \dontrun{
-file <- '/Users/sacmac/Downloads/bison-Poa_annua-20140508-151800.kml'
+file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
 
 # KML type file - using the web method
-file_to_geojson(input=file, method='web', outfilename='kml_web')
+file_to_geojson(input=file, method='web', output='kml_web')
+## read into memory
+file_to_geojson(input=file, method='web', output = ":memory:")
+file_to_geojson(input=file, method='local', output = ":memory:")
 
 # KML type file - using the local method
-file_to_geojson(input=file, method='local', outfilename='kml_local')
+file_to_geojson(input=file, method='local', output='~/kml_local')
 
 # Shp type file - using the web method - input is a zipped shp bundle
-file <- '~/github/sac/bison.zip'
-file_to_geojson(file, method='web', outfilename='shp_web')
+file <- system.file("examples", "bison.zip", package = "geojsonio")
+file_to_geojson(file, method='web', output='shp_web')
 
 # Shp type file - using the local method - input is the actual .shp file
-file <- file.path('~/github/ropensci/datasets/misc/bison-Bison_bison-20140508-154311/',
-'bison-Bison_bison-20140508-154311.shp')
-file_to_geojson(file, method='local', outfilename='shp_local')
+file <- system.file("examples", "bison.zip", package = "geojsonio")
+dir <- tempdir()
+unzip(file, exdir = dir)
+list.files(dir)
+shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
+file_to_geojson(shpfile, method='local', output='shp_local')
+file_to_geojson(shpfile, method='local', output=':memory:')
 
 # Get data and save map data
 splist <- c('Accipiter erythronemius', 'Junco hyemalis', 'Aix sponsa')
@@ -65,13 +71,11 @@ datgeojson <- spocc_stylegeojson(input=dat, var='name',
 # Put into a github repo to view on the web
 write.csv(datgeojson, '~/github/sac/mygeojson/rgbif_data.csv')
 file <- '~/github/sac/mygeojson/rgbif_data.csv'
-file_to_geojson(file, method='web', destpath='~/github/sac/mygeojson/',
-   outfilename='rgbif_data')
+file_to_geojson(file, method='web', destpath='~/github/sac/mygeojson/', output='rgbif_data')
 
 # Neighborhoods in the US
-url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-OR.zip'
-url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-MT.zip'
-out <- file_to_geojson(input=url, method='web', outfilename='zillow_mt')
+url <- 'http://www.nws.noaa.gov/geodata/catalog/national/data/ci08au12.zip'
+out <- file_to_geojson(input=url, method='web', output='cities')
 }
 }
 
