@@ -15,7 +15,7 @@ Functions in this package are organized first around what you're working with or
 * `geojson_list()`/`topojson_list()` - convert to geojson/topojson as R list format
 * `geojson_json()`/`topojson_json()` - convert to geojson/topojson as json
 * `geojson_read()``topojson_read()` - read a geojson/topojson file from file path or URL
-* `geojson_write()`/`topojson_write()` - write a geojson/topojson file locally
+* `geojson_write()` - write a geojson file locally (no write topojson yet)
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
@@ -151,6 +151,41 @@ geojson_list(sp_poly)
 ...
 ```
 
+From `SpatialPoints` class
+
+
+```r
+x <- c(1, 2, 3, 4, 5)
+y <- c(3, 2, 5, 1, 4)
+s <- SpatialPoints(cbind(x, y))
+```
+
+to __json__
+
+
+```r
+geojson_json(s)
+#> {"type":"FeatureCollection","features":[{"type":"Feature","id":1,"properties":{"dat":1},"geometry":{"type":"Point","coordinates":[1,3]}},{"type":"Feature","id":2,"properties":{"dat":2},"geometry":{"type":"Point","coordinates":[2,2]}},{"type":"Feature","id":3,"properties":{"dat":3},"geometry":{"type":"Point","coordinates":[3,5]}},{"type":"Feature","id":4,"properties":{"dat":4},"geometry":{"type":"Point","coordinates":[4,1]}},{"type":"Feature","id":5,"properties":{"dat":5},"geometry":{"type":"Point","coordinates":[5,4]}}]}
+```
+
+to a __list__
+
+
+```r
+geojson_list(s)
+#> $type
+#> [1] "FeatureCollection"
+#> 
+#> $features
+#> $features[[1]]
+#> $features[[1]]$type
+#> [1] "Feature"
+#> 
+#> $features[[1]]$id
+#> [1] 1
+...
+```
+
 ### Write geojson
 
 
@@ -174,10 +209,37 @@ plot(out)
 
 ## Topojson
 
+In the current version of this package you can read topojson. Writing topojson was in this package, but is gone for now - will come back later as in interface to [topojson](https://github.com/mbostock/topojson) via [V8](https://github.com/jeroenooms/V8). 
+
+Read from a file
+
 
 ```r
-"Asdfasdf"
-#> [1] "Asdfasdf"
+file <- system.file("examples", "us_states.topojson", package = "togeojson")
+out <- geojson_read(file)
+#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
+```
+
+Read from a URL
+
+
+```r
+url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
+out <- topojson_read(url)
+#> OGR data source with driver: GeoJSON 
+#> Source: "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson", layer: "states"
+#> with 51 features
+#> It has 2 fields
+```
+
+Or use `as.location()` first
+
+
+```r
+(loc <- as.location(file))
+#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
+out <- topojson_read(loc)
+#> Error in topojson_read(loc): object 'loc' not found
 ```
 
 ## Example use case: Play with US states
@@ -209,4 +271,4 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~ .id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png) 
+![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png) 
