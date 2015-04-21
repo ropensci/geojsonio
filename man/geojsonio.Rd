@@ -4,13 +4,16 @@
 \name{geojsonio}
 \alias{geojsonio}
 \alias{geojsonio-package}
-\title{Convert various data formats to geoJSON or topoJSON}
+\title{Convert various data formats to/from GeoJSON or TopoJSON}
 \description{
-This package converts lists, data.frame's, numeric, SpatialPolygons, and
-SpatialPolygonsDataFrame to geoJSON with the help of \code{rgdal} and friends, or topoJSON
-with the help of the npm node package \code{topojson}
+This package focuses mostly on converting lists, data.frame's, numeric, SpatialPolygons,
+SpatialPolygonsDataFrame, and more to GeoJSON with the help of \code{rgdal} and
+friends. You can currently read TopoJSON - writing TopoJSON will come in a future
+version of this package.
 }
 \author{
 Scott Chamberlain
+
+Andy Teucher
 }
 
