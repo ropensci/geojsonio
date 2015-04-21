@@ -5,6 +5,7 @@ travis-tool.sh
 vignettes/margins.sty
 Makefile
 inst/stuff/
+vignettes/figure/
 ^appveyor\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
