@@ -1,0 +1,99 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{CRS and Bounding Boxes}
+-->
+
+
+
+CRS and Bounding Boxes
+======================
+
+The following are the guidelines for CRS and bounding boxes for geojson, annotated as needed, so do so complete guidelines at [http://geojson.org/geojson-spec.html](http://geojson.org/geojson-spec.html).
+
+## CRS (Coordinate Reference System Objects)
+
+* If an object has no crs member, then its parent or grandparent object's crs member may be acquired. If no crs member can be so acquired, the default CRS shall apply to the GeoJSON object.
+* Default CRS: WGS84 datum, w/ longitude and latitude units of decimal degrees
+* The crs member should be on the top-level GeoJSON object in a hierarchy (in feature collection, feature, geometry order) and should not be repeated or overridden on children or grandchildren of the object
+* A non-null CRS object has two mandatory members: "type" and "properties"
+* The value of the type member must be a string, indicating the type of CRS object
+* The value of the properties member must be an object
+
+### Linked CRS
+
+A CRS object may indicate a coordinate reference system by name. In this case, the value of its `type` member must be the string `name`. The value of its `properties` member must be an object containing a `name` member. The value of that `name` member must be a string identifying a coordinate reference system. OGC CRS URNs such as `urn:ogc:def:crs:OGC:1.3:CRS84` shall be preferred over legacy identifiers such as `EPSG:4326`:
+
+```r
+"crs": {
+  "type": "name",
+  "properties": {
+    "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+  }
+}
+```
+
+### Named CRS
+
+A CRS object may link to CRS parameters on the Web. In this case, the value of its `type` member must be the string `link`, and the value of its `properties` member must be a Link object (see 3.2.1. Link Objects).
+
+#### Link objects
+
+A link object has one required member: `href`, and one optional member: `type`.
+
+The value of the required `href` member must be a dereferenceable URI.
+
+The value of the optional `type` member must be a string that hints at the format used to represent CRS parameters at the provided URI. Suggested values are: `proj4`, `ogcwkt`, `esriwkt`, but others can be used:
+
+```r
+"crs": {
+  "type": "link", 
+  "properties": {
+    "href": "http://example.com/crs/42",
+    "type": "proj4"
+  }
+}
+```
+    
+Relative links may be used to direct processors to CRS parameters in an auxiliary file:
+
+```r
+"crs": {
+  "type": "link",
+  "properties": {
+    "href": "data.crs",
+    "type": "ogcwkt"
+  }
+}
+```
+
+## Bounding Boxes
+
+To include information on the coordinate range for geometries, features, or feature collections, a GeoJSON object may have a member named "bbox". The value of the bbox member must be a 2*n array where n is the number of dimensions represented in the contained geometries, with the lowest values for all axes followed by the highest values. The axes order of a bbox follows the axes order of geometries. In addition, the coordinate reference system for the bbox is assumed to match the coordinate reference system of the GeoJSON object of which it is a member.
+
+Example of a bbox member on a feature:
+
+```
+{ 
+  "type": "Feature",
+  "bbox": [-180.0, -90.0, 180.0, 90.0],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-180.0, 10.0], [20.0, 90.0], [180.0, -5.0], [-30.0, -90.0]
+    ]]
+  }
+  ...
+}
+```
+
+Example of a bbox member on a feature collection:
+
+```
+{ 
+  "type": "FeatureCollection",
+  "bbox": [100.0, 0.0, 105.0, 1.0],
+  "features": [
+    ...
+  ] 
+}
+```
