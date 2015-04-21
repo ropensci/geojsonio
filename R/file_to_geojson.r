@@ -58,15 +58,10 @@
 #' file_to_geojson(file, method='web', destpath='~/github/sac/mygeojson/',
 #'    outfilename='rgbif_data')
 #'
-#' # Natural earth layers
-#' # Download from https://github.com/nvkelso/natural-earth-vector/tree/master/zips/110m_cultural
-#' file = "~/Downloads/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
-#' file_to_geojson(file, method='local', outfilename='shp_local')
-#'
 #' # Neighborhoods in the US
 #' url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-OR.zip'
 #' url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-MT.zip'
-#' file_to_geojson(input=url, method='web', outfilename='zillow_mt')
+#' out <- file_to_geojson(input=url, method='web', outfilename='zillow_mt')
 #' }
 
 file_to_geojson <- function(input, method = "web", destpath = "~/", outfilename = "myfile") {
