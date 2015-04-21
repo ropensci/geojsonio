@@ -15,7 +15,7 @@ Functions in this package are organized first around what you're working with or
 * `geojson_list()`/`topojson_list()` - convert to geojson/topojson as R list format
 * `geojson_json()`/`topojson_json()` - convert to geojson/topojson as json
 * `geojson_read()``topojson_read()` - read a geojson/topojson file from file path or URL
-* `geojson_write()`/`topojson_write()` - write a geojson/topojson file locally
+* `geojson_write()` - write a geojson file locally (topojson coming later)
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
@@ -34,7 +34,7 @@ Additional functions:
 
 ### Install
 
-Install rgdal - in case you can't get it installed from binary , here's what works on a Mac.
+Install rgdal - in case you can't get it installed from binary , here's what works on a Mac (change to the version of `rgdal` and `GDAL` you have).
 
 
 ```r
@@ -53,7 +53,6 @@ devtools::install_github("ropensci/geojsonio")
 ```r
 library("geojsonio")
 ```
-
 
 ### GeoJSON
 
@@ -191,8 +190,35 @@ to list
 
 
 ```r
-geojson_list(sp_poly)$coordinates[[1]]
-#> NULL
+geojson_list(sp_poly)$features[[1]]
+#> $type
+#> [1] "Feature"
+#> 
+#> $id
+#> [1] 1
+#> 
+#> $properties
+#> $properties$dummy
+#> [1] 0
+#> 
+#> 
+#> $geometry
+#> $geometry$type
+#> [1] "Polygon"
+#> 
+#> $geometry$coordinates
+#> $geometry$coordinates[[1]]
+#> $geometry$coordinates[[1]][[1]]
+#> [1] -100   40
+#> 
+#> $geometry$coordinates[[1]][[2]]
+#> [1] -90  50
+#> 
+#> $geometry$coordinates[[1]][[3]]
+#> [1] -85  45
+#> 
+#> $geometry$coordinates[[1]][[4]]
+#> [1] -100   40
 ```
 
 #### Write geojson
@@ -211,53 +237,12 @@ geojson_write(us.cities[1:2,], lat='lat', lon='long')
 ```r
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
-#> OGR data source with driver: GeoJSON 
-#> Source: "/Users/sacmac/github/ropensci/geojsonio/inst/examples/california.geojson", layer: "OGRGeoJSON"
-#> with 1 features and 11 fields
-#> Feature type: wkbMultiPolygon with 2 dimensions
+#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
 plot(out)
+#> Error in plot(out): error in evaluating the argument 'x' in selecting a method for function 'plot': Error: object 'out' not found
 ```
-
-![plot of chunk unnamed-chunk-11](inst/img/unnamed-chunk-11-1.png) 
 
 ### TopoJSON
-
-#### Convert to TopoJSON with Node topojson client
-
-For topojson you will need Mike Bostock's command line client. Install it by doing
-
-```
-sudo npm install -g topojson
-```
-
-Download a zipped shape fileset, [this one](http://esp.cr.usgs.gov/data/little/querwisl.zip) for distribution of _Quercus wislizeni_. Unzip the zip file to a folder. Then do (changing the path to your path)
-
-
-```r
-topojson_write(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='albers', projargs=list(rotate='[60, -35, 0]'))
-#> OGR data source with driver: ESRI Shapefile 
-#> Source: "/Users/sacmac/Downloads/querwisl", layer: "querwisl"
-#> with 35 features and 5 fields
-#> Feature type: wkbPolygon with 2 dimensions
-```
-
-Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`
-
-
-```r
-OGR data source with driver: ESRI Shapefile
-Source: "/Users/sacmac/Downloads/querwisl", layer: "querwisl"
-with 35 features and 5 fields
-Feature type: wkbPolygon with 2 dimensions
-topojson -o /Users/sacmac/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//Rtmp49APW7/querwisl.shp
-
-bounds: -403.2554825867553 401.27189387582916 -295.798050380061 585.4214768677039 (cartesian)
-pre-quantization: 0.010746817902459677 0.018416799979185387
-topology: 35 arcs, 2492 points
-prune: retained 35 / 35 arcs (100%)
-```
-
-You can then use this topojson file wherever. We'll add a function soon to automagically throw this file up as a Github gist to get an interactive map.
 
 #### Read topojson
 
@@ -269,12 +254,12 @@ url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-s
 out <- topojson_read(url)
 #> OGR data source with driver: GeoJSON 
 #> Source: "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson", layer: "states"
-#> with 51 features and 2 fields
-#> Feature type: wkbPolygon with 2 dimensions
+#> with 51 features
+#> It has 2 fields
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
+![plot of chunk unnamed-chunk-12](inst/img/unnamed-chunk-12-1.png) 
 
 ### Use case: Play with US states
 
@@ -305,7 +290,7 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~ .id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-16](inst/img/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
 
 ## Meta
 

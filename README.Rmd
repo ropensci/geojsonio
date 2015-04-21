@@ -24,7 +24,7 @@ Functions in this package are organized first around what you're working with or
 * `geojson_list()`/`topojson_list()` - convert to geojson/topojson as R list format
 * `geojson_json()`/`topojson_json()` - convert to geojson/topojson as json
 * `geojson_read()``topojson_read()` - read a geojson/topojson file from file path or URL
-* `geojson_write()`/`topojson_write()` - write a geojson/topojson file locally
+* `geojson_write()` - write a geojson file locally (topojson coming later)
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
@@ -100,7 +100,7 @@ geojson_json(sp_poly)
 to list
 
 ```{r}
-geojson_list(sp_poly)$coordinates[[1]]
+geojson_list(sp_poly)$features[[1]]
 ```
 
 #### Write geojson
@@ -120,37 +120,6 @@ plot(out)
 ```
 
 ### TopoJSON
-
-#### Convert to TopoJSON with Node topojson client
-
-For topojson you will need Mike Bostock's command line client. Install it by doing
-
-```
-sudo npm install -g topojson
-```
-
-Download a zipped shape fileset, [this one](http://esp.cr.usgs.gov/data/little/querwisl.zip) for distribution of _Quercus wislizeni_. Unzip the zip file to a folder. Then do (changing the path to your path)
-
-```{r}
-topojson_write(shppath='~/Downloads/querwisl', path = "~/Downloads", projection='albers', projargs=list(rotate='[60, -35, 0]'))
-```
-
-Which prints progress on the conversion of the shape file. And prints the topojson CLI call, including the location of the output file, here `/Users/sacmac/querwisl.json`
-
-```{r eval=FALSE}
-OGR data source with driver: ESRI Shapefile
-Source: "/Users/sacmac/Downloads/querwisl", layer: "querwisl"
-with 35 features and 5 fields
-Feature type: wkbPolygon with 2 dimensions
-topojson -o /Users/sacmac/querwisl.json -q 1e4 -s 0 --shapefile-encoding utf8 --projection 'd3.geo.albers().rotate([60, -35, 0])' -- /var/folders/gs/4khph0xs0436gmd2gdnwsg080000gn/T//Rtmp49APW7/querwisl.shp
-
-bounds: -403.2554825867553 401.27189387582916 -295.798050380061 585.4214768677039 (cartesian)
-pre-quantization: 0.010746817902459677 0.018416799979185387
-topology: 35 arcs, 2492 points
-prune: retained 35 / 35 arcs (100%)
-```
-
-You can then use this topojson file wherever. We'll add a function soon to automagically throw this file up as a Github gist to get an interactive map.
 
 #### Read topojson
 
