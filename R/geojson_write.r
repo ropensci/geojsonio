@@ -1,6 +1,6 @@
 #' Convert many input types with spatial data to a geojson file
 #'
-#' @import sp rgdal methods rgeos
+#' @import methods rgeos sp
 #' @importFrom dplyr rbind_all
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
@@ -36,7 +36,7 @@
 #'           c(-106.61132812499999,39.436192999314095),
 #'           c(-114.345703125,39.436192999314095))
 #' geojson_write(poly, geometry = "polygon")
-#' 
+#'
 #' ### named list
 #' mylist <- list(list(latitude=30, longitude=120, marker="red"),
 #'                list(latitude=30, longitude=130, marker="blue"))
@@ -55,7 +55,7 @@
 #'           c(-106.61132812499999,39.436192999314095),
 #'           c(-114.345703125,39.436192999314095))
 #' geojson_write(poly, geometry = "polygon")
-#' 
+#'
 #' # Write output of geojson_list to file
 #' res <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
 #' class(res)
@@ -90,31 +90,31 @@
 #' sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
 #' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 #' geojson_write(sgdf)
-#' 
+#'
 #' # From SpatialRings
 #' r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
 #' r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
 #' r1r2 <- SpatialRings(list(r1, r2))
 #' geojson_write(r1r2)
-#' 
+#'
 #' # From SpatialRingsDataFrame
 #' dat <- data.frame(id = c(1,2), value = 3:4)
 #' r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
 #' geojson_write(r1r2df)
-#' 
+#'
 #' # From SpatialPixels
-#' library("sp") 
+#' library("sp")
 #' pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
 #' summary(pixels)
 #' geojson_write(pixels)
-#' 
+#'
 #' # From SpatialPixelsDataFrame
 #' library("sp")
 #' pixelsdf <- suppressWarnings(
 #'  SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
 #' )
 #' geojson_write(pixelsdf)
-#' 
+#'
 #' # From SpatialCollections
 #' library("sp")
 #' poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")

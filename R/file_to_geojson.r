@@ -3,7 +3,9 @@
 #' You can use a web interface called Ogre, or do conversions locally using the
 #' rgdal package.
 #'
-#' @import httr rgdal maptools
+#' @importFrom httr GET POST content stop_for_status upload_file
+#' @importFrom maptools readShapeSpatial
+#' @importFrom rgdal readOGR writeOGR ogrListLayers
 #' @importFrom plyr rbind.fill
 #' @export
 #' @param input The file being uploaded, path to the file on your machine.
@@ -55,12 +57,12 @@
 #' file <- '~/github/sac/mygeojson/rgbif_data.csv'
 #' file_to_geojson(file, method='web', destpath='~/github/sac/mygeojson/',
 #'    outfilename='rgbif_data')
-#'    
+#'
 #' # Natural earth layers
 #' # Download from https://github.com/nvkelso/natural-earth-vector/tree/master/zips/110m_cultural
 #' file = "~/Downloads/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
 #' file_to_geojson(file, method='local', outfilename='shp_local')
-#' 
+#'
 #' # Neighborhoods in the US
 #' url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-OR.zip'
 #' url <- 'http://www.zillow.com/static/shp/ZillowNeighborhoods-MT.zip'
