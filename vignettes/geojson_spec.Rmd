@@ -8,7 +8,9 @@
 CRS and Bounding Boxes
 ======================
 
-The following are the guidelines for CRS and bounding boxes for geojson, annotated as needed, so do so complete guidelines at [http://geojson.org/geojson-spec.html](http://geojson.org/geojson-spec.html).
+In `geojsonio` we follow the below guidelines for GeoJSON, and try to preserve CRS information, and bbox information when converting formats. 
+
+The following are the guidelines for CRS and bounding boxes for geojson, annotated as needed, get complete guidelines at [http://geojson.org/geojson-spec.html](http://geojson.org/geojson-spec.html).
 
 ## CRS (Coordinate Reference System Objects)
 
@@ -23,7 +25,7 @@ The following are the guidelines for CRS and bounding boxes for geojson, annotat
 
 A CRS object may indicate a coordinate reference system by name. In this case, the value of its `type` member must be the string `name`. The value of its `properties` member must be an object containing a `name` member. The value of that `name` member must be a string identifying a coordinate reference system. OGC CRS URNs such as `urn:ogc:def:crs:OGC:1.3:CRS84` shall be preferred over legacy identifiers such as `EPSG:4326`:
 
-```r
+```
 "crs": {
   "type": "name",
   "properties": {
@@ -44,7 +46,7 @@ The value of the required `href` member must be a dereferenceable URI.
 
 The value of the optional `type` member must be a string that hints at the format used to represent CRS parameters at the provided URI. Suggested values are: `proj4`, `ogcwkt`, `esriwkt`, but others can be used:
 
-```r
+```
 "crs": {
   "type": "link", 
   "properties": {
@@ -56,7 +58,7 @@ The value of the optional `type` member must be a string that hints at the forma
     
 Relative links may be used to direct processors to CRS parameters in an auxiliary file:
 
-```r
+```
 "crs": {
   "type": "link",
   "properties": {
@@ -68,7 +70,7 @@ Relative links may be used to direct processors to CRS parameters in an auxiliar
 
 ## Bounding Boxes
 
-To include information on the coordinate range for geometries, features, or feature collections, a GeoJSON object may have a member named "bbox". The value of the bbox member must be a 2*n array where n is the number of dimensions represented in the contained geometries, with the lowest values for all axes followed by the highest values. The axes order of a bbox follows the axes order of geometries. In addition, the coordinate reference system for the bbox is assumed to match the coordinate reference system of the GeoJSON object of which it is a member.
+To include information on the coordinate range for geometries, features, or feature collections, a GeoJSON object may have a member named `bbox`. The value of the bbox member must be a 2*n array where n is the number of dimensions represented in the contained geometries, with the lowest values for all axes followed by the highest values. The axes order of a bbox follows the axes order of geometries. In addition, the coordinate reference system for the bbox is assumed to match the coordinate reference system of the GeoJSON object of which it is a member.
 
 Example of a bbox member on a feature:
 
