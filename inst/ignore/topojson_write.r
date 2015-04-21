@@ -5,7 +5,7 @@
 #' \url{https://github.com/mbostock/topojson/wiki/Installation} to be installed.
 #'
 #' @import rgdal sp
-#' @export
+#' @keywords internal
 #' @param shppath a named list of \code{SpatialPolygonsDataFrame} objects. The names of the list
 #' elements need to be the same as the names of the SPDF objects.
 #' @param path the path where the topojson file should be registered. By default, the working
@@ -46,8 +46,8 @@
 
 topojson_write <- function(shppath, path=getwd(), filename=NULL, simplification=0,
   quantisation="1e4", width=NULL, height=NULL, properties=NULL, id=NULL, projection=NULL,
-  projargs=list(), ignoreshp=FALSE)
-{
+  projargs=list(), ignoreshp=FALSE) {
+  
   tmpdir <- tempdir()
   setCPLConfigOption("SHAPE_ENCODING", "UTF-8")
 
