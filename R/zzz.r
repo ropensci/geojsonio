@@ -3,7 +3,9 @@ tg_compact <- function(l) Filter(Negate(is.null), l)
 # to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., auto_unbox = TRUE), class=c('json','geo_json'))
 to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., digits = 22, auto_unbox = TRUE), class='json')
 
-list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCollection", unnamed = FALSE, group=NULL){
+list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCollection", 
+                             unnamed = FALSE, group=NULL, projection = NULL) {
+  
   nn <- switch(type, FeatureCollection="features", GeometryCollection="geometries")
   geom <- capwords(match.arg(geometry, c("point","polygon")))
   if(geom == "Point"){
@@ -72,12 +74,13 @@ get_vals <- function(v, lat, lon){
     as.numeric(c(v[[lon]], v[[lat]]))
 }
 
-df_to_geo_list <- function(x, lat, lon, geometry, type, group, ...){
+df_to_geo_list <- function(x, lat, lon, geometry, type, group, projection, ...){
   x <- apply(x, 1, as.list)
-  list_to_geo_list(x=x, lat=lat, lon=lon, geometry=geometry, type=type, unnamed = TRUE, group=group, ...)
+  list_to_geo_list(x = x, lat = lat, lon = lon, geometry = geometry, type = type, 
+                   unnamed = TRUE, group = group, projection = projection, ...)
 }
 
-num_to_geo_list <- function(x, geometry = "point", type = "FeatureCollection"){
+num_to_geo_list <- function(x, geometry = "point", type = "FeatureCollection", projection = NULL){
   geom <- capwords(match.arg(geometry, c("point", "polygon")))
   res <- tryCatch(as.numeric(x), warning = function(e) e)
   if(is(res, "simpleWarning")) {

@@ -11,12 +11,14 @@
 #' GeometryCollection.
 #' @param group (character) A grouping variable to perform grouping for polygons - doesn't apply
 #' for points
+#' @param projection Can be NULL (ignored), character string, or a CRS class object 
+#' (from calling e.g., \code{\link[sp]{CRS}}). Default: NULL. Ignored for sp class objects.
 #' @param ... Ignored
 #'
 #' @details This function creates a geojson structure as an R list; it does not write a file
 #' using \code{rgdal} - see \code{\link{geojson_write}} for that.
 #'
-#' Note that all sp class objects will output as \code{FeatureCollection} objects, while other
+#' Note that all sp class objects will output as \code{FeatureCollection} objects, while R
 #' classes (numeric, list, data.frame) can be output as \code{FeatureCollection} or
 #' \code{GeometryCollection} objects. We're working on allowing \code{GeometryCollection}
 #' option for sp class objects.
@@ -29,6 +31,10 @@
 #' \code{lon} parameters if they are named appropriately (e.g., lat/latitude, lon/long/longitude),
 #' as they will be auto-detected. If they can not be found, the function will stop and warn
 #' you to specify the parameters specifically.
+#' 
+#' \bold{Projections}: For sp class objects if you have projection info in the object, it 
+#' will be preserved in the output geojson. However, if you have numeric, list, data.frame, 
+#' etc., you can add projection information in the function call. 
 #'
 #' @examples \dontrun{
 #' # From a numeric vector of length 2 to a point
@@ -70,7 +76,11 @@
 #'    c(30,40,35,30)))), "2")
 #' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 #' geojson_list(sp_poly)
-#'
+#' ## with CRS information, preserves CRS in geojson data
+#' proj4string(sp_poly) <- "+proj=longlat +datum=WGS84"
+#' sp_poly2 <- spTransform(sp_poly, CRS("+init=epsg:4267"))
+#' geojson_list(sp_poly2)
+#' 
 #' # From SpatialPolygonsDataFrame class
 #' sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
 #' geojson_list(input = sp_polydf)
@@ -160,74 +170,74 @@
 #' }
 
 geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
-                         geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   UseMethod("geojson_list")
 }
 
 #' @export
 geojson_list.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                         geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialPolygons")
 }
 
 #' @export
 geojson_list.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                                  geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialPolygonsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                       geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
   as.geo_list(geojson_rw(dat), "SpatialPoints")
 }
 
 #' @export
 geojson_list.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                                geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialPointsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                      geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialLines")
 }
 
 #' @export
 geojson_list.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                               geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialLinesDataFrame")
 }
 
 #' @export
 geojson_list.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                     geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialGrid")
 }
 
 #' @export
 geojson_list.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                              geometry = "point", type = "FeatureCollection", ...) {
+            geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialGridDataFrame")
 }
 
 #' @export
 geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                      geometry = "point",  type='FeatureCollection', ...) {
+            geometry = "point",  type='FeatureCollection', projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialRings")
 }
 
 #' @export
 geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                               geometry = "point",  type='FeatureCollection', ...) {
+            geometry = "point",  type='FeatureCollection', projection = NULL, ...) {
   as.geo_list(geojson_rw(input), "SpatialRingsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialCollections <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                            geometry = "point",  type='FeatureCollection', ...) {
+            geometry = "point",  type='FeatureCollection', projection = NULL, ...) {
   pt <- donotnull(input@pointobj, geojson_rw)
   ln <- donotnull(input@lineobj, geojson_rw)
   rg <- donotnull(input@ringobj, geojson_rw)
@@ -248,22 +258,23 @@ donotnull <- function(x, fun) {
 # regular R classes --------------------------
 #' @export
 geojson_list.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                 geometry = "point", type = "FeatureCollection", ...) {
-  as.geo_list(num_to_geo_list(input, geometry, type), "numeric")
+             geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
+  as.geo_list(num_to_geo_list(input, geometry, type, projection), "numeric")
 }
 
 #' @export
 geojson_list.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                    geometry = "point", type = "FeatureCollection", ...) {
+             geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
 
   tmp <- guess_latlon(names(input), lat, lon)
   as.geo_list(df_to_geo_list(x = input, lat = tmp$lat, lon = tmp$lon, 
-                             geometry = geometry, type = type, group = group), "data.frame")
+                             geometry = geometry, type = type, group = group,
+                             projection), "data.frame")
 }
 
 #' @export
 geojson_list.list <- function(input, lat = NULL, lon = NULL, group = NULL,
-                              geometry = "point", type = "FeatureCollection", ...) {
+             geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
 
   tmp <- if (!is.named(input)) {
     list(lon = NULL, lat = NULL)
@@ -271,19 +282,20 @@ geojson_list.list <- function(input, lat = NULL, lon = NULL, group = NULL,
     guess_latlon(names(input[[1]]), lat, lon)
   }
   as.geo_list(list_to_geo_list(input, lat = tmp$lat, lon = tmp$lon, 
-                               geometry, type, !is.named(input), group), "list")
+                               geometry, type, !is.named(input), group, 
+                               projection), "list")
 }
 
 #' @export
 geojson_list.geo_list <- function(input, lat = NULL, lon = NULL, group = NULL,
-                              geometry = "point", type = "FeatureCollection", ...) {
+              geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   
   return(input)
 }
 
 #' @export
 geojson_list.json <- function(input, lat = NULL, lon = NULL, group = NULL,
-                              geometry = "point", type = "FeatureCollection", ...) {
+              geometry = "point", type = "FeatureCollection", projection = NULL, ...) {
   
   jsonlite::fromJSON(input, FALSE, ...)
 }
