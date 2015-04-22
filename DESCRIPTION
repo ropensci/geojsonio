@@ -23,8 +23,6 @@ Imports:
     rgeos,
     httr,
     maptools,
-    plyr,
-    dplyr,
     jsonlite,
     gistr,
     magrittr,

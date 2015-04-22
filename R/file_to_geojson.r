@@ -6,12 +6,11 @@
 #' @importFrom httr GET POST content stop_for_status upload_file
 #' @importFrom maptools readShapeSpatial
 #' @importFrom rgdal readOGR writeOGR ogrListLayers
-#' @importFrom plyr rbind.fill
 #' @export
 #' @param input The file being uploaded, path to the file on your machine.
 #' @param method One of web or local. Matches on partial strings.
 #' @param output Destination for output geojson file. Defaults to root directory \code{~/}
-#' @param parse (logical) To parse geojson to data.frame like structures if possible. 
+#' @param parse (logical) To parse geojson to data.frame like structures if possible.
 #' Default: \code{FALSE}
 #' @description
 #' The web option uses the Ogre web API. Ogre currently has an output size limit of 15MB.
@@ -144,8 +143,8 @@ is.url <- function(x){
 
 # If given a url for a zip file, download it give back a path to the temporary file
 handle_remote <- function(x){
-  if (!grepl('http://', x)) { 
-    x 
+  if (!grepl('http://', x)) {
+    x
   } else {
     tfile <- tempfile(fileext = ".zip")
     download.file(x, destfile = tfile)

@@ -1,7 +1,6 @@
 #' Convert many input types with spatial data to a geojson file
 #'
 #' @import methods rgeos sp
-#' @importFrom dplyr rbind_all
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
 #'
