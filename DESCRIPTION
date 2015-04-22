@@ -24,10 +24,10 @@ Imports:
     httr,
     maptools,
     jsonlite,
-    gistr,
     magrittr,
     V8
 Suggests:
+    gistr,
     testthat,
     knitr
 Enhances:
