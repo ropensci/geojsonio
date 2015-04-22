@@ -1,7 +1,6 @@
 #' Convert many input types with spatial data to a geojson file
 #'
-#' @import methods rgeos sp
-#' @importFrom dplyr rbind_all
+#' @import methods sp rgeos
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
 #'
@@ -130,7 +129,7 @@ geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
   UseMethod("geojson_write")
 }
 
-## sp R classes -----------------
+## spatial classes from sp -----------------
 #' @export
 geojson_write.SpatialPolygons <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                           group = NULL, file = "myfile.geojson", ...) {
@@ -197,20 +196,6 @@ geojson_write.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, ge
 }
 
 #' @export
-geojson_write.SpatialRings <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                               group = NULL, file = "myfile.geojson", ...) {
-  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
-  return(file)
-}
-
-#' @export
-geojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                       group = NULL, file = "myfile.geojson", ...) {
-  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
-  return(file)
-}
-
-#' @export
 geojson_write.SpatialPixels <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                        group = NULL, file = "myfile.geojson", ...) {
   write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
@@ -221,6 +206,21 @@ geojson_write.SpatialPixels <- function(input, lat = NULL, lon = NULL, geometry 
 geojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                 group = NULL, file = "myfile.geojson", ...) {
   write_geojson(as(input, "SpatialPointsDataFrame"), file, ...)
+  return(file)
+}
+
+## spatial classes from rgeos -----------------
+#' @export
+geojson_write.SpatialRings <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                                       group = NULL, file = "myfile.geojson", ...) {
+  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
+  return(file)
+}
+
+#' @export
+geojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                                                group = NULL, file = "myfile.geojson", ...) {
+  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
   return(file)
 }
 

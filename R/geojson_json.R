@@ -180,7 +180,7 @@ geojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
   UseMethod("geojson_json")
 }
 
-# sp classes --------------------------
+# spatial classes from sp --------------------------
 #' @export
 geojson_json.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
                                          geometry = "point",  type='FeatureCollection', ...) {
@@ -231,6 +231,19 @@ geojson_json.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, gro
 }
 
 #' @export
+geojson_json.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NULL,
+                                       geometry = "point",  type='FeatureCollection', ...) {
+  to_json(geojson_rw(input), ...)
+}
+
+#' @export
+geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
+                                                geometry = "point",  type='FeatureCollection', ...) {
+  to_json(geojson_rw(input), ...)
+}
+
+# spatial classes from rgeos --------------------------
+#' @export
 geojson_json.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
                                               geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
@@ -239,18 +252,6 @@ geojson_json.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NUL
 #' @export
 geojson_json.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                geometry = "point",  type='FeatureCollection', ...) {
-  to_json(geojson_rw(input), ...)
-}
-
-#' @export
-geojson_json.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                               geometry = "point",  type='FeatureCollection', ...) {
-  to_json(geojson_rw(input), ...)
-}
-
-#' @export
-geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                       geometry = "point",  type='FeatureCollection', ...) {
   to_json(geojson_rw(input), ...)
 }
 

@@ -164,6 +164,7 @@ geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
   UseMethod("geojson_list")
 }
 
+# spatial classes from sp --------------------------
 #' @export
 geojson_list.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
                                          geometry = "point", type = "FeatureCollection", ...) {
@@ -213,6 +214,19 @@ geojson_list.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, gro
   as.geo_list(geojson_rw(input), "SpatialGridDataFrame")
 }
 
+#' @export
+geojson_list.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NULL,
+                                       geometry = "point",  type='FeatureCollection', ...) {
+  as.geo_list(geojson_rw(input), "SpatialPixels")
+}
+
+#' @export
+geojson_list.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
+                                                geometry = "point",  type='FeatureCollection', ...) {
+  as.geo_list(geojson_rw(input), "SpatialPixelsDataFrame")
+}
+
+# spatial classes from rgeos --------------------------
 #' @export
 geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point",  type='FeatureCollection', ...) {

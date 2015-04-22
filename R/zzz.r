@@ -112,13 +112,13 @@ makecoords <- function(x, y) {
 }
 
 list_to_geojson <- function(input, file = "myfile.geojson", geometry="point", lon, lat, ...){
-  input <- data.frame(rbind_all(lapply(input$features, function(x){
+  input <- rbind_fill(lapply(input$features, function(x){
     data.frame(geometry_type=x$geometry$type,
                longitude=x$geometry$coordinates[1],
                latitude=x$geometry$coordinates[2],
                x$properties,
                stringsAsFactors = FALSE)
-  })))
+  }))
   if(geometry == "point"){
     out <- df_to_SpatialPointsDataFrame(input, lon, lat)
   } else {
