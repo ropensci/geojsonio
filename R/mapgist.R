@@ -165,7 +165,7 @@ map_gist.location <- function(input, lat = "lat", lon = "long", geometry = "poin
                               group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
                               description = "", public = TRUE, browse = TRUE, ...) {
   check4gistr()
-  gist_create(files = file[[1]],  description = description, public = public, browse = browse, ...)
+  gistr::gist_create(files = file[[1]],  description = description, public = public, browse = browse, ...)
 }
 
 #' @export

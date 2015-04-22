@@ -20,7 +20,6 @@ Imports:
     methods,
     sp,
     rgdal,
-    rgeos,
     httr,
     maptools,
     jsonlite,
@@ -28,6 +27,7 @@ Imports:
     V8
 Suggests:
     gistr,
+    rgeos,
     testthat,
     knitr
 Enhances:
