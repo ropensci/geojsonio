@@ -230,21 +230,18 @@ geojson_list.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, g
 #' @export
 geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point",  type='FeatureCollection', ...) {
-  check4rgeos()
   as.geo_list(geojson_rw(input), "SpatialRings")
 }
 
 #' @export
 geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                geometry = "point",  type='FeatureCollection', ...) {
-  check4rgeos()
   as.geo_list(geojson_rw(input), "SpatialRingsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialCollections <- function(input, lat = NULL, lon = NULL, group = NULL,
                                             geometry = "point",  type='FeatureCollection', ...) {
-  check4rgeos()
   pt <- donotnull(input@pointobj, geojson_rw)
   ln <- donotnull(input@lineobj, geojson_rw)
   rg <- donotnull(input@ringobj, geojson_rw)

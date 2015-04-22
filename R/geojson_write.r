@@ -1,6 +1,6 @@
 #' Convert many input types with spatial data to a geojson file
 #'
-#' @import methods sp
+#' @import methods sp rgeos
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
 #'
@@ -213,7 +213,6 @@ geojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, 
 #' @export
 geojson_write.SpatialRings <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                        group = NULL, file = "myfile.geojson", ...) {
-  check4rgeos()
   write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
   return(file)
 }
@@ -221,7 +220,6 @@ geojson_write.SpatialRings <- function(input, lat = NULL, lon = NULL, geometry =
 #' @export
 geojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                 group = NULL, file = "myfile.geojson", ...) {
-  check4rgeos()
   write_geojson(as(input, "SpatialPolygonsDataFrame"), file, ...)
   return(file)
 }
@@ -229,7 +227,6 @@ geojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, g
 #' @export
 geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                  group = NULL, file = "myfile.geojson", ...) {
-  check4rgeos()
   ptfile <- iter_spatialcoll(input@pointobj, file, ...)
   lfile <- iter_spatialcoll(input@lineobj, file, ...)
   rfile <- iter_spatialcoll(input@ringobj, file, ...)

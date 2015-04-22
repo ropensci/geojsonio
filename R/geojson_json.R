@@ -246,21 +246,18 @@ geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, g
 #' @export
 geojson_json.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
                                               geometry = "point",  type='FeatureCollection', ...) {
-  check4rgeos()
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
 geojson_json.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                geometry = "point",  type='FeatureCollection', ...) {
-  check4rgeos()
   to_json(geojson_rw(input), ...)
 }
 
 #' @export
 geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                 geometry = "point",  type='FeatureCollection', ...) {
-  check4rgeos()
   to_json(geojson_rw(input), ...)
 }
 
