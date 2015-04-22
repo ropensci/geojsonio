@@ -319,9 +319,9 @@ pluck <- function(x, name, type) {
 
 ###### code adapted from the leaflet package - source at github.com/rstudio/leaflet
 guess_latlon <- function(x, lat=NULL, lon=NULL) {
-  if(is.null(lat) && is.null(lon)){
-    lats <- x[grep("^(lat|latitude)$", x, ignore.case = TRUE)]
-    lngs <- x[grep("^(lon|lng|long|longitude)$", x, ignore.case = TRUE)]
+  if (is.null(lat) && is.null(lon)){
+    lats <- x[grep("^(lat|latitude|y)$", x, ignore.case = TRUE)]
+    lngs <- x[grep("^(lon|lng|long|longitude|x)$", x, ignore.case = TRUE)]
 
     if (length(lats) == 1 && length(lngs) == 1) {
       if (length(x) > 2) {
