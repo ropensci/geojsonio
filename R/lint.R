@@ -114,84 +114,9 @@ lint.data.frame <- function(x, ...) lint(geojson_list(x, ...))
 lintit <- function(x) {
   ct$eval(sprintf("var out = geojsonhint.hint('%s');", minify(x)))
   tmp <- as.list(ct$get("out"))
-  if(identical(tmp, list())){
+  if (identical(tmp, list())) {
     return("valid")
   } else {
     tmp
   }
 }
-
-# Examples -------------------------------
-
-# # from lincoln
-# x <- '{"type":"Point","geometry":{"type":"Point","coordinates":[-80,40]},"properties":{}}'
-#
-# # bad
-# x <- '{
-# "type": "Point",
-# "coordinates": [2, 2],
-# "bbox": [1, 2, "string"]
-# }'
-#
-# # bad, fails on minify() call i think cause bad json
-# x <- '{
-# "type": "MultiPoint"
-# "coordinates": [["foo", "bar"]]
-# }'
-#
-# # bad
-# x <- '{
-# "type": "FooBar"
-# }'
-#
-# # bad
-# x <- '{ "type": "FeatureCollection" }'
-#
-# # bad
-# x <- '{
-# "type": "Point",
-# "coordinates": [2]
-# }'
-#
-# # good
-# x <- '{
-# "type": "Feature",
-# "id": 100,
-# "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
-# "properties": {"prop0": "value0"}
-# }'
-#
-# # good
-# x <- '{ "type": "FeatureCollection",
-# "features": [
-# { "type": "Feature",
-# "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
-# "properties": {"prop0": "value0"}
-# },
-# { "type": "Feature",
-# "geometry": {
-# "type": "LineString",
-# "coordinates": [
-# [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-# ]
-# },
-# "properties": {
-# "prop0": "value0",
-# "prop1": 0.0
-# }
-# },
-# { "type": "Feature",
-# "geometry": {
-# "type": "Polygon",
-# "coordinates": [
-# [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
-# [100.0, 1.0], [100.0, 0.0] ]
-# ]
-# },
-# "properties": {
-# "prop0": "value0",
-# "prop1": {"this": "that"}
-# }
-# }
-# ]
-# }'
