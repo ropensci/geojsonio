@@ -12,7 +12,7 @@
 #' @param file File name to use to put up as the gist file
 #' @param description Description for the Github gist, or leave to default (=no description)
 #' @param public (logical) Want gist to be public or not? Default: TRUE
-#' @param browse If TRUE (default) the map opens in your default browser.
+#' @param browse If TRUE (default) thef map opens in your default browser.
 #' @param ... Further arguments passed on to \code{\link[httr]{POST}}
 #'
 #' @description There are two ways to authorize to work with your GitHub account:
@@ -33,7 +33,7 @@
 #' @examples \donttest{
 #' # From file
 #' file <- "myfile.geojson"
-#' geojson_write(us_cities[1:2,], lat='lat', lon='long', file = file)
+#' geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
 #' map_gist(file=as.location(file))
 #'
 #' # From SpatialPoints class
@@ -117,9 +117,42 @@
 #'           c(-106.61132812499999,39.436192999314095),
 #'           c(-114.345703125,39.436192999314095))
 #' map_gist(poly, geometry = "polygon")
-#'
+#' 
+#' # From a json object
+#' (x <- geojson_json(c(-99.74,32.45)))
+#' map_gist(x)
+#' ## another example
+#' map_gist(geojson_json(us_cities[1:10,], lat='lat', lon='long'))
+#' 
+#' # From a geo_list object
+#' (res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
+#' map_gist(res)
+#' 
 #' ## Use the cartographer package to make maps locally
 #' library("cartographer")
+#' 
+#' # From SpatialPixels
+#' pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
+#' summary(pixels)
+#' map_gist(pixels)
+#' 
+#' # From SpatialPixelsDataFrame
+#' pixelsdf <- suppressWarnings(
+#'  SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
+#' )
+#' map_gist(pixelsdf)
+#' 
+#' # From SpatialRings
+#' library("rgeos")
+#' r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
+#' r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
+#' r1r2 <- SpatialRings(list(r1, r2))
+#' map_gist(r1r2)
+#' 
+#' # From SpatialRingsDataFrame
+#' dat <- data.frame(id = c(1,2), value = 3:4)
+#' r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
+#' map_gist(r1r2df)
 #'
 #' # From SpatialPolygons class
 #' library('sp')
@@ -153,13 +186,16 @@ map_gist <- function(input, lat = "lat", lon = "long", geometry = "point",
   UseMethod("map_gist")
 }
 
+# Spatial classes methods from sp package ----------------------
 #' @export
-map_gist.location <- function(input, lat = "lat", lon = "long", geometry = "point",
-                              group = NULL, type = "FeatureCollection", file = "myfile.geojson",
-                              description = "", public = TRUE, browse = TRUE, ...) {
+map_gist.SpatialPoints <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                   group = NULL, type = "FeatureCollection", file = "myfile.geojson",
+                                   description = "", public = TRUE, browse = TRUE, ...){
   check4gistr()
-  gistr::gist_create(files = file[[1]],  description = description, public = public, browse = browse, ...)
+  dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
+  gc(dat, file, description, public, browse, ...)
 }
+
 
 #' @export
 map_gist.SpatialPointsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point",
@@ -168,15 +204,6 @@ map_gist.SpatialPointsDataFrame <- function(input, lat = "lat", lon = "long", ge
                                             public = TRUE, browse = TRUE, ...) {
   check4gistr()
   gc(input, file, description, public, browse, ...)
-}
-
-#' @export
-map_gist.SpatialPoints <- function(input, lat = "lat", lon = "long", geometry = "point",
-                                   group = NULL, type = "FeatureCollection", file = "myfile.geojson",
-                                   description = "", public = TRUE, browse = TRUE, ...){
-  check4gistr()
-  dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
-  gc(dat, file, description, public, browse, ...)
 }
 
 #' @export
@@ -232,6 +259,44 @@ map_gist.SpatialGridDataFrame <- function(input, lat = "lat", lon = "long", geom
 }
 
 #' @export
+map_gist.SpatialPixels <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                   group = NULL, type = "FeatureCollection",
+                                   file = "myfile.geojson", description = "",
+                                   public = TRUE, browse = TRUE, ...) {
+  check4gistr()
+  gc(input, file, description, public, browse, ...)
+}
+
+#' @export
+map_gist.SpatialPixelsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                            group = NULL, type = "FeatureCollection",
+                                            file = "myfile.geojson", description = "",
+                                            public = TRUE, browse = TRUE, ...) {
+  check4gistr()
+  gc(input, file, description, public, browse, ...)
+}
+
+# spatial classes methods from rgeos package --------------------------
+#' @export
+map_gist.SpatialRings <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                  group = NULL, type = "FeatureCollection",
+                                  file = "myfile.geojson", description = "",
+                                  public = TRUE, browse = TRUE, ...) {
+  check4gistr()
+  gc(input, file, description, public, browse, ...)
+}
+
+#' @export
+map_gist.SpatialRingsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                           group = NULL, type = "FeatureCollection",
+                                           file = "myfile.geojson", description = "",
+                                           public = TRUE, browse = TRUE, ...) {
+  check4gistr()
+  gc(input, file, description, public, browse, ...)
+}
+
+# R classes: numeric, data.frame, list ------------------------
+#' @export
 map_gist.numeric <- function(input, lat = "lat", lon = "long", geometry = "point", group = NULL,
                              type = "FeatureCollection", file = "myfile.geojson", description = "",
                              public = TRUE, browse = TRUE, ...) {
@@ -254,12 +319,38 @@ map_gist.list <- function(input, lat = "lat", lon = "long", geometry = "point", 
                           type = "FeatureCollection", file = "myfile.geojson", description = "",
                           public = TRUE, browse = TRUE, ...) {
   check4gistr()
-  input <- as.geo_list(list_to_geo_list(input, lat, lon, geometry, type, group=group), "list")
+  input <- as.geo_list(list_to_geo_list(input, lat, lon, geometry, type, group = group), "list")
   gc(input, file, description, public, browse, ...)
 }
 
+# Other methods: location, json, geo_list ------------------------
+#' @export
+map_gist.location <- function(input, lat = "lat", lon = "long", geometry = "point",
+                              group = NULL, type = "FeatureCollection", file = "myfile.geojson",
+                              description = "", public = TRUE, browse = TRUE, ...) {
+  check4gistr()
+  gistr::gist_create(files = file[[1]],  description = description, public = public, browse = browse, ...)
+}
+
+#' @export
+map_gist.json <- function(input, lat = "lat", lon = "long", geometry = "point",
+                              group = NULL, type = "FeatureCollection", file = "myfile.geojson",
+                              description = "", public = TRUE, browse = TRUE, ...) {
+  check4gistr()
+  gc(input, file, description, public, browse, ...)
+}
+
+#' @export
+map_gist.geo_list <- function(input, lat = "lat", lon = "long", geometry = "point",
+                          group = NULL, type = "FeatureCollection", file = "myfile.geojson",
+                          description = "", public = TRUE, browse = TRUE, ...) {
+  check4gistr()
+  gc(input, file, description, public, browse, ...)
+}
+
+# Helper functions ------------------------
 gc <- function(input, file, description, public, browse, ...){
-  gistr::gist_create(files = geojson_write(input, file=file),
+  gistr::gist_create(files = geojson_write(input, file = file),
               description = description,
               public = public,
               browse = browse, ...)

@@ -28,7 +28,7 @@ apply for points}
 
 \item{public}{(logical) Want gist to be public or not? Default: TRUE}
 
-\item{browse}{If TRUE (default) the map opens in your default browser.}
+\item{browse}{If TRUE (default) thef map opens in your default browser.}
 
 \item{...}{Further arguments passed on to \code{\link[httr]{POST}}}
 }
@@ -52,7 +52,7 @@ PAT, that will be used, if not, OAuth will be used.
 \donttest{
 # From file
 file <- "myfile.geojson"
-geojson_write(us_cities[1:2,], lat='lat', lon='long', file = file)
+geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
 map_gist(file=as.location(file))
 
 # From SpatialPoints class
@@ -137,8 +137,41 @@ poly <- c(c(-114.345703125,39.436192999314095),
           c(-114.345703125,39.436192999314095))
 map_gist(poly, geometry = "polygon")
 
+# From a json object
+(x <- geojson_json(c(-99.74,32.45)))
+map_gist(x)
+## another example
+map_gist(geojson_json(us_cities[1:10,], lat='lat', lon='long'))
+
+# From a geo_list object
+(res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
+map_gist(res)
+
 ## Use the cartographer package to make maps locally
 library("cartographer")
+
+# From SpatialPixels
+pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
+summary(pixels)
+map_gist(pixels)
+
+# From SpatialPixelsDataFrame
+pixelsdf <- suppressWarnings(
+ SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
+)
+map_gist(pixelsdf)
+
+# From SpatialRings
+library("rgeos")
+r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
+r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
+r1r2 <- SpatialRings(list(r1, r2))
+map_gist(r1r2)
+
+# From SpatialRingsDataFrame
+dat <- data.frame(id = c(1,2), value = 3:4)
+r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
+map_gist(r1r2df)
 
 # From SpatialPolygons class
 library('sp')
