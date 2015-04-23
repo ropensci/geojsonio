@@ -1,4 +1,4 @@
-#' Get bounds for any Spatial class or geojson/topojson object
+#' Get bounds for a list or geo_list
 #' 
 #' @export
 #' @param x An object of class list or geo_list

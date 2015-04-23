@@ -2,7 +2,7 @@
 % Please edit documentation in R/bounds.R
 \name{bounds}
 \alias{bounds}
-\title{Get bounds for any Spatial class or geojson/topojson object}
+\title{Get bounds for a list or geo_list}
 \usage{
 bounds(x, ...)
 }
@@ -15,7 +15,7 @@ bounds(x, ...)
 A vector of the form min longitude, min latitude, max longitude, max latitude
 }
 \description{
-Get bounds for any Spatial class or geojson/topojson object
+Get bounds for a list or geo_list
 }
 \examples{
 # numeric
