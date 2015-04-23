@@ -19,8 +19,8 @@ knitr::knit_hooks$set(output = function(x, options) {
        x <- c(head(x, lines), more)
      }
    } else {
-     x <- c(if (abs(lines[1])>1) more else NULL, 
-            x[lines], 
+     x <- c(if (abs(lines[1])>1) more else NULL,
+            x[lines],
             if (length(x)>lines[abs(length(lines))]) more else NULL
            )
    }
@@ -32,7 +32,7 @@ knitr::knit_hooks$set(output = function(x, options) {
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE
 )
 ```
@@ -102,15 +102,13 @@ From a `data.frame`
 as __json__
 
 ```{r}
-library('maps')
-data(us.cities)
-geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
+geojson_json(us_cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
 as a __list__
 
 ```{r output.lines=1:10}
-geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
+geojson_list(us_cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
 From `SpatialPolygons` class
@@ -159,27 +157,17 @@ geojson_list(s)
 ### Write geojson
 
 ```{r}
-library('maps')
-data(us.cities)
-geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-```
-
-### Read geojson
-
-```{r}
-file <- system.file("examples", "california.geojson", package = "geojsonio")
-out <- geojson_read(file)
-plot(out)
+geojson_write(us_cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
 ## Topojson
 
-In the current version of this package you can read topojson. Writing topojson was in this package, but is gone for now - will come back later as in interface to [topojson](https://github.com/mbostock/topojson) via [V8](https://github.com/jeroenooms/V8). 
+In the current version of this package you can read topojson. Writing topojson was in this package, but is gone for now - will come back later as in interface to [topojson](https://github.com/mbostock/topojson) via [V8](https://github.com/jeroenooms/V8).
 
 Read from a file
 
 ```{r}
-file <- system.file("examples", "us_states.topojson", package = "togeojson")
+file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 out <- geojson_read(file)
 ```
 
@@ -197,29 +185,17 @@ Or use `as.location()` first
 out <- topojson_read(loc)
 ```
 
-## Example use case: Play with US states
+## Example use case: Make a map
 
-Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
-
-Get some geojson
-
-```{r eval=FALSE}
-library('httr')
-res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
-base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
-st_files <- paste0(base, st_names)
-```
-
-Make a faceted plot
-
-```{r tidy=FALSE, eval=FALSE}
-library('ggplot2')
-library('plyr')
-st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, verbose = FALSE)
-df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
-ggplot(df, aes(long, lat, group = group)) +
-  geom_polygon() +
-  facet_wrap(~ .id, scales = "free")
+```{r tidy=FALSE}
+library('sp')
+library('cartographer')
+poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
+   c(40,50,45,40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
+   c(30,40,35,30)))), "2")
+sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+cartographer() %>%
+ tile_layer() %>%
+ geojson_layer(data = geojson_json(sp_poly))
 ```
