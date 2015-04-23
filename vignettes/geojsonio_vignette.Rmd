@@ -154,6 +154,29 @@ to a __list__
 geojson_list(s)
 ```
 
+### Combine objects
+
+`geo_list` + `geo_list`
+
+> Note: `geo_list` is the output type from `geojson_list()`, it's just a list with a class attached so we know it's geojson :)
+
+```{r output.lines=1:10}
+vec <- c(-99.74, 32.45)
+a <- geojson_list(vec)
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(100.0, 0.0))
+b <- geojson_list(vecs, geometry = "polygon")
+a + b
+```
+
+`json` + `json`
+
+```{r}
+c <- geojson_json(c(-99.74, 32.45))
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
+d <- geojson_json(vecs, geometry = "polygon")
+c + d
+```
+
 ### Write geojson
 
 ```{r}
@@ -166,7 +189,7 @@ In the current version of this package you can read topojson. Writing topojson w
 
 Read from a file
 
-```{r}
+```{r eval=FALSE}
 file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 out <- geojson_read(file)
 ```
@@ -180,7 +203,7 @@ out <- topojson_read(url)
 
 Or use `as.location()` first
 
-```{r}
+```{r eval=FALSE}
 (loc <- as.location(file))
 out <- topojson_read(loc)
 ```

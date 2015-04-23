@@ -221,13 +221,90 @@ geojson_list(sp_poly)$features[[1]]
 #> [1] -100   40
 ```
 
+#### Combine objects
+
+`geo_list` + `geo_list`
+
+> Note: `geo_list` is the output type from `geojson_list()`, it's just a list with a class attached so we know it's geojson :)
+
+
+```r
+vec <- c(-99.74, 32.45)
+a <- geojson_list(vec)
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(100.0, 0.0))
+b <- geojson_list(vecs, geometry = "polygon")
+a + b
+#> $type
+#> [1] "FeatureCollection"
+#> 
+#> $features
+#> $features[[1]]
+#> $features[[1]]$type
+#> [1] "Feature"
+#> 
+#> $features[[1]]$geometry
+#> $features[[1]]$geometry$type
+#> [1] "Point"
+#> 
+#> $features[[1]]$geometry$coordinates
+#> [1] -99.74  32.45
+#> 
+#> 
+#> $features[[1]]$properties
+#> NULL
+#> 
+#> 
+#> $features[[2]]
+#> $features[[2]]$type
+#> [1] "Feature"
+#> 
+#> $features[[2]]$geometry
+#> $features[[2]]$geometry$type
+#> [1] "Polygon"
+#> 
+#> $features[[2]]$geometry$coordinates
+#> $features[[2]]$geometry$coordinates[[1]]
+#> $features[[2]]$geometry$coordinates[[1]][[1]]
+#> [1] 100   0
+#> 
+#> $features[[2]]$geometry$coordinates[[1]][[2]]
+#> [1] 101   0
+#> 
+#> $features[[2]]$geometry$coordinates[[1]][[3]]
+#> [1] 100   0
+#> 
+#> 
+#> 
+#> 
+#> $features[[2]]$properties
+#> list()
+#> 
+#> 
+#> 
+#> attr(,"class")
+#> [1] "geo_list"
+#> attr(,"from")
+#> [1] "numeric" "list"
+```
+
+`json` + `json`
+
+
+```r
+c <- geojson_json(c(-99.74, 32.45))
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
+d <- geojson_json(vecs, geometry = "polygon")
+c + d
+#> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.74,32.45]},"properties":{}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100,0],[101,0],[101,1],[100,1],[100,0]]]},"properties":[]}]}
+```
+
 #### Write geojson
 
 
 ```r
 library('maps')
 data(us.cities)
-geojson_write(us.cities[1:2,], lat='lat', lon='long')
+geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> [1] "myfile.geojson"
 ```
 
@@ -256,7 +333,7 @@ out <- topojson_read(url)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-12](inst/img/unnamed-chunk-12-1.png) 
+![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
 
 ### Use case: Make a map
 

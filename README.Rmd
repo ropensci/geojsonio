@@ -103,12 +103,35 @@ to list
 geojson_list(sp_poly)$features[[1]]
 ```
 
+#### Combine objects
+
+`geo_list` + `geo_list`
+
+> Note: `geo_list` is the output type from `geojson_list()`, it's just a list with a class attached so we know it's geojson :)
+
+```{r}
+vec <- c(-99.74, 32.45)
+a <- geojson_list(vec)
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(100.0, 0.0))
+b <- geojson_list(vecs, geometry = "polygon")
+a + b
+```
+
+`json` + `json`
+
+```{r}
+c <- geojson_json(c(-99.74, 32.45))
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
+d <- geojson_json(vecs, geometry = "polygon")
+c + d
+```
+
 #### Write geojson
 
 ```{r}
 library('maps')
 data(us.cities)
-geojson_write(us.cities[1:2,], lat='lat', lon='long')
+geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
 #### Read geojson
