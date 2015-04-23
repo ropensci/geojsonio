@@ -28,7 +28,7 @@ class(x)
 lint(x)
 
 # A file
-file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
+file <- system.file("examples", "zillow_or.geojson", package = "geojsonio")
 lint(as.location(file))
 
 # A URL

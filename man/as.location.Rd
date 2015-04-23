@@ -17,7 +17,7 @@ Convert a path or URL to a location object.
 \examples{
 \donttest{
 # A file
-file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
+file <- system.file("examples", "zillow_or.geojson", package = "geojsonio")
 as.location(file)
 
 # A URL

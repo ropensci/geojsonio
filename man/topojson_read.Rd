@@ -17,7 +17,7 @@ Read topojson from a local file or a URL
 \examples{
 \donttest{
 # From a file
-file <- system.file("examples", "us_states.topojson", package = "togeojson")
+file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 geojson_read(file)
 
 # From a URL
