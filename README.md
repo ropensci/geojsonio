@@ -237,9 +237,6 @@ geojson_write(us.cities[1:2,], lat='lat', lon='long')
 ```r
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
-#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
-plot(out)
-#> Error in plot(out): error in evaluating the argument 'x' in selecting a method for function 'plot': Error: object 'out' not found
 ```
 
 ### TopoJSON
@@ -261,36 +258,23 @@ plot(out)
 
 ![plot of chunk unnamed-chunk-12](inst/img/unnamed-chunk-12-1.png) 
 
-### Use case: Play with US states
-
-Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
-
-Get some geojson
+### Use case: Make a map
 
 
 ```r
-library('httr')
-res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
-base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
-st_files <- paste0(base, st_names)
+library('sp')
+library('cartographer')
+poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
+   c(40,50,45,40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
+   c(30,40,35,30)))), "2")
+sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+cartographer() %>%
+ tile_layer() %>%
+ geojson_layer(data = geojson_json(sp_poly))
 ```
 
-Make a faceted plot
-
-
-```r
-library('ggplot2')
-library('plyr')
-st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, verbose = FALSE)
-df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
-ggplot(df, aes(long, lat, group = group)) +
-  geom_polygon() +
-  facet_wrap(~ .id, scales = "free")
-```
-
-![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
+![](inst/img/readme1.png)
 
 ## Meta
 
