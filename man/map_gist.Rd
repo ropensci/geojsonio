@@ -162,13 +162,6 @@ library("cartographer")
 land <- system.file("extdata", "land.geojson", package = "cartographer")
 cartographer() \%>\%
  geojson_layer(file = land, label = "land")
-
-# Historical usa boundaries
-library("USAboundaries")
-us_sp <- us_boundaries(as.Date("1800-01-01"))
-cartographer(region = "United States") \%>\%
- tile_layer() \%>\%
- geojson_layer(data = geojson_json(us_sp), label = "US 1800", clickable = TRUE)
 }
 }
 

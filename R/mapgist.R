@@ -137,40 +137,33 @@
 #' cartographer() %>%
 #'  tile_layer() %>%
 #'  geojson_layer(data = geojson_json(sp_polydf))
-#'
+#'  
 #' # From a file
 #' library("cartographer")
 #' land <- system.file("extdata", "land.geojson", package = "cartographer")
 #' cartographer() %>%
 #'  geojson_layer(file = land, label = "land")
-#'
-#' # Historical usa boundaries
-#' library("USAboundaries")
-#' us_sp <- us_boundaries(as.Date("1800-01-01"))
-#' cartographer(region = "United States") %>%
-#'  tile_layer() %>%
-#'  geojson_layer(data = geojson_json(us_sp), label = "US 1800", clickable = TRUE)
 #' }
 
-map_gist <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                     group = NULL, type = "FeatureCollection", 
+map_gist <- function(input, lat = "lat", lon = "long", geometry = "point",
+                     group = NULL, type = "FeatureCollection",
                      file = "myfile.geojson", description = "",
                      public = TRUE, browse = TRUE, ...) {
-  
+
   UseMethod("map_gist")
 }
 
 #' @export
-map_gist.location <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                              group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
+map_gist.location <- function(input, lat = "lat", lon = "long", geometry = "point",
+                              group = NULL, type = "FeatureCollection", file = "myfile.geojson",
                               description = "", public = TRUE, browse = TRUE, ...) {
   check4gistr()
   gistr::gist_create(files = file[[1]],  description = description, public = public, browse = browse, ...)
 }
 
 #' @export
-map_gist.SpatialPointsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                                            group = NULL, type = "FeatureCollection", 
+map_gist.SpatialPointsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                            group = NULL, type = "FeatureCollection",
                                             file = "myfile.geojson", description = "",
                                             public = TRUE, browse = TRUE, ...) {
   check4gistr()
@@ -178,8 +171,8 @@ map_gist.SpatialPointsDataFrame <- function(input, lat = "lat", lon = "long", ge
 }
 
 #' @export
-map_gist.SpatialPoints <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                                   group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
+map_gist.SpatialPoints <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                   group = NULL, type = "FeatureCollection", file = "myfile.geojson",
                                    description = "", public = TRUE, browse = TRUE, ...){
   check4gistr()
   dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
@@ -187,16 +180,16 @@ map_gist.SpatialPoints <- function(input, lat = "lat", lon = "long", geometry = 
 }
 
 #' @export
-map_gist.SpatialPolygons <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                                     group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
+map_gist.SpatialPolygons <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                     group = NULL, type = "FeatureCollection", file = "myfile.geojson",
                                      description = "", public = TRUE, browse = TRUE, ...) {
   check4gistr()
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-map_gist.SpatialPolygonsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                                              group = NULL, type = "FeatureCollection", 
+map_gist.SpatialPolygonsDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                              group = NULL, type = "FeatureCollection",
                                               file = "myfile.geojson", description = "",
                                               public = TRUE, browse = TRUE, ...) {
   check4gistr()
@@ -204,16 +197,16 @@ map_gist.SpatialPolygonsDataFrame <- function(input, lat = "lat", lon = "long", 
 }
 
 #' @export
-map_gist.SpatialLines <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                                  group = NULL, type = "FeatureCollection", file = "myfile.geojson", 
+map_gist.SpatialLines <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                  group = NULL, type = "FeatureCollection", file = "myfile.geojson",
                                   description = "", public = TRUE, browse = TRUE, ...){
   check4gistr()
   gc(input, file, description, public, browse, ...)
 }
 
 #' @export
-map_gist.SpatialLinesDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                                           group = NULL, type = "FeatureCollection", 
+map_gist.SpatialLinesDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                           group = NULL, type = "FeatureCollection",
                                            file = "myfile.geojson", description = "",
                                            public = TRUE, browse = TRUE, ...) {
   check4gistr()
@@ -221,8 +214,8 @@ map_gist.SpatialLinesDataFrame <- function(input, lat = "lat", lon = "long", geo
 }
 
 #' @export
-map_gist.SpatialGrid <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                                 group = NULL, type = "FeatureCollection", 
+map_gist.SpatialGrid <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                 group = NULL, type = "FeatureCollection",
                                  file = "myfile.geojson", description = "",
                                  public = TRUE, browse = TRUE, ...) {
   check4gistr()
@@ -230,8 +223,8 @@ map_gist.SpatialGrid <- function(input, lat = "lat", lon = "long", geometry = "p
 }
 
 #' @export
-map_gist.SpatialGridDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point", 
-                                          group = NULL, type = "FeatureCollection", 
+map_gist.SpatialGridDataFrame <- function(input, lat = "lat", lon = "long", geometry = "point",
+                                          group = NULL, type = "FeatureCollection",
                                           file = "myfile.geojson", description = "",
                                           public = TRUE, browse = TRUE, ...) {
   check4gistr()
@@ -275,5 +268,5 @@ gc <- function(input, file, description, public, browse, ...){
 check4gistr <- function() {
   if (!requireNamespace("gistr", quietly = TRUE)) {
     stop("Please install gistr", call. = FALSE)
-  }  
+  }
 }

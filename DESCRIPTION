@@ -32,5 +32,4 @@ Suggests:
     knitr
 Enhances:
     cartographer,
-    RColorBrewer,
-    USAboundaries
+    RColorBrewer
