@@ -173,7 +173,7 @@ out <- geojson_read(file)
 
 Read from a URL
 
-```{r}
+```{r eval=FALSE}
 url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
 out <- topojson_read(url)
 ```
