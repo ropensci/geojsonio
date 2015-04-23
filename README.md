@@ -314,6 +314,7 @@ geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```r
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
+#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
 ```
 
 ### TopoJSON
@@ -334,24 +335,6 @@ plot(out)
 ```
 
 ![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
-
-### Use case: Make a map
-
-
-```r
-library('sp')
-library('cartographer')
-poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-   c(40,50,45,40)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
-   c(30,40,35,30)))), "2")
-sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
-cartographer() %>%
- tile_layer() %>%
- geojson_layer(data = geojson_json(sp_poly))
-```
-
-![](inst/img/readme1.png)
 
 ## Meta
 

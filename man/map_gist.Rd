@@ -147,9 +147,6 @@ map_gist(geojson_json(us_cities[1:10,], lat='lat', lon='long'))
 (res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
 map_gist(res)
 
-## Use the cartographer package to make maps locally
-library("cartographer")
-
 # From SpatialPixels
 pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
 summary(pixels)
@@ -172,29 +169,6 @@ map_gist(r1r2)
 dat <- data.frame(id = c(1,2), value = 3:4)
 r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
 map_gist(r1r2df)
-
-# From SpatialPolygons class
-library('sp')
-poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-   c(40,50,45,40)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
-   c(30,40,35,30)))), "2")
-sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
-cartographer() \%>\%
- tile_layer() \%>\%
- geojson_layer(data = geojson_json(sp_poly))
-
-# From SpatialPolygonsDataFrame class
-sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
-cartographer() \%>\%
- tile_layer() \%>\%
- geojson_layer(data = geojson_json(sp_polydf))
-
-# From a file
-library("cartographer")
-land <- system.file("extdata", "land.geojson", package = "cartographer")
-cartographer() \%>\%
- geojson_layer(file = land, label = "land")
 }
 }
 

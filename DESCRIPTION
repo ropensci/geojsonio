@@ -31,5 +31,4 @@ Suggests:
     testthat,
     knitr
 Enhances:
-    cartographer,
     RColorBrewer
