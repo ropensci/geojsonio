@@ -123,7 +123,7 @@ file_to_geojson <- function(input, method = "web", output = "~/", parse = FALSE)
         invisible(paste0(output, ".geojson"))
       }
     } else {
-      stop("only .shp, .kml, and url's are supported")
+      stop("only .shp, .kml, .topojson, and url's are supported")
     }
   }
 }
@@ -133,7 +133,7 @@ ftype <- function(z) {
     "url"
   } else {
     fileext <- strsplit(z, "\\.")[[1]]
-    fileext[length(z)]
+    fileext[length(fileext)]
   }
 }
 
