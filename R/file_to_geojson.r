@@ -137,10 +137,6 @@ ftype <- function(z) {
   }
 }
 
-is.url <- function(x){
-  grepl("https?://", x)
-}
-
 # If given a url for a zip file, download it give back a path to the temporary file
 handle_remote <- function(x){
   if (!grepl('http://', x)) {
