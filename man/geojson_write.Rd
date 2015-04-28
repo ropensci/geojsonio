@@ -59,6 +59,7 @@ mylist <- list(list(latitude=30, longitude=120, marker="red"),
 geojson_write(mylist)
 
 # From a numeric vector of length 2
+######### FIX ME -------------------------------------------------------
 vec <- c(-99.74, 32.45)
 geojson_write(vec)
 
@@ -94,7 +95,6 @@ geojson_write(sp_poly)
 # From SpatialPolygonsDataFrame class
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
 geojson_write(input = sp_polydf)
-geojson_write(input = sp_polydf, file = "~/stuff")
 
 # From SpatialGrid
 x <- GridTopology(c(0,0), c(1,1), c(5,5))
