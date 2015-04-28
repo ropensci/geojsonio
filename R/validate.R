@@ -13,7 +13,7 @@
 #' validate(x = '{"type": "Rhombus", "coordinates": [[1, 2], [3, 4], [5, 6]]}') # bad
 #'
 #' # A file
-#' file <- system.file("examples", "zillow_or.geojson", package = "togeojson")
+#' file <- system.file("examples", "zillow_or.geojson", package = "geojsonio")
 #' validate(x = as.location(file))
 #'
 #' # A URL

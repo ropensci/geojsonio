@@ -103,12 +103,35 @@ to list
 geojson_list(sp_poly)$features[[1]]
 ```
 
+#### Combine objects
+
+`geo_list` + `geo_list`
+
+> Note: `geo_list` is the output type from `geojson_list()`, it's just a list with a class attached so we know it's geojson :)
+
+```{r}
+vec <- c(-99.74, 32.45)
+a <- geojson_list(vec)
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(100.0, 0.0))
+b <- geojson_list(vecs, geometry = "polygon")
+a + b
+```
+
+`json` + `json`
+
+```{r}
+c <- geojson_json(c(-99.74, 32.45))
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
+d <- geojson_json(vecs, geometry = "polygon")
+c + d
+```
+
 #### Write geojson
 
 ```{r}
 library('maps')
 data(us.cities)
-geojson_write(us.cities[1:2,], lat='lat', lon='long')
+geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
 #### Read geojson
@@ -116,7 +139,6 @@ geojson_write(us.cities[1:2,], lat='lat', lon='long')
 ```{r}
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
-plot(out)
 ```
 
 ### TopoJSON
@@ -129,33 +151,6 @@ TopoJSON
 url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
 out <- topojson_read(url)
 plot(out)
-```
-
-### Use case: Play with US states
-
-Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
-
-Get some geojson
-
-```{r}
-library('httr')
-res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
-base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
-st_files <- paste0(base, st_names)
-```
-
-Make a faceted plot
-
-```{r}
-library('ggplot2')
-library('plyr')
-st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, verbose = FALSE)
-df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
-ggplot(df, aes(long, lat, group = group)) +
-  geom_polygon() +
-  facet_wrap(~ .id, scales = "free")
 ```
 
 ## Meta

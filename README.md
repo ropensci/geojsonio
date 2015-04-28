@@ -221,13 +221,90 @@ geojson_list(sp_poly)$features[[1]]
 #> [1] -100   40
 ```
 
+#### Combine objects
+
+`geo_list` + `geo_list`
+
+> Note: `geo_list` is the output type from `geojson_list()`, it's just a list with a class attached so we know it's geojson :)
+
+
+```r
+vec <- c(-99.74, 32.45)
+a <- geojson_list(vec)
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(100.0, 0.0))
+b <- geojson_list(vecs, geometry = "polygon")
+a + b
+#> $type
+#> [1] "FeatureCollection"
+#> 
+#> $features
+#> $features[[1]]
+#> $features[[1]]$type
+#> [1] "Feature"
+#> 
+#> $features[[1]]$geometry
+#> $features[[1]]$geometry$type
+#> [1] "Point"
+#> 
+#> $features[[1]]$geometry$coordinates
+#> [1] -99.74  32.45
+#> 
+#> 
+#> $features[[1]]$properties
+#> NULL
+#> 
+#> 
+#> $features[[2]]
+#> $features[[2]]$type
+#> [1] "Feature"
+#> 
+#> $features[[2]]$geometry
+#> $features[[2]]$geometry$type
+#> [1] "Polygon"
+#> 
+#> $features[[2]]$geometry$coordinates
+#> $features[[2]]$geometry$coordinates[[1]]
+#> $features[[2]]$geometry$coordinates[[1]][[1]]
+#> [1] 100   0
+#> 
+#> $features[[2]]$geometry$coordinates[[1]][[2]]
+#> [1] 101   0
+#> 
+#> $features[[2]]$geometry$coordinates[[1]][[3]]
+#> [1] 100   0
+#> 
+#> 
+#> 
+#> 
+#> $features[[2]]$properties
+#> list()
+#> 
+#> 
+#> 
+#> attr(,"class")
+#> [1] "geo_list"
+#> attr(,"from")
+#> [1] "numeric" "list"
+```
+
+`json` + `json`
+
+
+```r
+c <- geojson_json(c(-99.74, 32.45))
+vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
+d <- geojson_json(vecs, geometry = "polygon")
+c + d
+#> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.74,32.45]},"properties":{}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100,0],[101,0],[101,1],[100,1],[100,0]]]},"properties":[]}]}
+```
+
 #### Write geojson
 
 
 ```r
 library('maps')
 data(us.cities)
-geojson_write(us.cities[1:2,], lat='lat', lon='long')
+geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> [1] "myfile.geojson"
 ```
 
@@ -238,8 +315,6 @@ geojson_write(us.cities[1:2,], lat='lat', lon='long')
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
 #> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
-plot(out)
-#> Error in plot(out): error in evaluating the argument 'x' in selecting a method for function 'plot': Error: object 'out' not found
 ```
 
 ### TopoJSON
@@ -257,37 +332,6 @@ out <- topojson_read(url)
 #> with 51 features
 #> It has 2 fields
 plot(out)
-```
-
-![plot of chunk unnamed-chunk-12](inst/img/unnamed-chunk-12-1.png) 
-
-### Use case: Play with US states
-
-Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
-
-Get some geojson
-
-
-```r
-library('httr')
-res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
-base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
-st_files <- paste0(base, st_names)
-```
-
-Make a faceted plot
-
-
-```r
-library('ggplot2')
-library('plyr')
-st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, verbose = FALSE)
-df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
-ggplot(df, aes(long, lat, group = group)) +
-  geom_polygon() +
-  facet_wrap(~ .id, scales = "free")
 ```
 
 ![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
