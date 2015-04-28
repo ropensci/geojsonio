@@ -5,7 +5,7 @@ Description: Convert data to geoJSON or topoJSON from various R classes,
     package does not aim to replace packages like sp, rgdal, rgeos, but
     rather aims to be a high level client to simplify conversions of data
     from and to geoJSON and topoJSON.
-Version: 0.0.9.9996
+Version: 0.0.9.9997
 Date: 2015-04-28
 License: MIT + file LICENSE
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
