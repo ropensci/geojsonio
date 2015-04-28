@@ -57,11 +57,39 @@ Additional functions:
 
 ## Install
 
-Install rgdal - in case you can't get it installed from binary , here's what works on a Mac (change to the version of `rgdal` and `GDAL` you have).
+A note about installing `rgdal` and `rgeos` - these two packages are built on top of C libraries, and their installation often causes trouble for Mac and Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`. Change to the version of `rgdal` and `GDAL` you have):
+
+_Mac_
+
+Install `GDAL` on the command line first, e.g., usingn `homebrew`
+
+```
+brew install gdal
+```
+
+Then install `rgdal` and `rgeos`
 
 ```{r eval=FALSE}
-install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.11/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
+install.packages("rgdal", type = "source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.11/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
+install.packages("rgeos", type = "source")
 ```
+
+_Linux_
+
+Get deps first
+
+```
+sudo apt-get install libgdal1-dev libgdal-dev libgeos-c1 libproj-dev
+```
+
+Then install `rgdal` and `rgeos`
+
+```{r eval=FALSE}
+install.packages("rgdal", type = "source")
+install.packages("rgeos", type = "source")
+```
+
+__Install geojsonio__
 
 Stable version from CRAN
 
@@ -115,10 +143,10 @@ From `SpatialPolygons` class
 
 ```{r}
 library('sp')
-poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-  c(40,50,45,40)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
-  c(30,40,35,30)))), "2")
+poly1 <- Polygons(list(Polygon(cbind(c(-100, -90, -85, -100),
+  c(40, 50, 45, 40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90, -80, -75, -90),
+  c(30, 40, 35, 30)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 ```
 
@@ -171,7 +199,7 @@ a + b
 `json` + `json`
 
 ```{r}
-c <- geojson_json(c(-99.74, 32.45))
+c <- geojson_json(c(-99.74, 32.45))23
 vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
 d <- geojson_json(vecs, geometry = "polygon")
 c + d
@@ -207,3 +235,9 @@ Or use `as.location()` first
 (loc <- as.location(file))
 out <- topojson_read(loc)
 ```
+
+## To do
+
+* Replace `rgdal` with javascript libraries to read from various file types (kml, shp, etc.) and convert to geojson. This is in development, and will come in the next version of this package most likely. 
+* Performance improvements. Some operations already use the gdal or geos C libraries, so are quite fast, though the round trip to disk and back does take significant time. 
+* More input types. We already have operations (json, list, etc.) for lots of input types (data.frame, list, sp classes). but likely there will be more added. 

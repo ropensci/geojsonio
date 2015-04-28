@@ -1,7 +1,32 @@
 geojsonio
-========
+=========
 
 ```{r echo=FALSE}
+library("knitr")
+hook_output <- knitr::knit_hooks$get("output")
+knitr::knit_hooks$set(output = function(x, options) {
+   lines <- options$output.lines
+   if (is.null(lines)) {
+     return(hook_output(x, options))  # pass to default hook
+   }
+   x <- unlist(strsplit(x, "\n"))
+   more <- "..."
+   if (length(lines)==1) {        # first n lines
+     if (length(x) > lines) {
+       # truncate the output, but add ....
+       x <- c(head(x, lines), more)
+     }
+   } else {
+     x <- c(if (abs(lines[1])>1) more else NULL,
+            x[lines],
+            if (length(x)>lines[abs(length(lines))]) more else NULL
+           )
+   }
+   # paste these lines together
+   x <- paste(c(x, ""), collapse = "\n")
+   hook_output(x, options)
+ })
+
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,
@@ -37,19 +62,44 @@ Additional functions:
 * GeoJSON - [spec](http://geojson.org/geojson-spec.html)
 * [GeoJSON lint](http://geojsonlint.com/)
 * TopoJSON - [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
-* TopoJSON node library - [on NMP](https://www.npmjs.org/package/topojson), [source](https://github.com/mbostock/topojson)
 
 ## Quick start
 
 ### Install
 
-Install rgdal - in case you can't get it installed from binary , here's what works on a Mac (change to the version of `rgdal` and `GDAL` you have).
+A note about installing `rgdal` and `rgeos` - these two packages are built on top of C libraries, and their installation often causes trouble for Mac and Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`. Change to the version of `rgdal` and `GDAL` you have):
 
-```{r eval=FALSE}
-install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
+_Mac_
+
+Install `GDAL` on the command line first, e.g., usingn `homebrew`
+
+```
+brew install gdal
 ```
 
-Install `geojsonio`
+Then install `rgdal` and `rgeos`
+
+```{r eval=FALSE}
+install.packages("rgdal", type = "source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.11/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
+install.packages("rgeos", type = "source")
+```
+
+_Linux_
+
+Get deps first
+
+```
+sudo apt-get install libgdal1-dev libgdal-dev libgeos-c1 libproj-dev
+```
+
+Then install `rgdal` and `rgeos`
+
+```{r eval=FALSE}
+install.packages("rgdal", type = "source")
+install.packages("rgeos", type = "source")
+```
+
+__Install geojsonio__
 
 ```{r eval=FALSE}
 install.packages("devtools")
@@ -67,8 +117,11 @@ library("geojsonio")
 From a `numeric` vector of length 2, as json or list
 
 ```{r}
-geojson_json(c(32.45,-99.74))
-geojson_list(c(32.45,-99.74))
+geojson_json(c(32.45, -99.74))
+```
+
+```{r output.lines=1:10}
+geojson_list(c(32.45, -99.74))
 ```
 
 From a `data.frame`
@@ -76,18 +129,21 @@ From a `data.frame`
 ```{r}
 library('maps')
 data(us.cities)
-geojson_json(us.cities[1:2,], lat='lat', lon='long')
-geojson_list(us.cities[1:2,], lat='lat', lon='long')
+geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
+```
+
+```{r output.lines=1:10}
+geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
 From `SpatialPolygons` class
 
 ```{r}
 library('sp')
-poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-  c(40,50,45,40)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
-  c(30,40,35,30)))), "2")
+poly1 <- Polygons(list(Polygon(cbind(c(-100, -90, -85, -100),
+  c(40, 50, 45, 40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90, -80, -75, -90),
+  c(30, 40, 35, 30)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 ```
 
@@ -99,7 +155,7 @@ geojson_json(sp_poly)
 
 to list
 
-```{r}
+```{r output.lines=1:10}
 geojson_list(sp_poly)$features[[1]]
 ```
 
@@ -109,7 +165,7 @@ geojson_list(sp_poly)$features[[1]]
 
 > Note: `geo_list` is the output type from `geojson_list()`, it's just a list with a class attached so we know it's geojson :)
 
-```{r}
+```{r output.lines=1:10}
 vec <- c(-99.74, 32.45)
 a <- geojson_list(vec)
 vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(100.0, 0.0))

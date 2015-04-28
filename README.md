@@ -1,5 +1,5 @@
 geojsonio
-========
+=========
 
 
 
@@ -28,20 +28,46 @@ Additional functions:
 * GeoJSON - [spec](http://geojson.org/geojson-spec.html)
 * [GeoJSON lint](http://geojsonlint.com/)
 * TopoJSON - [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
-* TopoJSON node library - [on NMP](https://www.npmjs.org/package/topojson), [source](https://github.com/mbostock/topojson)
 
 ## Quick start
 
 ### Install
 
-Install rgdal - in case you can't get it installed from binary , here's what works on a Mac (change to the version of `rgdal` and `GDAL` you have).
+A note about installing `rgdal` and `rgeos` - these two packages are built on top of C libraries, and their installation often causes trouble for Mac and Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`. Change to the version of `rgdal` and `GDAL` you have):
+
+_Mac_
+
+Install `GDAL` on the command line first, e.g., usingn `homebrew`
+
+```
+brew install gdal
+```
+
+Then install `rgdal` and `rgeos`
 
 
 ```r
-install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.10/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
+install.packages("rgdal", type = "source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.11/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
+install.packages("rgeos", type = "source")
 ```
 
-Install `geojsonio`
+_Linux_
+
+Get deps first
+
+```
+sudo apt-get install libgdal1-dev libgdal-dev libgeos-c1 libproj-dev
+```
+
+Then install `rgdal` and `rgeos`
+
+
+```r
+install.packages("rgdal", type = "source")
+install.packages("rgeos", type = "source")
+```
+
+__Install geojsonio__
 
 
 ```r
@@ -62,9 +88,13 @@ From a `numeric` vector of length 2, as json or list
 
 
 ```r
-geojson_json(c(32.45,-99.74))
+geojson_json(c(32.45, -99.74))
 #> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[32.45,-99.74]},"properties":{}}]}
-geojson_list(c(32.45,-99.74))
+```
+
+
+```r
+geojson_list(c(32.45, -99.74))
 #> $type
 #> [1] "FeatureCollection"
 #> 
@@ -75,21 +105,7 @@ geojson_list(c(32.45,-99.74))
 #> 
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
-#> [1] "Point"
-#> 
-#> $features[[1]]$geometry$coordinates
-#> [1]  32.45 -99.74
-#> 
-#> 
-#> $features[[1]]$properties
-#> NULL
-#> 
-#> 
-#> 
-#> attr(,"class")
-#> [1] "geo_list"
-#> attr(,"from")
-#> [1] "numeric"
+...
 ```
 
 From a `data.frame`
@@ -98,9 +114,13 @@ From a `data.frame`
 ```r
 library('maps')
 data(us.cities)
-geojson_json(us.cities[1:2,], lat='lat', lon='long')
+geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.74,32.45]},"properties":{"name":"Abilene TX","country.etc":"TX","pop":"113888","capital":"0"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-81.52,41.08]},"properties":{"name":"Akron OH","country.etc":"OH","pop":"206634","capital":"0"}}]}
-geojson_list(us.cities[1:2,], lat='lat', lon='long')
+```
+
+
+```r
+geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> $type
 #> [1] "FeatureCollection"
 #> 
@@ -111,59 +131,7 @@ geojson_list(us.cities[1:2,], lat='lat', lon='long')
 #> 
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
-#> [1] "Point"
-#> 
-#> $features[[1]]$geometry$coordinates
-#> [1] -99.74  32.45
-#> 
-#> 
-#> $features[[1]]$properties
-#> $features[[1]]$properties$name
-#> [1] "Abilene TX"
-#> 
-#> $features[[1]]$properties$country.etc
-#> [1] "TX"
-#> 
-#> $features[[1]]$properties$pop
-#> [1] "113888"
-#> 
-#> $features[[1]]$properties$capital
-#> [1] "0"
-#> 
-#> 
-#> 
-#> $features[[2]]
-#> $features[[2]]$type
-#> [1] "Feature"
-#> 
-#> $features[[2]]$geometry
-#> $features[[2]]$geometry$type
-#> [1] "Point"
-#> 
-#> $features[[2]]$geometry$coordinates
-#> [1] -81.52  41.08
-#> 
-#> 
-#> $features[[2]]$properties
-#> $features[[2]]$properties$name
-#> [1] "Akron OH"
-#> 
-#> $features[[2]]$properties$country.etc
-#> [1] "OH"
-#> 
-#> $features[[2]]$properties$pop
-#> [1] "206634"
-#> 
-#> $features[[2]]$properties$capital
-#> [1] "0"
-#> 
-#> 
-#> 
-#> 
-#> attr(,"class")
-#> [1] "geo_list"
-#> attr(,"from")
-#> [1] "data.frame"
+...
 ```
 
 From `SpatialPolygons` class
@@ -171,10 +139,10 @@ From `SpatialPolygons` class
 
 ```r
 library('sp')
-poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-  c(40,50,45,40)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
-  c(30,40,35,30)))), "2")
+poly1 <- Polygons(list(Polygon(cbind(c(-100, -90, -85, -100),
+  c(40, 50, 45, 40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90, -80, -75, -90),
+  c(30, 40, 35, 30)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 ```
 
@@ -201,24 +169,7 @@ geojson_list(sp_poly)$features[[1]]
 #> $properties$dummy
 #> [1] 0
 #> 
-#> 
-#> $geometry
-#> $geometry$type
-#> [1] "Polygon"
-#> 
-#> $geometry$coordinates
-#> $geometry$coordinates[[1]]
-#> $geometry$coordinates[[1]][[1]]
-#> [1] -100   40
-#> 
-#> $geometry$coordinates[[1]][[2]]
-#> [1] -90  50
-#> 
-#> $geometry$coordinates[[1]][[3]]
-#> [1] -85  45
-#> 
-#> $geometry$coordinates[[1]][[4]]
-#> [1] -100   40
+...
 ```
 
 #### Combine objects
@@ -244,47 +195,7 @@ a + b
 #> 
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
-#> [1] "Point"
-#> 
-#> $features[[1]]$geometry$coordinates
-#> [1] -99.74  32.45
-#> 
-#> 
-#> $features[[1]]$properties
-#> NULL
-#> 
-#> 
-#> $features[[2]]
-#> $features[[2]]$type
-#> [1] "Feature"
-#> 
-#> $features[[2]]$geometry
-#> $features[[2]]$geometry$type
-#> [1] "Polygon"
-#> 
-#> $features[[2]]$geometry$coordinates
-#> $features[[2]]$geometry$coordinates[[1]]
-#> $features[[2]]$geometry$coordinates[[1]][[1]]
-#> [1] 100   0
-#> 
-#> $features[[2]]$geometry$coordinates[[1]][[2]]
-#> [1] 101   0
-#> 
-#> $features[[2]]$geometry$coordinates[[1]][[3]]
-#> [1] 100   0
-#> 
-#> 
-#> 
-#> 
-#> $features[[2]]$properties
-#> list()
-#> 
-#> 
-#> 
-#> attr(,"class")
-#> [1] "geo_list"
-#> attr(,"from")
-#> [1] "numeric" "list"
+...
 ```
 
 `json` + `json`
@@ -314,7 +225,6 @@ geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```r
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
-#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
 ```
 
 ### TopoJSON
@@ -334,7 +244,7 @@ out <- topojson_read(url)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-14](inst/img/unnamed-chunk-14-1.png) 
+![plot of chunk unnamed-chunk-17](inst/img/unnamed-chunk-17-1.png) 
 
 ## Meta
 
