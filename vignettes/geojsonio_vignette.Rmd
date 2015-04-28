@@ -199,7 +199,7 @@ a + b
 `json` + `json`
 
 ```{r}
-c <- geojson_json(c(-99.74, 32.45))23
+c <- geojson_json(c(-99.74, 32.45))
 vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
 d <- geojson_json(vecs, geometry = "polygon")
 c + d
