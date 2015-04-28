@@ -4,13 +4,18 @@
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
 #'
-#' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
+#' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr 
+#' \code{tbl_df}
 #' class since it inherits from \code{data.frame}.
-#' @param lat (character) Latitude name. The default is \code{NULL}, and we attempt to guess.
-#' @param lon (character) Longitude name. The default is \code{NULL}, and we attempt to guess.
+#' @param lat (character) Latitude name. The default is \code{NULL}, and we attempt 
+#' to guess.
+#' @param lon (character) Longitude name. The default is \code{NULL}, and we attempt 
+#' to guess.
 #' @param geometry (character) One of point (Default) or polygon.
-#' @param group (character) A grouping variable to perform grouping for polygons - doesn't apply for points
-#' @param file (character) A path and file name (e.g., myfile), with the \code{.geojson} file extension
+#' @param group (character) A grouping variable to perform grouping for polygons - 
+#' doesn't apply for points
+#' @param file (character) A path and file name (e.g., myfile), with the 
+#' \code{.geojson} file extension. Default writes to current working directory.
 #' @param ... Further args passed on to \code{\link[rgdal]{writeOGR}}
 #'
 #' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}

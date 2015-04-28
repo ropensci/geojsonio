@@ -8,18 +8,23 @@ geojson_write(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.geojson", ...)
 }
 \arguments{
-\item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
+\item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr
+\code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
-\item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt to guess.}
+\item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt
+to guess.}
 
-\item{lon}{(character) Longitude name. The default is \code{NULL}, and we attempt to guess.}
+\item{lon}{(character) Longitude name. The default is \code{NULL}, and we attempt
+to guess.}
 
 \item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't apply for points}
+\item{group}{(character) A grouping variable to perform grouping for polygons -
+doesn't apply for points}
 
-\item{file}{(character) A path and file name (e.g., myfile), with the \code{.geojson} file extension}
+\item{file}{(character) A path and file name (e.g., myfile), with the
+\code{.geojson} file extension. Default writes to current working directory.}
 
 \item{...}{Further args passed on to \code{\link[rgdal]{writeOGR}}}
 }

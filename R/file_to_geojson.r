@@ -9,7 +9,8 @@
 #' @export
 #' @param input The file being uploaded, path to the file on your machine.
 #' @param method One of web or local. Matches on partial strings.
-#' @param output Destination for output geojson file. Defaults to root directory \code{~/}
+#' @param output Destination for output geojson file. Defaults to current working 
+#' directory
 #' @param parse (logical) To parse geojson to data.frame like structures if possible.
 #' Default: \code{FALSE}
 #' @description
@@ -34,7 +35,7 @@
 #' file_to_geojson(input=file, method='local', output = ":memory:")
 #'
 #' # KML type file - using the local method
-#' file_to_geojson(input=file, method='local', output='~/kml_local')
+#' file_to_geojson(input=file, method='local', output='kml_local')
 #'
 #' # Shp type file - using the web method - input is a zipped shp bundle
 #' file <- system.file("examples", "bison.zip", package = "geojsonio")
@@ -47,28 +48,14 @@
 #' list.files(dir)
 #' shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
 #' file_to_geojson(shpfile, method='local', output='shp_local')
-#' file_to_geojson(shpfile, method='local', output=':memory:')
-#'
-#' # Get data and save map data
-#' splist <- c('Accipiter erythronemius', 'Junco hyemalis', 'Aix sponsa')
-#' keys <- sapply(splist, function(x) gbif_lookup(name=x, kingdom='plants')$speciesKey,
-#'    USE.NAMES=FALSE)
-#' out <- occ_search(keys, georeferenced=TRUE, limit=50, return='data')
-#' dat <- ldply(out)
-#' datgeojson <- spocc_stylegeojson(input=dat, var='name',
-#'    color=c('#976AAE','#6B944D','#BD5945'), size=c('small','medium','large'))
-#'
-#' # Put into a github repo to view on the web
-#' write.csv(datgeojson, '~/github/sac/mygeojson/rgbif_data.csv')
-#' file <- '~/github/sac/mygeojson/rgbif_data.csv'
-#' file_to_geojson(file, method='web', destpath='~/github/sac/mygeojson/', output='rgbif_data')
 #'
 #' # Neighborhoods in the US
+#' ## beware, this is a long running example
 #' url <- 'http://www.nws.noaa.gov/geodata/catalog/national/data/ci08au12.zip'
 #' out <- file_to_geojson(input=url, method='web', output='cities')
 #' }
 
-file_to_geojson <- function(input, method = "web", output = "~/", parse = FALSE) {
+file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE) {
   method <- match.arg(method, choices = c("web", "local"))
   if (method == "web") {
     url <- "http://ogre.adc4gis.com/convert"
