@@ -59,7 +59,7 @@ mylist <- list(list(latitude=30, longitude=120, marker="red"),
 geojson_write(mylist)
 
 # From a numeric vector of length 2
-######### FIX ME -------------------------------------------------------
+## Expected order is lon, lat
 vec <- c(-99.74, 32.45)
 geojson_write(vec)
 

@@ -156,8 +156,10 @@ list_to_SpatialPointsDataFrame <- function(x, lat, lon){
 }
 
 df_to_SpatialPointsDataFrame <- function(x, lon, lat) {
+  if (is.null(lat)) lat <- "lat"
+  if (is.null(lon)) lon <- "lon"
   x2 <- x
-  coordinates(x2) <- c(lon,lat)
+  coordinates(x2) <- c(lon, lat)
   SpatialPointsDataFrame(x2, x)
 }
 

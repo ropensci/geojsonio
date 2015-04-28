@@ -47,7 +47,7 @@
 #' geojson_write(mylist)
 #'
 #' # From a numeric vector of length 2
-#' ######### FIX ME -------------------------------------------------------
+#' ## Expected order is lon, lat
 #' vec <- c(-99.74, 32.45)
 #' geojson_write(vec)
 #'
@@ -253,6 +253,8 @@ geojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "poi
 }
 
 num2df <- function(x, lat, lon) {
+  if (is.null(lat)) lat <- "lat"
+  if (is.null(lon)) lon <- "lon"
   setNames(data.frame(rbind(x), stringsAsFactors = FALSE, row.names = NULL), c(lat, lon))
 }
 
