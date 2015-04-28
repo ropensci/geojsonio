@@ -51,3 +51,5 @@ test_that("as.json works with geojson class inputs", {
     "{\"type\":\"MultiPoint\",\"bbox\":[-100,-75,30,50],\"coordinates\":[[-91.6666666666667,45],[-81.6666666666667,35]],\"properties\":{}}"
   )
 })
+
+#### FIXME - add tests for character input, file names that is.
