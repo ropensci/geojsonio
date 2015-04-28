@@ -1,4 +1,4 @@
-context("testing as.location")
+context("as.location")
 
 # A URL
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
