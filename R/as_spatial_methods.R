@@ -57,3 +57,16 @@ as.SpatialPointsDataFrame.SpatialPixels <- function (from) {
 
 setAs("SpatialPixels", "SpatialPointsDataFrame",
       as.SpatialPointsDataFrame.SpatialPixels)
+
+# Convert to various sp classes from geojson files
+as.SpatialPolygonsDataFrame <- function(x, ...) {
+  UseMethod("as.SpatialPolygonsDataFrame")
+}
+
+as.SpatialPolygonsDataFrame.geojson <- function(x, ...) {
+  readOGR(x$path, "OGRGeoJSON", ...)
+}
+
+as.SpatialPolygonsDataFrame.character <- function(x, ...) {
+  readOGR(x, "OGRGeoJSON", ...)
+}

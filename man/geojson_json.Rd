@@ -104,10 +104,7 @@ pt <- gBuffer(pt, width = 100)
 pt <- spTransform(pt, CRS("+proj=longlat +datum=WGS84"))
 geojson_json(pt)
 
-## data.frame to SpatialPolygonsDataFrame
-geojson_write(us_cities[1:2,], lat='lat', lon='long') \%>\% as.SpatialPolygonsDataFrame
-
-## data.frame to json (via SpatialPolygonsDataFrame)
+## data.frame to geojson
 geojson_write(us_cities[1:2,], lat='lat', lon='long') \%>\% as.json
 
 # From SpatialPoints class
