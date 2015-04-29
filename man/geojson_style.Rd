@@ -2,36 +2,81 @@
 % Please edit documentation in R/geojson_style.R
 \name{geojson_style}
 \alias{geojson_style}
-\title{Style a data.frame prior to converting to geojson.}
+\title{Style a data.frame or list prior to converting to geojson}
 \usage{
 geojson_style(input, var = NULL, var_col = NULL, var_sym = NULL,
-  var_size = NULL, color = NULL, symbol = NULL, size = NULL)
+  var_size = NULL, var_stroke = NULL, var_stroke_width = NULL,
+  var_stroke_opacity = NULL, var_fill = NULL, var_fill_opacity = NULL,
+  color = NULL, symbol = NULL, size = NULL, stroke = NULL,
+  stroke_width = NULL, stroke_opacity = NULL, fill = NULL,
+  fill_opacity = NULL)
 }
 \arguments{
 \item{input}{A data.frame or a list}
 
 \item{var}{(character) A single variable to map colors, symbols, and/or sizes to.}
 
-\item{var_col}{(character) The variable to map colors to.}
+\item{var_col}{(character) A single variable to map colors to.}
 
-\item{var_sym}{(character) The variable to map symbols to.}
+\item{var_sym}{(character) A single variable to map symbols to.}
 
-\item{var_size}{(character) The variable to map size to.}
+\item{var_size}{(character) A single variable to map size to.}
+
+\item{var_stroke}{(character) A single variable to map stroke to.}
+
+\item{var_stroke_width}{(character) A single variable to map stroke width to.}
+
+\item{var_stroke_opacity}{(character) A single variable to map stroke opacity to.}
+
+\item{var_fill}{(character) A single variable to map fill to.}
+
+\item{var_fill_opacity}{(character) A single variable to map fill opacity to.}
 
 \item{color}{(character) Valid RGB hex color. Assigned to the variable \code{marker-color}}
 
 \item{symbol}{(character) An icon ID from the Maki project \url{http://www.mapbox.com/maki/}
 or a single alphanumeric character (a-z or 0-9). Assigned to the variable \code{marker-symbol}}
 
-\item{size}{One of 'small', 'medium', or 'large'. Assigned to the variable
-\code{marker-size}}
+\item{size}{(character) One of 'small', 'medium', or 'large'. Assigned to the
+variable \code{marker-size}}
+
+\item{stroke}{(character) Color of a polygon edge or line (RGB). Assigned to the
+variable \code{stroke}}
+
+\item{stroke_width}{(numeric) Width of a polygon edge or line (number > 0). Assigned
+to the variable \code{stroke-width}}
+
+\item{stroke_opacity}{(numeric) Opacity of a polygon edge or line (0.0 - 1.0). Assigned
+to the variable \code{stroke-opacity}}
+
+\item{fill}{(character) The color of the interior of a polygon (GRB). Assigned to the
+variable \code{fill}}
+
+\item{fill_opacity}{(character) The opacity of the interior of a polygon (0.0-1.0).
+Assigned to the variable \code{fill-opacity}}
 }
 \description{
-Style a data.frame prior to converting to geojson.
+This helps you add styling following the Simplestyle Spec. See Details
+}
+\details{
+The parameters color, symbol, size, stroke, stroke_width, stroke_opacity,
+fill, and fill_opacity expect a vector of size 1 (recycled), or exact length of vector
+being applied to in your input data.
+
+This function helps add styling data to a list or data.frame followingn the
+Simplestyle Spec (\url{https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0}),
+used by MapBox and GitHub Gists (that renders geoJSON/topoJSON as interactive maps).
+
+There are a few other style variables, but deal with polygons
+
+GitHub has a nice help article on geoJSON files
+\url{https://help.github.com/articles/mapping-geojson-files-on-github/}
+
+Please do get in touch if you think anything should change in this function.
 }
 \examples{
 \dontrun{
-## Style geojson - from data.frames
+## from data.frames - point data
 library("RColorBrewer")
 smalluscities <-
    subset(us_cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
@@ -46,7 +91,7 @@ geojson_style(smalluscities, var = 'country.etc',
    color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"),
    size=c('small','medium','large'))
 
-## From lists
+## from lists - point data
 mylist <- list(list(latitude=30, longitude=120, state="US"),
                list(latitude=32, longitude=130, state="OR"),
                list(latitude=38, longitude=125, state="NY"),
@@ -63,6 +108,18 @@ geojson_style(mylist, var = 'state',
    color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
    size=c('small','medium','large','large'),
    symbol="zoo")
+# stroke, fill
+geojson_style(mylist, var = 'state',
+   stroke=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
+   fill=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Greens"))
+
+# from data.frame - polygon data
+smallstates <- states[states$group \%in\% 1:3, ]
+head(smallstates)
+geojson_style(smallstates, var = 'group',
+   stroke = brewer.pal(length(unique(smallstates$group)), "Blues"),
+   stroke_width = c(1, 2, 3),
+   fill = brewer.pal(length(unique(smallstates$group)), "Greens"))
 }
 }
 
