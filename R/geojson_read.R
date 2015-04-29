@@ -13,7 +13,6 @@
 #' # From a file
 #' file <- system.file("examples", "california.geojson", package = "geojsonio")
 #' out <- geojson_read(file)
-#' plot(out)
 #'
 #' # From a URL
 #' url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"

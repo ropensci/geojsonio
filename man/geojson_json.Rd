@@ -178,6 +178,7 @@ geojson_json(pixelsdf)
 
 # From SpatialCollections
 library("sp")
+library("rgeos")
 pts <- SpatialPoints(cbind(c(1,2,3,4,5), c(3,2,5,1,4)))
 poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
 poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")

@@ -324,7 +324,7 @@ map_gist.geo_list <- function(input, lat = "lat", lon = "long", geometry = "poin
 
 # Helper functions ------------------------
 gc <- function(input, file, description, public, browse, ...){
-  gistr::gist_create(files = geojson_write(input, file = file),
+  gistr::gist_create(files = geojson_write(input, file = file)$path,
               description = description,
               public = public,
               browse = browse, ...)
