@@ -12,3 +12,4 @@ vignettes/figure/
 README.Rmd
 ^.*\.geojson
 .V8history
+cran-comments.md
