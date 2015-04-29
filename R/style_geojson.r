@@ -17,12 +17,12 @@
 #'    subset(us_cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
 #'
 #' ### Just color
-#' style_geojson(smalluscities, var = 'country.etc',
+#' geojson_style(smalluscities, var = 'country.etc',
 #'    color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"))
 #' ### Just size
-#' style_geojson(smalluscities, var = 'country.etc', size=c('small','medium','large'))
+#' geojson_style(smalluscities, var = 'country.etc', size=c('small','medium','large'))
 #' ### Color and size
-#' style_geojson(smalluscities, var = 'country.etc',
+#' geojson_style(smalluscities, var = 'country.etc',
 #'    color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"),
 #'    size=c('small','medium','large'))
 #'
@@ -32,26 +32,26 @@
 #'                list(latitude=38, longitude=125, state="NY"),
 #'                list(latitude=40, longitude=128, state="VT"))
 #' # just color
-#' style_geojson(mylist, var = 'state',
+#' geojson_style(mylist, var = 'state',
 #'    color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))
 #' # color and size
-#' style_geojson(mylist, var = 'state',
+#' geojson_style(mylist, var = 'state',
 #'    color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
 #'    size=c('small','medium','large','large'))
 #' # color, size, and symbol
-#' style_geojson(mylist, var = 'state',
+#' geojson_style(mylist, var = 'state',
 #'    color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
 #'    size=c('small','medium','large','large'),
 #'    symbol="zoo")
 #' }
 
-style_geojson <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
+geojson_style <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
                           var_size = NULL, color = NULL, symbol = NULL, size = NULL){
-  UseMethod("style_geojson")
+  UseMethod("geojson_style")
 }
 
 #' @export
-style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
+geojson_style.data.frame <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
                                      var_size = NULL, color = NULL, symbol = NULL, size = NULL) {
   # check inputs
   if (NROW(input) == 0) {
@@ -72,7 +72,7 @@ style_geojson.data.frame <- function(input, var = NULL, var_col = NULL, var_sym 
 }
 
 #' @export
-style_geojson.list <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
+geojson_style.list <- function(input, var = NULL, var_col = NULL, var_sym = NULL,
                                var_size = NULL, color = NULL, symbol = NULL, size = NULL) {
   # check inputs
   if (length(input) == 0) {
