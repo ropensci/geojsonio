@@ -68,7 +68,8 @@ geojson_style.data.frame <- function(input, var = NULL, var_col = NULL, var_sym 
   
   # put together output
   output <- do.call(cbind, tg_compact(list(input, `marker-color` = color_vec, 
-                                           `marker-symbol` = symbol_vec, `marker-size` = size_vec)))
+                                           `marker-symbol` = symbol_vec, `marker-size` = size_vec, 
+                                           stringsAsFactors = FALSE)))
   return(output)
 }
 
@@ -102,7 +103,7 @@ df_vec <- function(input, x, var_x) {
     if (length(x) == 1) {
       rep(x, nrow(input))
     } else {
-      mapping <- data.frame(var = unique(input[[var_x]]), col2 = x)
+      mapping <- data.frame(var = unique(input[[var_x]]), col2 = x, stringsAsFactors = FALSE)
       stuff <- input[[var_x]]
       with(mapping, col2[match(stuff, var)])
     }
