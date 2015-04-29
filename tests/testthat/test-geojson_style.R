@@ -1,17 +1,17 @@
 context("geojson_style")
 
 test_that("geojson_style works with data.frame inputs", {
-  library("RColorBrewer")
+  require("RColorBrewer")
   smalluscities <- subset(us_cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
   
   ### Just color
   a <- geojson_style(smalluscities, var = 'country.etc',
-     color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"))
+     color=RColorBrewer::brewer.pal(length(unique(smalluscities$country.etc)), "Blues"))
   ### Just size
   b <- geojson_style(smalluscities, var = 'country.etc', size=c('small','medium','large'))
   ### Color and size
   c <- geojson_style(smalluscities, var = 'country.etc',
-     color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"),
+     color=RColorBrewer::brewer.pal(length(unique(smalluscities$country.etc)), "Blues"),
      size=c('small','medium','large'))
   
   expect_is(a, "data.frame")
@@ -30,14 +30,14 @@ test_that("geojson_style works with list inputs", {
                  list(latitude=40, longitude=128, state="VT"))
   # just color
   d <- geojson_style(mylist, var = 'state',
-                color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))
+                color=RColorBrewer::brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))
   # color and size
   e <- geojson_style(mylist, var = 'state',
-                color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
+                color=RColorBrewer::brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
                 size=c('small','medium','large','large'))
   # color, size, and symbol
   f <- geojson_style(mylist, var = 'state',
-                color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
+                color=RColorBrewer::brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
                 size=c('small','medium','large','large'),
                 symbol="zoo")
   
