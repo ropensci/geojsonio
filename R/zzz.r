@@ -1,19 +1,19 @@
 tg_compact <- function(l) Filter(Negate(is.null), l)
 
 # to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., auto_unbox = TRUE), class=c('json','geo_json'))
-to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., digits = 22, auto_unbox = TRUE), class='json')
+to_json <- function(x, ...) structure(jsonlite::toJSON(x, ..., digits = 22, auto_unbox = TRUE), class = 'json')
 
 list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCollection", unnamed = FALSE, group=NULL){
-  nn <- switch(type, FeatureCollection="features", GeometryCollection="geometries")
-  geom <- capwords(match.arg(geometry, c("point","polygon")))
-  if(geom == "Point"){
+  nn <- switch(type, FeatureCollection = "features", GeometryCollection = "geometries")
+  geom <- capwords(match.arg(geometry, c("point", "polygon")))
+  if (geom == "Point") {
     z <- lapply(x, function(l) {
-      if(!unnamed){
+      if (!unnamed) {
         if (is.null(l[[lat]]) || is.null(l[[lon]])) {
           return(NULL)
         }
       }
-      if(nn == "features"){
+      if (nn == "features") {
         list(type = "Feature",
              geometry = list(type = geom,
                              coordinates = get_vals(l, lat, lon)),
@@ -24,15 +24,15 @@ list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCol
       }
     })
     z <- setNames(Filter(function(x) !is.null(x), z), NULL)
-    structure(list(type, z), .Names = c('type',nn))
+    structure(list(type, z), .Names = c('type', nn))
   } else {
-    if(!unnamed){
+    if (!unnamed) {
       if (is.null(x[[lat]]) || is.null(x[[lon]])) {
         return(NULL)
       }
     }
-    if(nn == "features"){
-      if(is.null(group)) {
+    if (nn == "features") {
+      if (is.null(group)) {
         z <- list(list(type = "Feature",
                   geometry = list(type = geom, coordinates = get_vals2(x, unnamed, lat, lon)),
                   properties = get_props(x, lat, lon)))
@@ -48,7 +48,7 @@ list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCol
     } else {
       z <- list(type = geom, coordinates = get_vals2(x, unnamed, lat, lon))
     }
-    structure(list(type, z), .Names = c('type',nn))
+    structure(list(type, z), .Names = c('type', nn))
   }
 }
 
@@ -57,7 +57,7 @@ get_props <- function(x, lat, lon){
 }
 
 get_vals2 <- function(v, unnamed, lat, lon){
-  if(unnamed) {
+  if (unnamed) {
     list(v)
   } else {
     unname(lapply(v, function(g) as.numeric(gsub("^\\s+|\\s+$", "", unlist(unname(g[names(g) %in% c(lat, lon)]))))))
@@ -66,21 +66,23 @@ get_vals2 <- function(v, unnamed, lat, lon){
 
 get_vals <- function(v, lat, lon){
   tt <- tryCatch(v[[lon]], error = function(e) e)
-  if(is(tt, "simpleError"))
+  if (is(tt, "simpleError")) {
     as.numeric(v)
-  else
+  } else {
     as.numeric(c(v[[lon]], v[[lat]]))
+  }
 }
 
 df_to_geo_list <- function(x, lat, lon, geometry, type, group, ...){
   x <- apply(x, 1, as.list)
-  list_to_geo_list(x=x, lat=lat, lon=lon, geometry=geometry, type=type, unnamed = TRUE, group=group, ...)
+  list_to_geo_list(x = x, lat = lat, lon = lon, geometry = geometry, 
+                   type = type, unnamed = TRUE, group = group, ...)
 }
 
 num_to_geo_list <- function(x, geometry = "point", type = "FeatureCollection"){
   geom <- capwords(match.arg(geometry, c("point", "polygon")))
   res <- tryCatch(as.numeric(x), warning = function(e) e)
-  if(is(res, "simpleWarning")) {
+  if (is(res, "simpleWarning")) {
     stop("Coordinates are not numeric", call. = FALSE)
   } else {
     switch(type,
@@ -113,13 +115,13 @@ makecoords <- function(x, y) {
 
 list_to_geojson <- function(input, file = "myfile.geojson", geometry="point", lon, lat, ...){
   input <- rbind_fill(lapply(input$features, function(x){
-    data.frame(geometry_type=x$geometry$type,
-               longitude=x$geometry$coordinates[1],
-               latitude=x$geometry$coordinates[2],
+    data.frame(geometry_type = x$geometry$type,
+               longitude = x$geometry$coordinates[1],
+               latitude = x$geometry$coordinates[2],
                x$properties,
                stringsAsFactors = FALSE)
   }))
-  if(geometry == "point"){
+  if (geometry == "point") {
     out <- df_to_SpatialPointsDataFrame(input, lon, lat)
   } else {
     out <- df_to_SpatialPolygonsDataFrame(input)
@@ -163,7 +165,7 @@ df_to_SpatialPointsDataFrame <- function(x, lon, lat) {
   SpatialPointsDataFrame(x2, x)
 }
 
-bbox2df <- function(x) c(x[1,1], x[1,2], x[2,1], x[2,2])
+bbox2df <- function(x) c(x[1, 1], x[1, 2], x[2, 1], x[2, 2])
 
 sppolytogeolist <- function(x){
   list(type = "Polygon",
@@ -177,8 +179,8 @@ sppolytogeolist <- function(x){
 }
 
 lines_to_geo_list <- function(x, object="FeatureCollection"){
-  nn <- switch(object, FeatureCollection="features", GeometryCollection="geometries")
-  if( length(x@lines) == 1 ){
+  nn <- switch(object, FeatureCollection = "features", GeometryCollection = "geometries")
+  if ( length(x@lines) == 1 ) {
     list(type = "LineString",
          bbox = bbox2df(x@bbox),
          coordinates = apply(x@lines[[1]]@Lines[[1]]@coords, 1, as.list),
@@ -186,12 +188,12 @@ lines_to_geo_list <- function(x, object="FeatureCollection"){
     )
   } else {
     z <- lapply(x@lines, function(l) {
-      if(nn == "features"){
+      if (nn == "features") {
         list(type = "Feature",
              bbox = bbox2df(x@bbox),
              geometry = list(type = ifelse(length(l@Lines) == 1, "LineString", "MultiLineString"),
                              coordinates =
-                             if(length(l@Lines) == 1){
+                             if (length(l@Lines) == 1) {
                                apply(l@Lines[[1]]@coords, 1, as.list)
                              } else {
                                lapply(l@Lines, function(w) {
@@ -208,7 +210,7 @@ lines_to_geo_list <- function(x, object="FeatureCollection"){
       }
     })
     z <- setNames(Filter(function(x) !is.null(x), z), NULL)
-    structure(list(object, z), .Names = c('type',nn))
+    structure(list(object, z), .Names = c('type', nn))
   }
 }
 
@@ -218,10 +220,10 @@ datdat <- function(x, l){
 }
 
 splinestogeolist <- function(x, object){
-  if(is(x, "SpatialLinesDataFrame")){
+  if (is(x, "SpatialLinesDataFrame")) {
     lines_to_geo_list(x, object)
   } else {
-    if( length(x@lines) == 1 ){
+    if ( length(x@lines) == 1 ) {
       list(type = "LineString",
            bbox = bbox2df(x@bbox),
            coordinates = apply(x@lines[[1]]@Lines[[1]]@coords, 1, as.list),
@@ -241,7 +243,7 @@ splinestogeolist <- function(x, object){
 }
 
 spdftogeolist <- function(x){
-  if(is(x, "SpatialPointsDataFrame") || is(x, "SpatialGridDataFrame")){
+  if (is(x, "SpatialPointsDataFrame") || is(x, "SpatialGridDataFrame")) {
     nms <- dimnames(coordinates(x))[[2]]
     temp <- apply(data.frame(x), 1, as.list)
     list_to_geo_list(temp, nms[1], nms[2], NULL, type = "FeatureCollection")
@@ -297,16 +299,15 @@ geojson_rw <- function(input, ...){
 }
 
 capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
-  cap <- function(s) paste(toupper(substring(s,1,1)),
-                           {s <- substring(s,2); if(strict) tolower(s) else s}, sep = "", collapse = " " )
-  if(!onlyfirst){
+  cap <- function(s) paste(toupper(substring(s, 1, 1)),
+                           {s <- substring(s, 2); if (strict) tolower(s) else s}, sep = "", collapse = " " )
+  if (!onlyfirst) {
     sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
-  } else
-  {
+  } else {
     sapply(s, function(x)
-      paste(toupper(substring(x,1,1)),
-            tolower(substring(x,2)),
-            sep="", collapse=" "), USE.NAMES=F)
+      paste(toupper(substring(x, 1, 1)),
+            tolower(substring(x, 2)),
+            sep = "", collapse = " "), USE.NAMES = FALSE)
   }
 }
 
@@ -321,7 +322,7 @@ pluck <- function(x, name, type) {
 
 ###### code adapted from the leaflet package - source at github.com/rstudio/leaflet
 guess_latlon <- function(x, lat=NULL, lon=NULL) {
-  if(is.null(lat) && is.null(lon)){
+  if (is.null(lat) && is.null(lon)) {
     lats <- x[grep("^(lat|latitude)$", x, ignore.case = TRUE)]
     lngs <- x[grep("^(lon|lng|long|longitude)$", x, ignore.case = TRUE)]
 
