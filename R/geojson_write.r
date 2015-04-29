@@ -233,7 +233,7 @@ geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL, geom
 }
 
 iter_spatialcoll <- function(z, file, ...) {
-  wfile <- paste0(class(z)[1], "_", file)
+  wfile <- sprintf("%s/%s_%s", dirname(file), class(z)[1], basename(file))
   if (!is.null(z)) {
     geojson_write(z, file = wfile, ...)
   }

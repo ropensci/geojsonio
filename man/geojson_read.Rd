@@ -23,7 +23,7 @@ Read geojson from a local file or a URL
 Uses \code{\link{file_to_geojson}} internally.
 }
 \examples{
-\donttest{
+\dontrun{
 # From a file
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)

@@ -30,7 +30,7 @@
 #' authenticated, this function will run internally with each functionn call. If you have a
 #' PAT, that will be used, if not, OAuth will be used.
 #'
-#' @examples \donttest{
+#' @examples \dontrun{
 #' # From file
 #' file <- "myfile.geojson"
 #' geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)

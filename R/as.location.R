@@ -4,7 +4,7 @@
 #'
 #' @param x Input.
 #' @param ... Ignored.
-#' @examples \donttest{
+#' @examples \dontrun{
 #' # A file
 #' file <- system.file("examples", "zillow_or.geojson", package = "geojsonio")
 #' as.location(file)

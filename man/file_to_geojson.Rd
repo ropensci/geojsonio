@@ -61,8 +61,8 @@ file_to_geojson(shpfile, method='local', output='shp_local')
 
 # Neighborhoods in the US
 ## beware, this is a long running example
-url <- 'http://www.nws.noaa.gov/geodata/catalog/national/data/ci08au12.zip'
-out <- file_to_geojson(input=url, method='web', output='cities')
+# url <- 'http://www.nws.noaa.gov/geodata/catalog/national/data/ci08au12.zip'
+# out <- file_to_geojson(input=url, method='web', output='cities')
 }
 }
 

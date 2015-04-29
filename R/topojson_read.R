@@ -10,7 +10,7 @@
 #' @details Returns a Spatial class (e.g., SpatialPolygonsDataFrame), but 
 #' you can easily and quickly get this to geojson, see examples
 #'
-#' @examples \donttest{
+#' @examples \dontrun{
 #' # From a file
 #' file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 #' topojson_read(file)

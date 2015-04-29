@@ -76,7 +76,7 @@ head(states)
 geojson_json(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
 
 # from a geo_list
-a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')$features[[1]]
+a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
 geojson_json(a)
 
 # sp classes

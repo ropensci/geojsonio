@@ -9,7 +9,7 @@
 #' @param ... Ignored
 #' @details Uses \code{\link{file_to_geojson}} internally.
 #'
-#' @examples \donttest{
+#' @examples \dontrun{
 #' # From a file
 #' file <- system.file("examples", "california.geojson", package = "geojsonio")
 #' out <- geojson_read(file)

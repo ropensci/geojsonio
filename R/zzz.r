@@ -293,9 +293,16 @@ convert_ordered <- function(df) {
 NULL
 
 geojson_rw <- function(input, ...){
-  tmp <- tempfile(fileext = ".geojson")
-  suppressMessages(geojson_write(input, file = tmp))
-  jsonlite::fromJSON(tmp, simplifyDataFrame = FALSE, simplifyMatrix = FALSE, ...)
+  if (is(input, "SpatialCollections")) {
+    tmp <- tempfile(fileext = ".geojson")
+    tmp2 <- suppressMessages(geojson_write(input, file = tmp))
+    paths <- vapply(tg_compact(tmp2), "[[", "", "path")
+    lapply(paths, jsonlite::fromJSON, simplifyDataFrame = FALSE, simplifyMatrix = FALSE, ...)
+  } else {
+    tmp <- tempfile(fileext = ".geojson")
+    suppressMessages(geojson_write(input, file = tmp))
+    jsonlite::fromJSON(tmp, simplifyDataFrame = FALSE, simplifyMatrix = FALSE, ...)
+  }
 }
 
 capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {

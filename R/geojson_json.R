@@ -59,7 +59,7 @@
 #' geojson_json(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
 #'
 #' # from a geo_list
-#' a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')$features[[1]]
+#' a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
 #' geojson_json(a)
 #'
 #' # sp classes
@@ -161,6 +161,7 @@
 #' 
 #' # From SpatialCollections
 #' library("sp")
+#' library("rgeos")
 #' pts <- SpatialPoints(cbind(c(1,2,3,4,5), c(3,2,5,1,4)))
 #' poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
 #' poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
@@ -255,7 +256,7 @@ geojson_json.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, gr
 #' @export
 geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                 geometry = "point",  type='FeatureCollection', ...) {
-  to_json(geojson_rw(input), ...)
+  lapply(geojson_rw(input), to_json)
 }
 
 
