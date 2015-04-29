@@ -10,6 +10,5 @@ vignettes/figure/
 ^.*\.Rproj$
 ^\.Rproj\.user$
 README.Rmd
-^.*\.geojson
 .V8history
 cran-comments.md
