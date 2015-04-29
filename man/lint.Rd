@@ -36,7 +36,7 @@ url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/calif
 lint(as.location(url))
 
 # from json (jsonlite class)
-x <- minify('{ "type": "FeatureCollection" }')
+x <- jsonlite::minify('{ "type": "FeatureCollection" }')
 class(x)
 lint(x)
 
