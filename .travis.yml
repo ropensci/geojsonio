@@ -5,6 +5,7 @@ before_install:
 
 r_binary_packages:
   - rgdal
+  - RColorBrewer
   
 r_github_packages:  
   - jimhester/robustr
