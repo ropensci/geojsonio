@@ -193,7 +193,7 @@ geojson_json.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_json.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point",  type='FeatureCollection', ...) {
-  dat <- SpatialPointsDataFrame(input, data.frame(dat=1:NROW(input@coords)))
+  dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
   to_json(geojson_rw(dat))
 }
 
@@ -277,7 +277,7 @@ geojson_json.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_json.list <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point",  type='FeatureCollection', ...){
-  tmp <- if(!is.named(input)) {
+  tmp <- if (!is.named(input)) {
     list(lon = NULL, lat = NULL)
   } else {
     guess_latlon(names(input[[1]]), lat, lon)

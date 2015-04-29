@@ -2,14 +2,15 @@
 #'
 #' @export
 #' @param input A data.frame or a list
-#' @param var A single variable to map colors, symbols, and/or sizes to.
-#' @param var_col The variable to map colors to.
-#' @param var_sym The variable to map symbols to.
-#' @param var_size The variable to map size to.
-#' @param color Valid RGB hex color
-#' @param symbol An icon ID from the Maki project \url{http://www.mapbox.com/maki/} or
-#'    a single alphanumeric character (a-z or 0-9).
-#' @param size One of 'small', 'medium', or 'large'
+#' @param var (character) A single variable to map colors, symbols, and/or sizes to.
+#' @param var_col (character) The variable to map colors to.
+#' @param var_sym (character) The variable to map symbols to.
+#' @param var_size (character) The variable to map size to.
+#' @param color (character) Valid RGB hex color. Assigned to the variable \code{marker-color}
+#' @param symbol (character) An icon ID from the Maki project \url{http://www.mapbox.com/maki/} 
+#' or a single alphanumeric character (a-z or 0-9). Assigned to the variable \code{marker-symbol}
+#' @param size One of 'small', 'medium', or 'large'. Assigned to the variable 
+#' \code{marker-size}
 #' @examples \dontrun{
 #' ## Style geojson - from data.frames
 #' library("RColorBrewer")
@@ -66,8 +67,8 @@ geojson_style.data.frame <- function(input, var = NULL, var_col = NULL, var_sym 
   size_vec <- df_vec(input, size, var_size)
   
   # put together output
-  output <- do.call(cbind, tg_compact(list(input, `marker-color` = color_vec, `marker-symbol` = symbol_vec,
-                                           `marker-size` = size_vec)))
+  output <- do.call(cbind, tg_compact(list(input, `marker-color` = color_vec, 
+                                           `marker-symbol` = symbol_vec, `marker-size` = size_vec)))
   return(output)
 }
 
