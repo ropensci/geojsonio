@@ -7,4 +7,8 @@ R 3.2 and devel on a virtualbox Windows install (tried
 Win-Builder but it's been down apparently, or at least very 
 slow to respond).
 
+This is a re-submission from the first try today to put single
+quotes around some words in theh Description entry in the 
+DESCRIPTION file.
+
 Thanks! Scott Chamberlain
