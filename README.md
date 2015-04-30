@@ -247,6 +247,7 @@ TopoJSON
 
 
 ```r
+library("sp")
 url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
 out <- topojson_read(url)
 #> OGR data source with driver: GeoJSON 
