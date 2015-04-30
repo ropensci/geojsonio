@@ -47,9 +47,9 @@ This package is a utility to convert geographic data to geojson and topojson for
 
 Functions in this package are organized first around what you're working with or want to get, geojson or topojson, then convert to or read from various formats:
 
-* `geojson_list()`/`topojson_list()` - convert to geojson/topojson as R list format
-* `geojson_json()`/`topojson_json()` - convert to geojson/topojson as json
-* `geojson_read()``topojson_read()` - read a geojson/topojson file from file path or URL
+* `geojson_list()` - convert to geojson/topojson as R list format
+* `geojson_json()` - convert to geojson/topojson as json
+* `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
 * `geojson_write()` - write a geojson file locally (topojson coming later)
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
