@@ -5,6 +5,7 @@ geojsonio
 
 [![Build Status](https://api.travis-ci.org/ropensci/geojsonio.png)](https://travis-ci.org/ropensci/geojsonio)
 [![Coverage Status](https://coveralls.io/repos/ropensci/geojsonio/badge.svg)](https://coveralls.io/r/ropensci/geojsonio)
+[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/metacran/cranlogs.app)
 
 __Convert various data formats to geoJSON or topoJSON__
 
@@ -68,6 +69,15 @@ install.packages("rgeos", type = "source")
 ```
 
 __Install geojsonio__
+
+Stable version from CRAN
+
+
+```r
+install.packages("geojsonio")
+```
+
+Or development version from GitHub
 
 
 ```r
@@ -216,7 +226,9 @@ c + d
 library('maps')
 data(us.cities)
 geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-#> [1] "myfile.geojson"
+#> <geojson>
+#>   Path:       myfile.geojson
+#>   From class: data.frame
 ```
 
 #### Read geojson
@@ -244,7 +256,7 @@ out <- topojson_read(url)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-17](inst/img/unnamed-chunk-17-1.png) 
+![plot of chunk unnamed-chunk-18](inst/img/unnamed-chunk-18-1.png) 
 
 ## Meta
 

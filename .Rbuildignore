@@ -12,4 +12,3 @@ vignettes/figure/
 README.Rmd
 .V8history
 cran-comments.md
-tests/test-all.R
