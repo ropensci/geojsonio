@@ -275,11 +275,11 @@ write_ogr <- function(input, dir, file, ...){
 }
 
 convert_ordered <- function(df) {
-  data.frame(lapply(df, function(x) {
-    if ("ordered" %in% class(x)) x <- as.character(x)
+  df[] <- lapply(df, function(x) {
+    if (is(x, "ordered")) x <- as.character(x)
     x
-  }),
-  stringsAsFactors = FALSE)
+  })
+  return(df)
 }
 
 #' Pipe operator

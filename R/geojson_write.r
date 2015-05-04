@@ -24,7 +24,7 @@
 #' # From a data.frame
 #' ## to points
 #' geojson_write(us_cities[1:2,], lat='lat', lon='long')
-#'
+#' 
 #' ## to polygons
 #' head(states)
 #' geojson_write(input=states, lat='lat', lon='long', geometry='group', group="group")
