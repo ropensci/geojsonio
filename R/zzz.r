@@ -269,7 +269,7 @@ write_geojson <- function(input, file = "myfile.geojson", ...){
 
 write_ogr <- function(input, dir, file, ...){
   input@data <- convert_ordered(input@data)
-  writeOGR(input, dir, "", "GeoJSON", ...)
+  writeOGR(input, dir, "", "GeoJSON", dataset_options = "WRITE_BBOX=YES", ...)
   file.copy(dir, file)
   message("Success! File is at ", file)
 }
