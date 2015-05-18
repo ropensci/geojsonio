@@ -6,6 +6,7 @@ geojsonio
 [![Build Status](https://api.travis-ci.org/ropensci/geojsonio.png)](https://travis-ci.org/ropensci/geojsonio)
 [![Coverage Status](https://coveralls.io/repos/ropensci/geojsonio/badge.svg)](https://coveralls.io/r/ropensci/geojsonio)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/metacran/cranlogs.app)
+[![cran version](http://www.r-pkg.org/badges/version/geojsonio)](http://cran.rstudio.com/web/packages/geojsonio)
 
 __Convert various data formats to geoJSON or topoJSON__
 
