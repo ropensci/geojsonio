@@ -18,7 +18,7 @@
 #'   directory.
 #' @param precision desired number of decimal places for the coordinates in the
 #'   geojson file. Using fewer decimal places can decrease file sizes (at the
-#'   cost of precision)
+#'   cost of precision).
 #' @param ... Further args passed on to \code{\link[rgdal]{writeOGR}}
 #'   
 #' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}
@@ -239,18 +239,19 @@ geojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, g
 
 #' @export
 geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                                 group = NULL, file = "myfile.geojson", ...) {
-  ptfile <- iter_spatialcoll(input@pointobj, file, ...)
-  lfile <- iter_spatialcoll(input@lineobj, file, ...)
-  rfile <- iter_spatialcoll(input@ringobj, file, ...)
-  pyfile <- iter_spatialcoll(input@polyobj, file, ...)
+                                                 group = NULL, file = "myfile.geojson", 
+                                             precision = NULL, ...) {
+  ptfile <- iter_spatialcoll(input@pointobj, file, precision = precision, ...)
+  lfile <- iter_spatialcoll(input@lineobj, file, precision = precision, ...)
+  rfile <- iter_spatialcoll(input@ringobj, file, precision = precision, ...)
+  pyfile <- iter_spatialcoll(input@polyobj, file, precision = precision, ...)
   return(structure(list(ptfile, lfile, rfile, pyfile), class = "spatialcoll"))
 }
 
-iter_spatialcoll <- function(z, file, ...) {
+iter_spatialcoll <- function(z, file, precision = NULL, ...) {
   wfile <- sprintf("%s/%s_%s", dirname(file), class(z)[1], basename(file))
   if (!is.null(z)) {
-    geojson_write(z, file = wfile, ...)
+    geojson_write(z, file = wfile, precision = precision, ...)
   }
 }
 
