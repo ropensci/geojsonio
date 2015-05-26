@@ -130,7 +130,7 @@
 #' }
 
 geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                          group = NULL, file = "myfile.geojson", ...) {
+                          group = NULL, file = "myfile.geojson", precision = NULL, ...) {
   UseMethod("geojson_write")
 }
 
@@ -144,8 +144,9 @@ geojson_write.SpatialPolygons <- function(input, lat = NULL, lon = NULL, geometr
 
 #' @export
 geojson_write.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                                   group = NULL, file = "myfile.geojson", ...) {
-  write_geojson(input, file, ...)
+                                                   group = NULL, file = "myfile.geojson", precision = NULL, 
+                                                   ...) {
+  write_geojson(input, file, precision, ...)
   return(as.geojson(file, "SpatialPolygonsDataFrame"))
 }
 
