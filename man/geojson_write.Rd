@@ -28,7 +28,7 @@ directory.}
 
 \item{precision}{desired number of decimal places for the coordinates in the
 geojson file. Using fewer decimal places can decrease file sizes (at the
-cost of precision)}
+cost of precision).}
 
 \item{...}{Further args passed on to \code{\link[rgdal]{writeOGR}}}
 }
