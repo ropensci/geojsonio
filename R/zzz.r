@@ -272,7 +272,7 @@ write_ogr <- function(input, dir, file, precision = NULL, ...){
   dots <- list(...)
   # Capture any layer_options passed via ..., remove them from ... 
   # and make them part of lyr_opts 
-  lyr_opts <- c("WRITE_BBOX=YES", dots$layer_options)
+  lyr_opts <- dots$layer_options
   dots$layer_options <- NULL
   if (!is.null(precision)) {
     lyr_opts <- c(lyr_opts, paste0("COORDINATE_PRECISION=", precision))
