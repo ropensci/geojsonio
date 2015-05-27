@@ -269,12 +269,17 @@ write_geojson <- function(input, file = "myfile.geojson", precision = NULL, ...)
 
 write_ogr <- function(input, dir, file, precision = NULL, ...){
   input@data <- convert_ordered(input@data)
+  dots <- list(...)
+  # Capture any layer_options passed via ..., remove them from ... 
+  # and make them part of lyr_opts 
+  lyr_opts <- c("WRITE_BBOX=YES", dots$layer_options)
+  dots$layer_options <- NULL
   if (!is.null(precision)) {
-    lyr_opts <- paste0("COORDINATE_PRECISION=", precision)
-  } else {
-    lyr_opts <- NULL
+    lyr_opts <- c(lyr_opts, paste0("COORDINATE_PRECISION=", precision))
   }
-  writeOGR(input, dir, "", "GeoJSON", dataset_options = "WRITE_BBOX=YES", layer_options = lyr_opts, ...)
+  args <- c(list(obj = input, dsn = dir, layer = "", driver = "GeoJSON", 
+                 layer_options = lyr_opts), dots)
+  do.call(writeOGR, args)
   file.copy(dir, file)
   message("Success! File is at ", file)
 }
