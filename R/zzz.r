@@ -279,10 +279,9 @@ write_ogr <- function(input, dir, file, precision = NULL, ...){
   }
   args <- c(list(obj = input, dsn = dir, layer = "", driver = "GeoJSON", 
                  layer_options = lyr_opts), dots)
-  ret <- do.call(writeOGR, args)
+  do.call(writeOGR, args)
   file.copy(dir, file)
   message("Success! File is at ", file)
-  if (!is.null(ret)) return(ret)
 }
 
 convert_ordered <- function(df) {
