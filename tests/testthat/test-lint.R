@@ -24,12 +24,16 @@ test_that("lint works with geo_list inputs", {
   expect_equal(b, "valid")
 })
 
-test_that("lint works with file or url inputs", {
+test_that("lint works with file inputs", {
   file <- system.file("examples", "zillow_or.geojson", package = "geojsonio")
   d <- lint(as.location(file))
   expect_is(as.location(file), "location")
   expect_is(d, "character")
   expect_equal(d, "valid")
+})
+
+test_that("lint works with url inputs", {
+  skip_on_cran()
   
   url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
   e <- lint(as.location(url))
