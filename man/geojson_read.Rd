@@ -4,7 +4,7 @@
 \alias{geojson_read}
 \title{Read geojson from a local file or a URL}
 \usage{
-geojson_read(x, method = "web", parse = FALSE, ...)
+geojson_read(x, method = "web", parse = FALSE, what = "list", ...)
 }
 \arguments{
 \item{x}{Path to a local file or a URL.}
@@ -14,6 +14,9 @@ geojson_read(x, method = "web", parse = FALSE, ...)
 \item{parse}{(logical) To parse geojson to data.frame like structures if possible.
 Default: \code{FALSE}}
 
+\item{what}{What to return. One of list or sp (for Spatial class). Default: list.
+If sp chosen, method forced to be "local".}
+
 \item{...}{Ignored}
 }
 \description{
@@ -21,6 +24,9 @@ Read geojson from a local file or a URL
 }
 \details{
 Uses \code{\link{file_to_geojson}} internally.
+
+This function supports various geospatial file formats from a URL, as well as local
+kml, shp, and geojson file formats.
 }
 \examples{
 \dontrun{
@@ -36,8 +42,22 @@ geojson_read(url, method = "local")
 geojson_read(as.location(file))
 
 # use jsonlite to parse to data.frame structures where possible
-url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 geojson_read(url, method = "local", parse = TRUE)
+
+# output a SpatialClass object
+## read kml
+file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
+geojson_read(as.location(file), what = "sp")
+## read geojson
+file <- system.file("examples", "california.geojson", package = "geojsonio")
+geojson_read(as.location(file), what = "sp")
+## read geojson from a url
+url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
+geojson_read(url, what = "sp")
+
+# doesn't work right now
+## file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
+## geojson_read(file, what = "sp")
 }
 }
 
