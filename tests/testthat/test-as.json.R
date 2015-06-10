@@ -24,7 +24,7 @@ test_that("as.json works with geojson class inputs", {
   expect_is(as.json(c, verbose = FALSE), "json")
   expect_equal(
     unclass(as.json(c, verbose = FALSE)),
-    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[32.45,-99.74]},\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":\"113888\",\"lat\":\"32.45\",\"long\":\"-99.74\",\"capital\":\"0\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[41.08,-81.52]},\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":\"206634\",\"lat\":\"41.08\",\"long\":\"-81.52\",\"capital\":\"0\"}}]}"
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[32.45,-99.74]},\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":\"113888\",\"lat\":\"32.45\",\"long\":\"-99.74\",\"capital\":\"0\",\"optional\":\"TRUE\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[41.08,-81.52]},\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":\"206634\",\"lat\":\"41.08\",\"long\":\"-81.52\",\"capital\":\"0\",\"optional\":\"TRUE\"}}]}"
   )
   
   d <- suppressMessages(geojson_write(input=states, lat='lat', lon='long', geometry='group', group="group"))
