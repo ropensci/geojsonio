@@ -1,6 +1,7 @@
 <!--
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{geojsonio vignette}
+%\VignetteEncoding{UTF-8}
 -->
 
 ```{r echo=FALSE}
@@ -37,7 +38,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-gistr vignette
+geojsonio vignette
 ==============
 
 `geojsonio` converts geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
@@ -53,7 +54,7 @@ Each of the above functions have methods for various objects/classes, including 
 
 Additional functions:
 
-* `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map)
+* `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map) - See the _maps with geojsonio_ vignette. 
 
 ## Install
 
@@ -167,8 +168,9 @@ geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ### Read geojson
 
 ```{r}
+library("sp")
 file <- system.file("examples", "california.geojson", package = "geojsonio")
-out <- geojson_read(file)
+out <- geojson_read(file, what = "sp")
 plot(out)
 ```
 
@@ -179,47 +181,21 @@ In the current version of this package you can read topojson. Writing topojson w
 Read from a file
 
 ```{r}
-file <- system.file("examples", "us_states.topojson", package = "togeojson")
-out <- geojson_read(file)
+file <- system.file("examples", "us_states.topojson", package = "geojsonio")
+out <- topojson_read(file, verbose = FALSE)
+summary(out)
 ```
 
 Read from a URL
 
 ```{r}
 url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
-out <- topojson_read(url)
+out <- topojson_read(url, verbose = FALSE)
 ```
 
 Or use `as.location()` first
 
 ```{r}
 (loc <- as.location(file))
-out <- topojson_read(loc)
-```
-
-## Example use case: Play with US states
-
-Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
-
-Get some geojson
-
-```{r}
-library('httr')
-res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
-base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
-st_files <- paste0(base, st_names)
-```
-
-Make a faceted plot
-
-```{r tidy=FALSE}
-library('ggplot2')
-library('plyr')
-st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, verbose = FALSE)
-df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
-ggplot(df, aes(long, lat, group = group)) +
-  geom_polygon() +
-  facet_wrap(~ .id, scales = "free")
+out <- topojson_read(loc, verbose = FALSE)
 ```

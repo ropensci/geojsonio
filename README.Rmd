@@ -65,9 +65,8 @@ Additional functions:
 * [GeoJSON lint](http://geojsonlint.com/)
 * TopoJSON - [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
 
-## Quick start
 
-### Install
+## Install
 
 A note about installing `rgdal` and `rgeos` - these two packages are built on top of C libraries, and their installation often causes trouble for Mac and Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`. Change to the version of `rgdal` and `GDAL` you have):
 
@@ -120,9 +119,9 @@ devtools::install_github("ropensci/geojsonio")
 library("geojsonio")
 ```
 
-### GeoJSON
+## GeoJSON
 
-#### Convert various formats to geojson
+### Convert various formats to geojson
 
 From a `numeric` vector of length 2, as json or list
 
@@ -169,7 +168,7 @@ to list
 geojson_list(sp_poly)$features[[1]]
 ```
 
-#### Combine objects
+### Combine objects
 
 `geo_list` + `geo_list`
 
@@ -192,7 +191,7 @@ d <- geojson_json(vecs, geometry = "polygon")
 c + d
 ```
 
-#### Write geojson
+### Write geojson
 
 ```{r}
 library('maps')
@@ -200,29 +199,59 @@ data(us.cities)
 geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
-#### Read geojson
+### Read geojson
 
 ```{r}
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
 ```
 
-### TopoJSON
+## TopoJSON
 
-#### Read topojson
+### Read topojson
 
 TopoJSON
 
 ```{r}
 library("sp")
 url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
-out <- topojson_read(url)
+out <- topojson_read(url, verbose = FALSE)
 plot(out)
 ```
 
+## Use case: Play with US states
+
+Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
+
+Get some geojson
+
+```{r}
+library('httr')
+res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
+st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
+base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
+st_files <- paste0(base, st_names)
+```
+
+Make a faceted plot
+
+```{r tidy=FALSE}
+library('ggplot2')
+library('plyr')
+st_use <- st_files[7:13]
+geo <- lapply(st_use, geojson_read, method = "local", what = "sp", verbose = FALSE)
+df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
+ggplot(df, aes(long, lat, group = group)) +
+  geom_polygon() +
+  facet_wrap(~.id, scales = "free")
+```
+
+Okay, so the maps are not quite right (stretched to fit each panel), but you get the idea.
+
+
 ## Meta
 
-* [Please report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
+* Please [report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
 * License: MIT
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
 

@@ -31,9 +31,8 @@ Additional functions:
 * [GeoJSON lint](http://geojsonlint.com/)
 * TopoJSON - [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
 
-## Quick start
 
-### Install
+## Install
 
 A note about installing `rgdal` and `rgeos` - these two packages are built on top of C libraries, and their installation often causes trouble for Mac and Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`. Change to the version of `rgdal` and `GDAL` you have):
 
@@ -91,9 +90,9 @@ devtools::install_github("ropensci/geojsonio")
 library("geojsonio")
 ```
 
-### GeoJSON
+## GeoJSON
 
-#### Convert various formats to geojson
+### Convert various formats to geojson
 
 From a `numeric` vector of length 2, as json or list
 
@@ -183,7 +182,7 @@ geojson_list(sp_poly)$features[[1]]
 ...
 ```
 
-#### Combine objects
+### Combine objects
 
 `geo_list` + `geo_list`
 
@@ -220,7 +219,7 @@ c + d
 #> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.74,32.45]},"properties":{}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100,0],[101,0],[101,1],[100,1],[100,0]]]},"properties":[]}]}
 ```
 
-#### Write geojson
+### Write geojson
 
 
 ```r
@@ -232,7 +231,7 @@ geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #>   From class: data.frame
 ```
 
-#### Read geojson
+### Read geojson
 
 
 ```r
@@ -240,9 +239,9 @@ file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
 ```
 
-### TopoJSON
+## TopoJSON
 
-#### Read topojson
+### Read topojson
 
 TopoJSON
 
@@ -250,19 +249,77 @@ TopoJSON
 ```r
 library("sp")
 url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
-out <- topojson_read(url)
-#> OGR data source with driver: GeoJSON 
-#> Source: "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson", layer: "states"
-#> with 51 features
-#> It has 2 fields
+out <- topojson_read(url, verbose = FALSE)
 plot(out)
 ```
 
 ![plot of chunk unnamed-chunk-18](inst/img/unnamed-chunk-18-1.png) 
 
+## Use case: Play with US states
+
+Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
+
+Get some geojson
+
+
+```r
+library('httr')
+res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
+st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
+base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
+st_files <- paste0(base, st_names)
+```
+
+Make a faceted plot
+
+
+```r
+library('ggplot2')
+library('plyr')
+st_use <- st_files[7:13]
+geo <- lapply(st_use, geojson_read, method = "local", what = "sp", verbose = FALSE)
+#> OGR data source with driver: GeoJSON 
+#> Source: "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/connecticut.geojson", layer: "OGRGeoJSON"
+#> with 1 features
+#> It has 11 fields
+#> OGR data source with driver: GeoJSON 
+#> Source: "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/delaware.geojson", layer: "OGRGeoJSON"
+#> with 1 features
+#> It has 11 fields
+#> OGR data source with driver: GeoJSON 
+#> Source: "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/florida.geojson", layer: "OGRGeoJSON"
+#> with 1 features
+#> It has 11 fields
+#> OGR data source with driver: GeoJSON 
+#> Source: "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/georgia.geojson", layer: "OGRGeoJSON"
+#> with 1 features
+#> It has 11 fields
+#> OGR data source with driver: GeoJSON 
+#> Source: "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/hawaii.geojson", layer: "OGRGeoJSON"
+#> with 1 features
+#> It has 11 fields
+#> OGR data source with driver: GeoJSON 
+#> Source: "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/idaho.geojson", layer: "OGRGeoJSON"
+#> with 1 features
+#> It has 11 fields
+#> OGR data source with driver: GeoJSON 
+#> Source: "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/illinois.geojson", layer: "OGRGeoJSON"
+#> with 1 features
+#> It has 11 fields
+df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
+ggplot(df, aes(long, lat, group = group)) +
+  geom_polygon() +
+  facet_wrap(~.id, scales = "free")
+```
+
+![plot of chunk unnamed-chunk-20](inst/img/unnamed-chunk-20-1.png) 
+
+Okay, so the maps are not quite right (stretched to fit each panel), but you get the idea.
+
+
 ## Meta
 
-* [Please report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
+* Please [report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
 * License: MIT
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
 

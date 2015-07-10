@@ -1,6 +1,7 @@
 <!--
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{CRS and Bounding Boxes}
+%\VignetteEncoding{UTF-8}
 -->
 
 

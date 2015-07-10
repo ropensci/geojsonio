@@ -8,6 +8,9 @@ as.json <- function(x, ...) {
 }
 
 #' @export
+as.json.list <- function(x, ...) to_json(x, ...)
+
+#' @export
 as.json.geo_list <- function(x, ...) to_json(unclass(x), ...)
 
 #' @export

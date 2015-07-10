@@ -1,11 +1,12 @@
 <!--
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{geojsonio vignette}
+%\VignetteEncoding{UTF-8}
 -->
 
 
 
-gistr vignette
+geojsonio vignette
 ==============
 
 `geojsonio` converts geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
@@ -21,7 +22,7 @@ Each of the above functions have methods for various objects/classes, including 
 
 Additional functions:
 
-* `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map)
+* `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map) - See the _maps with geojsonio_ vignette. 
 
 ## Install
 
@@ -193,19 +194,22 @@ geojson_list(s)
 library('maps')
 data(us.cities)
 geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-#> [1] "myfile.geojson"
+#> <geojson>
+#>   Path:       myfile.geojson
+#>   From class: data.frame
 ```
 
 ### Read geojson
 
 
 ```r
+library("sp")
 file <- system.file("examples", "california.geojson", package = "geojsonio")
-out <- geojson_read(file)
-#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
+out <- geojson_read(file, what = "sp")
 plot(out)
-#> Error in plot(out): error in evaluating the argument 'x' in selecting a method for function 'plot': Error: object 'out' not found
 ```
+
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png) 
 
 ## Topojson
 
@@ -215,9 +219,25 @@ Read from a file
 
 
 ```r
-file <- system.file("examples", "us_states.topojson", package = "togeojson")
-out <- geojson_read(file)
-#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
+file <- system.file("examples", "us_states.topojson", package = "geojsonio")
+out <- topojson_read(file, verbose = FALSE)
+summary(out)
+#> Object of class SpatialPolygonsDataFrame
+#> Coordinates:
+#>          min       max
+#> x -171.79111 -66.96466
+#> y   18.91619  71.35776
+#> Is projected: NA 
+#> proj4string : [NA]
+#> Data attributes:
+#>           id       name   
+#>  Alabama   : 1   NA's:51  
+#>  Alaska    : 1            
+#>  Arizona   : 1            
+#>  Arkansas  : 1            
+#>  California: 1            
+#>  Colorado  : 1            
+#>  (Other)   :45
 ```
 
 Read from a URL
@@ -225,11 +245,7 @@ Read from a URL
 
 ```r
 url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
-out <- topojson_read(url)
-#> OGR data source with driver: GeoJSON 
-#> Source: "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson", layer: "states"
-#> with 51 features
-#> It has 2 fields
+out <- topojson_read(url, verbose = FALSE)
 ```
 
 Or use `as.location()` first
@@ -237,38 +253,8 @@ Or use `as.location()` first
 
 ```r
 (loc <- as.location(file))
-#> Error in check_location(x, ...): File does not exist. Create it, or fix the path.
-out <- topojson_read(loc)
-#> Error in topojson_read(loc): object 'loc' not found
+#> <location> 
+#>    Type:  file 
+#>    Location:  /Library/Frameworks/R.framework/Versions/3.2/Resources/library/geojsonio/examples/us_states.topojson
+out <- topojson_read(loc, verbose = FALSE)
 ```
-
-## Example use case: Play with US states
-
-Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
-
-Get some geojson
-
-
-```r
-library('httr')
-res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
-base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
-st_files <- paste0(base, st_names)
-```
-
-Make a faceted plot
-
-
-```r
-library('ggplot2')
-library('plyr')
-st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, verbose = FALSE)
-df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
-ggplot(df, aes(long, lat, group = group)) +
-  geom_polygon() +
-  facet_wrap(~ .id, scales = "free")
-```
-
-![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png) 

@@ -1,16 +1,10 @@
 <!--
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{CRS and Bounding Boxes}
+%\VignetteEncoding{UTF-8}
 -->
 
-```{r echo=FALSE}
-knitr::opts_chunk$set(
-  comment = "#>",
-  collapse = TRUE,
-  warning = FALSE, 
-  message = FALSE
-)
-```
+
 
 CRS and Bounding Boxes
 ======================
