@@ -4,7 +4,9 @@
 #' SpatialPolygonsDataFrame, and more to GeoJSON with the help of \code{rgdal} and 
 #' friends. You can currently read TopoJSON - writing TopoJSON will come in a future
 #' version of this package.
-#'
+#' 
+#' @importFrom stats setNames
+#' @importFrom utils download.file
 #' @name geojsonio
 #' @author Scott Chamberlain
 #' @author Andy Teucher
