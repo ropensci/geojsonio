@@ -73,3 +73,18 @@ as.SpatialPolygonsDataFrame.geojson <- function(x, ...) {
 as.SpatialPolygonsDataFrame.character <- function(x, ...) {
   readOGR(x, "OGRGeoJSON", ...)
 }
+
+
+
+## SpatialRings to SpatialPoints
+# as.SpatialPoints.SpatialRings <- function(from) {
+#   rings <- slot(from, "rings")
+#   IDs <- sapply(rings, function(x) slot(x, "ID"))
+#   res <- lapply(rings, function(x) {
+#     Polygons(list(Polygon(x@coords)), ID = x@ID)
+#   })
+#   SpatialPolygonsDataFrame(SpatialPolygons(res), from@data)
+# }
+# 
+# setAs("SpatialRings", "SpatialPoints",
+#       as.SpatialPoints.SpatialRings)
