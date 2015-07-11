@@ -9,6 +9,9 @@ r_binary_packages:
 r_github_packages:  
   - jimhester/robustr
   - jimhester/covr
+  - RcppCore/Rcpp
+  - rstats-db/DBI
+  - rstats-db/RPostgres
 
 after_success:
   - Rscript -e 'library(covr); coveralls()'
