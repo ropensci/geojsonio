@@ -3,6 +3,7 @@
 #' @export
 #'
 #' @param x Path to a local file or a URL.
+#' @param query A SQL query.
 #' @param method One of web or local. Matches on partial strings.
 #' @param parse (logical) To parse geojson to data.frame like structures if possible. 
 #' Default: \code{FALSE}
@@ -40,22 +41,43 @@
 #' url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 #' geojson_read(url, what = "sp")
 #' 
+#' # Query PostGIS/Postgres
+#' library("DBI")
+#' library("RPostgres")
+#' conn <- dbConnect(RPostgres::Postgres(), dbname = 'postgistest')
+#' state <- "SELECT row_to_json(fc)
+#'  FROM (SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
+#'  FROM (SELECT 'Feature' As type
+#'     , ST_AsGeoJSON(lg.geog)::json As geometry
+#'     , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
+#'       )) As properties
+#'    FROM locations As lg   ) As f )  As fc;"
+#' json <- geojson_read(conn, state)[[1]]
+#' map_leaf(json)
+#' 
 #' # doesn't work right now
 #' ## file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
 #' ## geojson_read(file, what = "sp")
 #' }
-geojson_read <- function(x, method = "web", parse = FALSE, what = "list", ...) {
+geojson_read <- function(x, query, method = "web", parse = FALSE, what = "list", ...) {
   UseMethod("geojson_read")
 }
 
 #' @export
-geojson_read.character <- function(x, method = "web", parse = FALSE, what = "list", ...) { 
+geojson_read.character <- function(x, query, method = "web", parse = FALSE, what = "list", ...) { 
   read_json(as.location(x), method, parse, what, ...)
 }
 
 #' @export
-geojson_read.location <- function(x, method = "web", parse = FALSE, what = "list", ...) {
+geojson_read.location <- function(x, query, method = "web", parse = FALSE, what = "list", ...) {
   read_json(x, method, parse, what, ...)
+}
+
+#' @export
+geojson_read.PqConnection <- function(x, query, method = "web", parse = FALSE, what = "list", ...) {
+  check4dbi()
+  check4rpostgres()
+  DBI::dbGetQuery(x, query)
 }
 
 read_json <- function(x, method, parse, what, ...) {
@@ -82,3 +104,16 @@ file_to_sp <- function(input, output = ".") {
       geojson = readOGR(input, ogrListLayers(input))
   )
 }
+
+check4rpostgres <- function() {
+  if (!requireNamespace("RPostgres", quietly = TRUE)) {
+    stop("Please install RPostgres", call. = FALSE)
+  }
+}
+
+check4dbi <- function() {
+  if (!requireNamespace("DBI", quietly = TRUE)) {
+    stop("Please install DBI", call. = FALSE)
+  }
+}
+
