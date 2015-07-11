@@ -1,10 +1,18 @@
 #' Add together geo_list or json objects
 #'
-#' @export
 #' @name geojson-add
-#' 
 #' @param x1 An object of class \code{geo_list} or \code{json}
 #' @param x2 A component to add to \code{x1}, of class \code{geo_list} or \code{json}
+#' 
+#' @details If the first object is an object of class \code{geo_list}, you can add
+#' another object of class \code{geo_list} or of class \code{json}, and will result 
+#' in a \code{geo_list} object. 
+#' 
+#' If the first object is an object of class \code{json}, you can add
+#' another object of class \code{json} or of class \code{geo_list}, and will result 
+#' in a \code{json} object.
+#' 
+#' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}
 #' @examples \dontrun{
 #' # geo_list + geo_list
 #' ## Note: geo_list is the output type from geojson_list, it's just a list with 
@@ -22,16 +30,8 @@
 #' c + d
 #' (c + d) %>% pretty
 #' }
-#' @details If the first object is an object of class \code{geo_list}, you can add
-#' another object of class \code{geo_list} or of class \code{json}, and will result 
-#' in a \code{geo_list} object. 
-#' 
-#' If the first object is an object of class \code{json}, you can add
-#' another object of class \code{json} or of class \code{geo_list}, and will result 
-#' in a \code{json} object.
-#' 
-#' TODO: Eventually solve adding \code{geojson_list} and \code{json} together
-#' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}
+
+#' @export
 #' @method + geo_list
 #' @rdname geojson-add
 `+.geo_list` <- function(x1, x2) {
