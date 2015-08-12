@@ -247,7 +247,8 @@ map_leaf.list <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner
 #' @export
 map_leaf.location <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
   check_4_leaflet()
-  petiole(input, basemap, ...)
+  input <- as.json(jsonlite::fromJSON(input, FALSE))
+  petiole(input, bounds = geojson_bounds(input), basemap = basemap, ...)
 }
 
 #' @export
@@ -271,9 +272,6 @@ map_leaf.geo_list <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.T
 
 # Helper functions ------------------------
 petiole <- function(x, bounds = NULL, basemap, ...) {
-  if (is.null(bounds)) {
-    bounds <- "xx"
-  }
   ll <- leaflet::leaflet()
   ll <- leaflet::addProviderTiles(ll, basemap)
   ll <- leaflet::fitBounds(ll, lng1 = bounds[1], lat1 = bounds[2],
@@ -281,7 +279,8 @@ petiole <- function(x, bounds = NULL, basemap, ...) {
   rachis(x, ll, ...)
 }
 
-rachis <- function(x, ...) {
+# rachis ------------------------
+rachis <- function(x, leaflet_obj, ...) {
   UseMethod("rachis")
 }
 
@@ -366,7 +365,7 @@ check_4_leaflet <- function() {
 #   paste0(readLines(tfile), collapse = "")
 # }
 
-# get bounds
+# get bounds ------------------
 sp_bounds <- function(x) {
   box <- x@bbox
   c(as.numeric(box[, "min"]),

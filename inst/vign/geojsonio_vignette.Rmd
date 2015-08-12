@@ -45,16 +45,17 @@ geojsonio vignette
 
 Functions in this package are organized first around what you're working with or want to get, geojson or topojson, then convert to or read from various formats:
 
-* `geojson_list()`/`topojson_list()` - convert to geojson/topojson as R list format
-* `geojson_json()`/`topojson_json()` - convert to geojson/topojson as json
-* `geojson_read()``topojson_read()` - read a geojson/topojson file from file path or URL
+* `geojson_list()` - convert to geojson as R list format
+* `geojson_json()` - convert to geojson as json
+* `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
 * `geojson_write()` - write a geojson file locally (no write topojson yet)
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
 Additional functions:
 
-* `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map) - See the _maps with geojsonio_ vignette. 
+* `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map) - See the _maps with geojsonio_ vignette.
+* `map_leaf()` - create a local interactive map with the `leaflet` package - See the _maps with geojsonio_ vignette. 
 
 ## Install
 

@@ -9,7 +9,7 @@
 maps with geojsonio
 ===================
 
-`geojsonio` is a great tool for creating geojson from various inputs - and easily feed into tools for making maps with geojson data.
+`geojsonio` creates geojson from various inputs - and can easily feed into tools for making maps with geojson data.
 
 
 ```r
@@ -19,7 +19,34 @@ library("geojsonio")
 
 ## Mapping with leaflet
 
-Example 1: Map of California
+### With geojsonio::map_leaf()
+
+#### From a file
+
+
+```r
+file <- "myfile.geojson"
+geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
+map_leaf(as.location(file))
+```
+
+![map_leaf1](figure/map_leaf1.png)
+
+#### From a SpatialGridDataFrame
+
+
+```r
+sgdim <- c(3, 4)
+sg <- SpatialGrid(GridTopology(rep(0, 2), rep(10, 2), sgdim))
+sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
+map_leaf(sgdf)
+```
+
+![map_leaf2](figure/map_leaf2.png)
+
+### DIY
+
+#### Example 1: Map of California
 
 
 ```r
@@ -34,7 +61,7 @@ leaflet() %>%
 
 ![leafletmap1](figure/leafletmap1.png)
 
-Example 1: Map of two polygons
+#### Example 2: Map of two polygons
 
 
 ```r
