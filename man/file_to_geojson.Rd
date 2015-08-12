@@ -4,7 +4,8 @@
 \alias{file_to_geojson}
 \title{Convert spatial data files to GeoJSON from various formats.}
 \usage{
-file_to_geojson(input, method = "web", output = ".", parse = FALSE)
+file_to_geojson(input, method = "web", output = ".", parse = FALSE,
+  encoding = "CP1250", verbose = FALSE, ...)
 }
 \arguments{
 \item{input}{The file being uploaded, path to the file on your machine.}
@@ -16,6 +17,14 @@ directory}
 
 \item{parse}{(logical) To parse geojson to data.frame like structures if possible.
 Default: \code{FALSE}}
+
+\item{encoding}{(character) The encoding passed to \code{\link[rgdal]{readOGR}}.
+Default: CP1250}
+
+\item{verbose}{(logical) Printing of \code{\link[rgdal]{readOGR}} progress.
+Default: \code{FALSE}}
+
+\item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
 }
 \description{
 The web option uses the Ogre web API. Ogre currently has an output size limit of 15MB.

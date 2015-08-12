@@ -93,7 +93,6 @@ test_that("file_to_geojson works w/ shp file input, local method, output file", 
   
   expect_is(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
-  expect_is(aa_in$crs, "list")
   expect_is(aa_in$features, "data.frame")
   
   expect_is(as.json(aa_in), "json")
