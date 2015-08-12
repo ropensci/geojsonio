@@ -17,7 +17,7 @@
 #' # From file
 #' file <- "myfile.geojson"
 #' geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
-#' map_leaf(file=as.location(file))
+#' map_leaf(as.location(file))
 #'
 #' # From SpatialPoints class
 #' library("sp")
@@ -83,18 +83,19 @@
 #' head(states)
 #' map_leaf(states[1:351, ])
 #'
-#' ## From a list
+#' ## From a named list
 #' mylist <- list(list(lat=30, long=120, marker="red"),
 #'                list(lat=30, long=130, marker="blue"))
 #' map_leaf(mylist, lat="lat", lon="long")
-#'
-#' ## this requires numeric class input, so inputting a list will dispatch on the list method
-#' poly <- c(c(-114.345703125,39.436192999314095),
-#'           c(-114.345703125,43.45291889355468),
-#'           c(-106.61132812499999,43.45291889355468),
-#'           c(-106.61132812499999,39.436192999314095),
-#'           c(-114.345703125,39.436192999314095))
-#' map_leaf(poly, geometry = "polygon")
+#' 
+#' ## From an unnamed list
+#' poly <- list(c(-114.345703125,39.436192999314095),
+#'              c(-114.345703125,43.45291889355468),
+#'              c(-106.61132812499999,43.45291889355468),
+#'              c(-106.61132812499999,39.436192999314095),
+#'              c(-114.345703125,39.436192999314095))
+#' map_leaf(poly)
+#' ## NOTE: Polygons from lists aren't supported yet
 #'
 #' # From a json object
 #' map_leaf(geojson_json(c(-99.74, 32.45)))
@@ -154,7 +155,7 @@ map_leaf <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ..
 #' @export
 map_leaf.SpatialPoints <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
   check_4_leaflet()
-  petiole(input, bounds = sp_bounds(input), lat = NULL, lon = NULL, basemap, ...)
+  petiole(input, bounds = sp_bounds(input), basemap, ...)
 }
 
 #' @export
@@ -239,7 +240,13 @@ map_leaf.data.frame <- function(input, lat = NULL, lon = NULL, basemap = "Stamen
 #' @export
 map_leaf.list <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
   check_4_leaflet()
-  input <- rbind_fill(lapply(input, data.frame, stringsAsFactors = FALSE))
+  if (is.named(input)) {
+    input <- rbind_fill(lapply(input, data.frame, stringsAsFactors = FALSE))
+  } else {
+    input <- rbind_fill(lapply(input, function(z) {
+      data.frame(as.list(setNames(z, c('lng', 'lat'))), stringsAsFactors = FALSE) 
+    }))
+  }
   petiole(input, bounds = df_bounds(input, lat, lon), basemap, ...)
 }
 
@@ -254,7 +261,7 @@ map_leaf.location <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.T
 #' @export
 map_leaf.json <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
   check_4_leaflet()
-  petiole(input, bounds = geojson_bounds(input), lat = NULL, lon = NULL, basemap, ...)
+  petiole(input, bounds = geojson_bounds(input), basemap, ...)
 }
 
 #' @export

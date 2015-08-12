@@ -263,7 +263,7 @@ geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL, group
 # regular R classes --------------------------
 #' @export
 geojson_json.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                 geometry = "point",  type='FeatureCollection', ...) {
+                                 geometry = "point", type='FeatureCollection', ...) {
   to_json(num_to_geo_list(input, geometry, type), ...)
 }
 
