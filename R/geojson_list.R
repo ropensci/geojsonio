@@ -279,6 +279,7 @@ geojson_list.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
 geojson_list.list <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point", type = "FeatureCollection", ...) {
 
+  if (geometry == "polygon") lint_polygon_list(input)
   tmp <- if (!is.named(input)) {
     list(lon = NULL, lat = NULL)
   } else {
@@ -303,3 +304,11 @@ geojson_list.json <- function(input, lat = NULL, lon = NULL, group = NULL,
 }
 
 as.geo_list <- function(x, from) structure(x, class = "geo_list", from = from)
+
+
+lint_polygon_list <- function(x) {
+  if (!identical(x[[1]], x[[length(x)]])) {
+    stop("First and last point in a polygon must be identical", 
+         call. = FALSE)
+  }
+}

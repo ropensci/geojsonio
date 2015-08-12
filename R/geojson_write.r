@@ -293,6 +293,7 @@ geojson_write.data.frame <- function(input, lat = NULL, lon = NULL, geometry = "
 geojson_write.list <- function(input, lat = NULL, lon = NULL, geometry="point",
                                group = NULL, file = "myfile.geojson", 
                                precision = NULL, ...) {
+  if (geometry == "polygon") lint_polygon_list(input)
   if (is.named(input)) {
     tmp <- guess_latlon(names(input[[1]]), lat, lon)
     res <- list_to_geo_list(input, tmp$lat, tmp$lon, geometry)

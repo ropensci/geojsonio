@@ -59,3 +59,19 @@ test_that("geojson_json works with data.frame inputs", {
     "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":\"113888\",\"capital\":\"0\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-81.52,41.08]},\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":\"206634\",\"capital\":\"0\"}}]}"
   )
 })
+
+test_that("geojson_json detects inproper polygons passed as lists inputs", {
+  good <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+  bad <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,1))
+  
+  # fine
+  fine <- geojson_json(good, geometry = "polygon")
+  expect_is(fine, "json")
+  
+  # bad
+  expect_error(geojson_json(bad, geometry = "polygon"),
+               "First and last point in a polygon must be identical")
+  
+  # doesn't matter if geometry != polygon
+  expect_is(geojson_json(bad), "json")
+})

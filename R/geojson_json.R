@@ -278,6 +278,7 @@ geojson_json.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_json.list <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point",  type='FeatureCollection', ...){
+  if (geometry == "polygon") lint_polygon_list(input)
   tmp <- if (!is.named(input)) {
     list(lon = NULL, lat = NULL)
   } else {

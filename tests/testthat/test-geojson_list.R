@@ -124,3 +124,18 @@ test_that("geojson_list works with data.frame inputs", {
 ), from = "SpatialPoints")
   )
 })
+
+test_that("geojson_list detects inproper polygons passed as lists inputs", {
+  vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+  fine <- geojson_list(vecs, geometry = "polygon")
+  
+  expect_is(fine, "geo_list")
+  
+  vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,1))
+  expect_error(geojson_list(vecs, geometry = "polygon"),
+               "First and last point in a polygon must be identical")
+  
+  # doesn't matter if geometry != polygon
+  vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,1))
+  expect_is(geojson_list(vecs), "geo_list")
+})

@@ -4,8 +4,9 @@ test_that("precision argument works with polygons", {
   skip_on_travis()
   skip_on_cran()
 
-  poly <- list(c(-114.345703125,39.436192999314095),
-               c(-114.345703125,43.45291889355468))
+  poly <- list(c(-114.345703125, 39.436192999314095),
+               c(-114.345703125, 43.45291889355468),
+               c(-114.345703125, 39.436192999314095))
   a <- suppressMessages(geojson_write(poly, geometry = "polygon"))
   expect_is(a, "geojson")
   a_txt <- gsub("\\s+", " ", paste0(readLines("myfile.geojson"), collapse = ""))
@@ -51,4 +52,21 @@ test_that("precision argument works with sp objects", {
   expect_is(f, "geojson")
   f_txt <- gsub("\\s+", " ", paste0(readLines("myfile.geojson"), collapse = ""))
   expect_equal(f_txt, "{\"type\": \"FeatureCollection\", \"features\": [{ \"type\": \"Feature\", \"id\": 1, \"properties\": { \"dummy\": 0.000000 }, \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -100.11, 40.11 ], [ -90.11, 50.11 ], [ -85.11, 45.11 ], [ -100.11, 40.11 ] ] ] } },{ \"type\": \"Feature\", \"id\": 2, \"properties\": { \"dummy\": 0.000000 }, \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -90.11, 30.11 ], [ -80.11, 40.11 ], [ -75.11, 35.11 ], [ -90.11, 30.11 ] ] ] } }]}")
+})
+
+test_that("geojson_write detects inproper polygons passed as lists inputs", {
+  good <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+  bad <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,1))
+  
+  # fine
+  fine <- suppressMessages(geojson_write(good, geometry = "polygon"))
+  expect_is(fine, "geojson")
+  expect_is(fine[[1]], "character")
+  
+  # bad
+  expect_error(geojson_write(bad, geometry = "polygon"),
+               "First and last point in a polygon must be identical")
+  
+  # doesn't matter if geometry != polygon
+  expect_is(suppressMessages(geojson_write(bad)), "geojson")
 })
