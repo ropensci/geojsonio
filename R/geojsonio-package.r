@@ -7,6 +7,9 @@
 #' 
 #' @importFrom stats setNames
 #' @importFrom utils download.file
+#' @importFrom httr GET POST content stop_for_status upload_file
+#' @importFrom maptools readShapeSpatial
+#' @importFrom rgdal readOGR writeOGR ogrListLayers
 #' @name geojsonio
 #' @author Scott Chamberlain
 #' @author Andy Teucher

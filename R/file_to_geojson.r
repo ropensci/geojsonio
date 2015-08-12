@@ -3,9 +3,6 @@
 #' You can use a web interface called Ogre, or do conversions locally using the
 #' rgdal package.
 #'
-#' @importFrom httr GET POST content stop_for_status upload_file
-#' @importFrom maptools readShapeSpatial
-#' @importFrom rgdal readOGR writeOGR ogrListLayers
 #' @export
 #' @param input The file being uploaded, path to the file on your machine.
 #' @param method One of web or local. Matches on partial strings.
@@ -57,6 +54,7 @@
 
 file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE) {
   method <- match.arg(method, choices = c("web", "local"))
+  if (!is(parse, "logical")) stop("parse must be logical", call. = FALSE)
   if (method == "web") {
     url <- "http://ogre.adc4gis.com/convert"
     input <- handle_remote(input)
@@ -89,7 +87,8 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE) 
         invisible(paste0(output, ".geojson"))
       }
     } else if (fileext == "shp") {
-      x <- readShapeSpatial(input)
+      # x <- readShapeSpatial(input)
+      x <- rgdal::readOGR(input, rgdal::ogrListLayers(input), stringsAsFactors = FALSE, encoding = "CP1250")
       unlink(paste0(output, ".geojson"))
       writeOGR(x, paste0(output, ".geojson"), basename(output), driver = "GeoJSON", check_exists = FALSE)
       if (mem) {
