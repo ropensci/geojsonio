@@ -4,16 +4,46 @@
 \name{geojsonio}
 \alias{geojsonio}
 \alias{geojsonio-package}
-\title{Convert various data formats to/from GeoJSON or TopoJSON}
+\title{\strong{I/O for GeoJSON}}
 \description{
-This package focuses mostly on converting lists, data.frame's, numeric, SpatialPolygons,
+Convert various data formats to/from GeoJSON or TopoJSON. This package
+focuses mostly on converting lists, data.frame's, numeric, SpatialPolygons,
 SpatialPolygonsDataFrame, and more to GeoJSON with the help of \code{rgdal} and
 friends. You can currently read TopoJSON - writing TopoJSON will come in a future
 version of this package.
 }
-\author{
-Scott Chamberlain
+\section{Package organization}{
 
-Andy Teucher
+The core functions in this package are organized first around what you're working
+with or want to get, geojson or topojson, then convert to or read from
+various formats:
+\itemize{
+ \item \code{\link{geojson_list}} - convert to geojson as R list format
+ \item \code{\link{geojson_json}} - convert to geojson as json
+ \item \code{\link{geojson_read}} / \code{\link{topojson_read}} - read a
+ geojson/topojson file from file path or URL
+ \item \code{\link{geojson_write}} - write a geojson file locally (topojson coming later)
+}
+
+Other interesting functions:
+\itemize{
+ \item \code{\link{map_gist}} - Create a GitHub gist (renders as an interactive map)
+ \item \code{\link{map_leaf}} - Create a local interactive map using the \code{leaflet}
+ package
+ \item \code{\link{lint}} - Checks validity of geojson using the Javascript library
+ geojsonhint
+ \item \code{\link{validate}} - Checks validity of geojson using the web service at
+ http://geojsonlint.com/
+}
+
+All of the above functions have methods for various classes, including
+\code{numeric} vectors, \code{data.frame}, \code{list}, \code{SpatialPolygons},
+\code{SpatialLines}, \code{SpatialPoints}, and many more - which will try to
+do the right thing based on the data you give as input.
+}
+\author{
+Scott Chamberlain \email{myrmecocystus@gmail.com}
+
+Andy Teucher \email{andy.teucher@gmail.com}
 }
 
