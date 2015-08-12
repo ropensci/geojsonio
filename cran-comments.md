@@ -1,14 +1,8 @@
-I have read and agree to the the CRAN policies at 
-http://cran.r-project.org/web/packages/policies.html
-
-R CMD CHECK passed on my local OS X install with R 3.2.0 and
+R CMD CHECK passed on my local OS X install with R 3.2.1 and
 R development version, Ubuntu running on Travis-CI, and Windows
-R 3.2 and devel on a virtualbox Windows install (tried 
-Win-Builder but it's been down apparently, or at least very 
-slow to respond).
+R 3.2.1 and devel on Win-Builder.
 
-This is a re-submission from the first try today to put single
-quotes around some words in theh Description entry in the 
-DESCRIPTION file.
+This submission has a number of bug fixes, including importing all
+non-base R functions (i.e., from methods, stats, and utils).
 
 Thanks! Scott Chamberlain

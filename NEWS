@@ -1,3 +1,32 @@
+geojsonio 0.1.4
+===============
+
+NEW FEATURES
+
+* New function `map_leaf()` uses the `leaflet` package to make maps, with
+S3 methods for most spatial classes as well as most R classes, including
+data.frame's, lists, vectors, file inputs, and more (#48)
+* `geojson_read()` now optionally can give back a spatial class object, 
+just a convenience in case you want to not get back geojson, but a 
+spatial class (#60)
+
+MINOR IMPROVEMENTS
+
+* Now that `leaflet` R package is on CRAN, put back in examples using
+it to make maps (#49)
+* Added a linter for list inputs comined with `geometry="polygon"` to
+all `geojson_*()` functions that have `.list` methods. This checks to 
+make sure inputs have the same first and last coordinate pairs to 
+close the polygon (#34)
+
+BUG FIXES
+
+* Importing all non-base R funtions, including from `methods`, `stats` and `utils`
+packages (#62)
+* Fixed bug in `geojson_write()` in which geojson style names were altered
+on accident (#56)
+* (#)
+
 geojsonio 0.1.0
 ===============
 
