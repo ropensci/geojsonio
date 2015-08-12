@@ -1,3 +1,5 @@
+#' @param query A SQL query.
+
 #' # Query PostGIS/Postgres
 #' library("DBI")
 #' library("RPostgres")

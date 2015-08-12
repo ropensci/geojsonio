@@ -2,30 +2,29 @@
 % Please edit documentation in R/geojson_read.R
 \name{geojson_read}
 \alias{geojson_read}
-\title{Read geojson from a local file or a URL}
+\title{Read geojson or other formats from a local file or a URL}
 \usage{
-geojson_read(x, query, method = "web", parse = FALSE, what = "list", ...)
+geojson_read(x, method = "web", parse = FALSE, what = "list", ...)
 }
 \arguments{
-\item{x}{Path to a local file or a URL.}
+\item{x}{(character) Path to a local file or a URL.}
 
-\item{query}{A SQL query.}
-
-\item{method}{One of web or local. Matches on partial strings.}
+\item{method}{(character) One of "web" (default) or "local". Matches on partial strings.}
 
 \item{parse}{(logical) To parse geojson to data.frame like structures if possible.
 Default: \code{FALSE}}
 
-\item{what}{What to return. One of list or sp (for Spatial class). Default: list.
-If sp chosen, method forced to be "local".}
+\item{what}{(character) What to return. One of "list" or "sp" (for Spatial class).
+Default: "list". If "sp" chosen, forced to \code{method="local"}.}
 
-\item{...}{Ignored}
+\item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
 }
 \description{
-Read geojson from a local file or a URL
+Read geojson or other formats from a local file or a URL
 }
 \details{
-Uses \code{\link{file_to_geojson}} internally.
+Uses \code{\link{file_to_geojson}} internally to give back geojson,
+and other helper functions when returning spatial classes.
 
 This function supports various geospatial file formats from a URL, as well as local
 kml, shp, and geojson file formats.
@@ -56,6 +55,12 @@ geojson_read(as.location(file), what = "sp")
 ## read geojson from a url
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 geojson_read(url, what = "sp")
+## read from a shape file
+file <- system.file("examples", "bison.zip", package = "geojsonio")
+dir <- tempdir()
+unzip(file, exdir = dir)
+shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE)
+geojson_read(shpfile, what = "sp")
 
 # doesn't work right now
 ## file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")

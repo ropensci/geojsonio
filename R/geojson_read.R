@@ -1,16 +1,16 @@
-#' Read geojson from a local file or a URL
+#' Read geojson or other formats from a local file or a URL
 #'
 #' @export
 #'
-#' @param x Path to a local file or a URL.
-#' @param query A SQL query.
-#' @param method One of web or local. Matches on partial strings.
+#' @param x (character) Path to a local file or a URL.
+#' @param method (character) One of "web" (default) or "local". Matches on partial strings.
 #' @param parse (logical) To parse geojson to data.frame like structures if possible. 
 #' Default: \code{FALSE}
-#' @param what What to return. One of list or sp (for Spatial class). Default: list. 
-#' If sp chosen, method forced to be "local". 
-#' @param ... Ignored
-#' @details Uses \code{\link{file_to_geojson}} internally.
+#' @param what (character) What to return. One of "list" or "sp" (for Spatial class). 
+#' Default: "list". If "sp" chosen, forced to \code{method="local"}. 
+#' @param ... Additional parameters passed to \code{\link[rgdal]{readOGR}}
+#' @details Uses \code{\link{file_to_geojson}} internally to give back geojson, 
+#' and other helper functions when returning spatial classes.
 #' 
 #' This function supports various geospatial file formats from a URL, as well as local
 #' kml, shp, and geojson file formats.
@@ -40,46 +40,51 @@
 #' ## read geojson from a url
 #' url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 #' geojson_read(url, what = "sp")
+#' ## read from a shape file
+#' file <- system.file("examples", "bison.zip", package = "geojsonio")
+#' dir <- tempdir()
+#' unzip(file, exdir = dir)
+#' shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE)
+#' geojson_read(shpfile, what = "sp")
 #' 
 #' # doesn't work right now
 #' ## file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
 #' ## geojson_read(file, what = "sp")
 #' }
-geojson_read <- function(x, query, method = "web", parse = FALSE, what = "list", ...) {
+geojson_read <- function(x, method = "web", parse = FALSE, what = "list", ...) {
   UseMethod("geojson_read")
 }
 
 #' @export
-geojson_read.character <- function(x, query, method = "web", parse = FALSE, what = "list", ...) { 
+geojson_read.character <- function(x, method = "web", parse = FALSE, what = "list", ...) { 
   read_json(as.location(x), method, parse, what, ...)
 }
 
 #' @export
-geojson_read.location <- function(x, query, method = "web", parse = FALSE, what = "list", ...) {
+geojson_read.location <- function(x, method = "web", parse = FALSE, what = "list", ...) {
   read_json(x, method, parse, what, ...)
 }
 
 read_json <- function(x, method, parse, what, ...) {
   what <- match.arg(what, c("list", "sp"))
   switch(what, 
-         list = file_to_geojson(x, method, output = ":memory:", parse), 
-         sp = file_to_sp(x)
+         list = file_to_geojson(x, method, output = ":memory:", parse, ...), 
+         sp = file_to_sp(x, ...)
   )
 }
 
-file_to_sp <- function(input, output = ".") {
+file_to_sp <- function(input, output = ".", ...) {
   fileext <- ftype(input)
   fileext <- match.arg(fileext, c("shp", "kml", "url", "geojson"))
   mem <- ifelse(output == ":memory:", TRUE, FALSE)
   output <- ifelse(output == ":memory:", tempfile(), output)
   output <- path.expand(output)
   switch(fileext, 
-      kml = {
-        my_layer <- ogrListLayers(input)
-        readOGR(input, layer = my_layer[1], drop_unsupported_fields = TRUE)
-      },
-      shp = readShapeSpatial(input),
-      url = readOGR(input, ogrListLayers(input)),
-      geojson = readOGR(input, ogrListLayers(input))
+      kml = rgdal::readOGR(input, rgdal::ogrListLayers(input)[1], 
+                       drop_unsupported_fields = TRUE, verbose = FALSE, ...),
+      # shp = maptools::readShapeSpatial(input),
+      shp = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
+      url = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
+      geojson = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...)
   )
 }
