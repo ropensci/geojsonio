@@ -13,9 +13,6 @@ before_install:
   - "./travis-tool.sh install_deps"
   - "./travis-tool.sh github_package jimhester/covr"
 
-r_binary_install:
-  - rgdal
-
 after_success:
   - Rscript -e 'covr::codecov()'
 
