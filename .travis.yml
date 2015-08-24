@@ -2,12 +2,12 @@ language: r
 
 before_install:
   - sudo apt-get install libv8-dev
+  - sudo add-apt-repository -y ppa:edd/misc
 
 r_binary_packages:
   - rgdal
 
 r_github_packages:
-  - jimhester/robustr
   - jimhester/covr
 
 after_success:
