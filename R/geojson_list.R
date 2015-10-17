@@ -301,7 +301,7 @@ geojson_list.json <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point", type = "FeatureCollection", ...) {
 
   output_list <- jsonlite::fromJSON(input, FALSE, ...)
-  as.geo_list(output_list, from = "list")
+  as.geo_list(output_list, from = "json")
 }
 
 as.geo_list <- function(x, from) structure(x, class = "geo_list", from = from)
