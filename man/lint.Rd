@@ -55,6 +55,11 @@ lint(us_cities[1:2,], lat='lat', lon='long')
 # From numeric
 vec <- c(32.45,-99.74)
 lint(vec)
+
+# From a list
+mylist <- list(list(latitude=30, longitude=120, marker="red"),
+               list(latitude=30, longitude=130, marker="blue"))
+lint(mylist)
 }
 }
 

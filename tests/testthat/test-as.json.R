@@ -52,4 +52,14 @@ test_that("as.json works with geojson class inputs", {
   )
 })
 
-#### FIXME - add tests for character input, file names that is.
+test_that("as.json works with file name inputs", {
+  ee <- suppressMessages(geojson_write(us_cities[1:2,], lat='lat', lon='long'))
+  expect_is(ee, "geojson")
+  expect_is(unclass(ee), "list")
+  expect_is(ee$path, "character")
+  expect_is(as.json(ee$path, verbose = FALSE), "json")
+  expect_equal(
+    unclass(as.json(ee, verbose = FALSE)),
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[32.45,-99.74]},\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":\"113888\",\"lat\":\"32.45\",\"long\":\"-99.74\",\"capital\":\"0\",\"optional\":\"TRUE\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[41.08,-81.52]},\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":\"206634\",\"lat\":\"41.08\",\"long\":\"-81.52\",\"capital\":\"0\",\"optional\":\"TRUE\"}}]}"
+  )
+})
