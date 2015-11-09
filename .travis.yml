@@ -2,6 +2,7 @@ language: r
 
 before_install:
   - sudo apt-get install libv8-dev
+  - sudo add-apt-repository -y ppa:marutter/c2d4u
 
 r_binary_packages:
   - rgdal
