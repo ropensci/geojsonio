@@ -13,6 +13,10 @@
 #' \code{SpatialPolygonsDataFrame} class, etc., depending on what the 
 #' structure of the GeoJSON. 
 #' 
+#' The reading and writing of the CRS to/from geojson is inconsistent. You can 
+#' directly set the CRS by passing a valid PROJ4 string to the \code{p4s} argument in 
+#' \code{\link[rgdal]{readOGR}}.
+#' 
 #' @examples \dontrun{
 #' # geo_list ------------------
 #' ## From a numeric vector of length 2 to a point
@@ -39,6 +43,9 @@
 #' # from featurecollectino of points
 #' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp
 #' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp %>% plot
+#' 
+#' # Set the CRS via the p4s argument
+#' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp(p4s = "+init=epsg:4326")
 #' }
 geojson_sp <- function(x, disambiguateFIDs = TRUE, ...) {
   UseMethod("geojson_sp")
