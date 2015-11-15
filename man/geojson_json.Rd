@@ -24,6 +24,9 @@ apply for points}
 
 \item{...}{Further args passed on to \code{\link[jsonlite]{toJSON}}}
 }
+\value{
+An object of class \code{geo_json} (and \code{json})
+}
 \description{
 Convert many input types with spatial data to geojson specified as a json string
 }

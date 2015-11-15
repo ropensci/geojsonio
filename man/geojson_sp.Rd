@@ -7,7 +7,7 @@
 geojson_sp(x, disambiguateFIDs = TRUE, ...)
 }
 \arguments{
-\item{x}{Object of class \code{geo_list} or \code{json}}
+\item{x}{Object of class \code{geo_list} or \code{geo_json}}
 
 \item{disambiguateFIDs}{(logical) default \code{FALSE}, if \code{TRUE}, and FID 
 values are not unique, they will be set to unique values 1:N for N features; 
@@ -46,7 +46,7 @@ vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0
 geojson_list(vecs, geometry="polygon") \%>\% geojson_sp
 geojson_list(vecs, geometry="polygon") \%>\% geojson_sp \%>\% plot
 
-# json ------------------
+# geo_json ------------------
 ## from point
 geojson_json(c(-99.74,32.45)) \%>\% geojson_sp
 geojson_json(c(-99.74,32.45)) \%>\% geojson_sp \%>\% plot

@@ -1,7 +1,7 @@
 #' Convert output of geojson_list or geojson_json to spatial classes
 #' 
 #' @export
-#' @param x Object of class \code{geo_list} or \code{json}
+#' @param x Object of class \code{geo_list} or \code{geo_json}
 #' @param disambiguateFIDs (logical) default \code{FALSE}, if \code{TRUE}, and FID 
 #' values are not unique, they will be set to unique values 1:N for N features; 
 #' problem observed in GML files
@@ -31,7 +31,7 @@
 #' geojson_list(vecs, geometry="polygon") %>% geojson_sp
 #' geojson_list(vecs, geometry="polygon") %>% geojson_sp %>% plot
 #' 
-#' # json ------------------
+#' # geo_json ------------------
 #' ## from point
 #' geojson_json(c(-99.74,32.45)) %>% geojson_sp
 #' geojson_json(c(-99.74,32.45)) %>% geojson_sp %>% plot
@@ -51,7 +51,7 @@ geojson_sp.geo_list <- function(x, disambiguateFIDs = TRUE, ...) {
 }
 
 #' @export
-geojson_sp.json <- function(x, disambiguateFIDs = TRUE, ...) {
+geojson_sp.geo_json <- function(x, disambiguateFIDs = TRUE, ...) {
   rgdal::readOGR(x, layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs, 
                  verbose = FALSE, ...)
 }

@@ -12,6 +12,8 @@
 #' apply for points
 #' @param ... Further args passed on to \code{\link[jsonlite]{toJSON}}
 #'
+#' @return An object of class \code{geo_json} (and \code{json})
+#' 
 #' @details This function creates a geojson structure as a json character string; it does not
 #' write a file using \code{rgdal} - see \code{\link{geojson_write}} for that.
 #'
