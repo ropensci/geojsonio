@@ -59,7 +59,7 @@ add_geolist <- function(t1, t2, t2name) {
   if (!xor(!is(t2, "geo_list"), !is(t2, "json"))) {
     stop("Don't know how to add ", t2name, " to a geo_list object", call. = FALSE)
   }
-  if (class(t2) == "geo_list") { 
+  if (is(t2, "geo_list")) { 
     t1$features <- c(t1$features, t2$features)
     att1 <- attr(t1, "from")
     att2 <- attr(t2, "from")
@@ -75,7 +75,7 @@ add_json <- function(t1, t2, t2name) {
   if (!xor(!is(t2, "json"), !is(t2, "geo_list"))) {
     stop("Don't know how to add ", t2name, " to a json object", call. = FALSE)
   }
-  if (class(t2) == "geo_list") { 
+  if (is(t2, "geo_list")) { 
     jsonlite::toJSON(list(type = "FeatureCollection", 
         features = c(geojson_list(t1)$features, geojson_list(t2)$features)
     ), auto_unbox = TRUE)
