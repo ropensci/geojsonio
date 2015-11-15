@@ -46,10 +46,12 @@ geojson_sp <- function(x, disambiguateFIDs = TRUE, ...) {
 
 #' @export
 geojson_sp.geo_list <- function(x, disambiguateFIDs = TRUE, ...) {
-  rgdal::readOGR(as.json(x), layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs, ...)
+  rgdal::readOGR(as.json(x), layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs, 
+                 verbose = FALSE, ...)
 }
 
 #' @export
 geojson_sp.json <- function(x, disambiguateFIDs = TRUE, ...) {
-  rgdal::readOGR(x, layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs, ...)
+  rgdal::readOGR(x, layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs, 
+                 verbose = FALSE, ...)
 }
