@@ -25,7 +25,11 @@ Convert output of geojson_list or geojson_json to spatial classes
 The spatial class object returned will depend on the input GeoJSON. 
 Sometimes you will get back a \code{SpatialPoints} class, and sometimes a 
 \code{SpatialPolygonsDataFrame} class, etc., depending on what the 
-structure of the GeoJSON.
+structure of the GeoJSON. 
+
+The reading and writing of the CRS to/from geojson is inconsistent. You can 
+directly set the CRS by passing a valid PROJ4 string to the \code{p4s} argument in 
+\code{\link[rgdal]{readOGR}}.
 }
 \examples{
 \dontrun{
@@ -54,6 +58,9 @@ geojson_json(c(-99.74,32.45)) \%>\% geojson_sp \%>\% plot
 # from featurecollectino of points
 geojson_json(us_cities[1:2,], lat='lat', lon='long') \%>\% geojson_sp
 geojson_json(us_cities[1:2,], lat='lat', lon='long') \%>\% geojson_sp \%>\% plot
+
+# Set the CRS via the p4s argument
+geojson_json(us_cities[1:2,], lat='lat', lon='long') \%>\% geojson_sp(p4s = "+init=epsg:4326")
 }
 }
 
