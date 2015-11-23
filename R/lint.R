@@ -118,7 +118,8 @@ lint.data.frame <- function(x, ...) lint(geojson_list(x, ...))
 
 # helper fxn
 lintit <- function(x) {
-  ct$eval(sprintf("var out = geojsonhint.hint('%s');", minify(x)))
+  ct$assign("x", minify(x))
+  ct$eval("var out = geojsonhint.hint(x);")
   tmp <- as.list(ct$get("out"))
   if (identical(tmp, list())) {
     return("valid")
