@@ -11,6 +11,9 @@ before_script:
   - ./travis-tool.sh bootstrap
   - ./travis-tool.sh install_deps
 
+install_github:
+ - ropensci/gistr
+
 env:
    global:
      - R_LIBS="http://cran.rstudio.com"
