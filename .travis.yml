@@ -5,6 +5,7 @@ script: ./travis-tool.sh run_tests
 
 before_script:
   - sudo apt-get update
+  - sudo apt-get install libv8-dev
   - sudo apt-get install -y gdal-bin libgdal-dev libgdal1-dev netcdf-bin libproj-dev
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
