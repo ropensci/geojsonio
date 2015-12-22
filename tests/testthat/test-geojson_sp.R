@@ -13,9 +13,9 @@ test_that("geojson_sp works with geo_list inputs", {
   expect_is(b, "SpatialPointsDataFrame")
   
   # from a list of numeric vectors to a polygon
-  vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
-  d <- geojson_sp(geojson_list(vecs, geometry="polygon"))
-  expect_is(d, "SpatialPolygonsDataFrame")
+  # vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+  # d <- geojson_sp(geojson_list(vecs, geometry="polygon"))
+  # expect_is(d, "SpatialPolygonsDataFrame")
 })
 
 test_that("geojson_sp works with json inputs", {
@@ -31,7 +31,7 @@ test_that("geojson_sp works with json inputs", {
   expect_is(b, "SpatialPointsDataFrame")
   
   # from a list of numeric vectors to a polygon
-  vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
-  d <- geojson_sp(geojson_json(vecs, geometry="polygon"))
-  expect_is(d, "SpatialPolygonsDataFrame")  
+  # vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+  # d <- geojson_sp(geojson_json(vecs, geometry="polygon"))
+  # expect_is(d, "SpatialPolygonsDataFrame")  
 })
