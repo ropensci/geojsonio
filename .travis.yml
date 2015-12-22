@@ -14,6 +14,9 @@ before_script:
 install_github:
  - ropensci/gistr
 
+after_failure:
+  - ./travis-tool.sh dump_logs
+
 env:
    global:
      - R_LIBS="http://cran.rstudio.com"
