@@ -246,9 +246,11 @@ splinestogeolist <- function(x, object){
 
 spdftogeolist <- function(x){
   if (is(x, "SpatialPointsDataFrame") || is(x, "SpatialGridDataFrame")) {
-    nms <- dimnames(coordinates(x))[[2]]
+    nms <- dimnames(2)[[2]]
     temp <- apply(data.frame(x), 1, as.list)
     list_to_geo_list(temp, nms[1], nms[2], NULL, type = "FeatureCollection")
+  } else if (is(x, "SpatialPolygonsDataFrame")) {
+    geojson_list(x)
   } else {
     list(type = "MultiPoint",
          bbox = bbox2df(x@bbox),
@@ -263,7 +265,6 @@ write_geojson <- function(input, file = "myfile.geojson", precision = NULL, ...)
     file <- paste0(file, ".geojson")
   }
   file <- path.expand(file)
-  unlink(file)
   destpath <- dirname(file)
   if (!file.exists(destpath)) dir.create(destpath)
   write_ogr(input, tempfile(), file, precision, ...)
@@ -289,16 +290,6 @@ convert_ordered <- function(df) {
   })
   return(df)
 }
-
-#' Pipe operator
-#'
-#' @name %>%
-#' @rdname pipe
-#' @keywords internal
-#' @export
-#' @importFrom magrittr %>%
-#' @usage lhs \%>\% rhs
-NULL
 
 geojson_rw <- function(input, ...){
   if (is(input, "SpatialCollections")) {

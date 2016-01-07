@@ -39,6 +39,7 @@
 #' @importFrom httr GET POST content stop_for_status upload_file
 #' @importFrom maptools readShapeSpatial
 #' @importFrom rgdal readOGR writeOGR ogrListLayers
+#' @importFrom magrittr %>%
 #' @name geojsonio
 #' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}
