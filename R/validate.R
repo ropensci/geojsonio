@@ -111,8 +111,8 @@ validate.list <- function(x, ...) validate(geojson_list(x))
 
 val_fxn <- function(x){
   file <- tempfile(fileext = ".geojson")
-  suppressMessages(geojson_write(x, file=file))
-  res <- POST(v_url(), body=upload_file(file))
+  suppressMessages(geojson_write(x, file = file))
+  res <- POST(v_url(), body = upload_file(file))
   stop_for_status(res)
   content(res)
 }

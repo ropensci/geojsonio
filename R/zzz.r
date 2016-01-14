@@ -246,9 +246,10 @@ splinestogeolist <- function(x, object){
 
 spdftogeolist <- function(x){
   if (is(x, "SpatialPointsDataFrame") || is(x, "SpatialGridDataFrame")) {
-    nms <- dimnames(2)[[2]]
+    #nms <- dimnames(x)[[2]]
+    nms <- suppressMessages(guess_latlon(names(data.frame(x))))
     temp <- apply(data.frame(x), 1, as.list)
-    list_to_geo_list(temp, nms[1], nms[2], NULL, type = "FeatureCollection")
+    list_to_geo_list(temp, nms$lat, nms$lon, NULL, type = "FeatureCollection")
   } else if (is(x, "SpatialPolygonsDataFrame")) {
     geojson_list(x)
   } else {

@@ -366,12 +366,6 @@ check_4_leaflet <- function() {
   }
 }
 
-# foo <- function(x) {
-#   tfile <- tempfile(fileext = ".geojson")
-#   invisible(suppressMessages(geojson_write(x, file = tfile)))
-#   paste0(readLines(tfile), collapse = "")
-# }
-
 # get bounds ------------------
 sp_bounds <- function(x) {
   box <- x@bbox
