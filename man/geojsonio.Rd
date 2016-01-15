@@ -20,6 +20,8 @@ various formats:
 \itemize{
  \item \code{\link{geojson_list}} - convert to geojson as R list format
  \item \code{\link{geojson_json}} - convert to geojson as json
+ \item \code{\link{geojson_sp}} - convert to a spatial object from \code{geojson_list}
+ or \code{geojson_json}
  \item \code{\link{geojson_read}} / \code{\link{topojson_read}} - read a 
  geojson/topojson file from file path or URL
  \item \code{\link{geojson_write}} - write a geojson file locally (topojson coming later)

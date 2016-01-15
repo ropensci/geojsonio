@@ -15,6 +15,7 @@ Functions in this package are organized first around what you're working with or
 
 * `geojson_list()` - convert to geojson as R list format
 * `geojson_json()` - convert to geojson as json
+* `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
 * `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
 * `geojson_write()` - write a geojson file locally (no write topojson yet)
 
@@ -31,7 +32,7 @@ Install rgdal - in case you can't get it installed from binary , here's what wor
 
 
 ```r
-install.packages("http://cran.r-project.org/src/contrib/rgdal_0.9-1.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.11/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
+install.packages("http://cran.r-project.org/src/contrib/rgdal_1.1-3.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.11/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
 Stable version from CRAN
@@ -210,7 +211,7 @@ out <- geojson_read(file, what = "sp")
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png) 
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
 
 ## Topojson
 
