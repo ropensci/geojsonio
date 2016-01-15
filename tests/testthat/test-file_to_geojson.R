@@ -10,6 +10,8 @@ ftog3 <- basename(tempfile())
 ftog4 <- basename(tempfile())
 
 test_that("file_to_geojson works w/ kml input, web method, output file", {
+  skip_on_cran()
+  
   aa <- suppressMessages(file_to_geojson(input = file, method = 'web',
                                          output = ftog1))
   aa_in <- jsonlite::fromJSON(aa)
@@ -28,6 +30,8 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
 })
 
 test_that("file_to_geojson works w/ kml input, web method, output memory", {
+  skip_on_cran()
+  
   aa <- suppressMessages(file_to_geojson(input = file, method = 'web',
                                          output = ':memory:'))
 
@@ -73,6 +77,8 @@ test_that("file_to_geojson works w/ kml input, local method, output memory", {
 
 # shp -------------------------------
 test_that("file_to_geojson works w/ shp zip file input, web method, output file", {
+  skip_on_cran()
+  
   file <- system.file("examples", "bison.zip", package = "geojsonio")
 
   aa <- suppressMessages(file_to_geojson(input = file, method = 'web',
