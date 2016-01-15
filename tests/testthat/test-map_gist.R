@@ -3,12 +3,12 @@ context("map_gist")
 test_that("map_gist works with file inputs", {
   skip_on_cran()
   
-  file <- "myfile.geojson"
-  geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
-  a <- map_gist(file=as.location(file), browse = FALSE)
+  tfile <- tempfile(fileext = ".geojson")
+  geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = tfile)
+  a <- map_gist(file=as.location(tfile), browse = FALSE)
   expect_is(a, "gist")
   expect_is(a$url, "character")
-  expect_named(a$files, "myfile.geojson")
+  expect_named(a$files, basename(tfile))
   
   gdel(a)
 })
