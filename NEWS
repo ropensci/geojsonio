@@ -1,3 +1,23 @@
+geojsonio 0.1.6
+===============
+
+NEW FEATURES
+
+* New function `geojson_sp()` to convert output of `geojson_list()` or 
+`geojson_json()` to spatial classes (e.g., `SpatialPointsDataFrame`) (#71)
+
+MINOR IMPROVEMENTS
+
+* Startup message added to notify users to ideally update to `rgdal > v1.1-1` 
+given fix to make writing multipolygon objects to geojson correct (#69)
+* Filled out test suite more (#46)
+
+BUG FIXES
+
+* Fix to `lint()` function, due to bug in passing data to the Javascript
+layer (#73)
+* Fixes to `as.json()` (#76)
+
 geojsonio 0.1.4
 ===============
 
