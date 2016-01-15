@@ -50,6 +50,7 @@ Functions in this package are organized first around what you're working with or
 
 * `geojson_list()` - convert to geojson as R list format
 * `geojson_json()` - convert to geojson as json
+* `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
 * `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
 * `geojson_write()` - write a geojson file locally (topojson coming later)
 
@@ -240,7 +241,7 @@ Make a faceted plot
 library('ggplot2')
 library('plyr')
 st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, method = "local", what = "sp", verbose = FALSE)
+geo <- lapply(st_use, geojson_read, method = "local", what = "sp")
 df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
 ggplot(df, aes(long, lat, group = group)) +
   geom_polygon() +
