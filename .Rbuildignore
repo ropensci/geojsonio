@@ -13,3 +13,4 @@ README.Rmd
 .V8history
 cran-comments.md
 myfile.geojson
+^CONDUCT\.md$

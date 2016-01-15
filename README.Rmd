@@ -58,6 +58,7 @@ Each of the above functions have methods for various objects/classes, including 
 Additional functions:
 
 * `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map)
+* `map_leaf()` - create a local interactive map using the `leaflet` package
 
 ## *json Info
 
@@ -254,5 +255,6 @@ Okay, so the maps are not quite right (stretched to fit each panel), but you get
 * Please [report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
 * License: MIT
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
+* Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 [![rofooter](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
