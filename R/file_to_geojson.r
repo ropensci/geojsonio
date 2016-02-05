@@ -67,7 +67,7 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
     input <- handle_remote(input)
     tt <- httr::POST(url, body = list(upload = httr::upload_file(input)))
     httr::stop_for_status(tt)
-    out <- httr::content(tt, as = "text")
+    out <- httr::content(tt, as = "text", encoding = "UTF-8")
     if (output == ":memory:") {
       jsonlite::fromJSON(out, parse)
     } else {

@@ -71,7 +71,7 @@ lint.geo_list <- function(x, ...){
 lint.location <- function(x, ...){
   res <- switch(attr(x, "type"),
                 file = paste0(readLines(x), collapse = ""),
-                url = minify(content(GET(x), "text")))
+                url = minify(content(GET(x), "text", encoding = "UTF-8")))
   lintit(res)
 }
 

@@ -51,19 +51,19 @@ validate <- function(x, ...) {
 
 #' @export
 validate.character <- function(x, ...){
-  if( !jsonlite::validate(x) ) stop("invalid json string")
-  res <- POST(v_url(), body=x)
+  if (!jsonlite::validate(x)) stop("invalid json string", call. = FALSE)
+  res <- POST(v_url(), body = x)
   stop_for_status(res)
-  content(res)
+  jsonlite::fromJSON(content(res, "text", encoding = "UTF-8"))
 }
 
 #' @export
 validate.location <- function(x, ...){
   res <- switch(attr(x, "type"),
-                file = POST(v_url(), body=upload_file(x[[1]])),
-                url = GET(v_url(), query=list(url = x[[1]])))
+                file = POST(v_url(), body = upload_file(x[[1]])),
+                url = GET(v_url(), query = list(url = x[[1]])))
   stop_for_status(res)
-  content(res)
+  jsonlite::fromJSON(content(res, "text", encoding = "UTF-8"))
 }
 
 #' @export
@@ -114,7 +114,7 @@ val_fxn <- function(x){
   suppressMessages(geojson_write(x, file = file))
   res <- POST(v_url(), body = upload_file(file))
   stop_for_status(res)
-  content(res)
+  jsonlite::fromJSON(content(res, "text", encoding = "UTF-8"))
 }
 
 v_url <- function() 'http://geojsonlint.com/validate'
