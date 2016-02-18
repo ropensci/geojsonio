@@ -42,6 +42,8 @@
 #' @importFrom maptools readShapeSpatial
 #' @importFrom rgdal readOGR writeOGR ogrListLayers
 #' @importFrom magrittr %>%
+#' @importFrom Rcpp evalCpp
+#' @useDynLib geojsonio
 #' @name geojsonio
 #' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}
