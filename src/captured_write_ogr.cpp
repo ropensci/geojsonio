@@ -1,7 +1,11 @@
 #include <Rcpp.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#ifdef _WIN32
+  #include <io.h>
+#else
+  #include <unistd.h>
+#endif
 
 using namespace Rcpp;
 
@@ -50,8 +54,11 @@ CharacterVector capturedWriteOGR(SEXP obj,
   
   // ok, there's some error checking if we couldn't even
   // get the hack started
-  
-  if (pipe(out_pipe) != 0 ) { return(NA_STRING); }
+  #ifdef _WIN32
+    if (_pipe(out_pipe, MAX_LEN, 0) != 0 ) { return(NA_STRING); }
+  #else
+    if (pipe(out_pipe) != 0 ) { return(NA_STRING); }
+  #endif
   
   dup2(out_pipe[1], STDOUT_FILENO);
   close(out_pipe[1]);
