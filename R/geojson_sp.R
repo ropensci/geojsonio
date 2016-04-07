@@ -46,6 +46,10 @@
 #' 
 #' # Set the CRS via the p4s argument
 #' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp(p4s = "+init=epsg:4326")
+#' 
+#' # json ----------------------
+#' x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
+#' geojson_sp(x)
 #' }
 geojson_sp <- function(x, disambiguateFIDs = TRUE, ...) {
   UseMethod("geojson_sp")
@@ -53,12 +57,20 @@ geojson_sp <- function(x, disambiguateFIDs = TRUE, ...) {
 
 #' @export
 geojson_sp.geo_list <- function(x, disambiguateFIDs = TRUE, ...) {
-  rgdal::readOGR(as.json(x), layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs, 
-                 verbose = FALSE, ...)
+  tosp(as.json(x), ...)
 }
 
 #' @export
 geojson_sp.geo_json <- function(x, disambiguateFIDs = TRUE, ...) {
+  tosp(x, ...)
+}
+
+#' @export
+geojson_sp.json <- function(x, disambiguateFIDs = TRUE, ...) {
+  tosp(x, disambiguateFIDs, ...)
+}
+
+tosp <- function(x, disambiguateFIDs, ...) {
   rgdal::readOGR(x, layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs, 
-                 verbose = FALSE, ...)
+                 verbose = FALSE, ...)  
 }

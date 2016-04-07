@@ -261,17 +261,17 @@ spdftogeolist <- function(x){
   }
 }
 
-write_geojson <- function(input, file = "myfile.geojson", precision = NULL, ...){
+write_geojson <- function(input, file = "myfile.geojson", precision = NULL, overwrite = TRUE, ...){
   if (!grepl("\\.geojson$", file)) {
     file <- paste0(file, ".geojson")
   }
   file <- path.expand(file)
   destpath <- dirname(file)
   if (!file.exists(destpath)) dir.create(destpath)
-  write_ogr(input, tempfile(), file, precision, ...)
+  write_ogr(input, tempfile(), file, precision, overwrite, ...)
 }
 
-write_ogr <- function(input, dir, file, precision = NULL, ...){
+write_ogr <- function(input, dir, file, precision = NULL, overwrite, ...){
   input@data <- convert_ordered(input@data)
   dots <- list(...)
   if (!is.null(precision)) {
@@ -280,8 +280,12 @@ write_ogr <- function(input, dir, file, precision = NULL, ...){
   }
   args <- c(list(obj = input, dsn = dir, layer = "", driver = "GeoJSON"), dots)
   do.call(writeOGR, args)
-  file.copy(dir, file)
-  message("Success! File is at ", file)
+  res <- file.copy(dir, file, overwrite = overwrite)
+  if (res) {
+    message("Success! File is at ", file)
+  } else {
+    stop(file, " already exists and overwrite = FALSE", call. = FALSE)
+  }
 }
 
 convert_ordered <- function(df) {
