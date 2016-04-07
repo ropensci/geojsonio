@@ -67,10 +67,10 @@ geojson_sp.geo_json <- function(x, disambiguateFIDs = TRUE, ...) {
 
 #' @export
 geojson_sp.json <- function(x, disambiguateFIDs = TRUE, ...) {
-  tosp(x, ...)
+  tosp(x, disambiguateFIDs, ...)
 }
 
-tosp <- function(x, ...) {
+tosp <- function(x, disambiguateFIDs, ...) {
   rgdal::readOGR(x, layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs, 
                  verbose = FALSE, ...)  
 }
