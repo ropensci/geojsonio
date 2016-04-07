@@ -5,7 +5,8 @@
 \title{Convert many input types with spatial data to a geojson file}
 \usage{
 geojson_write(input, lat = NULL, lon = NULL, geometry = "point",
-  group = NULL, file = "myfile.geojson", precision = NULL, ...)
+  group = NULL, file = "myfile.geojson", overwrite = TRUE,
+  precision = NULL, ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be
@@ -25,6 +26,10 @@ attempt to guess.}
 \item{file}{(character) A path and file name (e.g., myfile), with the 
 \code{.geojson} file extension. Default writes to current working
 directory.}
+
+\item{overwrite}{(logical) Overwrite the file given in \code{file} with
+\code{input}. Default: \code{TRUE}. If this param is \code{FALSE} and 
+the file already exists, we stop with error message.}
 
 \item{precision}{desired number of decimal places for the coordinates in the
 geojson file. Using fewer decimal places can decrease file sizes (at the
