@@ -9,6 +9,6 @@
 #' coordinates(states) <- ~long+lat
 #' cwgr(states[1:100,], "states")
 #' }
-cwgr <- function(obj, layer) {
-  capturedWriteOGR(obj, object.size(obj), layer, writeOGR)
+cwgr <- function(obj, layer = "", layer_options = "") {
+  capturedWriteOGR(obj, object.size(obj), layer, writeOGR, layer_options)
 }

@@ -277,15 +277,17 @@ write_ogr <- function(input, dir, file, precision = NULL, overwrite, ...){
   if (!is.null(precision)) {
     ## add precision to vector of layer_options in '...'
     dots$layer_options <- c(dots$layer_options, paste0("COORDINATE_PRECISION=", precision))
-  }
-  args <- c(list(obj = input, dsn = dir, layer = "", driver = "GeoJSON"), dots)
-  do.call(writeOGR, args)
-  res <- file.copy(dir, file, overwrite = overwrite)
-  if (res) {
-    message("Success! File is at ", file)
   } else {
+    dots$layer_options <- ""
+  }
+  # args <- c(list(obj = input, dsn = dir, layer = "", driver = "GeoJSON"), dots)
+  # do.call(writeOGR, args)
+  if (!overwrite && file.exists(file)) {
     stop(file, " already exists and overwrite = FALSE", call. = FALSE)
   }
+  cat(cwgr(input, "", dots$layer_options), file = file)
+  message("Success! File is at ", file)
+  #res <- file.copy(dir, file, overwrite = overwrite)
 }
 
 convert_ordered <- function(df) {

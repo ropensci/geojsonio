@@ -15,6 +15,7 @@ using namespace Rcpp;
 //' @param obj_size pls pass in \code{object.size(obj)}
 //' @param layer spatial layer to use
 //' @param writeOGR pls pass in \code{writeOGR} (no quotes)
+//' @param layer_options pls pass in layer options
 //' @return character vector of GeoJSON if all goes well
 //' @examples \dontrun{
 //' capturedWriteOGR(cities[1:10,],
@@ -26,7 +27,8 @@ using namespace Rcpp;
 CharacterVector capturedWriteOGR(SEXP obj,
                                  int obj_size,
                                  SEXP layer,
-                                 Function writeOGR) {
+                                 Function writeOGR,
+                                 CharacterVector layer_options) {
   
   // we don't know how big the output is going to be.
   // this is the main problem with this approach.
@@ -67,7 +69,7 @@ CharacterVector capturedWriteOGR(SEXP obj,
   // we are calling R from C since the rgdal folks have not
   // exposed anything we can use AFAI can tell
   
-  writeOGR(obj, "/vsistdout/", layer, "GeoJSON");
+  writeOGR(obj, "/vsistdout/", layer, "GeoJSON", layer_options = layer_options);
   
   // ok, we let it do it's thing, now make sure we've
   // cleatned up after it

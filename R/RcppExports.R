@@ -7,6 +7,7 @@
 #' @param obj_size pls pass in \code{object.size(obj)}
 #' @param layer spatial layer to use
 #' @param writeOGR pls pass in \code{writeOGR} (no quotes)
+#' @param layer_options pls pass in layer options
 #' @return character vector of GeoJSON if all goes well
 #' @examples \dontrun{
 #' capturedWriteOGR(cities[1:10,],
@@ -14,7 +15,7 @@
 #'                  "cities",
 #'                  writeOGR))
 #' }
-capturedWriteOGR <- function(obj, obj_size, layer, writeOGR) {
-    .Call('geojsonio_capturedWriteOGR', PACKAGE = 'geojsonio', obj, obj_size, layer, writeOGR)
+capturedWriteOGR <- function(obj, obj_size, layer, writeOGR, layer_options) {
+    .Call('geojsonio_capturedWriteOGR', PACKAGE = 'geojsonio', obj, obj_size, layer, writeOGR, layer_options)
 }
 

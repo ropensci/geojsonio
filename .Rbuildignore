@@ -14,3 +14,8 @@ README.Rmd
 cran-comments.md
 myfile.geojson
 ^CONDUCT\.md$
+
+src/*.o
+src/*.so
+src/*.a
+src/*.dll

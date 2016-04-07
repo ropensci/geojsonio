@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // capturedWriteOGR
-CharacterVector capturedWriteOGR(SEXP obj, int obj_size, SEXP layer, Function writeOGR);
-RcppExport SEXP geojsonio_capturedWriteOGR(SEXP objSEXP, SEXP obj_sizeSEXP, SEXP layerSEXP, SEXP writeOGRSEXP) {
+CharacterVector capturedWriteOGR(SEXP obj, int obj_size, SEXP layer, Function writeOGR, CharacterVector layer_options);
+RcppExport SEXP geojsonio_capturedWriteOGR(SEXP objSEXP, SEXP obj_sizeSEXP, SEXP layerSEXP, SEXP writeOGRSEXP, SEXP layer_optionsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -15,7 +15,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type obj_size(obj_sizeSEXP);
     Rcpp::traits::input_parameter< SEXP >::type layer(layerSEXP);
     Rcpp::traits::input_parameter< Function >::type writeOGR(writeOGRSEXP);
-    __result = Rcpp::wrap(capturedWriteOGR(obj, obj_size, layer, writeOGR));
+    Rcpp::traits::input_parameter< CharacterVector >::type layer_options(layer_optionsSEXP);
+    __result = Rcpp::wrap(capturedWriteOGR(obj, obj_size, layer, writeOGR, layer_options));
     return __result;
 END_RCPP
 }
