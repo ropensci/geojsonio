@@ -16,7 +16,7 @@ BugReports: http://www.github.com/ropensci/geojsonio/issues
 LazyData: true
 VignetteBuilder: knitr
 LinkingTo: 
-    Rcpp (>= 0.12.0)
+    Rcpp (>= 0.12.3)
 Depends:
     R (>= 3.02)
 Imports:

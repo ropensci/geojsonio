@@ -4,7 +4,7 @@
 \alias{capturedWriteOGR}
 \title{An \code{writeOGR} shim to capture stdout}
 \usage{
-capturedWriteOGR(obj, obj_size, layer, writeOGR)
+capturedWriteOGR(obj, obj_size, layer, writeOGR, layer_options)
 }
 \arguments{
 \item{obj}{the \code{Spatial} object to use}
@@ -14,6 +14,8 @@ capturedWriteOGR(obj, obj_size, layer, writeOGR)
 \item{layer}{spatial layer to use}
 
 \item{writeOGR}{pls pass in \code{writeOGR} (no quotes)}
+
+\item{layer_options}{pls pass in layer options}
 }
 \value{
 character vector of GeoJSON if all goes well

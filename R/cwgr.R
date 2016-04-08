@@ -1,6 +1,9 @@
 #' capture writeOGR 
 #' 
 #' @export
+#' @param obj Object, e.g, a data.frame
+#' @param layer layer name, default: \code{""}
+#' @param layer_options layer options, as a character vector
 #' @examples \dontrun{
 #' library("rgdal")
 #' cities <- readOGR(system.file("vectors", package = "rgdal")[1], "cities")

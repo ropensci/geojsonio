@@ -4,7 +4,14 @@
 \alias{cwgr}
 \title{capture writeOGR}
 \usage{
-cwgr(obj, layer)
+cwgr(obj, layer = "", layer_options = "")
+}
+\arguments{
+\item{obj}{Object, e.g, a data.frame}
+
+\item{layer}{layer name, default: \code{""}}
+
+\item{layer_options}{layer options, as a character vector}
 }
 \description{
 capture writeOGR
