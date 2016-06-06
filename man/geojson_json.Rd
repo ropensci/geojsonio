@@ -5,7 +5,7 @@
 \title{Convert many input types with spatial data to geojson specified as a json string}
 \usage{
 geojson_json(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type = "FeatureCollection", fun = readbyline, ...)
+  geometry = "point", type = "FeatureCollection", ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
