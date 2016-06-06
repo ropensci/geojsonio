@@ -5,7 +5,7 @@
 \title{Convert many input types with spatial data to geojson specified as a json string}
 \usage{
 geojson_json(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type = "FeatureCollection", ...)
+  geometry = "point", type = "FeatureCollection", fun = readbyline, ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
@@ -167,7 +167,7 @@ r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
 geojson_json(r1r2df)
 
 # From SpatialPixels
-library("sp") 
+library("sp")
 pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
 summary(pixels)
 geojson_json(pixels)

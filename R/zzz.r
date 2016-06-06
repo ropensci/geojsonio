@@ -318,16 +318,12 @@ geojson_rw_ <- function(input, ...){
     tmp <- tempfile(fileext = ".geojson")
     tmp2 <- suppressMessages(geojson_write(input, file = tmp))
     paths <- vapply(tg_compact(tmp2), "[[", "", "path")
-    lapply(paths, readbyline, ...)
+    lapply(paths, readr::read_file, ...)
   } else {
     tmp <- tempfile(fileext = ".geojson")
     suppressMessages(geojson_write(input, file = tmp))
-    readbyline(tmp, ...)
+    readr::read_file(tmp, ...)
   }
-}
-
-readbyline <- function(x, minify = TRUE, ...) {
-  paste0(readLines(x, ...), collapse = "\n")
 }
 
 capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
