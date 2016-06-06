@@ -156,10 +156,13 @@ ftype <- function(z) {
 # If given a url for a zip file, download it give back a path to the temporary file
 handle_remote <- function(x){
   if (!grepl('http://', x)) {
-    x
+    return(x)
   } else {
     tfile <- tempfile(fileext = ".zip")
-    download.file(x, destfile = tfile)
-    tfile
+    # download.file(x, destfile = tfile)
+    # tfile
+    res <- httr::GET(x, httr::write_disk(tfile))
+    httr::stop_for_status(res)
+    res$request$output$path
   }
 }
