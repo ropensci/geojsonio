@@ -318,11 +318,11 @@ geojson_rw_ <- function(input, ...){
     tmp <- tempfile(fileext = ".geojson")
     tmp2 <- suppressMessages(geojson_write(input, file = tmp))
     paths <- vapply(tg_compact(tmp2), "[[", "", "path")
-    lapply(paths, readr::read_file, ...)
+    lapply(paths, readr::read_file, locale = readr::locale())
   } else {
     tmp <- tempfile(fileext = ".geojson")
     suppressMessages(geojson_write(input, file = tmp))
-    readr::read_file(tmp, ...)
+    readr::read_file(tmp, locale = readr::locale())
   }
 }
 
