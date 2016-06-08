@@ -300,30 +300,30 @@ convert_ordered <- function(df) {
   return(df)
 }
 
-geojson_rw <- function(input, ...){
+geojson_rw <- function(input, target = c("char", "list"), ...){
+
+  read_fun <- switch(target, 
+                     char = geojson_file_to_char, 
+                     list = geojson_file_to_list)
+  
   if (inherits(input, "SpatialCollections")) {
     tmp <- tempfile(fileext = ".geojson")
     tmp2 <- suppressMessages(geojson_write(input, file = tmp))
     paths <- vapply(tg_compact(tmp2), "[[", "", "path")
-    lapply(paths, jsonlite::fromJSON, simplifyDataFrame = FALSE, simplifyMatrix = FALSE, ...)
+    lapply(paths, read_fun, ...)
   } else {
     tmp <- tempfile(fileext = ".geojson")
     suppressMessages(geojson_write(input, file = tmp))
-    jsonlite::fromJSON(tmp, simplifyDataFrame = FALSE, simplifyMatrix = FALSE, ...)
+    read_fun(tmp, ...)
   }
 }
 
-geojson_rw_ <- function(input, ...){
-  if (inherits(input, "SpatialCollections")) {
-    tmp <- tempfile(fileext = ".geojson")
-    tmp2 <- suppressMessages(geojson_write(input, file = tmp))
-    paths <- vapply(tg_compact(tmp2), "[[", "", "path")
-    lapply(paths, readr::read_file, locale = readr::locale())
-  } else {
-    tmp <- tempfile(fileext = ".geojson")
-    suppressMessages(geojson_write(input, file = tmp))
-    readr::read_file(tmp, locale = readr::locale())
-  }
+geojson_file_to_char <- function(file, ...) {
+  readr::read_file(file, locale = readr::locale())
+}
+
+geojson_file_to_list <- function(file, ...) {
+  jsonlite::fromJSON(file, simplifyDataFrame = FALSE, simplifyMatrix = FALSE, ...)
 }
 
 capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
