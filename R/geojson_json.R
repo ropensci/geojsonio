@@ -184,81 +184,81 @@ geojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_json.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
                                          geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                   geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point",  type='FeatureCollection', ...) {
   dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
-  class_json(geojson_rw_(dat))
+  class_json(geojson_rw(dat, target = "char"))
 }
 
 #' @export
 geojson_json.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                 geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL,
                                      geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                               geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                 geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 # spatial classes from rgeos --------------------------
 #' @export
 geojson_json.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
                                               geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw_(input), ...)
+  class_json(geojson_rw(input, target = "char"), ...)
 }
 
 #' @export
 geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                 geometry = "point",  type='FeatureCollection', ...) {
-  lapply(geojson_rw_(input, ...), class_json)
+  lapply(geojson_rw(input, target = "char", ...), class_json)
 }
 
 # regular R classes --------------------------

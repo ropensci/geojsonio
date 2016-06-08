@@ -168,92 +168,92 @@ geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
                                          geometry = "point", type = "FeatureCollection", ...) {
-  as.geo_list(geojson_rw(input), "SpatialPolygons")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialPolygons")
 }
 
 #' @export
 geojson_list.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                   geometry = "point", type = "FeatureCollection", ...) {
-  as.geo_list(geojson_rw(input), "SpatialPolygonsDataFrame")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialPolygonsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point", type = "FeatureCollection", ...) {
   dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
-  as.geo_list(geojson_rw(dat), "SpatialPoints")
+  as.geo_list(geojson_rw(dat, target = "list"), "SpatialPoints")
 }
 
 #' @export
 geojson_list.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                 geometry = "point", type = "FeatureCollection", ...) {
-  as.geo_list(geojson_rw(input), "SpatialPointsDataFrame")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialPointsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point", type = "FeatureCollection", ...) {
-  as.geo_list(geojson_rw(input), "SpatialLines")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialLines")
 }
 
 #' @export
 geojson_list.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                geometry = "point", type = "FeatureCollection", ...) {
-  as.geo_list(geojson_rw(input), "SpatialLinesDataFrame")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialLinesDataFrame")
 }
 
 #' @export
 geojson_list.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL,
                                      geometry = "point", type = "FeatureCollection", ...) {
-  as.geo_list(geojson_rw(input), "SpatialGrid")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialGrid")
 }
 
 #' @export
 geojson_list.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                               geometry = "point", type = "FeatureCollection", ...) {
-  as.geo_list(geojson_rw(input), "SpatialGridDataFrame")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialGridDataFrame")
 }
 
 #' @export
 geojson_list.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point",  type='FeatureCollection', ...) {
-  as.geo_list(geojson_rw(input), "SpatialPixels")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialPixels")
 }
 
 #' @export
 geojson_list.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                 geometry = "point",  type='FeatureCollection', ...) {
-  as.geo_list(geojson_rw(input), "SpatialPixelsDataFrame")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialPixelsDataFrame")
 }
 
 # spatial classes from rgeos --------------------------
 #' @export
 geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point",  type='FeatureCollection', ...) {
-  as.geo_list(geojson_rw(input), "SpatialRings")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialRings")
 }
 
 #' @export
 geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                                geometry = "point",  type='FeatureCollection', ...) {
-  as.geo_list(geojson_rw(input), "SpatialRingsDataFrame")
+  as.geo_list(geojson_rw(input, target = "list"), "SpatialRingsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialCollections <- function(input, lat = NULL, lon = NULL, group = NULL,
                                             geometry = "point",  type='FeatureCollection', ...) {
-  pt <- donotnull(input@pointobj, geojson_rw)
-  ln <- donotnull(input@lineobj, geojson_rw)
-  rg <- donotnull(input@ringobj, geojson_rw)
-  py <- donotnull(input@polyobj, geojson_rw)
+  pt <- donotnull(input@pointobj, geojson_rw, target = "list")
+  ln <- donotnull(input@lineobj, geojson_rw, target = "list")
+  rg <- donotnull(input@ringobj, geojson_rw, target = "list")
+  py <- donotnull(input@polyobj, geojson_rw, target = "list")
   alldat <- tg_compact(list(SpatialPoints = pt, SpatialLines = ln, 
                             SpatialRings = rg, SpatialPolygons = py))
   as.geo_list(alldat, "SpatialCollections")
 }
 
-donotnull <- function(x, fun) {
+donotnull <- function(x, fun, ...) {
   if (!is.null(x)) {
-    fun(x)
+    fun(x, ...)
   } else {
     NULL
   }
