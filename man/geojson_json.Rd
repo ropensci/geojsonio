@@ -167,7 +167,7 @@ r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
 geojson_json(r1r2df)
 
 # From SpatialPixels
-library("sp") 
+library("sp")
 pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
 summary(pixels)
 geojson_json(pixels)
