@@ -22,7 +22,7 @@ Imports:
     stats,
     utils,
     sp,
-    rgdal,
+    rgdal (>= 1.1-1),
     rgeos,
     httr (>= 1.1.0),
     maptools,
