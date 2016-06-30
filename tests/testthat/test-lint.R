@@ -2,16 +2,27 @@ context("lint")
 
 test_that("lint works with character inputs", {
   a <- lint('{"type": "FooBar"}')
-  expect_is(a, "list")
-  expect_is(a$message, "character")
-  expect_equal(a$message, "The type FooBar is unknown")
+  expect_false(a)
+  # expect_is(attributes(a)$message, "character")
+  # expect_equal(a$message, "The type FooBar is unknown")
 
   # valid
-  expect_equal(lint('{"type": "Point", "coordinates": [-80,40]}'), "valid")
+  expect_true(lint('{"type": "Point", "coordinates": [-80,40]}'))
+  res <- lint('{"type": "Point", "coordinates": [-80,40]}', verbose = TRUE)
+  expect_null(attributes(res))
   
   # invalid
-  expect_is(lint('{ "type": "FeatureCollection" }'), "list")
-  expect_is(lint('{"type":"Point","geometry":{"type":"Point","coordinates":[-80,40]},"properties":{}}'), "list")
+  expect_false(lint('{ "type": "FeatureCollection" }'))
+  expect_false(lint('{"type":"Point","geometry":{"type":"Point","coordinates":[-80,40]},"properties":{}}'))
+  res <- lint('{"type":"Point","geometry":{"type":"Point","coordinates":[-80,40]},"properties":{}}', verbose = TRUE)
+  expect_named(attributes(res), "errors")
+  expect_equal(attributes(res)$errors$message, "\"coordinates\" property required")
+  
+  # with stop
+  expect_error(lint('{ "type": "FeatureCollection" }', error = TRUE), 
+               "\"features\" property required")
+  expect_error(lint('{"type":"Point","geometry":{"type":"Point","coordinates":[-80,40]},"properties":{}}', error = TRUE), 
+               "\"coordinates\" property required")
 })
 
 test_that("lint works with geo_list inputs", {
@@ -20,16 +31,14 @@ test_that("lint works with geo_list inputs", {
   x <- suppressMessages(geojson_list(mylist))
   b <- lint(x)
   expect_is(x, "geo_list")
-  expect_is(b, "character")
-  expect_equal(b, "valid")
+  expect_true(b)
 })
 
 test_that("lint works with file inputs", {
   file <- system.file("examples", "zillow_or.geojson", package = "geojsonio")
   d <- lint(as.location(file))
   expect_is(as.location(file), "location")
-  expect_is(d, "character")
-  expect_equal(d, "valid")
+  expect_true(d)
 })
 
 test_that("lint works with url inputs", {
@@ -38,35 +47,31 @@ test_that("lint works with url inputs", {
   url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
   e <- lint(as.location(url))
   expect_is(as.location(url), "location")
-  expect_is(e, "character")
-  expect_equal(e, "valid")
+  expect_true(e)
 })
 
 test_that("lint works with json inputs", {
   x <- jsonlite::minify('{ "type": "FeatureCollection" }')
   f <- lint(x)
   expect_is(x, "json")
-  expect_is(f, "list")
-  expect_equal(f$message, "\"features\" property required")
+  expect_false(f)
 })
 
 test_that("lint works with data.frame inputs", {
   h <- lint(us_cities[1:2,], lat = 'lat', lon = 'long')
-  expect_is(h, "character")
-  expect_equal(h, "valid")
+  expect_true(h)
 })
 
 test_that("lint works with numeric vector inputs", {
-  expect_is(lint(c(32.45, -99.74)), "character")
-  expect_equal(lint(c(32.45, -99.74)), "valid")
+  expect_true(lint(c(32.45, -99.74)))
+  expect_true(lint(c(32.45, -99.74)))
 })
 
 test_that("lint works with list inputs", {
   mylist <- list(list(latitude=30, longitude=120, marker="red"), 
                  list(latitude=30, longitude=130, marker="blue"))
   ii <- suppressMessages(lint(mylist))
-  expect_is(ii, "character")
-  expect_equal(ii, "valid")
+  expect_true(ii)
 })
 
 
@@ -104,61 +109,52 @@ sp_grid <- local({
 
 test_that("lint works with SpatialPolygons inputs", {
   jj <- lint(sp_poly)
-  
-  expect_is(jj, "character")
-  expect_equal(jj, "valid")
+  expect_true(jj)
 })
 
 test_that("lint works with SpatialPolygonsDataFrame inputs", {
   sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
   jj <- lint(sp_polydf)
   
-  expect_is(jj, "character")
-  expect_equal(jj, "valid")
+  expect_true(jj)
 })
 
 test_that("lint works with SpatialPoints inputs", {
   kk <- lint(sp_pts)
   expect_is(sp_pts, "SpatialPoints")
-  expect_is(kk, "character")
-  expect_equal(kk, "valid")
+  expect_true(kk)
 })
 
 test_that("lint works with SpatialPointsDataFrame inputs", {
   sp_ptsdf <- as(sp_pts, "SpatialPointsDataFrame")
   ll <- lint(sp_ptsdf)
   expect_is(sp_ptsdf, "SpatialPointsDataFrame")
-  expect_is(ll, "character")
-  expect_equal(ll, "valid")
+  expect_true(ll)
 })
 
 test_that("lint works with SpatialLines inputs", {
   mm <- lint(sp_lines)
   expect_is(sp_lines, "SpatialLines")
-  expect_is(mm, "character")
-  expect_equal(mm, "valid")
+  expect_true(mm)
 })
 
 test_that("lint works with SpatialLinesDataFrame inputs", {
   sp_linesdf <- as(sp_lines, "SpatialLinesDataFrame")
   nn <- lint(sp_linesdf)
   expect_is(sp_linesdf, "SpatialLinesDataFrame")
-  expect_is(nn, "character")
-  expect_equal(nn, "valid")
+  expect_true(nn)
 })
 
 
 test_that("lint works with SpatialGrid inputs", {
   mm <- lint(sp_grid)
   expect_is(sp_grid, "SpatialGrid")
-  expect_is(mm, "character")
-  expect_equal(mm, "valid")
+  expect_true(mm)
 })
 
 test_that("lint works with SpatialGridDataFrame inputs", {
   sp_griddf <- SpatialGridDataFrame(sp_grid, data.frame(val = 1:25))
   nn <- lint(sp_griddf)
   expect_is(sp_griddf, "SpatialGridDataFrame")
-  expect_is(nn, "character")
-  expect_equal(nn, "valid")
+  expect_true(nn)
 })
