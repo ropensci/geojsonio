@@ -14,3 +14,6 @@ README.Rmd
 cran-comments.md
 myfile.geojson
 ^CONDUCT\.md$
+^cran-comments\.md$
+^revdep$
+
