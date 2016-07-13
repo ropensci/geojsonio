@@ -26,9 +26,9 @@
 #'  \item \code{\link{map_leaf}} - Create a local interactive map using the \code{leaflet}
 #'  package
 #'  \item \code{\link{lint}} - Checks validity of geojson using the Javascript library
-#'  geojsonhint
+#'  geojsonhint. See also \code{\link{geojsonio-deprecated}}
 #'  \item \code{\link{validate}} - Checks validity of geojson using the web service at
-#'  http://geojsonlint.com/
+#'  http://geojsonlint.com/. See also \code{\link{geojsonio-deprecated}}
 #' }
 #' 
 #' All of the above functions have methods for various classes, including 
@@ -86,3 +86,15 @@ NULL
 #' @keywords data
 NULL
 
+
+#' Deprecated functions in geojsonio
+#'
+#' \itemize{
+#'  \item \code{\link{lint}}: In the next version this function will be removed, defunct.
+#'  See \code{geojsonlint::geojson_hint}
+#'  \item \code{\link{validate}}: In the next version this function will be removed, defunct.
+#'  See \code{geojsonlint::geojson_lint}
+#' }
+#'
+#' @name geojsonio-deprecated
+NULL

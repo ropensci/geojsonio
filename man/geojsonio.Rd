@@ -33,9 +33,9 @@ Other interesting functions:
  \item \code{\link{map_leaf}} - Create a local interactive map using the \code{leaflet}
  package
  \item \code{\link{lint}} - Checks validity of geojson using the Javascript library
- geojsonhint
+ geojsonhint. See also \code{\link{geojsonio-deprecated}}
  \item \code{\link{validate}} - Checks validity of geojson using the web service at
- http://geojsonlint.com/
+ http://geojsonlint.com/. See also \code{\link{geojsonio-deprecated}}
 }
 
 All of the above functions have methods for various classes, including 

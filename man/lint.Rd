@@ -14,6 +14,10 @@ lint(x, ...)
 \description{
 Lint geojson
 }
+\details{
+This function is Deprecated - and will be removed in the next version of 
+this package. See \code{\link{geojsonio-deprecated}} for more information
+}
 \examples{
 \dontrun{
 lint('{"type": "FooBar"}')

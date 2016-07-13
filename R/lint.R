@@ -5,6 +5,9 @@
 #'
 #' @param x Input, a geojson character string or list
 #' @param ... Further args passed on to helper functions.
+#' 
+#' @details This function is Deprecated - and will be removed in the next version of 
+#' this package. See \code{\link{geojsonio-deprecated}} for more information
 #'
 #' @examples \dontrun{
 #' lint('{"type": "FooBar"}')
@@ -46,7 +49,7 @@
 #' # From numeric
 #' vec <- c(32.45,-99.74)
 #' lint(vec)
-#'
+#' 
 #' # From a list
 #' mylist <- list(list(latitude=30, longitude=120, marker="red"),
 #'                list(latitude=30, longitude=130, marker="blue"))
@@ -58,18 +61,21 @@ lint <- function(x, ...) {
 
 #' @export
 lint.character <- function(x, ...) {
-  if ( !jsonlite::validate(x) ) stop("invalid json string", call. = FALSE)
-  geojsonlint::geojson_hint(x, ...)
+  if ( !jsonlite::validate(x) ) stop("invalid json string")
+  lintit(x)
 }
 
 #' @export
 lint.geo_list <- function(x, ...){
-  lint(jsonlite::toJSON(unclass(x), auto_unbox = TRUE))
+  lintit(jsonlite::toJSON(unclass(x), auto_unbox = TRUE))
 }
 
 #' @export
 lint.location <- function(x, ...){
-  geojsonlint::geojson_hint(x, ...)
+  res <- switch(attr(x, "type"),
+                file = paste0(readLines(x), collapse = ""),
+                url = minify(content(GET(x), "text", encoding = "UTF-8")))
+  lintit(res)
 }
 
 #' @export
@@ -78,8 +84,8 @@ lint.list <- function(x, ...) {
 }
 
 #' @export
-lint.json <- function(x, ...) {
-  geojsonlint::geojson_hint(x, ...)
+lint.json <- function(x, ...){
+  lintit(x)
 }
 
 #' @export
@@ -111,3 +117,16 @@ lint.numeric <- function(x, ...) lint(geojson_list(x))
 
 #' @export
 lint.data.frame <- function(x, ...) lint(geojson_list(x, ...))
+
+# helper fxn
+lintit <- function(x) {
+  .Deprecated("geojson_hint", package = "geojsonlint", msg = "This function will be removed in the next version, see geojsonlint::geojson_hint()")
+  ct$assign("x", minify(x))
+  ct$eval("var out = geojsonhint.hint(x);")
+  tmp <- as.list(ct$get("out"))
+  if (identical(tmp, list())) {
+    return("valid")
+  } else {
+    tmp
+  }
+}

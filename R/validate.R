@@ -6,6 +6,9 @@
 #' @param ... Further args passed on to helper functions.
 #'
 #' @details Uses the web service at \url{http://geojsonlint.com/}
+#' 
+#' This function is Deprecated - and will be removed in the next version of 
+#' this package. See \code{\link{geojsonio-deprecated}} for more information
 #'
 #' @examples \dontrun{
 #' # From a json character string
@@ -51,6 +54,7 @@ validate <- function(x, ...) {
 
 #' @export
 validate.character <- function(x, ...){
+  .Deprecated("geojson_lint", package = "geojsonlint", msg = "This function will be removed in the next version, see geojsonlint::geojson_lint()")
   if (!jsonlite::validate(x)) stop("invalid json string", call. = FALSE)
   res <- POST(v_url(), body = x)
   stop_for_status(res)
@@ -59,6 +63,7 @@ validate.character <- function(x, ...){
 
 #' @export
 validate.location <- function(x, ...){
+  .Deprecated("geojson_lint", package = "geojsonlint", msg = "This function will be removed in the next version, see geojsonlint::geojson_lint()")
   res <- switch(attr(x, "type"),
                 file = POST(v_url(), body = upload_file(x[[1]])),
                 url = GET(v_url(), query = list(url = x[[1]])))
@@ -110,6 +115,7 @@ validate.data.frame <- function(x, ...) validate(geojson_list(x, ...))
 validate.list <- function(x, ...) validate(geojson_list(x))
 
 val_fxn <- function(x){
+  .Deprecated("geojson_lint", package = "geojsonlint", msg = "This function will be removed in the next version, see geojsonlint::geojson_lint()")
   file <- tempfile(fileext = ".geojson")
   suppressMessages(geojson_write(x, file = file))
   res <- POST(v_url(), body = upload_file(file))
