@@ -1,9 +1,31 @@
+geojsonio 0.2.0
+===============
+
+### MINOR IMPROVEMENTS
+
+* Major performance improvement for `geojson_json()` - moved to 
+reading in json with `readr::read_file()` (#85) thanks @javrucebo !
+* Now requiring explicit versions of some package dependencies
+* Removed the startup message
+
+### BUG FIXES
+
+* Changed `file_to_geojson()` to use `httr::write_disk()` instead of 
+`download.file()` (#83) thanks @patperu
+
+### DEPRECATED AND DEFUNCT
+
+* The two linting functions in this package, `lint()` and `validate()`
+are now deprecated, and will be defunct in the next version of this 
+package. See the new package `geojsonlint` on CRAN for linting 
+geojson functionality (#82)
+
 geojsonio 0.1.8
 ===============
 
 ### NEW FEATURES
 
-* New method `geojson_sp.json()` added to `geojson_sp()` to handle json 
+* New method `geojson_sp.json()` added to `geojson_sp()` to handle json
 class inputs
 
 ### MINOR IMPROVEMENTS
@@ -12,9 +34,9 @@ class inputs
 
 ### BUG FIXES
 
-* `geojson_write()` didn't overwrite existing files despite saying so. 
+* `geojson_write()` didn't overwrite existing files despite saying so.
 New parameter added to the function `overwrite` to specify whether to
-overwrite a function or not, which defaults to `TRUE` (#81) 
+overwrite a function or not, which defaults to `TRUE` (#81)
 thanks @Robinlovelace !
 
 geojsonio 0.1.6
