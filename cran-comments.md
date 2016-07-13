@@ -1,8 +1,21 @@
-R CMD CHECK passed on my local OS X install with R 3.2.4 and
-R development version, Ubuntu running on Travis-CI, and Windows
-R 3.2.4 and devel on Win-Builder.
+## Test environments
+* local OS X install, R 3.3.1
+* ubuntu 12.04 (on travis-ci), R 3.3.1
+* win-builder (devel and release)
 
-This submission has a an important fix for a bug, and few minor 
-improvements - detailed in the NEWS file.
+## R CMD check results
 
-Thanks! Scott Chamberlain
+0 errors | 0 warnings | 1 note
+
+   License components with restrictions and base license permitting such:
+     MIT + file LICENSE
+   File 'LICENSE':
+     YEAR: 2016
+     COPYRIGHT HOLDER: Scott Chamberlain
+
+## Reverse dependencies
+
+* I have run R CMD check on the 3 downstream dependencies.
+  (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>). 
+
+* All revdep maintainers were notified of the release.
