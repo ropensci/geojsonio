@@ -133,7 +133,15 @@ to __json__
 
 ```r
 geojson_json(sp_poly)
-#> {"type":"FeatureCollection","features":[{"type":"Feature","id":1,"properties":{"dummy":0},"geometry":{"type":"Polygon","coordinates":[[[-100,40],[-90,50],[-85,45],[-100,40]]]}},{"type":"Feature","id":2,"properties":{"dummy":0},"geometry":{"type":"Polygon","coordinates":[[[-90,30],[-80,40],[-75,35],[-90,30]]]}}]}
+#> {
+#> "type": "FeatureCollection",
+#>                                                                                 
+#> "features": [
+#> { "type": "Feature", "id": 1, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -100.0, 40.0 ], [ -90.0, 50.0 ], [ -85.0, 45.0 ], [ -100.0, 40.0 ] ] ] } },
+#> { "type": "Feature", "id": 2, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
+#> ]
+#> }
+#> 
 ```
 
 to a __list__
@@ -168,7 +176,18 @@ to __json__
 
 ```r
 geojson_json(s)
-#> {"type":"FeatureCollection","features":[{"type":"Feature","id":1,"properties":{"dat":1},"geometry":{"type":"Point","coordinates":[1,3]}},{"type":"Feature","id":2,"properties":{"dat":2},"geometry":{"type":"Point","coordinates":[2,2]}},{"type":"Feature","id":3,"properties":{"dat":3},"geometry":{"type":"Point","coordinates":[3,5]}},{"type":"Feature","id":4,"properties":{"dat":4},"geometry":{"type":"Point","coordinates":[4,1]}},{"type":"Feature","id":5,"properties":{"dat":5},"geometry":{"type":"Point","coordinates":[5,4]}}]}
+#> {
+#> "type": "FeatureCollection",
+#>                                                                                 
+#> "features": [
+#> { "type": "Feature", "id": 1, "properties": { "dat": 1 }, "geometry": { "type": "Point", "coordinates": [ 1.0, 3.0 ] } },
+#> { "type": "Feature", "id": 2, "properties": { "dat": 2 }, "geometry": { "type": "Point", "coordinates": [ 2.0, 2.0 ] } },
+#> { "type": "Feature", "id": 3, "properties": { "dat": 3 }, "geometry": { "type": "Point", "coordinates": [ 3.0, 5.0 ] } },
+#> { "type": "Feature", "id": 4, "properties": { "dat": 4 }, "geometry": { "type": "Point", "coordinates": [ 4.0, 1.0 ] } },
+#> { "type": "Feature", "id": 5, "properties": { "dat": 5 }, "geometry": { "type": "Point", "coordinates": [ 5.0, 4.0 ] } }
+#> ]
+#> }
+#> 
 ```
 
 to a __list__
@@ -257,6 +276,6 @@ Or use `as.location()` first
 (loc <- as.location(file))
 #> <location> 
 #>    Type:  file 
-#>    Location:  /Library/Frameworks/R.framework/Versions/3.2/Resources/library/geojsonio/examples/us_states.topojson
+#>    Location:  /Library/Frameworks/R.framework/Versions/3.3/Resources/library/geojsonio/examples/us_states.topojson
 out <- topojson_read(loc, verbose = FALSE)
 ```
