@@ -163,7 +163,15 @@ to json
 
 ```r
 geojson_json(sp_poly)
-#> {"type":"FeatureCollection","features":[{"type":"Feature","id":1,"properties":{"dummy":0},"geometry":{"type":"Polygon","coordinates":[[[-100,40],[-90,50],[-85,45],[-100,40]]]}},{"type":"Feature","id":2,"properties":{"dummy":0},"geometry":{"type":"Polygon","coordinates":[[[-90,30],[-80,40],[-75,35],[-90,30]]]}}]}
+#> {
+#> "type": "FeatureCollection",
+#>                                                                                 
+#> "features": [
+#> { "type": "Feature", "id": 1, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -100.0, 40.0 ], [ -90.0, 50.0 ], [ -85.0, 45.0 ], [ -100.0, 40.0 ] ] ] } },
+#> { "type": "Feature", "id": 2, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
+#> ]
+#> }
+#> 
 ```
 
 to list
