@@ -40,7 +40,7 @@ A note about installing `rgdal` and `rgeos` - these two packages are built on to
 
 _Mac_
 
-Install `GDAL` on the command line first, e.g., usingn `homebrew`
+Install `GDAL` on the command line first, e.g., using `homebrew`
 
 ```
 brew install gdal
