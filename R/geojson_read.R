@@ -84,7 +84,14 @@ file_to_sp <- function(input, output = ".", ...) {
                        drop_unsupported_fields = TRUE, verbose = FALSE, ...),
       # shp = maptools::readShapeSpatial(input),
       shp = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
-      url = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
+      url = readogr_url(input, ...),
       geojson = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...)
   )
+}
+
+readogr_url <- function(input, ...) {
+  tmp <- tempfile()
+  on.exit(unlink(tmp))
+  download.file(input, destfile = tmp)
+  rgdal::readOGR(tmp, rgdal::ogrListLayers(tmp), verbose = FALSE, ...)
 }
