@@ -109,9 +109,8 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
       }
     } else if (fileext == "url") {
       unlink(paste0(output, ".geojson"))
-      x <- rgdal::readOGR(input, rgdal::ogrListLayers(input), 
-                          verbose = FALSE, stringsAsFactors = FALSE, 
-                          encoding = encoding, ...)
+      x <- readogr_url(input, stringsAsFactors = FALSE, 
+                       encoding = encoding, ...)
       write_ogr2(x, output)
       if (mem) {
         from_json(output, parse)
@@ -155,7 +154,7 @@ ftype <- function(z) {
 
 # If given a url for a zip file, download it give back a path to the temporary file
 handle_remote <- function(x){
-  if (!grepl('http://', x)) {
+  if (!is.url(x)) {
     return(x)
   } else {
     tfile <- tempfile(fileext = ".zip")
