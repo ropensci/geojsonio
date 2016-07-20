@@ -75,23 +75,20 @@ read_json <- function(x, method, parse, what, ...) {
 
 file_to_sp <- function(input, output = ".", ...) {
   fileext <- ftype(input)
-  fileext <- match.arg(fileext, c("shp", "kml", "url", "geojson"))
+  fileext <- match.arg(fileext, c("shp", "kml", "geojson"))
   mem <- ifelse(output == ":memory:", TRUE, FALSE)
   output <- ifelse(output == ":memory:", tempfile(), output)
   output <- path.expand(output)
+  
+  if (is.url(input)) {
+    input <- handle_remote(input)
+  }
+  
   switch(fileext, 
       kml = rgdal::readOGR(input, rgdal::ogrListLayers(input)[1], 
                        drop_unsupported_fields = TRUE, verbose = FALSE, ...),
       # shp = maptools::readShapeSpatial(input),
       shp = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
-      url = readogr_url(input, ...),
       geojson = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...)
   )
-}
-
-readogr_url <- function(input, ...) {
-  tmp <- tempfile()
-  on.exit(unlink(tmp))
-  download.file(input, destfile = tmp)
-  rgdal::readOGR(tmp, rgdal::ogrListLayers(tmp), verbose = FALSE, ...)
 }
