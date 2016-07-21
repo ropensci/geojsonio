@@ -43,5 +43,5 @@ print.location <- function(x, ...){
 }
 
 is.url <- function(x, ...){
-  grepl("https?://", x)
+  grepl("^(ftp|http)s?://", x)
 }

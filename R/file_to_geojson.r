@@ -62,13 +62,16 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
   
   method <- match.arg(method, choices = c("web", "local"))
   if (!is(parse, "logical")) stop("parse must be logical", call. = FALSE)
+  
+  input <- handle_remote(input)
+  mem <- ifelse(output == ":memory:", TRUE, FALSE)
+  
   if (method == "web") {
     url <- "http://ogre.adc4gis.com/convert"
-    input <- handle_remote(input)
     tt <- httr::POST(url, body = list(upload = httr::upload_file(input)))
     httr::stop_for_status(tt)
     out <- httr::content(tt, as = "text", encoding = "UTF-8")
-    if (output == ":memory:") {
+    if (mem) {
       jsonlite::fromJSON(out, parse)
     } else {
       fileConn <- file(paste0(output, ".geojson"))
@@ -79,8 +82,7 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
     }
   } else {
     fileext <- ftype(input)
-    mem <- ifelse(output == ":memory:", TRUE, FALSE)
-    output <- ifelse(output == ":memory:", tempfile(), output)
+    output <- ifelse(mem, tempfile(), output)
     output <- path.expand(output)
     if (fileext == "kml") {
       my_layer <- rgdal::ogrListLayers(input)
@@ -107,11 +109,12 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
         file_at(output)
         file_ret(output)
       }
-    } else if (fileext == "url") {
+    } else if (fileext == "geojson") {
       unlink(paste0(output, ".geojson"))
       x <- rgdal::readOGR(input, rgdal::ogrListLayers(input), 
                           verbose = FALSE, stringsAsFactors = FALSE, 
                           encoding = encoding, ...)
+      
       write_ogr2(x, output)
       if (mem) {
         from_json(output, parse)
@@ -145,20 +148,16 @@ from_json <- function(x, parse) {
 }
 
 ftype <- function(z) {
-  if (is.url(z)) {
-    "url"
-  } else {
     fileext <- strsplit(z, "\\.")[[1]]
     fileext[length(fileext)]
-  }
 }
 
 # If given a url for a zip file, download it give back a path to the temporary file
 handle_remote <- function(x){
-  if (!grepl('http://', x)) {
+  if (!is.url(x)) {
     return(x)
   } else {
-    tfile <- tempfile(fileext = ".zip")
+    tfile <- tempfile(fileext = paste0(".", ftype(x)))
     # download.file(x, destfile = tfile)
     # tfile
     res <- httr::GET(x, httr::write_disk(tfile))
