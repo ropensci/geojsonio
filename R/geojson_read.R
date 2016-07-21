@@ -78,10 +78,7 @@ file_to_sp <- function(input, output = ".", ...) {
   fileext <- match.arg(fileext, c("shp", "kml", "geojson"))
   output <- ifelse(output == ":memory:", tempfile(), output)
   output <- path.expand(output)
-  
-  if (is.url(input)) {
-    input <- handle_remote(input)
-  }
+  input <- handle_remote(input)
   
   switch(fileext, 
       kml = rgdal::readOGR(input, rgdal::ogrListLayers(input)[1], 
