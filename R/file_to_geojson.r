@@ -64,13 +64,14 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
   if (!is(parse, "logical")) stop("parse must be logical", call. = FALSE)
   
   input <- handle_remote(input)
+  mem <- ifelse(output == ":memory:", TRUE, FALSE)
   
   if (method == "web") {
     url <- "http://ogre.adc4gis.com/convert"
     tt <- httr::POST(url, body = list(upload = httr::upload_file(input)))
     httr::stop_for_status(tt)
     out <- httr::content(tt, as = "text", encoding = "UTF-8")
-    if (output == ":memory:") {
+    if (mem) {
       jsonlite::fromJSON(out, parse)
     } else {
       fileConn <- file(paste0(output, ".geojson"))
@@ -81,8 +82,7 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
     }
   } else {
     fileext <- ftype(input)
-    mem <- ifelse(output == ":memory:", TRUE, FALSE)
-    output <- ifelse(output == ":memory:", tempfile(), output)
+    output <- ifelse(mem, tempfile(), output)
     output <- path.expand(output)
     if (fileext == "kml") {
       my_layer <- rgdal::ogrListLayers(input)

@@ -76,7 +76,6 @@ read_json <- function(x, method, parse, what, ...) {
 file_to_sp <- function(input, output = ".", ...) {
   fileext <- ftype(input)
   fileext <- match.arg(fileext, c("shp", "kml", "geojson"))
-  mem <- ifelse(output == ":memory:", TRUE, FALSE)
   output <- ifelse(output == ":memory:", tempfile(), output)
   output <- path.expand(output)
   
