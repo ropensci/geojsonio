@@ -16,7 +16,7 @@ read. "web" means we use the Ogre web service, and "local" means we use
 \pkg{rgdal}. See Details fore more.}
 
 \item{output}{Destination for output geojson file. Defaults to current 
-working directory}
+working directory, and gives a random alphanumeric file name}
 
 \item{parse}{(logical) To parse geojson to data.frame like structures if 
 possible. Default: \code{FALSE}}
@@ -45,8 +45,8 @@ from the package rgdal.
 
 Note that for Shapefiles, GML, MapInfo, and VRT, you need to send zip files
 to Ogre. For other file types (.bna, .csv, .dgn, .dxf, .gxt, .txt, .json,
-.geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file with
-that file extension.
+.geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file 
+with that file extension.
 }
 
 \section{Linting GeoJSON}{
@@ -84,6 +84,20 @@ file_to_geojson(shpfile, method='local', output='shp_local')
 ## beware, this is a long running example
 # url <- 'http://www.nws.noaa.gov/geodata/catalog/national/data/ci08au12.zip'
 # out <- file_to_geojson(input=url, method='web', output='cities')
+
+# kml with weird ending
+x <- "http://add.antarctica.ac.uk/repository/entry/get/Seamask_medium_res_polygon.kml?entryid=synth\%3Af477219b-9121-44d6-afa6-d8552762dc45\%3AL2JhY2tkcm9wcy9rbWwvU2VhbWFza19tZWRpdW1fcmVzX3BvbHlnb24ua21s"
+res <- file_to_geojson(x, method = "web")
+jsonlite::fromJSON(res)
+res <- file_to_geojson(x, method = "local")
+jsonlite::fromJSON(res)
+
+# geojson with .json extension
+x <- 'https://gist.githubusercontent.com/hunterowens/25ea24e198c80c9fbcc7/raw/7fd3efda9009f902b5a991a506cea52db19ba143/wards2014.json'
+res <- file_to_geojson(x)
+jsonlite::fromJSON(res)
+res <- file_to_geojson(x, method = "local")
+jsonlite::fromJSON(res)
 }
 }
 

@@ -15,8 +15,8 @@
 #' @section Ogre:
 #' Note that for Shapefiles, GML, MapInfo, and VRT, you need to send zip files
 #' to Ogre. For other file types (.bna, .csv, .dgn, .dxf, .gxt, .txt, .json,
-#' .geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file with
-#' that file extension.
+#' .geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file 
+#' with that file extension.
 #'
 #' @section Linting GeoJSON:
 #' If you're having trouble rendering GeoJSON files, ensure you have a valid

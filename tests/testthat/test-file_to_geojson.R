@@ -21,7 +21,7 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
 
   expect_is(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, paset0(ftog1, ".geojson"))
+  expect_match(aa, paste0(ftog1, ".geojson"))
 
   expect_is(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -90,7 +90,7 @@ test_that("file_to_geojson works w/ shp zip file input, web method, output file"
 
   expect_is(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, paset0(ftog3, ".geojson"))
+  expect_match(aa, paste0(ftog3, ".geojson"))
 
   expect_is(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -138,7 +138,7 @@ test_that("file_to_geojson works w/ url kml input, web method, local output", {
   
   expect_is(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, paset0(ftog5, ".geojson"))
+  expect_match(aa, paste0(ftog5, ".geojson"))
   
   expect_is(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -208,7 +208,7 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, output f
   
   expect_is(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, paset0(ftog7, ".geojson"))
+  expect_match(aa, paste0(ftog7, ".geojson"))
   
   expect_is(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -243,5 +243,5 @@ test_that("file_to_geojson fails well", {
   expect_error(file_to_geojson(file, parse = "foobar"), "parse must be logical")
 })
 
-# cleanup files
+# cleanup any files that weren't cleaned up with above cleanups
 unlink(list.files(pattern = "file[0-9]+", full.names = TRUE))
