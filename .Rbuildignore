@@ -16,4 +16,5 @@ myfile.geojson
 ^CONDUCT\.md$
 ^cran-comments\.md$
 ^revdep$
+man-roxygen
 

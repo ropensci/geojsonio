@@ -9,13 +9,17 @@ geojson_read(x, method = "web", parse = FALSE, what = "list", ...)
 \arguments{
 \item{x}{(character) Path to a local file or a URL.}
 
-\item{method}{(character) One of "web" (default) or "local". Matches on partial strings.}
+\item{method}{(character) One of "web" (default) or "local". Matches on 
+partial strings. This parameter determines how the data is 
+read. "web" means we use the Ogre web service, and "local" means we use 
+\pkg{rgdal}. See Details fore more.}
 
-\item{parse}{(logical) To parse geojson to data.frame like structures if possible. 
-Default: \code{FALSE}}
+\item{parse}{(logical) To parse geojson to data.frame like structures if 
+possible. Default: \code{FALSE}}
 
-\item{what}{(character) What to return. One of "list" or "sp" (for Spatial class). 
-Default: "list". If "sp" chosen, forced to \code{method="local"}.}
+\item{what}{(character) What to return. One of "list" or "sp" (for 
+Spatial class). Default: "list". If "sp" chosen, forced to 
+\code{method="local"}.}
 
 \item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
 }
@@ -26,8 +30,30 @@ Read geojson or other formats from a local file or a URL
 Uses \code{\link{file_to_geojson}} internally to give back geojson, 
 and other helper functions when returning spatial classes.
 
-This function supports various geospatial file formats from a URL, as well as local
-kml, shp, and geojson file formats.
+This function supports various geospatial file formats from a URL, as well 
+as local kml, shp, and geojson file formats.
+}
+\section{Method parameter}{
+
+The web option uses the Ogre web API. Ogre currently has an output size 
+limit of 15MB. See here \url{http://ogre.adc4gis.com/} for info on the 
+Ogre web API. The local option uses the function \code{\link{writeOGR}} 
+from the package rgdal.
+}
+
+\section{Ogre}{
+
+Note that for Shapefiles, GML, MapInfo, and VRT, you need to send zip files
+to Ogre. For other file types (.bna, .csv, .dgn, .dxf, .gxt, .txt, .json,
+.geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file with
+that file extension.
+}
+
+\section{Linting GeoJSON}{
+
+If you're having trouble rendering GeoJSON files, ensure you have a valid
+GeoJSON file by running it through the package \pkg{geojsonlint}, which 
+has a variety of different GeoJSON linters.
 }
 \examples{
 \dontrun{
@@ -63,7 +89,8 @@ shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE)
 geojson_read(shpfile, what = "sp")
 
 # doesn't work right now
-## file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
+## file <- system.file("examples", "feature_collection.geojson", 
+##   package = "geojsonio")
 ## geojson_read(file, what = "sp")
 }
 }

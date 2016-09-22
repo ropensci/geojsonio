@@ -3,17 +3,16 @@
 #' @export
 #'
 #' @param x (character) Path to a local file or a URL.
-#' @param method (character) One of "web" (default) or "local". Matches on partial strings.
-#' @param parse (logical) To parse geojson to data.frame like structures if possible. 
-#' Default: \code{FALSE}
-#' @param what (character) What to return. One of "list" or "sp" (for Spatial class). 
-#' Default: "list". If "sp" chosen, forced to \code{method="local"}. 
-#' @param ... Additional parameters passed to \code{\link[rgdal]{readOGR}}
+#' @param what (character) What to return. One of "list" or "sp" (for 
+#' Spatial class). Default: "list". If "sp" chosen, forced to 
+#' \code{method="local"}. 
+#' @template read
+#' 
 #' @details Uses \code{\link{file_to_geojson}} internally to give back geojson, 
 #' and other helper functions when returning spatial classes.
 #' 
-#' This function supports various geospatial file formats from a URL, as well as local
-#' kml, shp, and geojson file formats.
+#' This function supports various geospatial file formats from a URL, as well 
+#' as local kml, shp, and geojson file formats.
 #'
 #' @examples \dontrun{
 #' # From a file
@@ -48,7 +47,8 @@
 #' geojson_read(shpfile, what = "sp")
 #' 
 #' # doesn't work right now
-#' ## file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
+#' ## file <- system.file("examples", "feature_collection.geojson", 
+#' ##   package = "geojsonio")
 #' ## geojson_read(file, what = "sp")
 #' }
 geojson_read <- function(x, method = "web", parse = FALSE, what = "list", ...) {

@@ -5,28 +5,13 @@
 #'
 #' @export
 #' @param input The file being uploaded, path to the file on your machine.
-#' @param method One of web or local. Matches on partial strings.
-#' @param output Destination for output geojson file. Defaults to current working 
-#' directory
-#' @param parse (logical) To parse geojson to data.frame like structures if possible.
-#' Default: \code{FALSE}
-#' @param encoding (character) The encoding passed to \code{\link[rgdal]{readOGR}}. 
-#' Default: CP1250
+#' @param output Destination for output geojson file. Defaults to current 
+#' working directory
+#' @param encoding (character) The encoding passed to 
+#' \code{\link[rgdal]{readOGR}}.  Default: CP1250
 #' @param verbose (logical) Printing of \code{\link[rgdal]{readOGR}} progress. 
 #' Default: \code{FALSE}
-#' @param ... Additional parameters passed to \code{\link[rgdal]{readOGR}}
-#' @description
-#' The web option uses the Ogre web API. Ogre currently has an output size limit of 15MB.
-#' See here \url{http://ogre.adc4gis.com/} for info on the Ogre web API.
-#' The local option uses the function \code{\link{writeOGR}} from the package rgdal.
-#'
-#' Note that for Shapefiles, GML, MapInfo, and VRT, you need to send zip files
-#' to Ogre. For other file types (.bna, .csv, .dgn, .dxf, .gxt, .txt, .json,
-#' .geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file with
-#' that file extension.
-#'
-#' If you're having trouble rendering geoJSON files, ensure you have a valid
-#' geoJSON file by running it through a geoJSON linter \url{http://geojsonlint.com/}.
+#' @template read
 #' @examples \dontrun{
 #' file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
 #'
