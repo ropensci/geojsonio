@@ -46,6 +46,13 @@
 #' shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE)
 #' geojson_read(shpfile, what = "sp")
 #' 
+#' x <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
+#' geojson_read(x, method = "local", what = "sp")
+#' geojson_read(x, method = "local", what = "list")
+#' 
+#' download.file(x, destfile = basename(x))
+#' geojson_read(basename(x), method = "local", what = "sp")
+#' 
 #' # doesn't work right now
 #' ## file <- system.file("examples", "feature_collection.geojson", 
 #' ##   package = "geojsonio")
@@ -73,18 +80,16 @@ read_json <- function(x, method, parse, what, ...) {
   )
 }
 
-file_to_sp <- function(input, output = ".", ...) {
+file_to_sp <- function(input, ...) {
   fileext <- ftype(input)
-  fileext <- match.arg(fileext, c("shp", "kml", "geojson"))
-  output <- ifelse(output == ":memory:", tempfile(), output)
-  output <- path.expand(output)
+  fileext <- match.arg(fileext, c("shp", "kml", "geojson", "json"))
   input <- handle_remote(input)
-  
-  switch(fileext, 
-      kml = rgdal::readOGR(input, rgdal::ogrListLayers(input)[1], 
-                       drop_unsupported_fields = TRUE, verbose = FALSE, ...),
-      # shp = maptools::readShapeSpatial(input),
-      shp = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
-      geojson = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...)
+  switch(
+    fileext, 
+    kml = rgdal::readOGR(input, rgdal::ogrListLayers(input)[1], 
+                         drop_unsupported_fields = TRUE, verbose = FALSE, ...),
+    shp = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
+    geojson = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
+    json = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...)
   )
 }

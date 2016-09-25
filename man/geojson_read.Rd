@@ -88,6 +88,13 @@ unzip(file, exdir = dir)
 shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE)
 geojson_read(shpfile, what = "sp")
 
+x <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
+geojson_read(x, method = "local", what = "sp")
+geojson_read(x, method = "local", what = "list")
+
+download.file(x, destfile = basename(x))
+geojson_read(basename(x), method = "local", what = "sp")
+
 # doesn't work right now
 ## file <- system.file("examples", "feature_collection.geojson", 
 ##   package = "geojsonio")
