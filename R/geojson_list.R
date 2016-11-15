@@ -259,6 +259,74 @@ donotnull <- function(x, fun, ...) {
   }
 }
 
+# sf classes ---------------------------------
+
+#' @export
+geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
+                          geometry = "point", type = "FeatureCollection", ...) {
+  epsg <- get_epsg(input)
+  if (!is.na(epsg)) {
+    crs <- list(type = "name",
+                properties = list(name = paste0("urn:ogc:def:crs:EPSG::", epsg)))
+  } else {
+    crs <- NULL
+  }
+  
+  sf_col <- get_sf_column_name(input)
+  
+  type <- "FeatureCollection"
+  features <- lapply(seq_len(nrow(input)),
+                     function(i) {
+                       geom <- input[[sf_col]][[i]]
+                       list(type = "Feature",
+                            properties = as.list(input[i, setdiff(names(input), sf_col)]),
+                            geometry = list(
+                              type = switch_geom_type(get_geometry_type(geom)),
+                              coordinates = unclass(geom))
+                       )
+                     })
+  
+  out <- list(type = type, crs = crs, features = features)
+  
+  as.geo_list(tg_compact(out), from = "sf")
+}
+
+switch_geom_type <- function(x) {
+  switch(x,
+         "POINT" = "Point",
+         "LINESTRING" = "LineString",
+         "POLYGON" = "Polygon",
+         "MULTIPOINT" = "MultiPoint",
+         "MULTILINESTRING" = "MultiLineString",
+         "MULTIPOLYGON" = "MultiPolygon",
+         "GEOMETRYCOLLECTION" = "GeometryCollection"
+  )
+}
+
+get_sf_column_name <- function(x) attr(x, "sf_column")
+
+## Get the geometry type
+get_geometry_type <- function(x) UseMethod("get_geometry_type")
+
+get_geometry_type.sf <- function(x) {
+  geom_col <- get_sf_column_name(x)
+  get_geometry_type(x[[geom_col]])
+}
+
+get_geometry_type.sfc <- function(x) strsplit(class(x)[1], "_")[[1]][2]
+
+get_geometry_type.sfg <- function(x) class(x)[2]
+
+## Get epsg code
+get_epsg <- function(x) UseMethod("get_epsg")
+
+get_epsg.sf <- function(x) {
+  geom_col <- get_sf_column_name(x)
+  get_epsg(x[[geom_col]])
+}
+
+get_epsg.sfc <- function(x) attr(x, "epsg")
+
 # regular R classes --------------------------
 #' @export
 geojson_list.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,

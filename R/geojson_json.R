@@ -242,6 +242,14 @@ geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, g
   class_json(geojson_rw(input, target = "char"), ...)
 }
 
+# sf classes ---------------------------------
+
+#' @export
+geojson_json.sf<- function(input, lat = NULL, lon = NULL, group = NULL,
+                           geometry = "point",  type='FeatureCollection', ...) {
+  as.json(geojson_list(input))
+}
+
 # spatial classes from rgeos --------------------------
 #' @export
 geojson_json.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
