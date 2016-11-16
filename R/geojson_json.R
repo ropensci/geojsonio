@@ -245,7 +245,17 @@ geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, g
 # sf classes ---------------------------------
 
 #' @export
-geojson_json.sf<- function(input, lat = NULL, lon = NULL, group = NULL,
+geojson_json.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
+                           geometry = "point",  type='FeatureCollection', ...) {
+  as.json(geojson_list(input))
+}
+
+geojson_json.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
+                           geometry = "point",  type='FeatureCollection', ...) {
+  as.json(geojson_list(input))
+}
+
+geojson_json.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
                            geometry = "point",  type='FeatureCollection', ...) {
   as.json(geojson_list(input))
 }

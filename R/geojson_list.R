@@ -264,13 +264,13 @@ donotnull <- function(x, fun, ...) {
 #' @export
 geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                           geometry = "point", type = "FeatureCollection", ...) {
-  epsg <- get_epsg(input)
-  if (!is.na(epsg)) {
-    crs <- list(type = "name",
-                properties = list(name = paste0("urn:ogc:def:crs:EPSG::", epsg)))
-  } else {
-    crs <- NULL
-  }
+  
+  crs <- NULL
+  # epsg <- get_epsg(input)
+  # if (!is.na(epsg)) {
+  #   crs <- list(type = "name",
+  #               properties = list(name = paste0("urn:ogc:def:crs:EPSG::", epsg)))
+  # }
   
   sf_col <- get_sf_column_name(input)
   
@@ -280,15 +280,41 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                        geom <- input[[sf_col]][[i]]
                        list(type = "Feature",
                             properties = as.list(input[i, setdiff(names(input), sf_col)]),
-                            geometry = list(
-                              type = switch_geom_type(get_geometry_type(geom)),
-                              coordinates = unclass(geom))
+                            geometry = geojson_list(geom)
                        )
                      })
   
   out <- list(type = type, crs = crs, features = features)
   
   as.geo_list(tg_compact(out), from = "sf")
+}
+
+geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
+                             geometry = "point", type = "FeatureCollection", ...) {
+  type <-  switch_geom_type(get_geometry_type(input))
+  
+  if (type == "GeometryCollection") {
+    geometries <- lapply(input, geojson_list)
+    out <- list(type = type, geometries = geometries)
+  } else {
+    coordinates <- unclass(input)
+    out <- list(type = type, coordinates = coordinates)
+  }
+  out
+}
+
+geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
+                             geometry = "point", type = "FeatureCollection", ...) {
+    type <-  switch_geom_type(get_geometry_type(input))
+    
+    if (type == "GeometryCollection") {
+      geometries <- lapply(input, function(x) unclass(geojson_list(x)))
+      out <- list(type = type, geometries = geometries)
+    } else {
+      coordinates <- unclass(input)
+      out <- list(type = type, coordinates = coordinates)
+    }
+    out
 }
 
 switch_geom_type <- function(x) {
@@ -299,6 +325,7 @@ switch_geom_type <- function(x) {
          "MULTIPOINT" = "MultiPoint",
          "MULTILINESTRING" = "MultiLineString",
          "MULTIPOLYGON" = "MultiPolygon",
+         "GEOMETRY" = "GeometryCollection",
          "GEOMETRYCOLLECTION" = "GeometryCollection"
   )
 }
