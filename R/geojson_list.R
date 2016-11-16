@@ -292,16 +292,11 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection", ...) {
-  type <-  switch_geom_type(get_geometry_type(input))
-  
-  if (type == "GeometryCollection") {
-    geometries <- lapply(input, geojson_list)
-    out <- list(type = type, geometries = geometries)
-  } else {
-    coordinates <- unclass(input)
-    out <- list(type = type, coordinates = coordinates)
-  }
-  out
+  ## For now always a GeometryCollection...possibly should just return the geometry
+  ## if length 1
+  type <- "GeometryCollection"
+  geometries <- lapply(input, geojson_list)
+  list(type = type, geometries = geometries)
 }
 
 #' @export
