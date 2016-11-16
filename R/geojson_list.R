@@ -289,6 +289,7 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
   as.geo_list(tg_compact(out), from = "sf")
 }
 
+#' @export
 geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection", ...) {
   type <-  switch_geom_type(get_geometry_type(input))
@@ -303,6 +304,7 @@ geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
   out
 }
 
+#' @export
 geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection", ...) {
     type <-  switch_geom_type(get_geometry_type(input))

@@ -250,11 +250,13 @@ geojson_json.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
   as.json(geojson_list(input))
 }
 
+#' @export
 geojson_json.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                            geometry = "point",  type='FeatureCollection', ...) {
   as.json(geojson_list(input))
 }
 
+#' @export
 geojson_json.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
                            geometry = "point",  type='FeatureCollection', ...) {
   as.json(geojson_list(input))
