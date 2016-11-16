@@ -31,10 +31,13 @@ geojson_json(mpol)
 geojson_json(mpol_sfc)
 geojson_json(mpol_sf)
 
+gc_sfc <- st_sfc(gc)
+gc_sf <- st_sf(id = "a", gc_sfc)
 geojson_list(gc)
 geojson_list(gc_sfc)
 geojson_list(gc_sf)
-gcjson_json(gc)
+
+geojson_json(gc)
 geojson_json(gc_sfc)
 geojson_json(gc_sf)
 
