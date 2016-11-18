@@ -265,12 +265,7 @@ donotnull <- function(x, fun, ...) {
 geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                           geometry = "point", type = "FeatureCollection", ...) {
   
-  crs <- NULL
-  # epsg <- get_epsg(input)
-  # if (!is.na(epsg)) {
-  #   crs <- list(type = "name",
-  #               properties = list(name = paste0("urn:ogc:def:crs:EPSG::", epsg)))
-  # }
+  input <- detect_convert_crs(input)
   
   sf_col <- get_sf_column_name(input)
   
@@ -284,7 +279,7 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                        )
                      })
   
-  out <- list(type = type, crs = crs, features = features)
+  out <- list(type = type, features = features)
   
   as.geo_list(tg_compact(out), from = "sf")
 }
@@ -293,6 +288,9 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
 geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection", ...) {
   ## A GeometryCollection except if length 1, then just return the geometry
+  
+  input <- detect_convert_crs(input)
+  
   if (length(input) == 1) {
     return(geojson_list(input[[1]]))
   } else {
@@ -306,6 +304,8 @@ geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
 geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection", ...) {
     type <-  switch_geom_type(get_geometry_type(input))
+    
+    # input <- detect_convert_crs(input)
     
     if (type == "GeometryCollection") {
       geometries <- lapply(input, function(x) unclass(geojson_list(x)))
@@ -343,6 +343,19 @@ get_geometry_type.sf <- function(x) {
 get_geometry_type.sfc <- function(x) strsplit(class(x)[1], "_")[[1]][2]
 
 get_geometry_type.sfg <- function(x) class(x)[2]
+
+detect_convert_crs <- function(x) {
+  epsg <- get_epsg(x)
+  if (!is.na(epsg) && epsg != 4326) {
+    if (!requireNamespace("sf", quietly = TRUE)) {
+      stop("Your input is not in a CRS that geojson supports and you don't have the 'sf' package installed. Please install and try again")
+    } else {
+      message("Converting CRS from EPSG:", epsg, " to WGS84.")
+      x <- sf::st_transform(x, 4326)
+    }
+  }
+  x
+}
 
 ## Get epsg code
 get_epsg <- function(x) UseMethod("get_epsg")
