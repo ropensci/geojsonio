@@ -346,7 +346,7 @@ detect_convert_crs <- function(x) {
     if (!requireNamespace("sf", quietly = TRUE)) {
       stop("Your input is not in a CRS that geojson supports and you don't have the 'sf' package installed. Please install and try again")
     } else {
-      message("Converting CRS from EPSG:", epsg, " to WGS84.")
+      message("Converting CRS from EPSG:", get_epsg(x), " to WGS84.")
       x <- sf::st_transform(x, 4326)
     }
   }
