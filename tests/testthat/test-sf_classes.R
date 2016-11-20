@@ -1,5 +1,5 @@
 context("sf classes")
-suppressPackageStartupMessages(library(sf))
+suppressPackageStartupMessages(library(sf, quietly = TRUE))
 
 file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
 testfc <- st_read(file, quiet = TRUE)
@@ -44,6 +44,13 @@ test_that("geojson_list works with points", {
   expect_equal(lapply(point_sf_list$features, `[[`, "geometry"), 
                point_sfc_list$geometries)
 })
+
+## POLYGON
+p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
+p2 <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
+pol <-st_polygon(list(p1,p2))
+pol_sfc <- st_sfc(pol)
+pol_sf <- st_sf(id = "a", pol_sfc)
 
 ## MULTIPOLYGON
 p3 <- rbind(c(3,0), c(4,0), c(4,1), c(3,1), c(3,0))
@@ -94,13 +101,6 @@ test_that("geojson_json works with multipolygons", {
 # s2 <- rbind(c(0.2,3), c(0.2,4), c(1,4.8), c(2,4.8))
 # s3 <- rbind(c(0,4.4), c(0.6,5))
 # mls <- st_multilinestring(list(s1,s2,s3))
-# ## POLYGON
-# p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
-# p2 <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
-# pol <-st_polygon(list(p1,p2))
-# pol_sfc <- st_sfc(pol)
-# pol_sf <- st_sf(id = "a", pol_sfc)
-# 
 # ## GEOMETRYCOLLECTION
 # gc <- st_geometrycollection(list(mp, mpol, ls))
 # gc_sfc <- st_sfc(gc)
