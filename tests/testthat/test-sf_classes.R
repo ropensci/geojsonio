@@ -42,9 +42,7 @@ geojson_json(gc_sfc)
 geojson_json(gc_sf)
 
 ## Big test
-library(bcmaps)
-st_as_sf(ecoprovinces)
-eco_sf <- st_as_sf(ecoprovinces)
-eco_sf <- st_transform(eco_sf, 4326)
-eco_geojson <- geojson_json(eco_sf)
-writeLines(eco_geojson, "eco.geojson")
+# library(bcmaps)
+# eco_sf <- st_as_sf(ecoprovinces)
+# eco_geojson <- geojson_json(eco_sf)
+# writeLines(eco_geojson, "eco.geojson")

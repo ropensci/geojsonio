@@ -265,7 +265,8 @@ donotnull <- function(x, fun, ...) {
 geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                           geometry = "point", type = "FeatureCollection", ...) {
   
-  input <- detect_convert_crs(input)
+  # input <- detect_convert_crs(input)
+  is_wgs84(input)
   
   sf_col <- get_sf_column_name(input)
   
@@ -287,9 +288,10 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection", ...) {
+  # input <- detect_convert_crs(input)
+  is_wgs84(input)
   ## A GeometryCollection except if length 1, then just return the geometry
   
-  input <- detect_convert_crs(input)
   
   if (length(input) == 1) {
     return(geojson_list(input[[1]]))
@@ -345,8 +347,7 @@ get_geometry_type.sfc <- function(x) strsplit(class(x)[1], "_")[[1]][2]
 get_geometry_type.sfg <- function(x) class(x)[2]
 
 detect_convert_crs <- function(x) {
-  epsg <- get_epsg(x)
-  if (!is.na(epsg) && epsg != 4326) {
+  if (!is_wgs84(x, warn = FALSE)) {
     if (!requireNamespace("sf", quietly = TRUE)) {
       stop("Your input is not in a CRS that geojson supports and you don't have the 'sf' package installed. Please install and try again")
     } else {
@@ -355,6 +356,14 @@ detect_convert_crs <- function(x) {
     }
   }
   x
+}
+
+is_wgs84 <- function(x, warn = TRUE) {
+  epsg <- get_epsg(x)
+  is_it <- is.na(epsg) || epsg == 4326 # Give NA epsg the benefit of the doubt
+  if (!is_it) {
+    warning("Input CRS is not WGS84 (epsg:4326), the standard for GeoJSON")
+  }
 }
 
 ## Get epsg code
