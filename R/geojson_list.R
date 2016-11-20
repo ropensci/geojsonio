@@ -276,7 +276,7 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                        geom <- input[[sf_col]][[i]]
                        list(type = "Feature",
                             properties = as.list(input[i, setdiff(names(input), sf_col)]),
-                            geometry = geojson_list(geom)
+                            geometry = unclass(geojson_list(geom))
                        )
                      })
   
@@ -297,9 +297,9 @@ geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
     return(geojson_list(input[[1]]))
   } else {
     out <- list(type = "GeometryCollection", 
-                geometries = lapply(input, geojson_list))
+                geometries = lapply(input, function(x) unclass(geojson_list(x))))
   }
-  
+  as.geo_list(out, from = "sfc")
 }
 
 #' @export
@@ -316,7 +316,7 @@ geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
       coordinates <- unclass(input)
       out <- list(type = type, coordinates = coordinates)
     }
-    out
+    as.geo_list(out, from = "sfg")
 }
 
 switch_geom_type <- function(x) {
