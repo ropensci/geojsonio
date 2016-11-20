@@ -356,9 +356,10 @@ detect_convert_crs <- function(x) {
 is_wgs84 <- function(x, warn = TRUE) {
   epsg <- get_epsg(x)
   is_it <- is.na(epsg) || epsg == 4326 # Give NA epsg the benefit of the doubt
-  if (!is_it) {
+  if (!is_it && warn) {
     warning("Input CRS is not WGS84 (epsg:4326), the standard for GeoJSON")
   }
+  is_it
 }
 
 ## Get epsg code
