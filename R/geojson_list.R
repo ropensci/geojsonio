@@ -337,11 +337,6 @@ get_sf_column_name <- function(x) attr(x, "sf_column")
 ## Get the geometry type
 get_geometry_type <- function(x) UseMethod("get_geometry_type")
 
-get_geometry_type.sf <- function(x) {
-  geom_col <- get_sf_column_name(x)
-  get_geometry_type(x[[geom_col]])
-}
-
 get_geometry_type.sfc <- function(x) strsplit(class(x)[1], "_")[[1]][2]
 
 get_geometry_type.sfg <- function(x) class(x)[2]
