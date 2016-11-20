@@ -1,3 +1,11 @@
+gejsonio 0.2.0.9250
+===================
+
+### MINOR IMPROVEMENTS
+
+* `geojson_json()` for non-sp classes now only keeps seven decimal places in the coordinates. This follows the default that GDAL uses.
+
+
 geojsonio 0.2.0
 ===============
 

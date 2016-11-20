@@ -24,7 +24,7 @@ test_that("geojson_json works with numeric inputs", {
             c(-114.345703125,39.436192999314095))
   expect_equal(
     unclass(geojson_json(poly, geometry = "polygon")),
-    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-114.345703125,39.4361929993141],[-114.345703125,43.4529188935547],[-106.611328125,43.4529188935547],[-106.611328125,39.4361929993141],[-114.345703125,39.4361929993141]]]},\"properties\":{}}]}"
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-114.3457031,39.436193],[-114.3457031,43.4529189],[-106.6113281,43.4529189],[-106.6113281,39.436193],[-114.3457031,39.436193]]]},\"properties\":{}}]}"
   )
 })
 
