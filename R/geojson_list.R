@@ -370,7 +370,7 @@ get_epsg.sf <- function(x) {
   get_epsg(x[[geom_col]])
 }
 
-get_epsg.sfc <- function(x) attr(x, "epsg")
+get_epsg.sfc <- function(x) attr(x, "crs")[["epsg"]]
 
 # regular R classes --------------------------
 #' @export
