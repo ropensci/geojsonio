@@ -23,7 +23,11 @@ before_install:
 
 sudo: required
 
-warnings_are_errors: true
+warnings_are_errors: false
+
+r_packages:
+  - colorspace
+  - rgdal
 
 r_github_packages: 
  - ropensci/gistr
