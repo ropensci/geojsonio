@@ -28,6 +28,7 @@ warnings_are_errors: false
 r_packages:
   - colorspace
   - rgdal
+  - rgeos
 
 r_github_packages: 
  - ropensci/gistr
