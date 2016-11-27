@@ -1,4 +1,5 @@
 language: r
+dist: trusty
 cache: packages
 
 before_install:
@@ -27,8 +28,6 @@ warnings_are_errors: false
 
 r_packages:
   - colorspace
-  - rgdal
-  - rgeos
 
 r_github_packages: 
  - ropensci/gistr
