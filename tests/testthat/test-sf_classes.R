@@ -179,11 +179,75 @@ test_that("geojson_json works with multipolygons", {
 ## LINESTRING
 s1 <- rbind(c(0,3),c(0,4),c(1,5),c(2,5))
 ls_sfg <- st_linestring(s1)
+ls_sfc <- st_sfc(ls_sfg)
+ls_sf <- st_sf(id = "a", ls_sfc)
+
+test_that("geojson_list works with linestrings", {
+  ls_sfg_list <- geojson_list(ls_sfg)
+  ls_sfc_list <- geojson_list(ls_sfc)
+  ls_sf_list <- geojson_list(ls_sf)
+  
+  expect_s3_class(ls_sfg_list, "geo_list")
+  expect_s3_class(ls_sfc_list, "geo_list")
+  expect_s3_class(ls_sf_list, "geo_list")
+})
+
+test_that("geojson_json works with multilinestrings", {
+  
+  ls_sfg_json <- geojson_json(ls_sfg)
+  ls_sfc_json <- geojson_json(ls_sfc)
+  ls_sf_json <- geojson_json(ls_sf)
+  
+  expect_s3_class(ls_sfg_json, "geo_json")
+  expect_s3_class(ls_sfc_json, "geo_json")
+  expect_s3_class(ls_sf_json, "geo_json")
+  
+  expect_equal(unclass(ls_sfg_json), 
+               "{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}")
+  
+  expect_equal(unclass(ls_sfc_json), 
+               "{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}")
+  
+  expect_equal(unclass(ls_sf_json), 
+               "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}}]}")
+})
+
 ## MULTILINESTRING
 s2 <- rbind(c(0.2,3), c(0.2,4), c(1,4.8), c(2,4.8))
 s3 <- rbind(c(0,4.4), c(0.6,5))
 mls_sfg <- st_multilinestring(list(s1,s2,s3))
+mls_sfc <- st_sfc(mls_sfg)
+mls_sf <- st_sf(id = "a", mls_sfc)
 
+test_that("geojson_list works with multilinestrings", {
+  mls_sfg_list <- geojson_list(ls_sfg)
+  mls_sfc_list <- geojson_list(ls_sfc)
+  mls_sf_list <- geojson_list(ls_sf)
+  
+  expect_s3_class(mls_sfg_list, "geo_list")
+  expect_s3_class(mls_sfc_list, "geo_list")
+  expect_s3_class(mls_sf_list, "geo_list")
+})
+
+test_that("geojson_json works with multilinestrings", {
+  
+  mls_sfg_json <- geojson_json(mls_sfg)
+  mls_sfc_json <- geojson_json(mls_sfc)
+  mls_sf_json <- geojson_json(mls_sf)
+  
+  expect_s3_class(mls_sfg_json, "geo_json")
+  expect_s3_class(mls_sfc_json, "geo_json")
+  expect_s3_class(mls_sf_json, "geo_json")
+  
+  expect_equal(unclass(mls_sfg_json), 
+               "{\"type\":\"MultiLineString\",\"coordinates\":[[[0,3],[0,4],[1,5],[2,5]],[[0.2,3],[0.2,4],[1,4.8],[2,4.8]],[[0,4.4],[0.6,5]]]}")
+  
+  expect_equal(unclass(mls_sfc_json), 
+               "{\"type\":\"MultiLineString\",\"coordinates\":[[[0,3],[0,4],[1,5],[2,5]],[[0.2,3],[0.2,4],[1,4.8],[2,4.8]],[[0,4.4],[0.6,5]]]}")
+  
+  expect_equal(unclass(mls_sf_json), 
+               "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"MultiLineString\",\"coordinates\":[[[0,3],[0,4],[1,5],[2,5]],[[0.2,3],[0.2,4],[1,4.8],[2,4.8]],[[0,4.4],[0.6,5]]]}}]}")
+})
 
 # ## GEOMETRYCOLLECTION
 gc_sfg <- st_geometrycollection(list(mp_sfg, mpol_sfg, ls_sfg))
