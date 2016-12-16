@@ -284,6 +284,16 @@ test_that("geojson_json works with geometry collections", {
                "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]},{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]},{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}]}}]}")
 })
 
+test_that("Deals with Z and M dimensions: points", {
+  pt_xyz <- st_point(c(3,4,5), dim = "XYZ")
+  pt_xym <- st_point(c(3,4,5), dim = "XYM")
+  pt_xyzm <- st_point(c(3,4,5,6), dim = "XYZM")
+  
+  expect_equal(geojson_list(pt_xyz)$coordinates, c(3,4,5))
+  expect_equal(geojson_list(pt_xym)$coordinates, c(3,4))
+  expect_equal(geojson_list(pt_xyzm)$coordinates, c(3,4,5))
+})
+
 
 ## Big test ------------------------------------------------------
 

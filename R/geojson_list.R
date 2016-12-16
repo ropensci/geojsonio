@@ -313,7 +313,7 @@ geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
       geometries <- lapply(input, function(x) unclass(geojson_list(x)))
       out <- list(type = type, geometries = geometries)
     } else {
-      coordinates <- unclass(input)
+      coordinates <- make_coords(input, type)
       out <- list(type = type, coordinates = coordinates)
     }
     as.geo_list(out, from = "sfg")
@@ -330,6 +330,21 @@ switch_geom_type <- function(x) {
          "GEOMETRY" = "GeometryCollection",
          "GEOMETRYCOLLECTION" = "GeometryCollection"
   )
+}
+
+make_coords <- function(input, type) {
+  dim <- class(input)[1]
+  m_loc <- regexpr("M", dim)
+  
+  if (m_loc > 0) {
+    if (type == "Point") {
+      # vector}
+    } else {
+      # matrix
+    }
+  } 
+  
+  unclass(input)
 }
 
 get_sf_column_name <- function(x) attr(x, "sf_column")
