@@ -118,6 +118,7 @@ sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 geojson_write(sgdf)
 
 # From SpatialRings
+library(rgeos)
 r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
 r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
 r1r2 <- SpatialRings(list(r1, r2))

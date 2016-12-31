@@ -33,6 +33,8 @@ directly set the CRS by passing a valid PROJ4 string to the \code{p4s} argument 
 }
 \examples{
 \dontrun{
+library(sp)
+
 # geo_list ------------------
 ## From a numeric vector of length 2 to a point
 vec <- c(-99.74,32.45)

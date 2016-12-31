@@ -23,6 +23,8 @@ Write topojson from various inputs
 xxx
 }
 \examples{
+library(sp)
+
 # from character string of TopoJSON
 x <- system.file("examples/point.json", package = "geojsonio")
 tj <- paste0(readLines(x), collapse = "")
@@ -31,8 +33,7 @@ topojson_read(z)
 
 # convert GeoJSON to TopoJSON, then write
 x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
-topojson_write(geojson2topojson(x))
-topojson_write(geojson2topojson(x), "out.topojson")
+topojson_write(geo2topo(x), "out.topojson")
 
 # SpatialPoints class
 x <- c(1,2,3,4,5)
@@ -47,7 +48,6 @@ topojson_write(s, "out.topojson")
 readLines("out.topojson")
 
 # SpatialLines class
-library(sp)
 c1 <- cbind(c(1,2,3), c(3,2,2))
 c2 <- cbind(c1[,1]+.05,c1[,2]+.05)
 c3 <- cbind(c(1,2,3),c(1,1.5,1))
@@ -76,17 +76,17 @@ poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
 poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
    c(30,40,35,30)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
-topojson_write(sp_poly, file = "out.topojson")
+res <- topojson_write(sp_poly, file = "out.topojson")
 readLines(res)
 
 # From SpatialPolygonsDataFrame class
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
-res <- topojson_write(sp_polydf, file = "out.topojson")
+res <- topojson_write(sp_polydf, "out.topojson")
 readLines(res)
 
 # from file
 ff <- system.file("examples/california.geojson", package = "geojsonio")
 ffgeo <- paste0(readLines(ff), collapse = " ")
-topojson_write(x = ffgeo, file = "stuff.topojson")
+topojson_write(ffgeo, "stuff.topojson")
 }
 
