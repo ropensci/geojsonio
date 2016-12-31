@@ -15,8 +15,7 @@
 #' # from character string of TopoJSON
 #' x <- system.file("examples/point.json", package = "geojsonio")
 #' tj <- paste0(readLines(x), collapse = "")
-#' (z <- topojson_write(tj, file = "my.topojson"))
-#' topojson_read(z)
+#' topojson_write(tj, file = "my.topojson")
 #' 
 #' # convert GeoJSON to TopoJSON, then write
 #' x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
