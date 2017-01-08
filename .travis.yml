@@ -2,6 +2,9 @@ language: r
 dist: trusty
 cache: packages
 
+apt_packages:
+  - libudunits2-dev
+
 before_install:
   - export CURWD=`pwd`
   - sudo apt-get install libproj-dev libgeos-dev netcdf-bin libv8-dev
