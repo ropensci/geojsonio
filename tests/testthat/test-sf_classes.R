@@ -23,7 +23,7 @@ test_that("fc utility functions work", {
 ## POINT
 p_list <- lapply(list(c(3.2,4), c(3,4.6), c(3.8,4.4)), st_point)
 pt_sfc <- st_sfc(p_list)
-pt_sf <- st_sf(id = c("a", "b", "c"), pt_sfc)
+pt_sf <- st_sf(x = c("a", "b", "c"), pt_sfc)
 
 test_that("geojson_list works with points", {
   point_sfg_list <- geojson_list(pt_sfc[[1]])
@@ -70,7 +70,7 @@ test_that("geojson_json works with points", {
 p <- rbind(c(3.2,4), c(3,4.6), c(3.8,4.4), c(3.5,3.8), c(3.4,3.6), c(3.9,4.5))
 mp_sfg <- st_multipoint(p)
 mp_sfc <- st_sfc(mp_sfg)
-mp_sf <- st_sf(id = "a", mp_sfc)
+mp_sf <- st_sf(x = "a", mp_sfc)
 
 test_that("geojson_list works with multipoints", {
   mp_sfg_list <- geojson_list(mp_sfg)
@@ -106,7 +106,7 @@ p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
 p2 <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
 pol_sfg <-st_polygon(list(p1,p2))
 pol_sfc <- st_sfc(pol_sfg)
-pol_sf <- st_sf(id = "a", pol_sfc)
+pol_sf <- st_sf(x = "a", pol_sfc)
 
 test_that("geojson_list works with polygons", {
   pol_sfg_list <- geojson_list(pol_sfg)
@@ -143,7 +143,7 @@ p4 <- rbind(c(3.3,0.3), c(3.8,0.3), c(3.8,0.8), c(3.3,0.8), c(3.3,0.3))[5:1,]
 p5 <- rbind(c(3,3), c(4,2), c(4,3), c(3,3))
 mpol_sfg <- st_multipolygon(list(list(p1,p2), list(p3,p4), list(p5)))
 mpol_sfc <- st_sfc(mpol_sfg)
-mpol_sf <- st_sf(id = "a", mpol_sfc)
+mpol_sf <- st_sf(x = "a", mpol_sfc)
 
 test_that("geojson_list works with multipolygons", {
   mpol_sfg_list <- geojson_list(mpol_sfg)
@@ -180,7 +180,7 @@ test_that("geojson_json works with multipolygons", {
 s1 <- rbind(c(0,3),c(0,4),c(1,5),c(2,5))
 ls_sfg <- st_linestring(s1)
 ls_sfc <- st_sfc(ls_sfg)
-ls_sf <- st_sf(id = "a", ls_sfc)
+ls_sf <- st_sf(x = "a", ls_sfc)
 
 test_that("geojson_list works with linestrings", {
   ls_sfg_list <- geojson_list(ls_sfg)
@@ -217,7 +217,7 @@ s2 <- rbind(c(0.2,3), c(0.2,4), c(1,4.8), c(2,4.8))
 s3 <- rbind(c(0,4.4), c(0.6,5))
 mls_sfg <- st_multilinestring(list(s1,s2,s3))
 mls_sfc <- st_sfc(mls_sfg)
-mls_sf <- st_sf(id = "a", mls_sfc)
+mls_sf <- st_sf(x = "a", mls_sfc)
 
 test_that("geojson_list works with multilinestrings", {
   mls_sfg_list <- geojson_list(ls_sfg)
@@ -252,7 +252,7 @@ test_that("geojson_json works with multilinestrings", {
 # ## GEOMETRYCOLLECTION
 gc_sfg <- st_geometrycollection(list(mp_sfg, mpol_sfg, ls_sfg))
 gc_sfc <- st_sfc(gc_sfg)
-gc_sf <- st_sf(id = "a", gc_sfc)
+gc_sf <- st_sf(x = "a", gc_sfc)
 
 test_that("geojson_list works with geometry collections", {
   gc_sfg_list <- geojson_list(gc_sfg)
