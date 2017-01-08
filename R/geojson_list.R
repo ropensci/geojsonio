@@ -341,8 +341,10 @@ make_coords <- function(input, type) {
   m_loc <- regexpr("M", dim)
   
   if (m_loc > 0) {
+    message("removing M dimension as not supported in GeoJSON format")
     if (type == "Point") {
-      # vector}
+      # vector
+      return(unclass(input)[-m_loc])
     } else {
       # matrix
     }
