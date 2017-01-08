@@ -317,7 +317,7 @@ geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
       geometries <- lapply(input, function(x) unclass(geojson_list(x)))
       out <- list(type = type, geometries = geometries)
     } else {
-      coordinates <- make_coords(input, type)
+      coordinates <- make_coords(input)
       out <- list(type = type, coordinates = coordinates)
     }
     as.geo_list(out, from = "sfg")
@@ -336,22 +336,22 @@ switch_geom_type <- function(x) {
   )
 }
 
-make_coords <- function(input, type) {
+make_coords <- function(input) {
   dim <- class(input)[1]
   m_loc <- regexpr("M", dim)
   
   if (m_loc > 0) {
     message("removing M dimension as not supported in GeoJSON format")
-    if (type == "Point") {
-      # vector
-      return(unclass(input)[-m_loc])
-    } else {
-      # matrix
-    }
+    return(drop_m(unclass(input), m_loc))
   } 
   
   unclass(input)
 }
+
+drop_m <- function(input, m_loc) UseMethod("drop_m")
+drop_m.list <- function(input, m_loc) lapply(input, drop_m, m_loc = m_loc)
+drop_m.numeric <- function(input, m_loc) input[-m_loc]
+drop_m.matrix <- function(input, m_loc) input[, -m_loc, drop = FALSE]
 
 get_sf_column_name <- function(x) attr(x, "sf_column")
 

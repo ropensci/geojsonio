@@ -292,6 +292,26 @@ test_that("Deals with Z and M dimensions: points", {
   expect_equal(geojson_list(pt_xyz)$coordinates, c(3,4,5))
   expect_equal(geojson_list(pt_xym)$coordinates, c(3,4))
   expect_equal(geojson_list(pt_xyzm)$coordinates, c(3,4,5))
+  
+  p_list_xyzm <- lapply(list(c(3.2,4, 5, 6), c(3,4.6, 6, 7), c(3.8,4.4, 7, 8)), 
+                        st_point, dim = "XYZM")
+  pt_sfc_xyzm <- st_sfc(p_list_xyzm)
+  pt_sf_xyzm <- st_sf(x = c("a", "b", "c"), pt_sfc_xyzm)
+  
+  
+  
+  expect_equal
+})
+
+test_that("Deal with M dimensions: multipoint", {
+  p <- rbind(c(3.2,4, 5, 6), c(3,4.6, 7, 8), c(3.8,4.4, 9, 10), 
+             c(3.5,3.8, 11, 12), c(3.4,3.6, 13, 14), c(3.9,4.5, 15, 16))
+  mp_sfg <- st_multipoint(p, dim = "XYZM")
+  mp_sfc <- st_sfc(mp_sfg)
+  mp_sf <- st_sf(x = "a", mp_sfc)
+  
+  out <- geojson_list(mp_sf)
+  expect_equal(dim(out$features[[1]]$geometry$coordinates), c(6, 3))
 })
 
 
