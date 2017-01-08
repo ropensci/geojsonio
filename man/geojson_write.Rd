@@ -48,7 +48,8 @@ geojson_write(us_cities[1:2,], lat='lat', lon='long')
 
 ## to polygons
 head(states)
-geojson_write(input=states, lat='lat', lon='long', geometry='group', group="group")
+geojson_write(input=states, lat='lat', lon='long', 
+  geometry='polygon', group="group")
 
 ## partial states dataset to points (defaults to points)
 geojson_write(input=states, lat='lat', lon='long')
