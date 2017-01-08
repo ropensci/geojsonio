@@ -16,8 +16,8 @@ test_that("fc utility functions work", {
   testfc_3005 <- st_transform(testfc, 3005)
   expect_false(suppressWarnings(is_wgs84(testfc_3005)))
   expect_warning(is_wgs84(testfc_3005), "WGS84")
-  expect_message(detect_convert_crs(testfc_3005), "EPSG:3005 to WGS84")
-  expect_true(is_wgs84(suppressMessages(detect_convert_crs(testfc_3005))))
+  # expect_message(detect_convert_crs(testfc_3005), "EPSG:3005 to WGS84")
+  # expect_true(is_wgs84(suppressMessages(detect_convert_crs(testfc_3005))))
 })
 
 ## POINT
@@ -316,8 +316,9 @@ test_that("Deal with M dimensions: multipoint", {
 
 
 ## Big test ------------------------------------------------------
-
+## devtools::install_github("bcgov/bcmaps")
 # library(bcmaps)
 # eco_sf <- st_as_sf(ecoprovinces)
+# eco_sf <- st_transform(eco_sf, 4326)
 # eco_geojson <- geojson_json(eco_sf)
-# writeLines(eco_geojson, "eco.geojson")
+# map_gist(eco_geojson)

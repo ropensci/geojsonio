@@ -296,7 +296,6 @@ geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
   is_wgs84(input)
   ## A GeometryCollection except if length 1, then just return the geometry
   
-  
   if (length(input) == 1) {
     return(geojson_list(input[[1]]))
   } else {
@@ -336,6 +335,14 @@ switch_geom_type <- function(x) {
   )
 }
 
+get_sf_column_name <- function(x) attr(x, "sf_column")
+
+## Get the geometry type
+get_geometry_type <- function(x) UseMethod("get_geometry_type")
+get_geometry_type.sfc <- function(x) strsplit(class(x)[1], "_")[[1]][2]
+get_geometry_type.sfg <- function(x) class(x)[2]
+
+## Make coordinates, dropping M dimension if it's there
 make_coords <- function(input) {
   dim <- class(input)[1]
   m_loc <- regexpr("M", dim)
@@ -353,26 +360,17 @@ drop_m.list <- function(input, m_loc) lapply(input, drop_m, m_loc = m_loc)
 drop_m.numeric <- function(input, m_loc) input[-m_loc]
 drop_m.matrix <- function(input, m_loc) input[, -m_loc, drop = FALSE]
 
-get_sf_column_name <- function(x) attr(x, "sf_column")
-
-## Get the geometry type
-get_geometry_type <- function(x) UseMethod("get_geometry_type")
-
-get_geometry_type.sfc <- function(x) strsplit(class(x)[1], "_")[[1]][2]
-
-get_geometry_type.sfg <- function(x) class(x)[2]
-
-detect_convert_crs <- function(x) {
-  if (!is_wgs84(x, warn = FALSE)) {
-    if (!requireNamespace("sf", quietly = TRUE)) {
-      stop("Your input is not in a CRS that geojson supports and you don't have the 'sf' package installed. Please install and try again")
-    } else {
-      message("Converting CRS from EPSG:", get_epsg(x), " to WGS84.")
-      x <- sf::st_transform(x, 4326)
-    }
-  }
-  x
-}
+# detect_convert_crs <- function(x) {
+#   if (!is_wgs84(x, warn = FALSE)) {
+#     if (!requireNamespace("sf", quietly = TRUE)) {
+#       stop("Your input is not in a CRS that geojson supports and you don't have the 'sf' package installed. Please install and try again")
+#     } else {
+#       message("Converting CRS from EPSG:", get_epsg(x), " to WGS84.")
+#       x <- sf::st_transform(x, 4326)
+#     }
+#   }
+#   x
+# }
 
 is_wgs84 <- function(x, warn = TRUE) {
   epsg <- get_epsg(x)
