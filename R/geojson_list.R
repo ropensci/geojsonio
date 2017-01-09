@@ -269,17 +269,17 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
   is_wgs84(input)
   
   sf_col <- get_sf_column_name(input)
+  ## Get the sfc column
   sfc <- unclass(input[[sf_col]])
-  df <- data.frame(input, 
-                   stringsAsFactors = FALSE)[, 
-                                             setdiff(names(input), sf_col), 
-                                             drop = FALSE]
+  ## remove the sf class so can extract the attributes using `[`
+  attr_df <- as.data.frame(input)[, setdiff(names(input), sf_col), 
+                             drop = FALSE]
   
   type <- "FeatureCollection"
   features <- lapply(seq_len(nrow(input)),
                      function(i) {
                        list(type = "Feature",
-                            properties = as.list(df[i, , drop = FALSE]),
+                            properties = as.list(attr_df[i, , drop = FALSE]),
                             geometry = unclass(geojson_list(sfc[[i]]))
                        )
                      })
