@@ -189,6 +189,28 @@ poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 dat <- SpatialCollections(pts, polygons = poly)
 geojson_json(dat)
 
+# From sf classes:
+if (require(sf)) {
+## sfg (a single simple features geometry)
+  p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
+  poly <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
+  poly_sfg <-st_polygon(list(p1))
+  geojson_json(poly_sfg)
+  
+## sfc (a collection of geometries)
+  p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
+  p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))
+  poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
+  geojson_json(poly_sfc)
+  
+## sf (collection of geometries with attributes)
+  p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
+  p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))
+  poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
+  poly_sf <- st_sf(foo = c("a", "b"), bar = 1:2, poly_sfc)
+  geojson_json(poly_sf)
+}
+
 ## Pretty print a json string
 geojson_json(c(-99.74,32.45))
 geojson_json(c(-99.74,32.45)) \%>\% pretty
