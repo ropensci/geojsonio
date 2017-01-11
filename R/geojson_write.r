@@ -136,7 +136,7 @@
 #' geojson_write(dat)
 #' }
 #' 
-#' From sf classes:
+#' # From sf classes:
 #' if (require(sf)) {
 #'   file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
 #'   sf_fc <- st_read(file, quiet = TRUE)
