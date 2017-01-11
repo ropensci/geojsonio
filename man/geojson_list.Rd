@@ -8,7 +8,7 @@ geojson_list(input, lat = NULL, lon = NULL, group = NULL,
   geometry = "point", type = "FeatureCollection", ...)
 }
 \arguments{
-\item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
+\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
 \item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt to guess.}
@@ -40,6 +40,15 @@ option for sp class objects.
 Also note that with sp classes we do make a round-trip, using \code{\link[rgdal]{writeOGR}}
 to write GeoJSON to disk, then read it back in. This is fast and we don't have to think
 about it too much, but this disk round-trip is not ideal.
+
+For sf classes (sf, sfc, sfg), the following conversions are made:
+
+\itemize{
+ \item sfg: the approprite geometry \code{Point, LineString, Polygon, MultiPoint, 
+ MultiLineString, MultiPolygon, GeometryCollection}
+ \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry as above
+ \item sf: \code{FeatureCollection}
+}
 
 For \code{list} and \code{data.frame} objects, you don't have to pass in \code{lat} and
 \code{lon} parameters if they are named appropriately (e.g., lat/latitude, lon/long/longitude),
