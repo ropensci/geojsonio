@@ -9,7 +9,7 @@ geojson_write(input, lat = NULL, lon = NULL, geometry = "point",
   precision = NULL, ...)
 }
 \arguments{
-\item{input}{Input list, data.frame, or spatial class. Inputs can also be
+\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can also be
 dplyr \code{tbl_df} class since it inherits from \code{data.frame}.}
 
 \item{lat}{(character) Latitude name. The default is \code{NULL}, and we
@@ -149,6 +149,13 @@ poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 coordinates(us_cities) <- ~long+lat
 dat <- SpatialCollections(points = us_cities, polygons = poly)
 geojson_write(dat)
+}
+
+# From sf classes:
+if (require(sf)) {
+  file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
+  sf_fc <- st_read(file, quiet = TRUE)
+  geojson_write(sf_fc)
 }
 }
 \seealso{

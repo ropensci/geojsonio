@@ -8,7 +8,7 @@ geojson_json(input, lat = NULL, lon = NULL, group = NULL,
   geometry = "point", type = "FeatureCollection", ...)
 }
 \arguments{
-\item{input}{Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
+\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can also be dplyr \code{tbl_df}
 class since it inherits from \code{data.frame}.}
 
 \item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt to guess.}
@@ -42,6 +42,15 @@ option for sp class objects.
 Also note that with sp classes we do make a round-trip, using \code{\link[rgdal]{writeOGR}}
 to write GeoJSON to disk, then read it back in. This is fast and we don't have to think
 about it too much, but this disk round-trip is not ideal.
+
+For sf classes (sf, sfc, sfg), the following conversions are made:
+
+\itemize{
+ \item sfg: the approprite geometry \code{Point, LineString, Polygon, MultiPoint, 
+ MultiLineString, MultiPolygon, GeometryCollection}
+ \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry as above
+ \item sf: \code{FeatureCollection}
+}
 }
 \examples{
 \dontrun{
@@ -188,6 +197,28 @@ poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
 poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 dat <- SpatialCollections(pts, polygons = poly)
 geojson_json(dat)
+
+# From sf classes:
+if (require(sf)) {
+## sfg (a single simple features geometry)
+  p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
+  poly <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
+  poly_sfg <-st_polygon(list(p1))
+  geojson_json(poly_sfg)
+  
+## sfc (a collection of geometries)
+  p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
+  p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))
+  poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
+  geojson_json(poly_sfc)
+  
+## sf (collection of geometries with attributes)
+  p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
+  p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))
+  poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
+  poly_sf <- st_sf(foo = c("a", "b"), bar = 1:2, poly_sfc)
+  geojson_json(poly_sf)
+}
 
 ## Pretty print a json string
 geojson_json(c(-99.74,32.45))

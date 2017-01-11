@@ -34,6 +34,7 @@ Suggests:
     gistr,
     testthat,
     knitr,
-    leaflet
+    leaflet,
+    sf
 Enhances: RColorBrewer
 RoxygenNote: 5.0.1
