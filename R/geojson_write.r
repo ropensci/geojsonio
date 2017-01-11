@@ -4,7 +4,7 @@
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @export
 #' 
-#' @param input Input list, data.frame, or spatial class. Inputs can also be
+#' @param input Input list, data.frame, spatial class, or sf class. Inputs can also be
 #'   dplyr \code{tbl_df} class since it inherits from \code{data.frame}.
 #' @param lat (character) Latitude name. The default is \code{NULL}, and we
 #'   attempt to guess.
@@ -135,6 +135,13 @@
 #' dat <- SpatialCollections(points = us_cities, polygons = poly)
 #' geojson_write(dat)
 #' }
+#' 
+#' From sf classes:
+#' if (require(sf)) {
+#'   file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
+#'   sf_fc <- st_read(file, quiet = TRUE)
+#'   geojson_write(sf_fc)
+#' }
 
 geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
                           group = NULL, file = "myfile.geojson", 
@@ -211,16 +218,16 @@ geojson_write.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, ge
 
 #' @export
 geojson_write.SpatialPixels <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                       group = NULL, file = "myfile.geojson", 
-                                       overwrite = TRUE, precision = NULL, ...) {
+                                        group = NULL, file = "myfile.geojson", 
+                                        overwrite = TRUE, precision = NULL, ...) {
   write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, ...)
   return(as.geojson(file, "SpatialPixels"))
 }
 
 #' @export
 geojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                                group = NULL, file = "myfile.geojson", 
-                                                overwrite = TRUE, precision = NULL, ...) {
+                                                 group = NULL, file = "myfile.geojson", 
+                                                 overwrite = TRUE, precision = NULL, ...) {
   write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, ...)
   return(as.geojson(file, "SpatialPixelsDataFrame"))
 }
@@ -244,7 +251,7 @@ geojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, g
 
 #' @export
 geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                                 group = NULL, file = "myfile.geojson", 
+                                             group = NULL, file = "myfile.geojson", 
                                              overwrite = TRUE, precision = NULL, ...) {
   ptfile <- iter_spatialcoll(input@pointobj, file, precision = precision, ...)
   lfile <- iter_spatialcoll(input@lineobj, file, precision = precision, ...)
@@ -258,6 +265,28 @@ iter_spatialcoll <- function(z, file, precision = NULL, ...) {
   if (!is.null(z)) {
     geojson_write(z, file = wfile, precision = precision, ...)
   }
+}
+
+## sf classes -----------------------------------------------------------------
+#' @export
+geojson_write.sf <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                             group = NULL, file = "myfile.geojson", 
+                             overwrite = TRUE, ...) {
+  geojson_write(geojson_list(input), file = file, overwrite = overwrite)
+}
+
+#' @export
+geojson_write.sfc <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                              group = NULL, file = "myfile.geojson", 
+                              overwrite = TRUE, ...) {
+  geojson_write(geojson_list(input), file = file, overwrite = overwrite)
+}
+
+#' @export
+geojson_write.sfg <- function(input, lat = NULL, lon = NULL, geometry = "point",
+                              group = NULL, file = "myfile.geojson", 
+                              overwrite = TRUE, ...) {
+  geojson_write(geojson_list(input), file = file, overwrite = overwrite)
 }
 
 ## normal R classes -----------------
