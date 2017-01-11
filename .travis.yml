@@ -17,9 +17,7 @@ warnings_are_errors: false
 
 r_packages:
   - colorspace
-
-r_github_packages: 
- - ropensci/gistr
+  - gistr
 
 env:
    global:
