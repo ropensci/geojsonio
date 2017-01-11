@@ -2,7 +2,7 @@
 #'
 #' @export
 #'
-#' @param input Input list, data.frame, or spatial class. Inputs can also be dplyr \code{tbl_df}
+#' @param input Input list, data.frame, spatial class, or sf class. Inputs can also be dplyr \code{tbl_df}
 #' class since it inherits from \code{data.frame}.
 #' @param lat (character) Latitude name. The default is \code{NULL}, and we attempt to guess.
 #' @param lon (character) Longitude name. The default is \code{NULL}, and we attempt to guess.
@@ -24,6 +24,15 @@
 #' Also note that with sp classes we do make a round-trip, using \code{\link[rgdal]{writeOGR}}
 #' to write GeoJSON to disk, then read it back in. This is fast and we don't have to think
 #' about it too much, but this disk round-trip is not ideal.
+#' 
+#' For sf classes (sf, sfc, sfg), the following conversions are made:
+#' 
+#' \itemize{
+#'  \item sfg: the approprite geometry \code{Point, LineString, Polygon, MultiPoint, 
+#'  MultiLineString, MultiPolygon, GeometryCollection}
+#'  \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry as above
+#'  \item sf: \code{FeatureCollection}
+#' }
 #'
 #' For \code{list} and \code{data.frame} objects, you don't have to pass in \code{lat} and
 #' \code{lon} parameters if they are named appropriately (e.g., lat/latitude, lon/long/longitude),
@@ -286,7 +295,7 @@ donotnull <- function(x, fun, ...) {
 
 #' @export
 geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
-                          geometry = "point", type = "FeatureCollection", ...) {
+                            geometry = "point", type = "FeatureCollection", ...) {
   
   # input <- detect_convert_crs(input)
   is_wgs84(input)
@@ -296,7 +305,7 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
   sfc <- unclass(input[[sf_col]])
   ## remove the sf class so can extract the attributes using `[`
   attr_df <- as.data.frame(input)[, setdiff(names(input), sf_col), 
-                             drop = FALSE]
+                                  drop = FALSE]
   
   type <- "FeatureCollection"
   features <- lapply(seq_len(nrow(input)),
@@ -331,18 +340,18 @@ geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection", ...) {
-    type <-  switch_geom_type(get_geometry_type(input))
-    
-    # input <- detect_convert_crs(input)
-    
-    if (type == "GeometryCollection") {
-      geometries <- lapply(input, function(x) unclass(geojson_list(x)))
-      out <- list(type = type, geometries = geometries)
-    } else {
-      coordinates <- make_coords(input)
-      out <- list(type = type, coordinates = coordinates)
-    }
-    as.geo_list(out, from = "sfg")
+  type <-  switch_geom_type(get_geometry_type(input))
+  
+  # input <- detect_convert_crs(input)
+  
+  if (type == "GeometryCollection") {
+    geometries <- lapply(input, function(x) unclass(geojson_list(x)))
+    out <- list(type = type, geometries = geometries)
+  } else {
+    coordinates <- make_coords(input)
+    out <- list(type = type, coordinates = coordinates)
+  }
+  as.geo_list(out, from = "sfg")
 }
 
 switch_geom_type <- function(x) {
@@ -424,7 +433,7 @@ geojson_list.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                     geometry = "point", type = "FeatureCollection", ...) {
-
+  
   tmp <- guess_latlon(names(input), lat, lon)
   as.geo_list(df_to_geo_list(x = input, lat = tmp$lat, lon = tmp$lon, 
                              geometry = geometry, type = type, group = group), "data.frame")
@@ -433,7 +442,7 @@ geojson_list.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.list <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point", type = "FeatureCollection", ...) {
-
+  
   if (geometry == "polygon") lint_polygon_list(input)
   tmp <- if (!is.named(input)) {
     list(lon = NULL, lat = NULL)
@@ -446,7 +455,7 @@ geojson_list.list <- function(input, lat = NULL, lon = NULL, group = NULL,
 
 #' @export
 geojson_list.geo_list <- function(input, lat = NULL, lon = NULL, group = NULL,
-                              geometry = "point", type = "FeatureCollection", ...) {
+                                  geometry = "point", type = "FeatureCollection", ...) {
   
   return(input)
 }
@@ -454,7 +463,7 @@ geojson_list.geo_list <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.json <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point", type = "FeatureCollection", ...) {
-
+  
   output_list <- jsonlite::fromJSON(input, FALSE, ...)
   as.geo_list(output_list, from = "json")
 }
