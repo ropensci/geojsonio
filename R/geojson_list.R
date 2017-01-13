@@ -392,37 +392,6 @@ drop_m.list <- function(input, m_loc) lapply(input, drop_m, m_loc = m_loc)
 drop_m.numeric <- function(input, m_loc) input[-m_loc]
 drop_m.matrix <- function(input, m_loc) input[, -m_loc, drop = FALSE]
 
-# detect_convert_crs <- function(x) {
-#   if (!is_wgs84(x, warn = FALSE)) {
-#     if (!requireNamespace("sf", quietly = TRUE)) {
-#       stop("Your input is not in a CRS that geojson supports and you don't have the 'sf' package installed. Please install and try again")
-#     } else {
-#       message("Converting CRS from EPSG:", get_epsg(x), " to WGS84.")
-#       x <- sf::st_transform(x, 4326)
-#     }
-#   }
-#   x
-# }
-
-is_wgs84 <- function(x, warn = TRUE) {
-  epsg <- get_epsg(x)
-  is_it <- is.na(epsg) || epsg == 4326 # Give NA epsg the benefit of the doubt
-  if (!is_it && warn) {
-    warning("Input CRS is not WGS84 (epsg:4326), the standard for GeoJSON")
-  }
-  is_it
-}
-
-## Get epsg code
-get_epsg <- function(x) UseMethod("get_epsg")
-
-get_epsg.sf <- function(x) {
-  geom_col <- get_sf_column_name(x)
-  get_epsg(x[[geom_col]])
-}
-
-get_epsg.sfc <- function(x) attr(x, "crs")[["epsg"]]
-
 # regular R classes --------------------------
 #' @export
 geojson_list.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
