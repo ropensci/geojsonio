@@ -298,7 +298,6 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                             geometry = "point", type = "FeatureCollection", ...) {
   
   # input <- detect_convert_crs(input)
-  is_wgs84(input)
   
   sf_col <- get_sf_column_name(input)
   ## Get the sfc column
@@ -325,7 +324,6 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
 geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection", ...) {
   # input <- detect_convert_crs(input)
-  is_wgs84(input)
   ## A GeometryCollection except if length 1, then just return the geometry
   
   if (length(input) == 1) {

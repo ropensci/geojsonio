@@ -5,8 +5,6 @@ file <- system.file("examples", "feature_collection.geojson", package = "geojson
 testfc <- st_read(file, quiet = TRUE)
 
 test_that("fc utility functions work", {
-  expect_equal(get_epsg(testfc), 4326)
-  expect_equal(get_epsg(testfc$geometry), 4326)
   expect_equal(get_sf_column_name(testfc), "geometry")
   expect_true(is_wgs84(testfc))
   
