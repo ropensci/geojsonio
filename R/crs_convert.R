@@ -51,7 +51,7 @@ is_wgs84_sf_attr <- function(crs_attr, warn) {
   } else {
     is_it <- epsg == 4326
   }
-  is_it <- is_it || is.na(is_it) # Give NA epsg the benefit of the doubt
+  is_it <- is.na(is_it) || is_it # Give NA epsg the benefit of the doubt
   if (!is_it && warn) {
     warning("Input CRS is not WGS84 (epsg:4326), the standard for GeoJSON")
   }
@@ -61,11 +61,11 @@ is_wgs84_sf_attr <- function(crs_attr, warn) {
 is_wgs84.Spatial <- function(x, warn = TRUE) {
   prj4 <- proj4string(x)
   epsg <- epsg_from_proj4(prj4)
-  if (epsg == 4326) {
-    is_it <- TRUE
-  } else if (is.na(epsg)) {
+  if (is.na(epsg)) {
     is_it <- is_wgs84_proj4(prj4)
-    is_it <- is_it || is.na(is_it)
+    is_it <- is.na(is_it) || is_it
+  } else if (epsg == 4326) {
+    is_it <- TRUE
   } else {
     is_it <- FALSE
   }
