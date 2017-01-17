@@ -39,17 +39,17 @@ test_that("works with spatial", {
 })
 
 test_that("allows supplying a CRS with Spatial", {
-  expect_equal(proj4string(convert_crs(spdf, init_crs = "+init=epsg:3005")), 
+  expect_equal(proj4string(convert_crs(spdf, crs = "+init=epsg:3005")), 
                "+init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
 })
 
 test_that("allows supplying a CRS with sf", {
-  expect_equal(st_crs(convert_crs(sf, init_crs = 3005))[["proj4string"]], 
+  expect_equal(st_crs(convert_crs(sf, crs = 3005))[["proj4string"]], 
                "+proj=longlat +datum=WGS84 +no_defs")
 })
 
 test_that("allows supplying a CRS with sfc", {
-  expect_equal(st_crs(convert_crs(sfc, init_crs = 3005))[["proj4string"]], 
+  expect_equal(st_crs(convert_crs(sfc, crs = 3005))[["proj4string"]], 
                "+proj=longlat +datum=WGS84 +no_defs")
 })
 

@@ -145,7 +145,8 @@
 
 geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
                           group = NULL, file = "myfile.geojson", 
-                          overwrite = TRUE, precision = NULL, ...) {
+                          overwrite = TRUE, precision = NULL, 
+                          convert_crs = FALSE, crs = NULL, ...) {
   UseMethod("geojson_write")
 }
 
@@ -153,82 +154,105 @@ geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
 #' @export
 geojson_write.SpatialPolygons <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                           group = NULL, file = "myfile.geojson", 
-                                          overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, precision = precision, ...)
+                                          overwrite = TRUE, precision = NULL, 
+                                          convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, precision = precision, 
+                convert_crs = convert_crs, crs = crs, ...)
   return(as.geojson(file, "SpatialPolygons"))
 }
 
 #' @export
-geojson_write.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
+geojson_write.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                                   geometry = "point",
                                                    group = NULL, file = "myfile.geojson", 
-                                                   overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(input, file, precision = precision, ...)
+                                                   overwrite = TRUE, precision = NULL, 
+                                                   convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(input, file, precision = precision, convert_crs = convert_crs, 
+                crs = crs, ...)
   return(as.geojson(file, "SpatialPolygonsDataFrame"))
 }
 
 #' @export
 geojson_write.SpatialPoints <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                         group = NULL, file = "myfile.geojson", 
-                                        overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, ...)
+                                        overwrite = TRUE, precision = NULL, 
+                                        convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, 
+                convert_crs = convert_crs, crs = crs, ...)
   return(as.geojson(file, "SpatialPoints"))
 }
 
 #' @export
 geojson_write.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                  group = NULL, file = "myfile.geojson", 
-                                                 overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(input, file, precision = precision, ...)
+                                                 overwrite = TRUE, precision = NULL, 
+                                                 convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(input, file, precision = precision, convert_crs = convert_crs, 
+                crs = crs, ...)
   return(as.geojson(file, "SpatialPointsDataFrame"))
 }
 
 #' @export
 geojson_write.SpatialLines <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                        group = NULL, file = "myfile.geojson", 
-                                       overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(as(input, "SpatialLinesDataFrame"), file, precision = precision, ...)
+                                       overwrite = TRUE, precision = NULL, 
+                                       convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(as(input, "SpatialLinesDataFrame"), file, precision = precision, 
+                convert_crs = convert_crs, crs = crs, ...)
   return(as.geojson(file, "SpatialLines"))
 }
 
 #' @export
-geojson_write.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
+geojson_write.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                                geometry = "point",
                                                 group = NULL, file = "myfile.geojson", 
-                                                overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(input, file, precision = precision, ...)
+                                                overwrite = TRUE, precision = NULL, 
+                                                convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(input, file, precision = precision, convert_crs = convert_crs, 
+                crs = crs, ...)
   return(as.geojson(file, "SpatialLinesDataFrame"))
 }
 
 #' @export
 geojson_write.SpatialGrid <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                       group = NULL, file = "myfile.geojson", 
-                                      overwrite = TRUE, precision = NULL, ...) {
+                                      overwrite = TRUE, precision = NULL, 
+                                      convert_crs = FALSE, crs = NULL, ...) {
   size <- prod(input@grid@cells.dim)
   input <- SpatialGridDataFrame(input, data.frame(val = rep(1, size)))
-  write_geojson(input, file, precision = precision, ...)
+  write_geojson(input, file, precision = precision, convert_crs = convert_crs, 
+                crs = crs, ...)
   return(as.geojson(file, "SpatialGrid"))
 }
 
 #' @export
-geojson_write.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
+geojson_write.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                               geometry = "point",
                                                group = NULL, file = "myfile.geojson", 
-                                               overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, ...)
+                                               overwrite = TRUE, precision = NULL, 
+                                               convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, 
+                convert_crs = convert_crs, crs = crs, ...)
   return(as.geojson(file, "SpatialGridDataFrame"))
 }
 
 #' @export
 geojson_write.SpatialPixels <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                         group = NULL, file = "myfile.geojson", 
-                                        overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, ...)
+                                        overwrite = TRUE, precision = NULL, 
+                                        convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, 
+                convert_crs = convert_crs, crs = crs, ...)
   return(as.geojson(file, "SpatialPixels"))
 }
 
 #' @export
 geojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                  group = NULL, file = "myfile.geojson", 
-                                                 overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, ...)
+                                                 overwrite = TRUE, precision = NULL, 
+                                                 convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(as(input, "SpatialPointsDataFrame"), file, precision = precision, 
+                convert_crs = convert_crs, crs = crs, ...)
   return(as.geojson(file, "SpatialPixelsDataFrame"))
 }
 
@@ -236,34 +260,46 @@ geojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, 
 #' @export
 geojson_write.SpatialRings <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                        group = NULL, file = "myfile.geojson", 
-                                       overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, precision = precision, ...)
+                                       overwrite = TRUE, precision = NULL, 
+                                       convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, precision = precision, 
+                convert_crs = convert_crs, crs = crs, ...)
   return(as.geojson(file, "SpatialRings"))
 }
 
 #' @export
 geojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, geometry = "point",
                                                 group = NULL, file = "myfile.geojson", 
-                                                overwrite = TRUE, precision = NULL, ...) {
-  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, precision = precision, ...)
+                                                overwrite = TRUE, precision = NULL, 
+                                                convert_crs = FALSE, crs = NULL, ...) {
+  write_geojson(as(input, "SpatialPolygonsDataFrame"), file, precision = precision, 
+                convert_crs = convert_crs, crs = crs, ...)
   return(as.geojson(file, "SpatialRingsDataFrame"))
 }
 
 #' @export
-geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL, geometry = "point",
+geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL, 
+                                             geometry = "point",
                                              group = NULL, file = "myfile.geojson", 
-                                             overwrite = TRUE, precision = NULL, ...) {
-  ptfile <- iter_spatialcoll(input@pointobj, file, precision = precision, ...)
-  lfile <- iter_spatialcoll(input@lineobj, file, precision = precision, ...)
-  rfile <- iter_spatialcoll(input@ringobj, file, precision = precision, ...)
-  pyfile <- iter_spatialcoll(input@polyobj, file, precision = precision, ...)
+                                             overwrite = TRUE, precision = NULL, 
+                                             convert_crs = FALSE, crs = NULL, ...) {
+  ptfile <- iter_spatialcoll(input@pointobj, file, precision = precision, 
+                             convert_crs = convert_crs, crs = crs, ...)
+  lfile <- iter_spatialcoll(input@lineobj, file, precision = precision, 
+                            convert_crs = convert_crs, crs = crs, ...)
+  rfile <- iter_spatialcoll(input@ringobj, file, precision = precision, 
+                            convert_crs = convert_crs, crs = crs, ...)
+  pyfile <- iter_spatialcoll(input@polyobj, file, precision = precision, 
+                             convert_crs = convert_crs, crs = crs, ...)
   return(structure(list(ptfile, lfile, rfile, pyfile), class = "spatialcoll"))
 }
 
-iter_spatialcoll <- function(z, file, precision = NULL, ...) {
+iter_spatialcoll <- function(z, file, precision = NULL, convert_crs = FALSE, 
+                             crs = NULL...) {
   wfile <- sprintf("%s/%s_%s", dirname(file), class(z)[1], basename(file))
   if (!is.null(z)) {
-    geojson_write(z, file = wfile, precision = precision, ...)
+    geojson_write(z, file = wfile, precision = precision, 
+                  convert_crs = convert_crs, crs = crs, ...)
   }
 }
 
@@ -271,22 +307,24 @@ iter_spatialcoll <- function(z, file, precision = NULL, ...) {
 #' @export
 geojson_write.sf <- function(input, lat = NULL, lon = NULL, geometry = "point",
                              group = NULL, file = "myfile.geojson", 
-                             overwrite = TRUE, ...) {
-  geojson_write(geojson_list(input), file = file, overwrite = overwrite)
+                             overwrite = TRUE, convert_crs = FALSE, crs = NULL, ...) {
+  geojson_write(geojson_list(input, convert_crs = convert_crs, crs = crs), file = file, overwrite = overwrite, ...)
 }
 
 #' @export
 geojson_write.sfc <- function(input, lat = NULL, lon = NULL, geometry = "point",
                               group = NULL, file = "myfile.geojson", 
-                              overwrite = TRUE, ...) {
-  geojson_write(geojson_list(input), file = file, overwrite = overwrite)
+                              overwrite = TRUE, convert_crs = FALSE, crs = NULL, ...) {
+  geojson_write(geojson_list(input, convert_crs = convert_crs, crs = crs), 
+                file = file, overwrite = overwrite, ...)
 }
 
 #' @export
 geojson_write.sfg <- function(input, lat = NULL, lon = NULL, geometry = "point",
                               group = NULL, file = "myfile.geojson", 
-                              overwrite = TRUE, ...) {
-  geojson_write(geojson_list(input), file = file, overwrite = overwrite)
+                              overwrite = TRUE, convert_crs = FALSE, crs = NULL, ...) {
+  geojson_write(geojson_list(input, convert_crs = convert_crs, crs = crs), 
+                file = file, overwrite = overwrite, ...)
 }
 
 ## normal R classes -----------------

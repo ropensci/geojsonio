@@ -207,84 +207,102 @@
 #' geojson_json(c(-99.74,32.45)) %>% pretty
 #' }
 geojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
-                         geometry = "point", type='FeatureCollection', ...) {
+                         geometry = "point", type='FeatureCollection',
+                         convert_crs = FALSE, crs = NULL, ...) {
   UseMethod("geojson_json")
 }
 
 # spatial classes from sp --------------------------
 #' @export
 geojson_json.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                         geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+                                         geometry = "point",  type='FeatureCollection',
+                                         convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
-geojson_json.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                                  geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+geojson_json.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                                  group = NULL, geometry = "point",  
+                                                  type='FeatureCollection',
+                                                  convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
 geojson_json.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                       geometry = "point",  type='FeatureCollection', ...) {
+                                       geometry = "point",  type='FeatureCollection',
+                                       convert_crs = FALSE, crs = NULL, ...) {
   dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
-  class_json(geojson_rw(dat, target = "char"))
+  class_json(geojson_rw(dat, target = "char", convert_crs = convert_crs, crs = crs))
 }
 
 #' @export
-geojson_json.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                                geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+geojson_json.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                                group = NULL, geometry = "point",  
+                                                type='FeatureCollection',
+                                                convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
 geojson_json.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                      geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+                                      geometry = "point",  type='FeatureCollection',
+                                      convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
-geojson_json.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                               geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+geojson_json.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                               group = NULL, geometry = "point",  
+                                               type='FeatureCollection',
+                                               convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
 geojson_json.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                     geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+                                     geometry = "point",  type='FeatureCollection',
+                                     convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
-geojson_json.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                              geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+geojson_json.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                              group = NULL, geometry = "point",  
+                                              type='FeatureCollection',
+                                              convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
 geojson_json.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                       geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+                                       geometry = "point",  type='FeatureCollection',
+                                       convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
-geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                                geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                                group = NULL, geometry = "point",  
+                                                type='FeatureCollection',
+                                                convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 # sf classes ---------------------------------
 
 #' @export
 geojson_json.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
-                            geometry = "point",  type='FeatureCollection', ...) {
-  as.json(geojson_list(input))
+                            geometry = "point",  type='FeatureCollection',
+                            convert_crs = FALSE, crs = NULL, ...) {
+  as.json(geojson_list(input, convert_crs = convert_crs, crs = crs))
 }
 
 #' @export
 geojson_json.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
-                             geometry = "point",  type='FeatureCollection', ...) {
-  as.json(geojson_list(input))
+                             geometry = "point",  type='FeatureCollection',
+                             convert_crs = FALSE, crs = NULL, ...) {
+  as.json(geojson_list(input, convert_crs = convert_crs, crs = crs))
 }
 
 #' @export
@@ -296,20 +314,25 @@ geojson_json.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
 # spatial classes from rgeos --------------------------
 #' @export
 geojson_json.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                      geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+                                      geometry = "point",  type='FeatureCollection',
+                                      convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
-geojson_json.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                               geometry = "point",  type='FeatureCollection', ...) {
-  class_json(geojson_rw(input, target = "char"), ...)
+geojson_json.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, 
+                                               group = NULL, geometry = "point",  
+                                               type='FeatureCollection',
+                                               convert_crs = FALSE, crs = NULL, ...) {
+  class_json(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs), ...)
 }
 
 #' @export
-geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL, group = NULL,
-                                            geometry = "point",  type='FeatureCollection', ...) {
-  lapply(geojson_rw(input, target = "char", ...), class_json)
+geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL, 
+                                            group = NULL, geometry = "point",  
+                                            type='FeatureCollection',
+                                            convert_crs = FALSE, crs = NULL, ...) {
+  lapply(geojson_rw(input, target = "char", convert_crs = convert_crs, crs = crs, ...), class_json)
 }
 
 # regular R classes --------------------------
