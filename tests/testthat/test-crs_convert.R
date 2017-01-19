@@ -76,7 +76,7 @@ test_that("is_wgs84 works with Spatial", {
   expect_warning(is_wgs84(spdf_3005), "WGS84")
 })
 
-test_that("convert_crs works with Spatial classes", {
+test_that("geojson_list: convert_crs works with Spatial classes", {
   expect_equal(geojson_list(spdf_4326, convert_crs = TRUE), 
                geojson_list(spdf_4326, convert_crs = FALSE))
   expect_equal(geojson_list(spdf_4326), 
@@ -88,7 +88,7 @@ test_that("convert_crs works with Spatial classes", {
                geojson_list(spdf_3005, convert_crs = TRUE, crs = 3005))
 })
 
-test_that("convert_crs works with sf classes", {
+test_that("geojson_list: convert_crs works with sf classes", {
   expect_equal(geojson_list(sf_4326, convert_crs = TRUE), 
                geojson_list(sf_4326, convert_crs = FALSE))
   expect_equal(geojson_list(sf_4326), 
@@ -98,4 +98,28 @@ test_that("convert_crs works with sf classes", {
                geojson_list(sf_3005, convert_crs = TRUE, crs = "+init=epsg:3005"))
   expect_equal(geojson_list(sf_4326), 
                geojson_list(sf_3005, convert_crs = TRUE, crs = 3005))
+})
+
+test_that("geojson_json: convert_crs works with Spatial classes", {
+  expect_equal(geojson_json(spdf_4326, convert_crs = TRUE), 
+               geojson_json(spdf_4326, convert_crs = FALSE))
+  expect_equal(geojson_json(spdf_4326), 
+               geojson_json(spdf_3005, convert_crs = TRUE))
+  proj4string(spdf_3005) <- NA_character_
+  expect_equal(geojson_json(spdf_4326), 
+               geojson_json(spdf_3005, convert_crs = TRUE, crs = "+init=epsg:3005"))
+  expect_equal(geojson_json(spdf_4326), 
+               geojson_json(spdf_3005, convert_crs = TRUE, crs = 3005))
+})
+
+test_that("geojson_json: convert_crs works with sf classes", {
+  expect_equal(geojson_json(sf_4326, convert_crs = TRUE), 
+               geojson_json(sf_4326, convert_crs = FALSE))
+  expect_equal(geojson_json(sf_4326), 
+               geojson_json(sf_3005, convert_crs = TRUE))
+  st_crs(sf_3005) <- NA_crs_
+  expect_equal(geojson_json(sf_4326), 
+               geojson_json(sf_3005, convert_crs = TRUE, crs = "+init=epsg:3005"))
+  expect_equal(geojson_json(sf_4326), 
+               geojson_json(sf_3005, convert_crs = TRUE, crs = 3005))
 })
