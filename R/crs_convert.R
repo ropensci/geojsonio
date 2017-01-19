@@ -15,7 +15,8 @@ convert_crs.Spatial <- function(x, crs = NULL) {
   
   if (is.na(is_it)) {
     if (!is.null(crs)) {
-      sp::proj4string(x) <- CRS(crs)
+      if (is.numeric(crs)) crs <- paste0("+init=epsg:",crs)
+      sp::proj4string(x) <- sp::CRS(crs)
     }
   } else if (is_it) {
     return(x)
