@@ -297,7 +297,7 @@ geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL,
 }
 
 iter_spatialcoll <- function(z, file, precision = NULL, convert_crs = FALSE, 
-                             crs = NULL...) {
+                             crs = NULL, ...) {
   wfile <- sprintf("%s/%s_%s", dirname(file), class(z)[1], basename(file))
   if (!is.null(z)) {
     geojson_write(z, file = wfile, precision = precision, 
@@ -309,14 +309,16 @@ iter_spatialcoll <- function(z, file, precision = NULL, convert_crs = FALSE,
 #' @export
 geojson_write.sf <- function(input, lat = NULL, lon = NULL, geometry = "point",
                              group = NULL, file = "myfile.geojson", 
-                             overwrite = TRUE, convert_crs = FALSE, crs = NULL, ...) {
+                             overwrite = TRUE, precision = NULL,
+                             convert_crs = FALSE, crs = NULL, ...) {
   geojson_write(geojson_list(input, convert_crs = convert_crs, crs = crs), file = file, overwrite = overwrite, ...)
 }
 
 #' @export
 geojson_write.sfc <- function(input, lat = NULL, lon = NULL, geometry = "point",
                               group = NULL, file = "myfile.geojson", 
-                              overwrite = TRUE, convert_crs = FALSE, crs = NULL, ...) {
+                              overwrite = TRUE, precision = NULL,
+                              convert_crs = FALSE, crs = NULL, ...) {
   geojson_write(geojson_list(input, convert_crs = convert_crs, crs = crs), 
                 file = file, overwrite = overwrite, ...)
 }
@@ -324,7 +326,8 @@ geojson_write.sfc <- function(input, lat = NULL, lon = NULL, geometry = "point",
 #' @export
 geojson_write.sfg <- function(input, lat = NULL, lon = NULL, geometry = "point",
                               group = NULL, file = "myfile.geojson", 
-                              overwrite = TRUE, convert_crs = FALSE, crs = NULL, ...) {
+                              overwrite = TRUE, precision = NULL,
+                              convert_crs = FALSE, crs = NULL, ...) {
   geojson_write(geojson_list(input, convert_crs = convert_crs, crs = crs), 
                 file = file, overwrite = overwrite, ...)
 }
