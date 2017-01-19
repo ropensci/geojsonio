@@ -11,6 +11,8 @@
 #' GeometryCollection.
 #' @param group (character) A grouping variable to perform grouping for polygons - doesn't apply
 #' for points
+#' @param convert_crs Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate referece system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude unitsof decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.
+#' @param crs The CRS of the input if it is not already defined. For \code{sf} objects this can be an epsg code as a four or five digit integer or a valid proj4 string. For \code{Spatial} obects it must be a valid proj4 string. This argument will be ignored if \code{convert_crs} is \code{FALSE} or the object already has a CRS.
 #' @param ... Ignored
 #'
 #' @details This function creates a geojson structure as an R list; it does not write a file

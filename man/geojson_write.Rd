@@ -6,7 +6,7 @@
 \usage{
 geojson_write(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.geojson", overwrite = TRUE,
-  precision = NULL, ...)
+  precision = NULL, convert_crs = FALSE, crs = NULL, ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, spatial class, or sf class. Inputs can also be
@@ -34,6 +34,10 @@ the file already exists, we stop with error message.}
 \item{precision}{desired number of decimal places for the coordinates in the
 geojson file. Using fewer decimal places can decrease file sizes (at the
 cost of precision).}
+
+\item{convert_crs}{Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate referece system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude unitsof decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.}
+
+\item{crs}{The CRS of the input if it is not already defined. For \code{sf} objects this can be an epsg code as a four or five digit integer or a valid proj4 string. For \code{Spatial} obects it must be a valid proj4 string. This argument will be ignored if \code{convert_crs} is \code{FALSE} or the object already has a CRS.}
 
 \item{...}{Further args passed on to \code{\link[rgdal]{writeOGR}}}
 }
