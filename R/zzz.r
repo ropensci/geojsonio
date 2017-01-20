@@ -265,17 +265,25 @@ spdftogeolist <- function(x){
   }
 }
 
-write_geojson <- function(input, file = "myfile.geojson", precision = NULL, overwrite = TRUE, ...){
+write_geojson <- function(input, file = "myfile.geojson", precision = NULL, 
+                          overwrite = TRUE, convert_wgs84 = FALSE, crs = NULL, ...){
   if (!grepl("\\.geojson$", file)) {
     file <- paste0(file, ".geojson")
   }
   file <- path.expand(file)
   destpath <- dirname(file)
   if (!file.exists(destpath)) dir.create(destpath)
-  write_ogr(input, tempfile(), file, precision, overwrite, ...)
+  write_ogr(input, tempfile(), file, precision, overwrite, 
+            convert_wgs84 = convert_wgs84, crs = crs, ...)
 }
 
-write_ogr <- function(input, dir, file, precision = NULL, overwrite, ...){
+write_ogr <- function(input, dir, file, precision = NULL, overwrite, 
+                      convert_wgs84 = FALSE, crs = NULL, ...){
+  
+  if (convert_wgs84) {
+    input <- convert_wgs84(input, crs = crs)
+  }
+  
   input@data <- convert_ordered(input@data)
   dots <- list(...)
   if (!is.null(precision)) {
@@ -300,7 +308,8 @@ convert_ordered <- function(df) {
   return(df)
 }
 
-geojson_rw <- function(input, target = c("char", "list"), ...){
+geojson_rw <- function(input, target = c("char", "list"), 
+                       convert_wgs84 = FALSE, crs = NULL, ...){
 
   read_fun <- switch(target, 
                      char = geojson_file_to_char, 
@@ -308,12 +317,14 @@ geojson_rw <- function(input, target = c("char", "list"), ...){
   
   if (inherits(input, "SpatialCollections")) {
     tmp <- tempfile(fileext = ".geojson")
-    tmp2 <- suppressMessages(geojson_write(input, file = tmp))
+    tmp2 <- suppressMessages(geojson_write(input, file = tmp, 
+                                           convert_wgs84 = convert_wgs84, crs = crs))
     paths <- vapply(tg_compact(tmp2), "[[", "", "path")
     lapply(paths, read_fun, ...)
   } else {
     tmp <- tempfile(fileext = ".geojson")
-    suppressMessages(geojson_write(input, file = tmp))
+    suppressMessages(geojson_write(input, file = tmp, 
+                                   convert_wgs84 = convert_wgs84, crs = crs))
     read_fun(tmp, ...)
   }
 }

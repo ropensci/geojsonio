@@ -1,23 +1,14 @@
 context("sf classes")
-suppressPackageStartupMessages(library(sf, quietly = TRUE))
+suppressPackageStartupMessages(library(sf))
 
 file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
 testfc <- st_read(file, quiet = TRUE)
 
 test_that("fc utility functions work", {
-  expect_equal(get_epsg(testfc), 4326)
-  expect_equal(get_epsg(testfc$geometry), 4326)
   expect_equal(get_sf_column_name(testfc), "geometry")
-  expect_true(is_wgs84(testfc))
   
   expect_equal(get_geometry_type(testfc$geometry), "GEOMETRY")
   expect_equal(switch_geom_type(get_geometry_type(testfc$geometry)), "GeometryCollection")
-  
-  testfc_3005 <- st_transform(testfc, 3005)
-  expect_false(suppressWarnings(is_wgs84(testfc_3005)))
-  expect_warning(is_wgs84(testfc_3005), "WGS84")
-  # expect_message(detect_convert_crs(testfc_3005), "EPSG:3005 to WGS84")
-  # expect_true(is_wgs84(suppressMessages(detect_convert_crs(testfc_3005))))
 })
 
 ## POINT
