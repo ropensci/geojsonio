@@ -266,7 +266,7 @@ spdftogeolist <- function(x){
 }
 
 write_geojson <- function(input, file = "myfile.geojson", precision = NULL, 
-                          overwrite = TRUE, convert_crs = FALSE, crs = NULL, ...){
+                          overwrite = TRUE, convert_wgs84 = FALSE, crs = NULL, ...){
   if (!grepl("\\.geojson$", file)) {
     file <- paste0(file, ".geojson")
   }
@@ -274,14 +274,14 @@ write_geojson <- function(input, file = "myfile.geojson", precision = NULL,
   destpath <- dirname(file)
   if (!file.exists(destpath)) dir.create(destpath)
   write_ogr(input, tempfile(), file, precision, overwrite, 
-            convert_crs = convert_crs, crs = crs, ...)
+            convert_wgs84 = convert_wgs84, crs = crs, ...)
 }
 
 write_ogr <- function(input, dir, file, precision = NULL, overwrite, 
-                      convert_crs = FALSE, crs = NULL, ...){
+                      convert_wgs84 = FALSE, crs = NULL, ...){
   
-  if (convert_crs) {
-    input <- convert_crs(input, crs = crs)
+  if (convert_wgs84) {
+    input <- convert_wgs84(input, crs = crs)
   }
   
   input@data <- convert_ordered(input@data)
@@ -309,7 +309,7 @@ convert_ordered <- function(df) {
 }
 
 geojson_rw <- function(input, target = c("char", "list"), 
-                       convert_crs = FALSE, crs = NULL, ...){
+                       convert_wgs84 = FALSE, crs = NULL, ...){
 
   read_fun <- switch(target, 
                      char = geojson_file_to_char, 
@@ -318,13 +318,13 @@ geojson_rw <- function(input, target = c("char", "list"),
   if (inherits(input, "SpatialCollections")) {
     tmp <- tempfile(fileext = ".geojson")
     tmp2 <- suppressMessages(geojson_write(input, file = tmp, 
-                                           convert_crs = convert_crs, crs = crs))
+                                           convert_wgs84 = convert_wgs84, crs = crs))
     paths <- vapply(tg_compact(tmp2), "[[", "", "path")
     lapply(paths, read_fun, ...)
   } else {
     tmp <- tempfile(fileext = ".geojson")
     suppressMessages(geojson_write(input, file = tmp, 
-                                   convert_crs = convert_crs, crs = crs))
+                                   convert_wgs84 = convert_wgs84, crs = crs))
     read_fun(tmp, ...)
   }
 }

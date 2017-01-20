@@ -1,16 +1,16 @@
-convert_crs <- function(x, crs = NULL) {
-  UseMethod("convert_crs")
+convert_wgs84 <- function(x, crs = NULL) {
+  UseMethod("convert_wgs84")
 }
 
-convert_crs.sf <- function(x, crs = NULL) {
-  convert_crs_sf_sfc(x, crs = crs)
+convert_wgs84.sf <- function(x, crs = NULL) {
+  convert_wgs84_sf_sfc(x, crs = crs)
 }
 
-convert_crs.sfc <- function(x, crs = NULL) {
-  convert_crs_sf_sfc(x, crs = crs)
+convert_wgs84.sfc <- function(x, crs = NULL) {
+  convert_wgs84_sf_sfc(x, crs = crs)
 }
 
-convert_crs.Spatial <- function(x, crs = NULL) {
+convert_wgs84.Spatial <- function(x, crs = NULL) {
   is_it <- is_wgs84(x, warn = FALSE)
   
   if (is.na(is_it)) {
@@ -25,7 +25,7 @@ convert_crs.Spatial <- function(x, crs = NULL) {
   sp::spTransform(x, CRS("+init=epsg:4326"))
 }
 
-convert_crs_sf_sfc <- function(x, crs) {
+convert_wgs84_sf_sfc <- function(x, crs) {
   is_it <- is_wgs84(x, warn = FALSE)
   
   if (is.na(is_it)) {

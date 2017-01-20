@@ -11,8 +11,8 @@
 #' GeometryCollection.
 #' @param group (character) A grouping variable to perform grouping for polygons - doesn't apply
 #' for points
-#' @param convert_crs Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate referece system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude unitsof decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.
-#' @param crs The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_crs} is \code{FALSE} or the object already has a CRS.
+#' @param convert_wgs84 Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate referece system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude unitsof decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.
+#' @param crs The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.
 #' @param ... Ignored
 #'
 #' @details This function creates a geojson structure as an R list; it does not write a file
@@ -195,7 +195,7 @@
 
 geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
                          geometry = "point", type = "FeatureCollection",
-                         convert_crs = FALSE, crs = NULL, ...) {
+                         convert_wgs84 = FALSE, crs = NULL, ...) {
   UseMethod("geojson_list")
 }
 
@@ -203,8 +203,8 @@ geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
                                          geometry = "point", type = "FeatureCollection",
-                                         convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                         convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPolygons")
 }
 
@@ -212,33 +212,33 @@ geojson_list.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = 
 geojson_list.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                   group = NULL, geometry = "point", 
                                                   type = "FeatureCollection",
-                                                  convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                                  convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPolygonsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point", type = "FeatureCollection",
-                                       convert_crs = FALSE, crs = NULL, ...) {
+                                       convert_wgs84 = FALSE, crs = NULL, ...) {
   dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
-  as.geo_list(geojson_rw(dat, target = "list", convert_crs = convert_crs, crs = crs), "SpatialPoints")
+  as.geo_list(geojson_rw(dat, target = "list", convert_wgs84 = convert_wgs84, crs = crs), "SpatialPoints")
 }
 
 #' @export
 geojson_list.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                 group = NULL, geometry = "point", 
                                                 type = "FeatureCollection",
-                                                convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                                convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPointsDataFrame")
 }
 
 #' @export
 geojson_list.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point", type = "FeatureCollection",
-                                      convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                      convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialLines")
 }
 
@@ -246,16 +246,16 @@ geojson_list.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NUL
 geojson_list.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                group = NULL, geometry = "point", 
                                                type = "FeatureCollection",
-                                               convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                               convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialLinesDataFrame")
 }
 
 #' @export
 geojson_list.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL,
                                      geometry = "point", type = "FeatureCollection",
-                                     convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                     convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialGrid")
 }
 
@@ -263,16 +263,16 @@ geojson_list.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL
 geojson_list.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, 
                                               group = NULL, geometry = "point", 
                                               type = "FeatureCollection",
-                                              convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                              convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialGridDataFrame")
 }
 
 #' @export
 geojson_list.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point",  type='FeatureCollection',
-                                       convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                       convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPixels")
 }
 
@@ -280,8 +280,8 @@ geojson_list.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NU
 geojson_list.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                 group = NULL, geometry = "point", 
                                                 type = "FeatureCollection",
-                                                convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                                convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPixelsDataFrame")
 }
 
@@ -289,8 +289,8 @@ geojson_list.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point",  type='FeatureCollection',
-                                      convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                      convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialRings")
 }
 
@@ -298,8 +298,8 @@ geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NUL
 geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                group = NULL, geometry = "point", 
                                                type = "FeatureCollection",
-                                               convert_crs = FALSE, crs = NULL, ...) {
-  as.geo_list(geojson_rw(input, target = "list", convert_crs = convert_crs, crs = crs),
+                                               convert_wgs84 = FALSE, crs = NULL, ...) {
+  as.geo_list(geojson_rw(input, target = "list", convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialRingsDataFrame")
 }
 
@@ -307,15 +307,15 @@ geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL,
 geojson_list.SpatialCollections <- function(input, lat = NULL, lon = NULL, 
                                             group = NULL, geometry = "point", 
                                             type = "FeatureCollection",
-                                            convert_crs = FALSE, crs = NULL, ...) {
+                                            convert_wgs84 = FALSE, crs = NULL, ...) {
   pt <- donotnull(input@pointobj, geojson_rw, target = "list", 
-                  convert_crs = convert_crs, crs = crs)
+                  convert_wgs84 = convert_wgs84, crs = crs)
   ln <- donotnull(input@lineobj, geojson_rw, target = "list", 
-                  convert_crs = convert_crs, crs = crs)
+                  convert_wgs84 = convert_wgs84, crs = crs)
   rg <- donotnull(input@ringobj, geojson_rw, target = "list", 
-                  convert_crs = convert_crs, crs = crs)
+                  convert_wgs84 = convert_wgs84, crs = crs)
   py <- donotnull(input@polyobj, geojson_rw, target = "list", 
-                  convert_crs = convert_crs, crs = crs)
+                  convert_wgs84 = convert_wgs84, crs = crs)
   alldat <- tg_compact(list(SpatialPoints = pt, SpatialLines = ln, 
                             SpatialRings = rg, SpatialPolygons = py))
   as.geo_list(alldat, "SpatialCollections")
@@ -334,9 +334,9 @@ donotnull <- function(x, fun, ...) {
 #' @export
 geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                             geometry = "point", type = "FeatureCollection",
-                            convert_crs = FALSE, crs = NULL, ...) {
-  if (convert_crs) {
-    input <- convert_crs(input, crs)
+                            convert_wgs84 = FALSE, crs = NULL, ...) {
+  if (convert_wgs84) {
+    input <- convert_wgs84(input, crs)
   }
   
   sf_col <- get_sf_column_name(input)
@@ -363,9 +363,9 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection",
-                             convert_crs = FALSE, crs = NULL, ...) {
-  if (convert_crs) {
-    input <- convert_crs(input, crs)
+                             convert_wgs84 = FALSE, crs = NULL, ...) {
+  if (convert_wgs84) {
+    input <- convert_wgs84(input, crs)
   }
   ## A GeometryCollection except if length 1, then just return the geometry
   
@@ -381,7 +381,7 @@ geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection",
-                             convert_crs = FALSE, crs = NULL, ...) {
+                             convert_wgs84 = FALSE, crs = NULL, ...) {
   
   type <-  switch_geom_type(get_geometry_type(input))
   
