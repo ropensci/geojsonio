@@ -1,5 +1,5 @@
 context("sf classes")
-suppressPackageStartupMessages(library(sf, quietly = TRUE))
+suppressPackageStartupMessages(library(sf))
 
 file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
 testfc <- st_read(file, quiet = TRUE)

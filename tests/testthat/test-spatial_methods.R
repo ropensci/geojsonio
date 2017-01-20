@@ -1,7 +1,7 @@
 context("spatial-methods")
 
-library("sp")
-library("rgeos")
+suppressPackageStartupMessages(library("sp"))
+suppressPackageStartupMessages(library("rgeos"))
 
 sp_poly <- local({
   poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
