@@ -116,8 +116,8 @@ test_that("geojson_json: convert_crs works with Spatial classes", {
 })
 
 test_that("geojson_json: convert_crs works with sf classes", {
-  expect_equal(geojson_json(sf_4326, convert_crs = TRUE), 
-               geojson_json(sf_4326, convert_crs = FALSE))
+  expect_equal(geojson_list(geojson_json(sf_4326, convert_crs = TRUE)), 
+                            geojson_list(geojson_json(sf_4326, convert_crs = FALSE)))
   expect_equal(geojson_list(geojson_json(sf_4326)), 
                geojson_list(geojson_json(sf_3005, convert_crs = TRUE)))
   st_crs(sf_3005) <- NA_crs_
@@ -127,4 +127,34 @@ test_that("geojson_json: convert_crs works with sf classes", {
                                                crs = "+init=epsg:3005")))
   expect_equal(geojson_list(geojson_json(sf_4326)), 
                geojson_list(geojson_json(sf_3005, convert_crs = TRUE, crs = 3005)))
+})
+
+file_list <- function(x) geojson_read(x$path, method = "local", what = "list")
+
+test_that("geojson_write: convert_crs works with Spatial classes", {
+  expect_equal(file_list(geojson_write(spdf_4326, convert_crs = TRUE)), 
+               file_list(geojson_write(spdf_4326, convert_crs = FALSE)))
+  expect_equal(file_list(geojson_write(spdf_4326)), 
+               file_list(geojson_write(spdf_3005, convert_crs = TRUE)))
+  proj4string(spdf_3005) <- NA_character_
+  expect_equal(file_list(geojson_write(spdf_4326)), 
+               file_list(geojson_write(spdf_3005, 
+                                         convert_crs = TRUE, 
+                                         crs = "+init=epsg:3005")))
+  expect_equal(file_list(geojson_write(spdf_4326)), 
+               file_list(geojson_write(spdf_3005, convert_crs = TRUE, crs = 3005)))
+})
+
+test_that("geojson_write: convert_crs works with sf classes", {
+  expect_equal(file_list(geojson_write(sf_4326, convert_crs = TRUE)), 
+                         file_list(geojson_write(sf_4326, convert_crs = FALSE)))
+  expect_equal(file_list(geojson_write(sf_4326)), 
+               file_list(geojson_write(sf_3005, convert_crs = TRUE)))
+  st_crs(sf_3005) <- NA_crs_
+  expect_equal(file_list(geojson_write(sf_4326)), 
+               file_list(geojson_write(sf_3005, 
+                                         convert_crs = TRUE, 
+                                         crs = "+init=epsg:3005")))
+  expect_equal(file_list(geojson_write(sf_4326)), 
+               file_list(geojson_write(sf_3005, convert_crs = TRUE, crs = 3005)))
 })
