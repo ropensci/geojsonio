@@ -1,6 +1,7 @@
 context("detect and convert crs")
 suppressPackageStartupMessages(library(sf))
 suppressPackageStartupMessages(library(sp))
+library(jsonlite)
 
 sfc <-  st_sfc(st_point(c(0,0)), st_point(c(1,1)))
 sf <-  st_sf(a = 1:2, geom = sfc)
@@ -101,25 +102,29 @@ test_that("geojson_list: convert_crs works with sf classes", {
 })
 
 test_that("geojson_json: convert_crs works with Spatial classes", {
-  expect_equal(geojson_json(spdf_4326, convert_crs = TRUE), 
-               geojson_json(spdf_4326, convert_crs = FALSE))
-  expect_equal(geojson_json(spdf_4326), 
-               geojson_json(spdf_3005, convert_crs = TRUE))
+  expect_equal(jsonlite::fromJSON(geojson_json(spdf_4326, convert_crs = TRUE)), 
+               jsonlite::fromJSON(geojson_json(spdf_4326, convert_crs = FALSE)))
+  expect_equal(jsonlite::fromJSON(geojson_json(spdf_4326)), 
+               jsonlite::fromJSON(geojson_json(spdf_3005, convert_crs = TRUE)))
   proj4string(spdf_3005) <- NA_character_
-  expect_equal(geojson_json(spdf_4326), 
-               geojson_json(spdf_3005, convert_crs = TRUE, crs = "+init=epsg:3005"))
-  expect_equal(geojson_json(spdf_4326), 
-               geojson_json(spdf_3005, convert_crs = TRUE, crs = 3005))
+  expect_equal(jsonlite::fromJSON(geojson_json(spdf_4326)), 
+               jsonlite::fromJSON(geojson_json(spdf_3005, 
+                                               convert_crs = TRUE, 
+                                               crs = "+init=epsg:3005")))
+  expect_equal(jsonlite::fromJSON(geojson_json(spdf_4326)), 
+               jsonlite::fromJSON(geojson_json(spdf_3005, convert_crs = TRUE, crs = 3005)))
 })
 
 test_that("geojson_json: convert_crs works with sf classes", {
   expect_equal(geojson_json(sf_4326, convert_crs = TRUE), 
                geojson_json(sf_4326, convert_crs = FALSE))
-  expect_equal(geojson_json(sf_4326), 
-               geojson_json(sf_3005, convert_crs = TRUE))
+  expect_equal(jsonlite::fromJSON(geojson_json(sf_4326)), 
+               jsonlite::fromJSON(geojson_json(sf_3005, convert_crs = TRUE)))
   st_crs(sf_3005) <- NA_crs_
-  expect_equal(geojson_json(sf_4326), 
-               geojson_json(sf_3005, convert_crs = TRUE, crs = "+init=epsg:3005"))
-  expect_equal(geojson_json(sf_4326), 
-               geojson_json(sf_3005, convert_crs = TRUE, crs = 3005))
+  expect_equal(jsonlite::fromJSON(geojson_json(sf_4326)), 
+               jsonlite::fromJSON(geojson_json(sf_3005, 
+                                               convert_crs = TRUE, 
+                                               crs = "+init=epsg:3005")))
+  expect_equal(jsonlite::fromJSON(geojson_json(sf_4326)), 
+               jsonlite::fromJSON(geojson_json(sf_3005, convert_crs = TRUE, crs = 3005)))
 })
