@@ -336,7 +336,7 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                             geometry = "point", type = "FeatureCollection",
                             convert_crs = FALSE, crs = NULL, ...) {
   if (convert_crs) {
-  input <- convert_crs(input, crs)
+    input <- convert_crs(input, crs)
   }
   
   sf_col <- get_sf_column_name(input)
