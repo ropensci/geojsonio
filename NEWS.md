@@ -20,13 +20,13 @@ instead of importing them
 clarifying what the options are for (#93) thanks @bhaskarvk
 * Internal fxn `to_json` now defaults to 7 digits, which is used in 
 `as.json` and `geojson_json` (#96)
-* Fix to `geojson_read` to read non-`.geojson` extensions (#93)
-thanks @bhaskarvk
 
 ## BUG FIXES
 
 * Fix to `geojson_read` to read correctly from a URL - in addition
 to file paths (#91) (#92) thanks @lecy
+* Fix to `geojson_read` to read non-`.geojson` extensions (#93)
+thanks @bhaskarvk
 
 
 geojsonio 0.2.0

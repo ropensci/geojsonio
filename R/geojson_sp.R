@@ -18,6 +18,8 @@
 #' \code{\link[rgdal]{readOGR}}.
 #' 
 #' @examples \dontrun{
+#' library(sp)
+#' 
 #' # geo_list ------------------
 #' ## From a numeric vector of length 2 to a point
 #' vec <- c(-99.74,32.45)
