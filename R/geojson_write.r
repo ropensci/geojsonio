@@ -349,7 +349,7 @@ geojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "poi
 num2df <- function(x, lat, lon) {
   if (is.null(lat)) lat <- "lat"
   if (is.null(lon)) lon <- "lon"
-  setNames(data.frame(rbind(x), stringsAsFactors = FALSE, row.names = NULL), c(lat, lon))
+  stats::setNames(data.frame(rbind(x), stringsAsFactors = FALSE, row.names = NULL), c(lat, lon))
 }
 
 #' @export

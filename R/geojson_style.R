@@ -174,7 +174,7 @@ geojson_style.list <- function(input, var = NULL,
                          `fill` = fill_vec,
                          `fill-opacity` = fill_opacity_vec))
   for (i in seq_along(dat)) {
-    input <- Map(function(x, y, z) c(x, setNames(list(y), z)), input, dat[[i]], names(dat[i]))
+    input <- Map(function(x, y, z) c(x, stats::setNames(list(y), z)), input, dat[[i]], names(dat[i]))
   }
   
   return(input)

@@ -244,7 +244,7 @@ map_leaf.list <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner
     input <- rbind_fill(lapply(input, data.frame, stringsAsFactors = FALSE))
   } else {
     input <- rbind_fill(lapply(input, function(z) {
-      data.frame(as.list(setNames(z, c('lng', 'lat'))), stringsAsFactors = FALSE) 
+      data.frame(as.list(stats::setNames(z, c('lng', 'lat'))), stringsAsFactors = FALSE) 
     }))
   }
   petiole(input, bounds = df_bounds(input, lat, lon), basemap, ...)

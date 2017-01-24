@@ -29,7 +29,7 @@ list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCol
              coordinates = get_vals(l, lat, lon))
       }
     })
-    z <- setNames(Filter(function(x) !is.null(x), z), NULL)
+    z <- stats::setNames(Filter(function(x) !is.null(x), z), NULL)
     structure(list(type, z), .Names = c('type', nn))
   } else {
     if (!unnamed) {
@@ -72,7 +72,7 @@ get_vals2 <- function(v, unnamed, lat, lon){
 
 get_vals <- function(v, lat, lon){
   tt <- tryCatch(v[[lon]], error = function(e) e)
-  if (is(tt, "simpleError")) {
+  if (inherits(tt, "simpleError")) {
     as.numeric(v)
   } else {
     as.numeric(c(v[[lon]], v[[lat]]))
@@ -88,7 +88,7 @@ df_to_geo_list <- function(x, lat, lon, geometry, type, group, ...){
 num_to_geo_list <- function(x, geometry = "point", type = "FeatureCollection"){
   geom <- capwords(match.arg(geometry, c("point", "polygon")))
   res <- tryCatch(as.numeric(x), warning = function(e) e)
-  if (is(res, "simpleWarning")) {
+  if (inherits(res, "simpleWarning")) {
     stop("Coordinates are not numeric", call. = FALSE)
   } else {
     switch(type,
@@ -215,7 +215,7 @@ lines_to_geo_list <- function(x, object="FeatureCollection"){
              properties = datdat(x, l) )
       }
     })
-    z <- setNames(Filter(function(x) !is.null(x), z), NULL)
+    z <- stats::setNames(Filter(function(x) !is.null(x), z), NULL)
     structure(list(object, z), .Names = c('type', nn))
   }
 }
@@ -226,7 +226,7 @@ datdat <- function(x, l){
 }
 
 splinestogeolist <- function(x, object){
-  if (is(x, "SpatialLinesDataFrame")) {
+  if (inherits(x, "SpatialLinesDataFrame")) {
     lines_to_geo_list(x, object)
   } else {
     if ( length(x@lines) == 1 ) {
@@ -249,12 +249,12 @@ splinestogeolist <- function(x, object){
 }
 
 spdftogeolist <- function(x){
-  if (is(x, "SpatialPointsDataFrame") || is(x, "SpatialGridDataFrame")) {
+  if (inherits(x, "SpatialPointsDataFrame") || inherits(x, "SpatialGridDataFrame")) {
     #nms <- dimnames(x)[[2]]
     nms <- suppressMessages(guess_latlon(names(data.frame(x))))
     temp <- apply(data.frame(x), 1, as.list)
     list_to_geo_list(temp, nms$lat, nms$lon, NULL, type = "FeatureCollection")
-  } else if (is(x, "SpatialPolygonsDataFrame")) {
+  } else if (inherits(x, "SpatialPolygonsDataFrame")) {
     geojson_list(x)
   } else {
     list(type = "MultiPoint",
@@ -302,7 +302,7 @@ write_ogr <- function(input, dir, file, precision = NULL, overwrite,
 
 convert_ordered <- function(df) {
   df[] <- lapply(df, function(x) {
-    if (is(x, "ordered")) x <- as.character(x)
+    if (inherits(x, "ordered")) x <- as.character(x)
     x
   })
   return(df)
