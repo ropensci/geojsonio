@@ -1,9 +1,32 @@
-gejsonio 0.2.0.9250
-===================
+gejsonio 0.3.0
+==============
+
+### NEW FEATURES
+
+* `geojson_json`, `geojson_list`, and `geojson_write` gain new S3 methods: 
+`sf`, `sfc`, and `sfg` - the three classes in the `sf` package (#95)
+* `geojson_json`, `geojson_list`, and `geojson_write` gain two new 
+parameters each: `convert_wgs84` (boolean) to convert to WGS84 or not (the 
+projection assumed for GeoJSON)  and `crs` to assign a CRS if known 
+(#101) (#102)
 
 ### MINOR IMPROVEMENTS
 
-* `geojson_json()` for non-sp classes now only keeps seven decimal places in the coordinates. This follows the default that GDAL uses.
+* `geojson_json()` for non-sp classes now only keeps seven decimal places 
+in the coordinates. This follows the default that GDAL uses.
+* Now namespacing base package calls for `methods`/`stats`/`utils`
+instead of importing them
+* Improved documentation for `method` parameter in `geojson_read`
+clarifying what the options are for (#93) thanks @bhaskarvk
+* Internal fxn `to_json` now defaults to 7 digits, which is used in 
+`as.json` and `geojson_json` (#96)
+* Fix to `geojson_read` to read non-`.geojson` extensions (#93)
+thanks @bhaskarvk
+
+## BUG FIXES
+
+* Fix to `geojson_read` to read correctly from a URL - in addition
+to file paths (#91) (#92) thanks @lecy
 
 
 geojsonio 0.2.0
