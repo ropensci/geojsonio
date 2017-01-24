@@ -17,4 +17,4 @@ myfile.geojson
 ^cran-comments\.md$
 ^revdep$
 man-roxygen
-
+^\.httr-oauth$
