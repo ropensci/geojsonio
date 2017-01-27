@@ -18,6 +18,8 @@
 
 * I have run R CMD check on the 5 downstream dependencies.
   (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>). 
+  There was a problem in one downstream package, but the maintainer knows 
+  about it.
 * All revdep maintainers were notified of the release.
 
 -------
