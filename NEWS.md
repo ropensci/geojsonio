@@ -1,3 +1,12 @@
+gejsonio 0.3.2
+==============
+
+### BUG FIXES
+
+* Fix to xxx (#xx)
+* Fix to xxx (#xx)
+
+
 gejsonio 0.3.0
 ==============
 

@@ -39,7 +39,7 @@ convert_wgs84_sf_sfc <- function(x, crs) {
     stop("You don't have the 'sf' package installed. Please install and try again")
   } else {
     message("Converting CRS from EPSG:", sf::st_crs(x)[["epsg"]], " to WGS84.")
-    x <- sf::st_transform(x, 4326)
+    sf::st_transform(x, 4326)
   }
 }
 

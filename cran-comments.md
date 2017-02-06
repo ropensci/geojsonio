@@ -20,12 +20,11 @@
   (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>). 
   There was a problem in one downstream package, but the maintainer knows 
   about it.
-* All revdep maintainers were notified of the release.
 
 -------
 
-This version includes new parameters in some functions, and some 
-bug fixes.
+This version includes fixes to tests - conditionally run tests if package
+sf is available, and not run tests at all checking proj4 strings. 
 
 Thanks!
 Scott Chamberlain
