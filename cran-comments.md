@@ -24,7 +24,7 @@
 -------
 
 This version includes fixes to tests - conditionally run tests if package
-sf is available, and not run tests at all checking proj4 strings. 
+sf is available, and not test proj4 strings, except that they are characters.
 
 Thanks!
 Scott Chamberlain

@@ -3,8 +3,8 @@ gejsonio 0.3.2
 
 ### BUG FIXES
 
-* Fix to xxx (#xx)
-* Fix to xxx (#xx)
+* Fix to tests for internal fxn `convert_wgs84` to do minimal test of 
+output, and to conditionally test only if `sf` is available (#103)
 
 
 gejsonio 0.3.0
