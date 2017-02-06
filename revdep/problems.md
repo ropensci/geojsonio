@@ -6,18 +6,18 @@
 |:--------|:----------------------------|
 |version  |R version 3.3.2 (2016-10-31) |
 |system   |x86_64, darwin13.4.0         |
-|ui       |RStudio (1.1.48)             |
+|ui       |X11                          |
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
-|tz       |Europe/Stockholm             |
-|date     |2017-01-24                   |
+|tz       |Europe/Berlin                |
+|date     |2017-02-06                   |
 
 ## Packages
 
 |package   |*  |version    |date       |source                           |
 |:---------|:--|:----------|:----------|:--------------------------------|
-|geojsonio |   |0.3.0      |2017-01-24 |local (ropensci/geojsonio@NA)    |
-|leaflet   |   |1.0.2.9010 |2017-01-24 |Github (rstudio/leaflet@cbb3495) |
+|geojsonio |   |0.3.2      |2017-02-06 |local (ropensci/geojsonio@NA)    |
+|leaflet   |   |1.0.2.9010 |2017-02-06 |Github (rstudio/leaflet@b9736ec) |
 
 # Check results
 1 packages with problems
