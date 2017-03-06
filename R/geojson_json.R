@@ -10,7 +10,7 @@
 #' @param type  (character)The type of collection. One of FeatureCollection (default) or GeometryCollection.
 #' @param group (character) A grouping variable to perform grouping for polygons - doesn't
 #' apply for points
-#' @param convert_wgs84 Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate referece system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude unitsof decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.
+#' @param convert_wgs84 Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude units of decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.
 #' @param crs The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.
 #' @param ... Further args passed on to \code{\link[jsonlite]{toJSON}}
 #'
@@ -31,7 +31,7 @@
 #' For sf classes (sf, sfc, sfg), the following conversions are made:
 #' 
 #' \itemize{
-#'  \item sfg: the approprite geometry \code{Point, LineString, Polygon, MultiPoint, 
+#'  \item sfg: the appropriate geometry \code{Point, LineString, Polygon, MultiPoint, 
 #'  MultiLineString, MultiPolygon, GeometryCollection}
 #'  \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry as above
 #'  \item sf: \code{FeatureCollection}
