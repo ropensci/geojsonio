@@ -24,11 +24,11 @@ apply for points}
 
 \item{file}{File name to use to put up as the gist file}
 
-\item{description}{Description for the Github gist, or leave to default (=no description)}
+\item{description}{Description for the GitHub gist, or leave to default (=no description)}
 
 \item{public}{(logical) Want gist to be public or not? Default: TRUE}
 
-\item{browse}{If TRUE (default) thef map opens in your default browser.}
+\item{browse}{If TRUE (default) the map opens in your default browser.}
 
 \item{...}{Further arguments passed on to \code{\link[httr]{POST}}}
 }
@@ -44,8 +44,8 @@ There are two ways to authorize to work with your GitHub account:
 
 Using the PAT method is recommended.
 
-Using the gist_auth() function you can authenticate seperately first, or if you're not
-authenticated, this function will run internally with each functionn call. If you have a
+Using the gist_auth() function you can authenticate separately first, or if you're not
+authenticated, this function will run internally with each function call. If you have a
 PAT, that will be used, if not, OAuth will be used.
 }
 \examples{

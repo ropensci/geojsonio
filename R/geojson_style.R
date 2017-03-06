@@ -33,7 +33,7 @@
 #' fill, and fill_opacity expect a vector of size 1 (recycled), or exact length of vector 
 #' being applied to in your input data. 
 #' 
-#' This function helps add styling data to a list or data.frame followingn the 
+#' This function helps add styling data to a list or data.frame following the 
 #' Simplestyle Spec (\url{https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0}), 
 #' used by MapBox and GitHub Gists (that renders geoJSON/topoJSON as interactive maps). 
 #' 
