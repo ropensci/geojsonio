@@ -5,8 +5,8 @@ geojsonio
 
 [![Build Status](https://api.travis-ci.org/ropensci/geojsonio.png)](https://travis-ci.org/ropensci/geojsonio)
 [![codecov.io](https://codecov.io/github/ropensci/geojsonio/coverage.svg?branch=master)](https://codecov.io/github/ropensci/geojsonio?branch=master)
-[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/metacran/cranlogs.app)
-[![cran version](http://www.r-pkg.org/badges/version/geojsonio)](https://cran.r-project.org/package=geojsonio)
+[![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/metacran/cranlogs.app)
+[![cran version](https://www.r-pkg.org/badges/version/geojsonio)](https://cran.r-project.org/package=geojsonio)
 
 __Convert various data formats to geoJSON or topoJSON__
 
@@ -109,12 +109,12 @@ geojson_json(c(32.45, -99.74))
 geojson_list(c(32.45, -99.74))
 #> $type
 #> [1] "FeatureCollection"
-#> 
+#>
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#> 
+#>
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
@@ -135,12 +135,12 @@ geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
 geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> $type
 #> [1] "FeatureCollection"
-#> 
+#>
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#> 
+#>
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
@@ -165,13 +165,13 @@ to json
 geojson_json(sp_poly)
 #> {
 #> "type": "FeatureCollection",
-#>                                                                                 
+#>
 #> "features": [
 #> { "type": "Feature", "id": 1, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -100.0, 40.0 ], [ -90.0, 50.0 ], [ -85.0, 45.0 ], [ -100.0, 40.0 ] ] ] } },
 #> { "type": "Feature", "id": 2, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
 #> ]
 #> }
-#> 
+#>
 ```
 
 to list
@@ -181,14 +181,14 @@ to list
 geojson_list(sp_poly)$features[[1]]
 #> $type
 #> [1] "Feature"
-#> 
+#>
 #> $id
 #> [1] 1
-#> 
+#>
 #> $properties
 #> $properties$dummy
 #> [1] 0
-#> 
+#>
 ...
 ```
 
@@ -207,12 +207,12 @@ b <- geojson_list(vecs, geometry = "polygon")
 a + b
 #> $type
 #> [1] "FeatureCollection"
-#> 
+#>
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#> 
+#>
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
@@ -306,4 +306,4 @@ Okay, so the maps are not quite right (stretched to fit each panel), but you get
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
 * Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
-[![rofooter](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![rofooter](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
