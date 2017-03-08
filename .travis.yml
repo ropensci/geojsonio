@@ -1,6 +1,7 @@
 language: r
 dist: trusty
 sudo: required
+cache: packages
 
 apt_packages:
   - libudunits2-dev
