@@ -18,3 +18,5 @@ myfile.geojson
 ^revdep$
 man-roxygen
 ^\.httr-oauth$
+.github
+
