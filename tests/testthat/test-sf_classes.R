@@ -307,6 +307,17 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     out <- geojson_list(mp_sf)
     expect_equal(dim(out$features[[1]]$geometry$coordinates), c(6, 3))
   })
+  
+  test_that("sf columns of class units are processed as numeric", {
+    st_crs(ls_sf) <- st_crs(pol_sf) <- 4326
+    ls_sf$length <- st_length(ls_sf)
+    pol_sf$area <- st_area(pol_sf)
+    
+    expect_s3_class(geojson_json(ls_sf), "geo_json")
+    expect_s3_class(geojson_json(pol_sf), "geo_json")
+    expect_equal(read_sf(geojson_json(ls_sf))[["length"]], as.numeric(ls_sf$length))
+    expect_equal(read_sf(geojson_json(pol_sf))[["area"]], as.numeric(pol_sf$area))
+  })
 
 }
 ## Big test ------------------------------------------------------
