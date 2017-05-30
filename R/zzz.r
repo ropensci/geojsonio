@@ -284,7 +284,7 @@ write_ogr <- function(input, dir, file, precision = NULL, overwrite,
     input <- convert_wgs84(input, crs = crs)
   }
   
-  input@data <- convert_ordered(input@data)
+  input@data <- convert_unsupported_classes(input@data)
   dots <- list(...)
   if (!is.null(precision)) {
     ## add precision to vector of layer_options in '...'
@@ -300,9 +300,13 @@ write_ogr <- function(input, dir, file, precision = NULL, overwrite,
   }
 }
 
-convert_ordered <- function(df) {
+convert_unsupported_classes <- function(df) {
   df[] <- lapply(df, function(x) {
-    if (inherits(x, "ordered")) x <- as.character(x)
+    if (inherits(x, "ordered")) {
+      x <- as.character(x)
+    } else if (!inherits(x, c("numeric", "character", "factor", "POSIXt", "integer", "logical"))) {
+      x <- unclass(x)
+    }
     x
   })
   return(df)

@@ -78,3 +78,19 @@ test_that("geojson_write detects inproper polygons passed as lists inputs", {
   # doesn't matter if geometry != polygon
   expect_is(suppressMessages(geojson_write(bad)), "geojson")
 })
+
+test_that("geojson_write unclasses columns with special classes so writeOGR works", {
+  library('sp')
+  library('rgdal')
+  poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
+                                       c(40,50,45,40)))), "1")
+  spdf <- SpatialPolygonsDataFrame(SpatialPolygons(list(poly1), 1L), 
+                                   data.frame(a = structure(1.5, class = "units"), 
+                                              b = ordered("z")))
+  gwf8 <- tempfile(fileext = ".geojson")
+  expect_s3_class(geojson_write(spdf, file = gwf8), "geojson")
+  spdf2 <- readOGR(gwf8, verbose = FALSE, stringsAsFactors = FALSE)
+  expect_is(spdf2@data$a, "numeric")
+  expect_is(spdf2@data$b, "character")
+})
+  
