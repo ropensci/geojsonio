@@ -309,8 +309,7 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   })
   
   test_that("sf columns of class units are processed as numeric", {
-    st_crs(ls_sf) <- st_crs(pol_sf) <- 4326
-    pol_sf$area <- st_area(pol_sf)
+    pol_sf$area <- structure(rep(1, nrow(pol_sf)), class = "units")
     
     expect_s3_class(geojson_json(pol_sf), "geo_json")
     expect_equal(read_sf(geojson_json(pol_sf))[["area"]], as.numeric(pol_sf$area))
