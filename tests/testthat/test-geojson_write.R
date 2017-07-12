@@ -93,4 +93,67 @@ test_that("geojson_write unclasses columns with special classes so writeOGR work
   expect_is(spdf2@data$a, "numeric")
   expect_is(spdf2@data$b, "character")
 })
+
+test_that("geojson_write passes toJSON args", {
+  expected_na_no_pretty <- "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":1.1},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.2,4]}},{\"type\":\"Feature\",\"properties\":{\"x\":2.2},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3,4.6]}},{\"type\":\"Feature\",\"properties\":{\"x\":\"NA\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.8,4.4]}}]}"
+  expected_null_pretty <- c("{", "  \"type\": \"FeatureCollection\",", "  \"features\": [", 
+                            "    {", "      \"type\": \"Feature\",", "      \"properties\": {", 
+                            "        \"x\": 1.1", "      },", "      \"geometry\": {", "        \"type\": \"Point\",", 
+                            "        \"coordinates\": [3.2, 4]", "      }", "    },", "    {", 
+                            "      \"type\": \"Feature\",", "      \"properties\": {", "        \"x\": 2.2", 
+                            "      },", "      \"geometry\": {", "        \"type\": \"Point\",", 
+                            "        \"coordinates\": [3, 4.6]", "      }", "    },", "    {", 
+                            "      \"type\": \"Feature\",", "      \"properties\": {", "        \"x\": null", 
+                            "      },", "      \"geometry\": {", "        \"type\": \"Point\",", 
+                            "        \"coordinates\": [3.8, 4.4]", "      }", "    }", "  ]", 
+                            "}")
   
+  if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
+    p_list <- lapply(list(c(3.2,4), c(3,4.6), c(3.8,4.4)), st_point)
+    pt_sfc <- st_sfc(p_list)
+    pt_sf <- st_sf(x = c(1.1, 2.2, NA_real_), pt_sfc)
+    
+    gwf9 <- tempfile(fileext = ".geojson")
+    
+    geojson_write(pt_sf, file = gwf9)
+    expect_equal(readLines(gwf9, warn = FALSE), expected_na_no_pretty)
+    
+    gwf10 <- tempfile(fileext = ".geojson")
+    geojson_write(pt_sf, file = gwf10, na = "null", pretty = TRUE)
+    expect_equal(readLines(gwf10, warn = FALSE), expected_null_pretty)
+  }
+  
+  pt_geo_list <-
+    structure(
+      list(
+        type = "FeatureCollection",
+        features = list(
+            list(
+              type = "Feature",
+              properties = list(x = 1.1),
+              geometry = list(type = "Point", coordinates = c(3.2,4))
+            ),
+            list(
+              type = "Feature",
+              properties = list(x = 2.2),
+              geometry = list(type = "Point", coordinates = c(3, 4.6))
+            ),
+            list(
+              type = "Feature",
+              properties = list(x = NA_real_),
+              geometry = list(type = "Point", coordinates = c(3.8, 4.4))
+            )
+        )
+      ), 
+      class = "geo_list"
+    )
+  
+  gwf11 <- tempfile(fileext = ".geojson")
+  
+  geojson_write(pt_geo_list, file = gwf11)
+  expect_equal(readLines(gwf11, warn = FALSE), expected_na_no_pretty)
+  
+  gwf12 <- tempfile(fileext = ".geojson")
+  geojson_write(pt_geo_list, file = gwf12, na = "null", pretty = TRUE)
+  expect_equal(readLines(gwf12, warn = FALSE), expected_null_pretty)
+})
