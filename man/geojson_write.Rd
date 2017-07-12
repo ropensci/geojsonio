@@ -39,7 +39,9 @@ cost of precision).}
 
 \item{crs}{The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.}
 
-\item{...}{Further args passed on to \code{\link[rgdal]{writeOGR}}}
+\item{...}{Further args passed on to internal functions. For Spatial* classes, data.frames, 
+regular lists, and numerics, it is passed through to \code{\link[rgdal]{writeOGR}}. For sf classes, 
+geo_lists and json classes, it is passed through to \code{\link[jsonlite]{toJSON}}.}
 }
 \description{
 Convert many input types with spatial data to a geojson file
@@ -165,4 +167,3 @@ if (require(sf)) {
 \seealso{
 \code{\link{geojson_list}}, \code{\link{geojson_json}}
 }
-

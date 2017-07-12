@@ -11,4 +11,3 @@
  See \code{geojsonlint::geojson_lint}
 }
 }
-

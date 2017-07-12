@@ -9,4 +9,3 @@ This is a data.frame with "long", "lat", "group", "order", "region", and "subreg
 columns specifying polygons for each US state.
 }
 \keyword{data}
-

@@ -122,4 +122,3 @@ geojson_style(smallstates, var = 'group',
    fill = brewer.pal(length(unique(smallstates$group)), "Greens"))
 }
 }
-

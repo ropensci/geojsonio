@@ -73,5 +73,7 @@ projections(proj="albers", clipExtent='[[105 - 87, 40], [105 + 87 + 1e-6, 82 + 1
 projections(proj="albers", invert=60)
 projections("orthographic")
 
+\dontrun{
+projections("alber")
 }
-
+}

@@ -33,4 +33,3 @@ bounds(x)
 x <- geojson_list(states[1:20,])
 bounds(x)
 }
-

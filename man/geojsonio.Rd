@@ -43,9 +43,9 @@ All of the above functions have methods for various classes, including
 \code{SpatialLines}, \code{SpatialPoints}, and many more - which will try to 
 do the right thing based on the data you give as input.
 }
+
 \author{
 Scott Chamberlain \email{myrmecocystus@gmail.com}
 
 Andy Teucher \email{andy.teucher@gmail.com}
 }
-

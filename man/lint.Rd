@@ -66,4 +66,3 @@ mylist <- list(list(latitude=30, longitude=120, marker="red"),
 lint(mylist)
 }
 }
-

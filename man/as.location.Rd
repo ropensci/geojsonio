@@ -25,4 +25,3 @@ url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/calif
 as.location(url)
 }
 }
-

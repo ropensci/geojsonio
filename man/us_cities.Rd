@@ -13,4 +13,3 @@ This database is of us cities of population greater than about 40,000. Also incl
 are state capitals of any population size.
 }
 \keyword{data}
-
