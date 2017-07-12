@@ -24,7 +24,9 @@
 #'   cost of precision).
 #' @param convert_wgs84 Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude units of decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.
 #' @param crs The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.
-#' @param ... Further args passed on to \code{\link[rgdal]{writeOGR}}
+#' @param ... Further args passed on to internal functions. For Spatial* classes, data.frames, 
+#' regular lists, and numerics, it is passed through to \code{\link[rgdal]{writeOGR}}. For sf classes, 
+#' geo_lists and json classes, it is passed through to \code{\link[jsonlite]{toJSON}}.
 #'   
 #' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}
 #'   
@@ -392,7 +394,7 @@ geojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "po
   if (!overwrite && file.exists(file)) {
     stop(file, " already exists and overwrite = FALSE", call. = FALSE)
   }
-  cat(as.json(input, pretty = TRUE), file = file)
+  cat(as.json(input, ...), file = file)
   message("Success! File is at ", file)
   return(as.geojson(file, "geo_list"))
 }
@@ -403,7 +405,7 @@ geojson_write.json <- function(input, lat = NULL, lon = NULL, geometry = "point"
   if (!overwrite && file.exists(file)) {
     stop(file, " already exists and overwrite = FALSE", call. = FALSE)
   }
-  cat(toJSON(jsonlite::fromJSON(input), pretty = TRUE, auto_unbox = TRUE), file = file)
+  cat(toJSON(jsonlite::fromJSON(input), auto_unbox = TRUE, ...), file = file)
   message("Success! File is at ", file)
   return(as.geojson(file, "json"))
 }
