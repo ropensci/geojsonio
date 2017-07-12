@@ -1,6 +1,10 @@
 geojsonio 0.3.2.9000
 ==============
 
+### MINOR IMPROVEMENTS
+
+* `geojson_write` and `geojson_json` now pass `...` argument through to `rgdal::writeOGR` or `jsonlite::toJSON` depending on the class/method. For those methods that use the latter, this now allows setting of the `na` argument to control how `NA` values are represented in json, and the `pretty` argument to control whether or the resulting json is pretty-formated or compact (#109)
+
 ### BUG FIXES
 
 * `geojson_json` and `geojson_write` now convert unsupported classes to their basic class before conversion and/or writing to geojson. This was most commonly occurring with fields in `sf` objects calculated by `sf::st_area` and `sf::st_length` which were of class `units`. (#107)
