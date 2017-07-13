@@ -67,7 +67,8 @@ as.SpatialPolygonsDataFrame <- function(x, ...) {
 }
 
 as.SpatialPolygonsDataFrame.geojson <- function(x, ...) {
-  readOGR(x$path, "OGRGeoJSON", ...)
+  #readOGR(x$path, "OGRGeoJSON", ...)
+  readOGR(x$path, sub("\\..+", "", basename(x$path)), ...)
 }
 
 as.SpatialPolygonsDataFrame.character <- function(x, ...) {
