@@ -33,4 +33,3 @@ centroid(x)
 x <- geojson_list(states[1:20,])
 centroid(x)
 }
-

@@ -25,4 +25,3 @@ as.json(geojson_list(vec))
 as.json(geojson_list(vec), pretty = TRUE)
 }
 }
-

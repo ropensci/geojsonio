@@ -55,6 +55,7 @@ If you're having trouble rendering GeoJSON files, ensure you have a valid
 GeoJSON file by running it through the package \pkg{geojsonlint}, which 
 has a variety of different GeoJSON linters.
 }
+
 \examples{
 \dontrun{
 file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
@@ -95,4 +96,3 @@ res <- file_to_geojson(x, method = "local")
 jsonlite::fromJSON(res)
 }
 }
-

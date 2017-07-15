@@ -27,7 +27,9 @@ apply for points}
 
 \item{crs}{The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.}
 
-\item{...}{Further args passed on to \code{\link[jsonlite]{toJSON}}}
+\item{...}{Further args passed on to internal functions. For Spatial* classes, it is passed through to 
+\code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics, and 
+geo_lists, it is passed through to \code{\link[jsonlite]{toJSON}}.}
 }
 \value{
 An object of class \code{geo_json} (and \code{json})
@@ -230,4 +232,3 @@ geojson_json(c(-99.74,32.45))
 geojson_json(c(-99.74,32.45)) \%>\% pretty
 }
 }
-

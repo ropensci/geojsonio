@@ -55,6 +55,7 @@ If you're having trouble rendering GeoJSON files, ensure you have a valid
 GeoJSON file by running it through the package \pkg{geojsonlint}, which 
 has a variety of different GeoJSON linters.
 }
+
 \examples{
 \dontrun{
 # From a file
@@ -101,4 +102,3 @@ geojson_read(basename(x), method = "local", what = "sp")
 ## geojson_read(file, what = "sp")
 }
 }
-

@@ -161,4 +161,3 @@ map_leaf(us_cities) \%>\%
 ## map_leaf(vec)
 }
 }
-

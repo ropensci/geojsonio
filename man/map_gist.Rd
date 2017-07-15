@@ -171,4 +171,3 @@ r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
 map_gist(r1r2df)
 }
 }
-
