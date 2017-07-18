@@ -135,31 +135,31 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   file_to_list <- function(x) geojson_read(x$path, method = "local", what = "list")
   
   test_that("geojson_write: convert_wgs84 works with Spatial classes", {
-    expect_equal(file_to_list(geojson_write(spdf_4326, convert_wgs84 = TRUE)), 
-                 file_to_list(geojson_write(spdf_4326, convert_wgs84 = FALSE)))
-    expect_equal(file_to_list(geojson_write(spdf_4326)), 
-                 file_to_list(geojson_write(spdf_3005, convert_wgs84 = TRUE)))
+    expect_equal(file_to_list(geojson_write(spdf_4326, convert_wgs84 = TRUE))$crs, 
+                 file_to_list(geojson_write(spdf_4326, convert_wgs84 = FALSE))$crs)
+    expect_equal(file_to_list(geojson_write(spdf_4326))$crs, 
+                 file_to_list(geojson_write(spdf_3005, convert_wgs84 = TRUE))$crs)
     proj4string(spdf_3005) <- NA_character_
-    expect_equal(file_to_list(geojson_write(spdf_4326)), 
+    expect_equal(file_to_list(geojson_write(spdf_4326))$crs, 
                  file_to_list(geojson_write(spdf_3005, 
                                             convert_wgs84 = TRUE, 
-                                            crs = "+init=epsg:3005")))
-    expect_equal(file_to_list(geojson_write(spdf_4326)), 
-                 file_to_list(geojson_write(spdf_3005, convert_wgs84 = TRUE, crs = 3005)))
+                                            crs = "+init=epsg:3005"))$crs)
+    expect_equal(file_to_list(geojson_write(spdf_4326))$crs, 
+                 file_to_list(geojson_write(spdf_3005, convert_wgs84 = TRUE, crs = 3005))$crs)
   })
   
   test_that("geojson_write: convert_wgs84 works with sf classes", {
-    expect_equal(file_to_list(geojson_write(sf_4326, convert_wgs84 = TRUE)), 
-                 file_to_list(geojson_write(sf_4326, convert_wgs84 = FALSE)))
-    expect_equal(file_to_list(geojson_write(sf_4326)), 
-                 file_to_list(geojson_write(sf_3005, convert_wgs84 = TRUE)))
+    expect_equal(file_to_list(geojson_write(sf_4326, convert_wgs84 = TRUE))$crs, 
+                 file_to_list(geojson_write(sf_4326, convert_wgs84 = FALSE))$crs)
+    expect_equal(file_to_list(geojson_write(sf_4326))$crs, 
+                 file_to_list(geojson_write(sf_3005, convert_wgs84 = TRUE))$crs)
     st_crs(sf_3005) <- NA_crs_
-    expect_equal(file_to_list(geojson_write(sf_4326)), 
+    expect_equal(file_to_list(geojson_write(sf_4326))$crs, 
                  file_to_list(geojson_write(sf_3005, 
                                             convert_wgs84 = TRUE, 
-                                            crs = "+init=epsg:3005")))
-    expect_equal(file_to_list(geojson_write(sf_4326)), 
-                 file_to_list(geojson_write(sf_3005, convert_wgs84 = TRUE, crs = 3005)))
+                                            crs = "+init=epsg:3005"))$crs)
+    expect_equal(file_to_list(geojson_write(sf_4326))$crs, 
+                 file_to_list(geojson_write(sf_3005, convert_wgs84 = TRUE, crs = 3005))$crs)
   })
   
 }

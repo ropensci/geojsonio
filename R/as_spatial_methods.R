@@ -1,3 +1,17 @@
+# get GDAL version for later use
+geojsonio_env <- new.env()
+
+gdal_version <- function() {
+  if (length(ls(envir = geojsonio_env)) == 0) {
+    tmp <- rgdal::getGDALVersionInfo(str = "--version") 
+    val <- as.numeric(
+      gsub("\\.", "", regmatches(tmp, regexpr("[0-9]+\\.[0-9]+\\.[0-9]+", tmp)))
+    )
+    assign("gdal_ver", val, envir = geojsonio_env)    
+  }
+  return(get("gdal_ver", envir = geojsonio_env))
+}
+
 ## SpatialPoints to SpatialPointsDataFrame
 as.SpatialPointsDataFrame.SpatialPoints <- function(from) {
   ids <- rownames(slot(from, "coords"))
@@ -67,12 +81,23 @@ as.SpatialPolygonsDataFrame <- function(x, ...) {
 }
 
 as.SpatialPolygonsDataFrame.geojson <- function(x, ...) {
-  #readOGR(x$path, "OGRGeoJSON", ...)
-  readOGR(x$path, sub("\\..+", "", basename(x$path)), ...)
+  if (gdal_version() < 220) {
+    # if gdal <= 2.2
+    readOGR(x$path, "OGRGeoJSON", ...)
+  } else {
+    # if gdal >= 2.2
+    readOGR(x$path, sub("\\..+", "", basename(x$path)), ...)
+  }
 }
 
 as.SpatialPolygonsDataFrame.character <- function(x, ...) {
-  readOGR(x, "OGRGeoJSON", ...)
+  if (gdal_version() < 220) {
+    # if gdal <= 2.2
+    readOGR(x, "OGRGeoJSON", ...)
+  } else {
+    # if gdal >= 2.2
+    readOGR(x, sub("\\..+", "", basename(x)), ...)
+  }
 }
 
 
