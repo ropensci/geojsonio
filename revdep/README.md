@@ -2,25 +2,43 @@
 
 ## Platform
 
-|setting  |value                        |
-|:--------|:----------------------------|
-|version  |R version 3.3.2 (2016-10-31) |
-|system   |x86_64, darwin13.4.0         |
-|ui       |X11                          |
-|language |(EN)                         |
-|collate  |en_US.UTF-8                  |
-|tz       |Europe/Berlin                |
-|date     |2017-02-06                   |
+|setting  |value                                       |
+|:--------|:-------------------------------------------|
+|version  |R version 3.4.1 Patched (2017-07-04 r72893) |
+|system   |x86_64, darwin15.6.0                        |
+|ui       |RStudio (1.0.143)                           |
+|language |(EN)                                        |
+|collate  |en_US.UTF-8                                 |
+|tz       |America/Vancouver                           |
+|date     |2017-07-21                                  |
 
 ## Packages
 
-|package   |*  |version    |date       |source                           |
-|:---------|:--|:----------|:----------|:--------------------------------|
-|geojsonio |   |0.3.2      |2017-02-06 |local (ropensci/geojsonio@NA)    |
-|leaflet   |   |1.0.2.9010 |2017-02-06 |Github (rstudio/leaflet@b9736ec) |
+|package   |*  |version |date       |source                        |
+|:---------|:--|:-------|:----------|:-----------------------------|
+|geojsonio |   |0.3.8   |2017-07-21 |local (ropensci/geojsonio@NA) |
+|sf        |   |0.5-2   |2017-07-12 |cran (@0.5-2)                 |
 
 # Check results
-5 packages
+
+8 packages
+
+|package        |version | errors| warnings| notes|
+|:--------------|:-------|------:|--------:|-----:|
+|antaresViz     |0.11    |      0|        0|     0|
+|jpmesh         |0.3.0   |      0|        0|     1|
+|leaflet.esri   |0.2     |      0|        0|     0|
+|leaflet.extras |0.2     |      0|        0|     0|
+|mregions       |0.1.4   |      0|        0|     0|
+|repijson       |0.1.0   |      0|        0|     0|
+|rmapshaper     |0.2.0   |      0|        0|     0|
+|webglobe       |1.0.2   |      0|        0|     1|
+
+## antaresViz (0.11)
+Maintainer: Francois Guillem <francois.guillem@rte-france.com>  
+Bug reports: https://github.com/rte-antares-rpackage/antaresViz/issues
+
+0 errors | 0 warnings | 0 notes
 
 ## jpmesh (0.3.0)
 Maintainer: Shinya Uryu <suika1127@gmail.com>  
@@ -35,9 +53,15 @@ checking installed package size ... NOTE
     extdata  205.2Mb
 ```
 
-## jpndistrict (0.1.0)
-Maintainer: Shinya Uryu <suika1127@gmail.com>  
-Bug reports: https://github.com/uribo/jpndistrict/issues
+## leaflet.esri (0.2)
+Maintainer: Bhaskar Karambelkar <bhaskarvk@gmail.com>  
+Bug reports: https://github.com/bhaskarvk/leaflet.esri/issues
+
+0 errors | 0 warnings | 0 notes
+
+## leaflet.extras (0.2)
+Maintainer: Bhaskar Karambelkar <bhaskarvk@gmail.com>  
+Bug reports: https://github.com/bhaskarvk/leaflet.extras/issues
 
 0 errors | 0 warnings | 0 notes
 
@@ -52,28 +76,23 @@ Maintainer: Andy South <southandy@gmail.com>
 
 0 errors | 0 warnings | 0 notes
 
-## rmapshaper (0.1.0)
+## rmapshaper (0.2.0)
 Maintainer: Andy Teucher <andy.teucher@gmail.com>  
-Bug reports: http://www.github.com/ateucher/rmapshaper/issues
+Bug reports: https://github.com/ateucher/rmapshaper/issues
 
-1 error  | 0 warnings | 0 notes
+0 errors | 0 warnings | 0 notes
+
+## webglobe (1.0.2)
+Maintainer: Richard Barnes <rbarnes@umn.edu>  
+Bug reports: https://github.com/r-barnes/webglobe/
+
+0 errors | 0 warnings | 1 note 
 
 ```
-checking tests ... ERROR
-Running the tests in ‘tests/testthat.R’ failed.
-Last 13 lines of output:
-  > 
-  > test_check("rmapshaper")
-  1. Failure: ms_simplify works with lines (@test-simplify.R#442) ----------------
-  ms_simplify(line_list) not equal to geojson_list(expected_json).
-  Component "features": Component 1: Component 2: Component 2: Component 2: Component 2: Mean relative difference: 1.985531e-08
-  
-  
-  testthat results ================================================================
-  OK: 252 SKIPPED: 0 FAILED: 1
-  1. Failure: ms_simplify works with lines (@test-simplify.R#442) 
-  
-  Error: testthat unit tests failed
-  Execution halted
+checking installed package size ... NOTE
+  installed size is 10.5Mb
+  sub-directories of 1Mb or more:
+    client   9.4Mb
+    doc      1.0Mb
 ```
 
