@@ -109,12 +109,12 @@ geojson_json(c(32.45, -99.74))
 geojson_list(c(32.45, -99.74))
 #> $type
 #> [1] "FeatureCollection"
-#>
+#> 
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#>
+#> 
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
@@ -135,12 +135,12 @@ geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
 geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> $type
 #> [1] "FeatureCollection"
-#>
+#> 
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#>
+#> 
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
@@ -165,13 +165,12 @@ to json
 geojson_json(sp_poly)
 #> {
 #> "type": "FeatureCollection",
-#>
 #> "features": [
-#> { "type": "Feature", "id": 1, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -100.0, 40.0 ], [ -90.0, 50.0 ], [ -85.0, 45.0 ], [ -100.0, 40.0 ] ] ] } },
-#> { "type": "Feature", "id": 2, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
+#> { "type": "Feature", "id": 1, "properties": { "dummy": 0.0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -100.0, 40.0 ], [ -90.0, 50.0 ], [ -85.0, 45.0 ], [ -100.0, 40.0 ] ] ] } },
+#> { "type": "Feature", "id": 2, "properties": { "dummy": 0.0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
 #> ]
 #> }
-#>
+#> 
 ```
 
 to list
@@ -181,14 +180,14 @@ to list
 geojson_list(sp_poly)$features[[1]]
 #> $type
 #> [1] "Feature"
-#>
+#> 
 #> $id
 #> [1] 1
-#>
+#> 
 #> $properties
 #> $properties$dummy
 #> [1] 0
-#>
+#> 
 ...
 ```
 
@@ -207,12 +206,12 @@ b <- geojson_list(vecs, geometry = "polygon")
 a + b
 #> $type
 #> [1] "FeatureCollection"
-#>
+#> 
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#>
+#> 
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
