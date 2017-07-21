@@ -9,6 +9,8 @@ geojsonio 0.3.2.9000
 
 * `geojson_json` and `geojson_write` now convert unsupported classes to their basic class before conversion and/or writing to geojson. This was most commonly occurring with fields in `sf` objects calculated by `sf::st_area` and `sf::st_length` which were of class `units`. (#107)
 
+* Fixed a bug occurring with `GDAL` version >= 2.2.0 where the layer name in a geojson file was not detected properly (#108).
+
 geojsonio 0.3.2
 ==============
 
