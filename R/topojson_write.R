@@ -84,6 +84,11 @@ topojson_write.character <- function(x, file = NULL, ...) {
 }
 
 #' @export
+topojson_write.json <- function(x, file = NULL, ...) {
+  write_topojson(unclass(x), file, ...)
+}
+
+#' @export
 topojson_write.SpatialPoints <- function(x, file = NULL, ...) sp_helper(x, file)
 
 #' @export

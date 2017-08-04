@@ -1,15 +1,29 @@
 #' GeoJSON to TopoJSON and back
 #' 
-#' TopoJSON to GeoJSON not quite working yet.
-#'
 #' @export
-#' @param x geojson or topojson as a character string, or form a file, or url
-#' @param ... ignored
-#' @return A character string of either GeoJSON or TopoJSON
+#' @param x GeoJSON or TopoJSON as a character string, a file path, or url
+#' @param ... for \code{geo2topo} ignored. for \code{topo2geo} args passed 
+#' on to \code{rgdal::readOGR}
+#' @return An object of class \code{json}, of either GeoJSON or TopoJSON
 #' @examples
 #' # geojson to topojson
 #' x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
-#' cat(geo2topo(x))
+#' z <- geo2topo(x)
+#' jsonlite::prettify(z)
+#' \dontrun{
+#' library(leaflet)
+#' leaflet() %>% 
+#'   addProviderTiles(provider = "Stamen.Terrain") %>% 
+#'   addTopoJSON(z)
+#' }
+#' 
+#' # topojson to geojson
+#' w <- topo2geo(z)
+#' jsonlite::prettify(w)
+#' 
+#' ## larger examples
+#' file <- system.file("examples", "us_states.topojson", package = "geojsonio")
+#' topo2geo(file)
 geo2topo <- function(x, ...) {
   UseMethod("geo2topo")
 }
@@ -33,24 +47,22 @@ topo2geo <- function(x, ...) {
 #' @export
 #' @rdname geo2topo
 topo2geo.default <- function(x, ...) {
-  stop("not working yet", call. = FALSE)
-  # stop("no 'topo2geo' method for ", class(x), call. = FALSE)
+  stop("no 'topo2geo' method for ", class(x), call. = FALSE)
 }
 
 #' @export
 #' @rdname geo2topo
 topo2geo.character <- function(x, ...) {
-  stop("not working yet", call. = FALSE)
-  # topo2geo(x)
+  topo_to_geo(x)
 }
 
 # helpers  --------------------------
 geo_to_topo <- function(x) {
-  topo$eval(sprintf("var output = JSON.stringify(topojson.topology(%s))", x))
-  topo$get("output")
+  topo$eval(sprintf("var output = JSON.stringify(topojson.topology({foo: %s}))", x))
+  structure(topo$get("output"), class = "json")
 }
 
-# topo2geo <- function(x) {
-#   ff <- tempfile(fileext = ".json")
-#   paste0(readLines(topojson_write(x, ff)), collapse = "")
-# }
+topo_to_geo <- function(x, ...) {
+  res <- readOGR(x, rgdal::ogrListLayers(x)[1], ...)
+  geojson_json(res)
+}
