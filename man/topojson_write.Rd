@@ -88,4 +88,3 @@ ff <- system.file("examples/california.geojson", package = "geojsonio")
 ffgeo <- paste0(readLines(ff), collapse = " ")
 topojson_write(ffgeo, "stuff.topojson")
 }
-

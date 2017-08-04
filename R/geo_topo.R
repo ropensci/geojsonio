@@ -1,9 +1,9 @@
 #' GeoJSON to TopoJSON and back
 #' 
 #' @export
-#' @param x GeoJSON or TopoJSON as a character string, a file path, or url
-#' @param ... for \code{geo2topo} ignored. for \code{topo2geo} args passed 
-#' on to \code{rgdal::readOGR}
+#' @param x GeoJSON or TopoJSON as a character string, json, a file path, or url
+#' @param ... for \code{topo2geo} args passed  on to 
+#' \code{\link[rgdal]{readOGR}}
 #' @return An object of class \code{json}, of either GeoJSON or TopoJSON
 #' @examples
 #' # geojson to topojson
@@ -24,18 +24,23 @@
 #' ## larger examples
 #' file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 #' topo2geo(file)
-geo2topo <- function(x, ...) {
+geo2topo <- function(x) {
   UseMethod("geo2topo")
 }
 
 #' @export
-geo2topo.default <- function(x, ...) {
+geo2topo.default <- function(x) {
   stop("no 'geo2topo' method for ", class(x), call. = FALSE)
 }
 
 #' @export
-geo2topo.character <- function(x, ...) {
+geo2topo.character <- function(x) {
   geo_to_topo(x)
+}
+
+#' @export
+geo2topo.json <- function(x) {
+  geo_to_topo(unclass(x))
 }
 
 #' @export
@@ -53,7 +58,13 @@ topo2geo.default <- function(x, ...) {
 #' @export
 #' @rdname geo2topo
 topo2geo.character <- function(x, ...) {
-  topo_to_geo(x)
+  topo_to_geo(x, ...)
+}
+
+#' @export
+#' @rdname geo2topo
+topo2geo.json <- function(x, ...) {
+  topo_to_geo(unclass(x), ...)
 }
 
 # helpers  --------------------------
