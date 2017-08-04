@@ -13,4 +13,3 @@ This database is of Canadian cities of population greater than about 1,000. Also
 are province capitals of any population size.
 }
 \keyword{data}
-

@@ -67,11 +67,11 @@ as.SpatialPolygonsDataFrame <- function(x, ...) {
 }
 
 as.SpatialPolygonsDataFrame.geojson <- function(x, ...) {
-  readOGR(x$path, "OGRGeoJSON", ...)
+    readOGR(x$path, rgdal::ogrListLayers(x$path)[1], ...)
 }
 
 as.SpatialPolygonsDataFrame.character <- function(x, ...) {
-  readOGR(x, "OGRGeoJSON", ...)
+    readOGR(x, rgdal::ogrListLayers(x)[1], ...)
 }
 
 

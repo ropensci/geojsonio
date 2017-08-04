@@ -42,7 +42,9 @@
 #' # out <- file_to_geojson(input=url, method='web', output='cities')
 #' 
 #' # geojson with .json extension
-#' x <- 'https://gist.githubusercontent.com/hunterowens/25ea24e198c80c9fbcc7/raw/7fd3efda9009f902b5a991a506cea52db19ba143/wards2014.json'
+#' x <- gsub("\n", "", paste0('https://gist.githubusercontent.com/hunterowens/
+#' 25ea24e198c80c9fbcc7/raw/7fd3efda9009f902b5a991a506cea52db19ba143/
+#' wards2014.json', collapse = ""))
 #' res <- file_to_geojson(x)
 #' jsonlite::fromJSON(res)
 #' res <- file_to_geojson(x, method = "local")

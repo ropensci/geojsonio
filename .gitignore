@@ -5,3 +5,4 @@ yep.geojson
 myfile.geojson
 .V8history
 .DS_Store
+.httr-oauth

@@ -69,4 +69,3 @@ x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
 geojson_sp(x)
 }
 }
-

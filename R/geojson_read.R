@@ -50,7 +50,7 @@
 #' geojson_read(x, method = "local", what = "sp")
 #' geojson_read(x, method = "local", what = "list")
 #' 
-#' download.file(x, destfile = basename(x))
+#' utils::download.file(x, destfile = basename(x))
 #' geojson_read(basename(x), method = "local", what = "sp")
 #' 
 #' # doesn't work right now

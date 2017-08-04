@@ -57,9 +57,9 @@ test_that("as.json works with file name inputs", {
   expect_is(ee, "geojson")
   expect_is(unclass(ee), "list")
   expect_is(ee$path, "character")
-  expect_is(as.json(ee$path, verbose = FALSE), "json")
+  expect_is(as.json(ee$path), "json")
   expect_equal_to_reference(
-    unclass(as.json(ee, verbose = FALSE)), 
+    unclass(as.json(ee)), 
     "us_citites_two_row.rds"
   )
 })

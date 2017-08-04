@@ -36,7 +36,7 @@
 #' @rdname geojson-add
 `+.geo_list` <- function(x1, x2) {
   x2name <- deparse(substitute(x2))
-  if (is(x1, "geo_list")) {
+  if (inherits(x1, "geo_list")) {
     add_geolist(x1, x2, x2name)
   } else {
     stop(x1name, " not of class geo_list", call. = FALSE)
@@ -48,7 +48,7 @@
 #' @rdname geojson-add
 `+.json` <- function(x1, x2) {
   x2name <- deparse(substitute(x2))
-  if (is(x1, "json")) {
+  if (inherits(x1, "json")) {
     add_json(x1, x2, x2name)
   } else {
     stop(x1name, " not of class json", call. = FALSE)
@@ -56,10 +56,10 @@
 }
 
 add_geolist <- function(t1, t2, t2name) {
-  if (!xor(!is(t2, "geo_list"), !is(t2, "json"))) {
+  if (!xor(!inherits(t2, "geo_list"), !inherits(t2, "json"))) {
     stop("Don't know how to add ", t2name, " to a geo_list object", call. = FALSE)
   }
-  if (is(t2, "geo_list")) { 
+  if (inherits(t2, "geo_list")) { 
     t1$features <- c(t1$features, t2$features)
     att1 <- attr(t1, "from")
     att2 <- attr(t2, "from")
@@ -72,10 +72,10 @@ add_geolist <- function(t1, t2, t2name) {
 }
 
 add_json <- function(t1, t2, t2name) {
-  if (!xor(!is(t2, "json"), !is(t2, "geo_list"))) {
+  if (!xor(!inherits(t2, "json"), !inherits(t2, "geo_list"))) {
     stop("Don't know how to add ", t2name, " to a json object", call. = FALSE)
   }
-  if (is(t2, "geo_list")) { 
+  if (inherits(t2, "geo_list")) { 
     jsonlite::toJSON(list(type = "FeatureCollection", 
         features = c(geojson_list(t1)$features, geojson_list(t2)$features)
     ), auto_unbox = TRUE)

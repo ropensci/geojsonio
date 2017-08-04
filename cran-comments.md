@@ -1,6 +1,7 @@
 ## Test environments
-* local OS X install, R 3.3.1
-* ubuntu 12.04 (on travis-ci), R 3.3.1
+
+* local OS X install, R 3.4.1
+* ubuntu 12.04 (on travis-ci), R 3.4.1
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -10,12 +11,20 @@
    License components with restrictions and base license permitting such:
      MIT + file LICENSE
    File 'LICENSE':
-     YEAR: 2016
+     YEAR: 2017
      COPYRIGHT HOLDER: Scott Chamberlain
 
 ## Reverse dependencies
 
-* I have run R CMD check on the 3 downstream dependencies.
+* I have run R CMD check on the 8 downstream dependencies.
   (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>). 
 
-* All revdep maintainers were notified of the release.
+-------
+
+This version includes fixes to a few functions due to changes in GDAL/rgdal, 
+and changing `geojson_write` and `geojson_json` to allow passing param 
+through `...` to control whether JSON is pretty printed or not to disk
+or console.
+
+Thanks!
+Scott Chamberlain

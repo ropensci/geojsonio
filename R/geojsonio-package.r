@@ -36,8 +36,6 @@
 #' \code{SpatialLines}, \code{SpatialPoints}, and many more - which will try to 
 #' do the right thing based on the data you give as input.
 #' 
-#' @importFrom stats setNames
-#' @importFrom utils download.file
 #' @importFrom httr GET POST content stop_for_status upload_file
 #' @importFrom maptools readShapeSpatial
 #' @importFrom rgdal readOGR writeOGR ogrListLayers

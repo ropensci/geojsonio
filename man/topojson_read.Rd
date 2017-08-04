@@ -40,4 +40,3 @@ tmp <- topojson_read(file)
 geojson_list(tmp)
 }
 }
-

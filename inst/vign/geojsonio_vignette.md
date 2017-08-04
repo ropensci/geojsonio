@@ -135,10 +135,9 @@ to __json__
 geojson_json(sp_poly)
 #> {
 #> "type": "FeatureCollection",
-#>                                                                                 
 #> "features": [
-#> { "type": "Feature", "id": 1, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -100.0, 40.0 ], [ -90.0, 50.0 ], [ -85.0, 45.0 ], [ -100.0, 40.0 ] ] ] } },
-#> { "type": "Feature", "id": 2, "properties": { "dummy": 0.000000 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
+#> { "type": "Feature", "id": 1, "properties": { "dummy": 0.0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -100.0, 40.0 ], [ -90.0, 50.0 ], [ -85.0, 45.0 ], [ -100.0, 40.0 ] ] ] } },
+#> { "type": "Feature", "id": 2, "properties": { "dummy": 0.0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
 #> ]
 #> }
 #> 
@@ -178,7 +177,6 @@ to __json__
 geojson_json(s)
 #> {
 #> "type": "FeatureCollection",
-#>                                                                                 
 #> "features": [
 #> { "type": "Feature", "id": 1, "properties": { "dat": 1 }, "geometry": { "type": "Point", "coordinates": [ 1.0, 3.0 ] } },
 #> { "type": "Feature", "id": 2, "properties": { "dat": 2 }, "geometry": { "type": "Point", "coordinates": [ 2.0, 2.0 ] } },
@@ -251,13 +249,13 @@ summary(out)
 #> Is projected: NA 
 #> proj4string : [NA]
 #> Data attributes:
-#>           id       name   
-#>  Alabama   : 1   NA's:51  
-#>  Alaska    : 1            
-#>  Arizona   : 1            
-#>  Arkansas  : 1            
-#>  California: 1            
-#>  Colorado  : 1            
+#>           id    
+#>  Alabama   : 1  
+#>  Alaska    : 1  
+#>  Arizona   : 1  
+#>  Arkansas  : 1  
+#>  California: 1  
+#>  Colorado  : 1  
 #>  (Other)   :45
 ```
 
@@ -276,6 +274,6 @@ Or use `as.location()` first
 (loc <- as.location(file))
 #> <location> 
 #>    Type:  file 
-#>    Location:  /Library/Frameworks/R.framework/Versions/3.3/Resources/library/geojsonio/examples/us_states.topojson
+#>    Location:  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/geojsonio/examples/us_states.topojson
 out <- topojson_read(loc, verbose = FALSE)
 ```
