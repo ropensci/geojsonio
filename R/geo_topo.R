@@ -5,6 +5,7 @@
 #' @param ... for \code{topo2geo} args passed  on to 
 #' \code{\link[rgdal]{readOGR}}
 #' @return An object of class \code{json}, of either GeoJSON or TopoJSON
+#' @seealso \code{\link{topojson_write}}, \code{\link{topojson_read}}
 #' @examples
 #' # geojson to topojson
 #' x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
@@ -50,19 +51,16 @@ topo2geo <- function(x, ...) {
 }
 
 #' @export
-#' @rdname geo2topo
 topo2geo.default <- function(x, ...) {
   stop("no 'topo2geo' method for ", class(x), call. = FALSE)
 }
 
 #' @export
-#' @rdname geo2topo
 topo2geo.character <- function(x, ...) {
   topo_to_geo(x, ...)
 }
 
 #' @export
-#' @rdname geo2topo
 topo2geo.json <- function(x, ...) {
   topo_to_geo(unclass(x), ...)
 }

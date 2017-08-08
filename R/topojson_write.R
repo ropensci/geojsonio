@@ -8,7 +8,7 @@
 #'  \item path: path to the file with the TopoJSON
 #'  \item type: type of object the TopoJSON came from, e.g., SpatialPoints
 #' }
-#' @seealso \code{\link{geojson_write}}
+#' @seealso \code{\link{geojson_write}}, \code{\link{topojson_read}}
 #' @details Under the hood we simply wrap \code{\link{geojson_write}}, then
 #' take the GeoJSON output of that operation, then convert to TopoJSON with 
 #' \code{\link{geo2topo}}, then write to disk. 

@@ -225,5 +225,5 @@ if (require(sf)) {
 }
 }
 \seealso{
-\code{\link{geojson_write}}
+\code{\link{geojson_write}}, \code{\link{topojson_read}}
 }

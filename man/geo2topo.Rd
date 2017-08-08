@@ -3,20 +3,11 @@
 \name{geo2topo}
 \alias{geo2topo}
 \alias{topo2geo}
-\alias{topo2geo.default}
-\alias{topo2geo.character}
-\alias{topo2geo.json}
 \title{GeoJSON to TopoJSON and back}
 \usage{
 geo2topo(x)
 
 topo2geo(x, ...)
-
-\method{topo2geo}{default}(x, ...)
-
-\method{topo2geo}{character}(x, ...)
-
-\method{topo2geo}{json}(x, ...)
 }
 \arguments{
 \item{x}{GeoJSON or TopoJSON as a character string, json, a file path, or url}
@@ -49,4 +40,7 @@ jsonlite::prettify(w)
 ## larger examples
 file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 topo2geo(file)
+}
+\seealso{
+\code{\link{topojson_write}}, \code{\link{topojson_read}}
 }

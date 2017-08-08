@@ -13,6 +13,8 @@
 #' Note that this does not give you Topojson, but gives you a \code{sp}
 #' style spatial class - which you can use then to turn it into geojson as a 
 #' list or json.
+#' 
+#' @seealso \code{\link{geojson_read}}, \code{\link{topojson_write}}
 #'
 #' @examples \dontrun{
 #' # From a file

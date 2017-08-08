@@ -45,3 +45,6 @@ geojson_list(tmp)
 geojson_json(tmp)
 }
 }
+\seealso{
+\code{\link{geojson_read}}, \code{\link{topojson_write}}
+}
