@@ -36,10 +36,12 @@
 #' \code{SpatialLines}, \code{SpatialPoints}, and many more - which will try to 
 #' do the right thing based on the data you give as input.
 #' 
+#' @import methods sp rgeos
 #' @importFrom httr GET POST content stop_for_status upload_file
 #' @importFrom maptools readShapeSpatial
 #' @importFrom rgdal readOGR writeOGR ogrListLayers
 #' @importFrom magrittr %>%
+#' @importFrom jsonlite toJSON fromJSON unbox
 #' @name geojsonio
 #' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}

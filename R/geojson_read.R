@@ -8,6 +8,8 @@
 #' \code{method="local"}. 
 #' @template read
 #' 
+#' @return xxxx
+#' 
 #' @details Uses \code{\link{file_to_geojson}} internally to give back geojson, 
 #' and other helper functions when returning spatial classes.
 #' 

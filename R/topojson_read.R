@@ -50,9 +50,9 @@ topojson_read.location <- function(x, ...) {
 # helpers -------------------------
 read_topojson <- function(x, ...) {
   if (is_file(x)) x <- normalizePath(x)
-  stopifnot(ftype(x) == "topojson" || ftype(x) == "url")
-  my_layer <- rgdal::ogrListLayers(x)
-  rgdal::readOGR(x, layer = my_layer[1], drop_unsupported_fields = TRUE, ...)
+  stopifnot(ftype(x) %in% c("json", "topojson", "url"))
+  rgdal::readOGR(x, layer = rgdal::ogrListLayers(x)[1], 
+                 drop_unsupported_fields = TRUE, ...)
 }
 
 is_file <- function(x) {

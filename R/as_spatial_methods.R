@@ -66,7 +66,7 @@ as.SpatialPolygonsDataFrame <- function(x, ...) {
   UseMethod("as.SpatialPolygonsDataFrame")
 }
 
-as.SpatialPolygonsDataFrame.geojson <- function(x, ...) {
+as.SpatialPolygonsDataFrame.geojson_file <- function(x, ...) {
     readOGR(x$path, rgdal::ogrListLayers(x$path)[1], ...)
 }
 

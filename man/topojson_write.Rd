@@ -4,46 +4,128 @@
 \alias{topojson_write}
 \title{Write topojson from various inputs}
 \usage{
-topojson_write(x, file = NULL, ...)
+topojson_write(input, lat = NULL, lon = NULL, geometry = "point",
+  group = NULL, file = "myfile.topojson", overwrite = TRUE,
+  precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...)
 }
 \arguments{
-\item{x}{topojson as character string, or form a file, or url}
+\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can 
+also be dplyr \code{tbl_df} class since it inherits from \code{data.frame}.}
 
-\item{file}{(character) if \code{NULL} write to stdout}
+\item{lat}{(character) Latitude name. The default is \code{NULL}, and we
+attempt to guess.}
 
-\item{...}{Further args passed on to xxxx}
+\item{lon}{(character) Longitude name. The default is \code{NULL}, and we
+attempt to guess.}
+
+\item{geometry}{(character) One of point (Default) or polygon.}
+
+\item{group}{(character) A grouping variable to perform grouping for polygons
+- doesn't apply for points}
+
+\item{file}{(character) A path and file name (e.g., myfile), with the
+\code{.geojson} file extension. Default writes to current working
+directory.}
+
+\item{overwrite}{(logical) Overwrite the file given in \code{file} with
+\code{input}. Default: \code{TRUE}. If this param is \code{FALSE} and
+the file already exists, we stop with error message.}
+
+\item{precision}{desired number of decimal places for the coordinates in the
+geojson file. Using fewer decimal places can decrease file sizes (at the
+cost of precision).}
+
+\item{convert_wgs84}{Should the input be converted to the 
+\href{https://tools.ietf.org/html/rfc7946}{standard coordinate 
+reference system defined for GeoJSON} (geographic coordinate reference 
+system, using the WGS84 datum, with longitude and latitude units of decimal 
+degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a 
+future package version. This will only work for \code{sf} or \code{Spatial} 
+objects with a CRS already defined. If one is not defined but you know what 
+it is, you may define it in the \code{crs} argument below.}
+
+\item{crs}{The CRS of the input if it is not already defined. This can be 
+an epsg code as a four or five digit integer or a valid proj4 string. This 
+argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the 
+object already has a CRS.}
+
+\item{...}{Further args passed on to internal functions. For Spatial* 
+classes, data.frames,
+regular lists, and numerics, it is passed through to 
+\code{\link[rgdal]{writeOGR}}. For sf classes,
+geo_lists and json classes, it is passed through to 
+\code{\link[jsonlite]{toJSON}}.}
 }
 \value{
-A path (character)
+A \code{topojson_write} class, with two elements: 
+\itemize{
+ \item path: path to the file with the TopoJSON
+ \item type: type of object the TopoJSON came from, e.g., SpatialPoints
+}
 }
 \description{
 Write topojson from various inputs
 }
 \details{
-xxx
+Under the hood we simply wrap \code{\link{geojson_write}}, then
+take the GeoJSON output of that operation, then convert to TopoJSON with 
+\code{\link{geo2topo}}, then write to disk. 
+
+Unfortunately, this process requires a number of round trips to disk, so
+speed ups will hopefully come soon.
 }
 \examples{
-library(sp)
+# From a data.frame
+## to points
+topojson_write(us_cities[1:2,], lat='lat', lon='long')
 
-# from character string of TopoJSON
+## to polygons
+head(states)
+topojson_write(input=states, lat='lat', lon='long',
+  geometry='polygon', group="group")
+
+## partial states dataset to points (defaults to points)
+topojson_write(input=states, lat='lat', lon='long')
+
+## Lists
+### list of numeric pairs
+poly <- list(c(-114.345703125,39.436192999314095),
+          c(-114.345703125,43.45291889355468),
+          c(-106.61132812499999,43.45291889355468),
+          c(-106.61132812499999,39.436192999314095),
+          c(-114.345703125,39.436192999314095))
+topojson_write(poly, geometry = "polygon")
+
+### named list
+mylist <- list(list(latitude=30, longitude=120, marker="red"),
+               list(latitude=30, longitude=130, marker="blue"))
+topojson_write(mylist)
+
+# From a numeric vector of length 2
+## Expected order is lon, lat
+vec <- c(-99.74, 32.45)
+topojson_write(vec)
+
+# from TopoJSON as JSON
 x <- system.file("examples/point.json", package = "geojsonio")
-tj <- paste0(readLines(x), collapse = "")
+tj <- structure(paste0(readLines(x), collapse = ""), class = "json")
 topojson_write(tj, file = "my.topojson")
 
 # convert GeoJSON to TopoJSON, then write
 x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
-topojson_write(geo2topo(x), "out.topojson")
+topojson_write(geo2topo(x), file = "out.topojson")
 
 # SpatialPoints class
+library(sp)
 x <- c(1,2,3,4,5)
 y <- c(3,2,5,1,4)
 s <- SpatialPoints(cbind(x,y))
-topojson_write(s, "out.topojson")
+res <- topojson_write(s, file = "out.topojson")
 readLines("out.topojson")
 
 # SpatialPointsDataFrame class
 s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
-topojson_write(s, "out.topojson")
+topojson_write(s, file = "out.topojson")
 readLines("out.topojson")
 
 # SpatialLines class
@@ -57,7 +139,7 @@ Ls1 <- Lines(list(L1), ID = "a")
 Ls2 <- Lines(list(L2, L3), ID = "b")
 sl1 <- SpatialLines(list(Ls1))
 sl12 <- SpatialLines(list(Ls1, Ls2))
-topojson_write(sl1, "out.topojson")
+topojson_write(sl1, file = "out.topojson")
 readLines("out.topojson")
 
 # SpatialLinesDataFrame class
@@ -65,7 +147,7 @@ dat <- data.frame(X = c("Blue", "Green"),
                  Y = c("Train", "Plane"),
                  Z = c("Road", "River"), row.names = c("a", "b"))
 sldf <- SpatialLinesDataFrame(sl12, dat)
-topojson_write(sldf, "out.topojson")
+topojson_write(sldf, file = "out.topojson")
 readLines("out.topojson")
 
 # SpatialPolygons class
@@ -76,15 +158,72 @@ poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
    c(30,40,35,30)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 res <- topojson_write(sp_poly, file = "out.topojson")
-readLines(res)
+readLines(res$path)
 
 # From SpatialPolygonsDataFrame class
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
-res <- topojson_write(sp_polydf, "out.topojson")
-readLines(res)
+res <- topojson_write(sp_polydf, file = "out.topojson")
+readLines(res$path)
 
-# from file
-ff <- system.file("examples/california.geojson", package = "geojsonio")
-ffgeo <- paste0(readLines(ff), collapse = " ")
-topojson_write(ffgeo, "stuff.topojson")
+# From SpatialGrid
+x <- GridTopology(c(0,0), c(1,1), c(5,5))
+y <- SpatialGrid(x)
+topojson_write(y) 
+
+# From SpatialGrid
+x <- GridTopology(c(0,0), c(1,1), c(5,5))
+y <- SpatialGrid(x)
+res <- topojson_write(y) 
+readLines(res$path)
+
+# From SpatialGridDataFrame
+sgdim <- c(3,4)
+sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
+topojson_write(sgdf)
+
+# From SpatialPixels
+library("sp")
+pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
+summary(pixels)
+topojson_write(pixels)
+
+# From SpatialPixelsDataFrame
+library("sp")
+pixelsdf <- suppressWarnings(
+ SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
+)
+topojson_write(pixelsdf)
+
+# From SpatialRings
+library(rgeos)
+r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
+r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
+r1r2 <- SpatialRings(list(r1, r2))
+class(r1r2)
+topojson_write(r1r2)
+
+# From SpatialRingsDataFrame
+dat <- data.frame(id = c(1,2), value = 3:4)
+r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
+geojson_write(r1r2df)
+
+# From SpatialCollections
+library("sp")
+poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
+poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+coordinates(us_cities) <- ~long+lat
+dat <- SpatialCollections(points = us_cities, polygons = poly)
+topojson_write(dat)
+
+# From sf classes:
+if (require(sf)) {
+  file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
+  sf_fc <- st_read(file, quiet = TRUE)
+  topojson_write(sf_fc)
+}
+}
+\seealso{
+\code{\link{geojson_write}}
 }

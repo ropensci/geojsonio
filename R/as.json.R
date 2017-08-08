@@ -23,7 +23,7 @@ as.json.list <- function(x, ...) to_json(x, ...)
 as.json.geo_list <- function(x, ...) to_json(unclass(x), ...)
 
 #' @export
-as.json.geojson <- function(x, ...) {
+as.json.geojson_file <- function(x, ...) {
   res <- as.SpatialPolygonsDataFrame(x)
   to_json(unclass(spdftogeolist(res)), ...)
 }
