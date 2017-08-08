@@ -24,7 +24,7 @@ Spatial class). Default: "list". If "sp" chosen, forced to
 \item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
 }
 \value{
-
+various, depending on what's chosen in \code{what} parameter
 }
 \description{
 Read geojson or other formats from a local file or a URL

@@ -40,6 +40,11 @@ topojson_read <- function(x, ...) {
 }
 
 #' @export
+topojson_read.default <- function(x, ...) { 
+  stop("no 'topojson_read' method for ", class(x), call. = FALSE)
+}
+
+#' @export
 topojson_read.character <- function(x, ...) {
   read_topojson(x, ...)
 }

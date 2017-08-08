@@ -10,7 +10,7 @@
 #' 
 #' @seealso \code{\link{topojson_read}}, \code{\link{geojson_write}}
 #' 
-#' @return 
+#' @return various, depending on what's chosen in \code{what} parameter
 #' 
 #' @details Uses \code{\link{file_to_geojson}} internally to give back geojson, 
 #' and other helper functions when returning spatial classes.
@@ -64,6 +64,11 @@
 #' }
 geojson_read <- function(x, method = "web", parse = FALSE, what = "list", ...) {
   UseMethod("geojson_read")
+}
+
+#' @export
+geojson_read.default <- function(x, method = "web", parse = FALSE, what = "list", ...) { 
+  stop("no 'geojson_read' method for ", class(x), call. = FALSE)
 }
 
 #' @export
