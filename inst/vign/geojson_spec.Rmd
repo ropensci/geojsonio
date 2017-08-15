@@ -1,6 +1,6 @@
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{CRS and Bounding Boxes}
+%\VignetteIndexEntry{GeoJSON Specification}
 %\VignetteEncoding{UTF-8}
 -->
 
@@ -8,102 +8,156 @@
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE
 )
 ```
 
-CRS and Bounding Boxes
-======================
+Selected GeoJSON Specification Sections
+=======================================
 
-In `geojsonio` we follow the below guidelines for GeoJSON, and try to preserve CRS information, and bbox information when converting formats. 
+In `geojsonio` we follow the below guidelines (RFC7946) for GeoJSON, and try
+to preserve CRS information, and bbox information when converting formats.
 
-The following are the guidelines for CRS and bounding boxes for geojson, annotated as needed, get complete guidelines at [http://geojson.org/geojson-spec.html](http://geojson.org/geojson-spec.html).
+The following are the guidelines for CRS and bounding boxes for geojson,
+annotated as needed, get complete guidelines at <https://tools.ietf.org/html/rfc7946>
 
-## CRS (Coordinate Reference System Objects)
+## The Structure of GeoJSON
 
-* If an object has no crs member, then its parent or grandparent object's crs member may be acquired. If no crs member can be so acquired, the default CRS shall apply to the GeoJSON object.
-* Default CRS: WGS84 datum, w/ longitude and latitude units of decimal degrees
-* The crs member should be on the top-level GeoJSON object in a hierarchy (in feature collection, feature, geometry order) and should not be repeated or overridden on children or grandchildren of the object
-* A non-null CRS object has two mandatory members: "type" and "properties"
-* The value of the type member must be a string, indicating the type of CRS object
-* The value of the properties member must be an object
+See <https://tools.ietf.org/html/rfc7946#section-3> for further information.
 
-### Linked CRS
+__GeoJSON text__: a JSON text and consists of a single GeoJSON object.
 
-A CRS object may indicate a coordinate reference system by name. In this case, the value of its `type` member must be the string `name`. The value of its `properties` member must be an object containing a `name` member. The value of that `name` member must be a string identifying a coordinate reference system. OGC CRS URNs such as `urn:ogc:def:crs:OGC:1.3:CRS84` shall be preferred over legacy identifiers such as `EPSG:4326`:
+__GeoJSON object__: represents a Geometry, Feature, or collection of Features
+(i.e., FeatureCollection).
 
-```
-"crs": {
-  "type": "name",
-  "properties": {
-    "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
-  }
-}
-```
+* has a member with the name "type".  The value of the member
+MUST be one of the GeoJSON types.
+* MAY have a "bbox" member, the value of which MUST be a bounding
+box array (see Section 5).
+* MAY have other members (see Section 6).
 
-### Named CRS
+__Geometry object__: represents points, curves, and surfaces in coordinate
+space. Every Geometry object is a GeoJSON object no matter where it occurs
+in a GeoJSON text.
 
-A CRS object may link to CRS parameters on the Web. In this case, the value of its `type` member must be the string `link`, and the value of its `properties` member must be a Link object (see 3.2.1. Link Objects).
+* The value of a Geometry object's "type" member MUST be one of the
+  seven geometry types.
+* A GeoJSON Geometry object of any type other than
+  "GeometryCollection" has a member with the name "coordinates".
+  The value of the "coordinates" member is an array.  The structure
+  of the elements in this array is determined by the type of
+  geometry.
 
-#### Link objects
+__Position__: the fundamental geometry construct.  The "coordinates" member of
+a Geometry object is composed of either:
 
-A link object has one required member: `href`, and one optional member: `type`.
+* one position in the case of a Point geometry,
+* an array of positions in the case of a LineString or MultiPoint geometry,
+* an array of LineString or linear ring coordinates in the case of a
+Polygon or MultiLineString geometry, or
+* an array of Polygon coordinates in the case of a MultiPolygon geometry
 
-The value of the required `href` member must be a dereferenceable URI.
+__Type of Geometries__:
 
-The value of the optional `type` member must be a string that hints at the format used to represent CRS parameters at the provided URI. Suggested values are: `proj4`, `ogcwkt`, `esriwkt`, but others can be used:
+* Point
+* MultiPoint
+* LineString
+* MultiLineString
+* Polygon
+* MultiPolygon
+* GeometryCollection
 
-```
-"crs": {
-  "type": "link", 
-  "properties": {
-    "href": "http://example.com/crs/42",
-    "type": "proj4"
-  }
-}
-```
-    
-Relative links may be used to direct processors to CRS parameters in an auxiliary file:
+__Feature Object__: A Feature object represents a spatially bounded thing.  Every
+Feature object is a GeoJSON object no matter where it occurs in a GeoJSON text. A
+Feature object has a "type" member with the value "Feature"; has a member with the
+name "geometry", the value of which geometry member as defined above or a JSON
+null value. A Feature object has a member with the name "properties"; the value
+of the properties member is an object (any JSON object or a JSON null value).
 
-```
-"crs": {
-  "type": "link",
-  "properties": {
-    "href": "data.crs",
-    "type": "ogcwkt"
-  }
-}
-```
+__FeatureCollection Object__: A GeoJSON object with the type "FeatureCollection" is a
+FeatureCollection object.  A FeatureCollection object has a member with the name
+"features".  The value of "features" is a JSON array. Each element of the array
+is a Feature object as defined above.  It is possible for this array to be empty.
+
+## CRS (Coordinate Reference System)
+
+See <https://tools.ietf.org/html/rfc7946#page-12> for further information.
+
+* The coordinate reference system for all GeoJSON coordinates is a geographic
+coordinate reference system, using the World Geodetic System 1984 (WGS84)
+datum, with longitude and latitude units of decimal degrees.  This is equivalent
+to the coordinate reference system identified by the Open Geospatial Consortium (OGC)
+URN `urn:ogc:def:crs:OGC::CRS84`. An OPTIONAL third-position element SHALL
+be the height in meters above or below the WGS 84 reference ellipsoid.  In the
+absence of elevation values, applications sensitive to height or depth SHOULD
+interpret positions as being at local ground or sea level.
+* The crs member has been removed.
+* RFC7946 does not that "where all involved parties have a prior arrangement,
+alternative coordinate reference systems can be used without risk of data being
+misinterpreted."
+
 
 ## Bounding Boxes
 
-To include information on the coordinate range for geometries, features, or feature collections, a GeoJSON object may have a member named `bbox`. The value of the bbox member must be a 2*n array where n is the number of dimensions represented in the contained geometries, with the lowest values for all axes followed by the highest values. The axes order of a bbox follows the axes order of geometries. In addition, the coordinate reference system for the bbox is assumed to match the coordinate reference system of the GeoJSON object of which it is a member.
+See <https://tools.ietf.org/html/rfc7946#page-12> for further information.
 
-Example of a bbox member on a feature:
+To include information on the coordinate range for Geometries, Features, or
+FeatureCollections, a GeoJSON object may have a member named `bbox`. The value of the bbox
+member must be a 2*n array where n is the number of dimensions represented in the
+contained geometries, with the lowest values for all axes followed by the highest
+values. The axes order of a bbox follows the axes order of geometries.
+
+Example of a 2D bbox member on a Feature:
 
 ```
-{ 
+{
   "type": "Feature",
-  "bbox": [-180.0, -90.0, 180.0, 90.0],
+  "bbox": [-10.0, -10.0, 10.0, 10.0],
   "geometry": {
     "type": "Polygon",
     "coordinates": [[
-      [-180.0, 10.0], [20.0, 90.0], [180.0, -5.0], [-30.0, -90.0]
+      [-10.0, -10.0], [10.0, -10.0], [10.0, 10.0], [-10.0, -10.0]
     ]]
   }
   ...
 }
 ```
 
-Example of a bbox member on a feature collection:
+Example of a 2D bbox member on a FeatureCollection:
 
 ```
-{ 
+{
   "type": "FeatureCollection",
   "bbox": [100.0, 0.0, 105.0, 1.0],
   "features": [
     ...
-  ] 
+  ]
 }
 ```
+
+Example of a 3D bbox member with a depth of 100 meters on a FeatureCollection:
+
+```
+{
+  "type": "FeatureCollection",
+  "bbox": [100.0, 0.0, -100.0, 105.0, 1.0, 0.0],
+  "features": [
+    ...
+  ]
+}
+```
+
+## Coordinate Precision
+
+See <https://tools.ietf.org/html/rfc7946#page-18> for further information.
+
+The size of a GeoJSON text in bytes is a major interoperability
+consideration, and precision of coordinate values has a large impact
+on the size of texts.  A GeoJSON text containing many detailed
+Polygons can be inflated almost by a factor of two by increasing
+coordinate precision from 6 to 15 decimal places.  For geographic
+coordinates with units of degrees, 6 decimal places (a default common
+in, e.g., sprintf) amounts to about 10 centimeters, a precision well
+within that of current GPS systems.  Implementations should consider
+the cost of using a greater precision than necessary.
