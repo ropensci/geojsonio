@@ -20,7 +20,7 @@ test_that("as.json works with geo_list class inputs", {
 test_that("as.json works with geojson class inputs", {
   tf1 <- tempfile(fileext = ".geojson")
   cc <- suppressMessages(geojson_write(us_cities[1:2,], lat='lat', lon='long', file = tf1))
-  expect_is(cc, "geojson")
+  expect_is(cc, "geojson_file")
   expect_is(unclass(cc), "list")
   expect_is(as.json(cc, verbose = FALSE), "json")
   expect_equal(
@@ -30,7 +30,7 @@ test_that("as.json works with geojson class inputs", {
   
   tf11 <- tempfile(fileext = ".geojson")
   d <- suppressMessages(geojson_write(input=states, lat='lat', lon='long', geometry='group', group="group", file = tf11))
-  expect_is(d, "geojson")
+  expect_is(d, "geojson_file")
   expect_is(unclass(d), "list")
   expect_is(as.json(d, verbose = FALSE), "json")
   
@@ -42,7 +42,7 @@ test_that("as.json works with geojson class inputs", {
   sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
   tf2 <- tempfile(fileext = ".geojson")
   e <- suppressMessages(geojson_write(sp_poly, file = tf2))
-  expect_is(e, "geojson")
+  expect_is(e, "geojson_file")
   expect_is(unclass(e), "list")
   expect_is(as.json(e, verbose = FALSE), "json")
   expect_equal(
@@ -54,7 +54,7 @@ test_that("as.json works with geojson class inputs", {
 test_that("as.json works with file name inputs", {
   tf3 <- tempfile(fileext = ".geojson")
   ee <- suppressMessages(geojson_write(us_cities[1:2,], lat = 'lat', lon = 'long', file = tf3))
-  expect_is(ee, "geojson")
+  expect_is(ee, "geojson_file")
   expect_is(unclass(ee), "list")
   expect_is(ee$path, "character")
   expect_is(as.json(ee$path), "json")

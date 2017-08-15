@@ -19,7 +19,11 @@ Read topojson from a local file or a URL
 }
 \details{
 Returns a Spatial class (e.g., SpatialPolygonsDataFrame), but 
-you can easily and quickly get this to geojson, see examples
+you can easily and quickly get this to geojson, see examples. 
+
+Note that this does not give you Topojson, but gives you a \code{sp}
+style spatial class - which you can use then to turn it into geojson as a 
+list or json.
 }
 \examples{
 \dontrun{
@@ -38,5 +42,9 @@ topojson_read(as.location(file))
 file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 tmp <- topojson_read(file)
 geojson_list(tmp)
+geojson_json(tmp)
 }
+}
+\seealso{
+\code{\link{geojson_read}}, \code{\link{topojson_write}}
 }

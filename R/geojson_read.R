@@ -8,6 +8,10 @@
 #' \code{method="local"}. 
 #' @template read
 #' 
+#' @seealso \code{\link{topojson_read}}, \code{\link{geojson_write}}
+#' 
+#' @return various, depending on what's chosen in \code{what} parameter
+#' 
 #' @details Uses \code{\link{file_to_geojson}} internally to give back geojson, 
 #' and other helper functions when returning spatial classes.
 #' 
@@ -17,7 +21,7 @@
 #' @examples \dontrun{
 #' # From a file
 #' file <- system.file("examples", "california.geojson", package = "geojsonio")
-#' out <- geojson_read(file)
+#' (out <- geojson_read(file))
 #'
 #' # From a URL
 #' url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
@@ -60,6 +64,11 @@
 #' }
 geojson_read <- function(x, method = "web", parse = FALSE, what = "list", ...) {
   UseMethod("geojson_read")
+}
+
+#' @export
+geojson_read.default <- function(x, method = "web", parse = FALSE, what = "list", ...) { 
+  stop("no 'geojson_read' method for ", class(x), call. = FALSE)
 }
 
 #' @export

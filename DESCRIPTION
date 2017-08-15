@@ -5,7 +5,7 @@ Description: Convert data to 'GeoJSON' or 'TopoJSON' from various R classes,
     'geojsonio' does not aim to replace packages like 'sp', 'rgdal', 'rgeos', 
     but rather aims to be a high level client to simplify conversions of data 
     from and to 'GeoJSON' and 'TopoJSON'.
-Version: 0.3.8.9100
+Version: 0.3.8.9411
 License: MIT + file LICENSE
 Authors@R: c(
     person("Scott", "Chamberlain", role = c("aut", "cre"), email = "myrmecocystus@gmail.com"),
@@ -27,7 +27,8 @@ Imports:
     jsonlite (>= 0.9.21),
     magrittr,
     readr (>= 0.2.2),
-    V8
+    V8,
+    geojson
 Suggests:
     gistr,
     testthat,

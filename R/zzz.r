@@ -266,9 +266,10 @@ spdftogeolist <- function(x){
 }
 
 write_geojson <- function(input, file = "myfile.geojson", precision = NULL, 
-                          overwrite = TRUE, convert_wgs84 = FALSE, crs = NULL, ...){
-  if (!grepl("\\.geojson$", file)) {
-    file <- paste0(file, ".geojson")
+                          overwrite = TRUE, convert_wgs84 = FALSE, crs = NULL, 
+                          file_ext = ".geojson", ...){
+  if (!grepl(sprintf("\\%s$", file_ext), file)) {
+    file <- paste0(file, file_ext)
   }
   file <- path.expand(file)
   destpath <- dirname(file)

@@ -23,6 +23,9 @@ Spatial class). Default: "list". If "sp" chosen, forced to
 
 \item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
 }
+\value{
+various, depending on what's chosen in \code{what} parameter
+}
 \description{
 Read geojson or other formats from a local file or a URL
 }
@@ -60,7 +63,7 @@ has a variety of different GeoJSON linters.
 \dontrun{
 # From a file
 file <- system.file("examples", "california.geojson", package = "geojsonio")
-out <- geojson_read(file)
+(out <- geojson_read(file))
 
 # From a URL
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
@@ -101,4 +104,7 @@ geojson_read(basename(x), method = "local", what = "sp")
 ##   package = "geojsonio")
 ## geojson_read(file, what = "sp")
 }
+}
+\seealso{
+\code{\link{topojson_read}}, \code{\link{geojson_write}}
 }
