@@ -9,7 +9,7 @@ test_that("geojson_read works with file inputs", {
   expect_is(aa$crs, "list")
   expect_is(aa$features, "list")
   expect_equal(aa$features[[1]]$type, "Feature")
-  expect_named(aa$features[[1]], c("type", "properties", "geometry"))
+  expect_named(aa$features[[1]], c("type", "_id", "properties", "geometry"))
   expect_named(aa, c("type", "crs", "features"))
 })
 
@@ -35,7 +35,7 @@ test_that("geojson_read works with as.location inputs", {
   expect_is(aa$crs, "list")
   expect_is(aa$features, "list")
   expect_equal(aa$features[[1]]$type, "Feature")
-  expect_named(aa$features[[1]], c("type", "properties", "geometry"))
+  expect_named(aa$features[[1]], c("type", "_id", "properties", "geometry"))
   expect_named(aa, c("type", "crs", "features"))
 })
 
