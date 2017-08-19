@@ -1,3 +1,18 @@
+geojsonio 0.4.0
+===============
+
+### NEW FEATURES
+
+* Gains new functions `geo2topo`, `topo2geo`, `topojson_write`, and `topojson_read` for working with TopoJSON data - associated with this, we
+now import `geojson` package (#24) (#100)
+
+### MINOR IMPROVEMENTS
+
+* Updated vignette with details on the GeoJSON specification to the new
+specification at <https://tools.ietf.org/html/rfc7946> (#114)
+
+
+
 geojsonio 0.3.8
 ===============
 
