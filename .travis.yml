@@ -8,6 +8,11 @@ r_github_packages:
 
 apt_packages:
   - libudunits2-dev
+  - libv8-dev
+  - libprotobuf-dev
+  - libprotoc-dev
+  - protobuf-compiler
+  - valgrind
 
 before_install:
   - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
