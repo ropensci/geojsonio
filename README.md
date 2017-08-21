@@ -8,28 +8,28 @@ geojsonio
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/metacran/cranlogs.app)
 [![cran version](https://www.r-pkg.org/badges/version/geojsonio)](https://cran.r-project.org/package=geojsonio)
 
-__Convert various data formats to geoJSON or topoJSON__
+__Convert various data formats to GeoJSON or TopoJSON__
 
-This package is a utility to convert geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
+This package is a utility to convert geographic data to GeoJSON and TopoJSON formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
 
-Functions in this package are organized first around what you're working with or want to get, geojson or topojson, then convert to or read from various formats:
+Functions in this package are organized first around what you're working with or want to get, GeoJSON or TopoJSON, then convert to or read from various formats:
 
-* `geojson_list()` - convert to geojson as R list format
-* `geojson_json()` - convert to geojson as json
+* `geojson_list()` - convert to GeoJSON as R list format
+* `geojson_json()` - convert to GeoJSON as json
 * `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
-* `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
-* `geojson_write()` - write a geojson file locally (topojson coming later)
+* `geojson_read()`/`topojson_read()` - read a GeoJSON/TopoJSON file from file path or URL
+* `geojson_write()`/`topojson_write()` - write a GeoJSON file locally (topojson coming later)
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
 Additional functions:
 
-* `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map)
+* `map_gist()` - push up a GeoJSON or topojson file as a GitHub gist (renders as an interactive map)
 * `map_leaf()` - create a local interactive map using the `leaflet` package
 
 ## *json Info
 
-* GeoJSON - [spec](http://geojson.org/geojson-spec.html)
+* GeoJSON - [spec](https://tools.ietf.org/html/rfc7946)
 * [GeoJSON lint](http://geojsonlint.com/)
 * TopoJSON - [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
 
@@ -228,31 +228,45 @@ c + d
 #> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.74,32.45]},"properties":{}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[100,0],[101,0],[101,1],[100,1],[100,0]]]},"properties":[]}]}
 ```
 
-### Write geojson
+### Write GeoJSON
 
 
 ```r
 library('maps')
 data(us.cities)
 geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-#> <geojson>
+#> <geojson-file>
 #>   Path:       myfile.geojson
 #>   From class: data.frame
 ```
 
-### Read geojson
+### Read GeoJSON
 
 
 ```r
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
+names(out)
+#> [1] "type"     "crs"      "features"
+names(out$features[[1]])
+#> [1] "type"       "_id"        "properties" "geometry"
 ```
 
 ## TopoJSON
 
-### Read topojson
+### Write TopoJSON
 
-TopoJSON
+
+```r
+library('maps')
+data(us.cities)
+geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
+#> <geojson-file>
+#>   Path:       myfile.geojson
+#>   From class: data.frame
+```
+
+### Read TopoJSON
 
 
 ```r
@@ -262,7 +276,7 @@ out <- topojson_read(url, verbose = FALSE)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-18](inst/img/unnamed-chunk-18-1.png)
+![plot of chunk unnamed-chunk-19](inst/img/unnamed-chunk-19-1.png)
 
 ## Use case: Play with US states
 
@@ -293,9 +307,32 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~.id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-20](inst/img/unnamed-chunk-20-1.png)
+![plot of chunk unnamed-chunk-21](inst/img/unnamed-chunk-21-1.png)
 
 Okay, so the maps are not quite right (stretched to fit each panel), but you get the idea.
+
+## GeoJSON <-> TopoJSON
+
+`geo2topo()` and `topo2geo()`
+
+
+```r
+geo_json <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
+(topo_json <- geo2topo(x))
+#> {"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}
+topo2geo(topo_json)
+#> OGR data source with driver: GeoJSON 
+#> Source: "{"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}", layer: "TopoJSON"
+#> with 1 features
+#> It has 1 fields
+#> {
+#> "type": "FeatureCollection",
+#> "features": [
+#> { "type": "Feature", "id": 0, "properties": { "id": "foo" }, "geometry": { "type": "LineString", "coordinates": [ [ 100.0, 0.0 ], [ 201.0, 1.0 ] ] } }
+#> ]
+#> }
+#> 
+```
 
 
 ## Meta
