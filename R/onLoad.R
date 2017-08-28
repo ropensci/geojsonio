@@ -10,5 +10,5 @@ topo <- NULL
   ext$source(system.file("js/turf_extent.js", package = pkgname))
   
   topo <<- V8::v8()
-  topo$source("https://unpkg.com/topojson-server@3")
+  topo$source(system.file("js/topojson-server.js", package = pkgname))
 }
