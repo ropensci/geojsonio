@@ -109,12 +109,12 @@ geojson_json(c(32.45, -99.74))
 geojson_list(c(32.45, -99.74))
 #> $type
 #> [1] "FeatureCollection"
-#> 
+#>
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#> 
+#>
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
@@ -135,12 +135,12 @@ geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
 geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> $type
 #> [1] "FeatureCollection"
-#> 
+#>
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#> 
+#>
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
@@ -170,7 +170,7 @@ geojson_json(sp_poly)
 #> { "type": "Feature", "id": 2, "properties": { "dummy": 0.0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
 #> ]
 #> }
-#> 
+#>
 ```
 
 to list
@@ -180,14 +180,14 @@ to list
 geojson_list(sp_poly)$features[[1]]
 #> $type
 #> [1] "Feature"
-#> 
+#>
 #> $id
 #> [1] 1
-#> 
+#>
 #> $properties
 #> $properties$dummy
 #> [1] 0
-#> 
+#>
 ...
 ```
 
@@ -206,12 +206,12 @@ b <- geojson_list(vecs, geometry = "polygon")
 a + b
 #> $type
 #> [1] "FeatureCollection"
-#> 
+#>
 #> $features
 #> $features[[1]]
 #> $features[[1]]$type
 #> [1] "Feature"
-#> 
+#>
 #> $features[[1]]$geometry
 #> $features[[1]]$geometry$type
 ...
@@ -321,7 +321,7 @@ x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
 (topo_json <- geo2topo(x))
 #> {"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}
 topo2geo(topo_json)
-#> OGR data source with driver: GeoJSON 
+#> OGR data source with driver: GeoJSON
 #> Source: "{"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}", layer: "TopoJSON"
 #> with 1 features
 #> It has 1 fields
@@ -331,7 +331,7 @@ topo2geo(topo_json)
 #> { "type": "Feature", "id": 0, "properties": { "id": "foo" }, "geometry": { "type": "LineString", "coordinates": [ [ 100.0, 0.0 ], [ 201.0, 1.0 ] ] } }
 #> ]
 #> }
-#> 
+#>
 ```
 
 
@@ -342,4 +342,3 @@ topo2geo(topo_json)
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
 * Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
-[![rofooter](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
