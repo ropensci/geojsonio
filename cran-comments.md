@@ -25,5 +25,8 @@
 This version includes a bug fix - javascript code from within 
 package instead of from the internet.
 
+There is a error on oldrel-osx build on CRAN - this should fix that 
+as well.
+
 Thanks!
 Scott Chamberlain
