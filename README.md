@@ -317,7 +317,7 @@ Okay, so the maps are not quite right (stretched to fit each panel), but you get
 
 
 ```r
-geo_json <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
+x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
 (topo_json <- geo2topo(x))
 #> {"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}
 topo2geo(topo_json)

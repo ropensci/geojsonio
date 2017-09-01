@@ -17,12 +17,13 @@
 ## Reverse dependencies
 
 * I have run R CMD check on the 9 downstream dependencies.
-  (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>). 
+  (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>).
+  One package errored on check but was unrelated to this package.
 
 -------
 
-This version includes a new set of functions for working with 
-TopoJSON data, and a vignette improvement.
+This version includes a bug fix - javascript code from within 
+package instead of from the internet.
 
 Thanks!
 Scott Chamberlain

@@ -1,3 +1,14 @@
+geojsonio 0.4.2
+===============
+
+### BUG FIXES
+
+* Fix package so that we load `topojson-server.js` from within the 
+package instead of from the web. This makes it so that the 
+package doesn’t make any web requests on load, which prevented package
+from loading when no internet connection available. (#118)
+
+
 geojsonio 0.4.0
 ===============
 

@@ -263,7 +263,7 @@ Okay, so the maps are not quite right (stretched to fit each panel), but you get
 `geo2topo()` and `topo2geo()`
 
 ```{r}
-geo_json <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
+x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
 (topo_json <- geo2topo(x))
 topo2geo(topo_json)
 ```

@@ -49,7 +49,7 @@ Functions in this package are organized first around what you're working with or
 * `geojson_json()` - convert to geojson as json
 * `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
 * `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
-* `geojson_write()` - write a geojson file locally (no write topojson yet)
+* `geojson_write()`/`topojson_write()` - write a geojson file locally (no write topojson yet)
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
