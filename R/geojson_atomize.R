@@ -4,6 +4,9 @@
 #' @export
 #' @param x input object, either json or list
 #' @return same class as input object, but modified
+#' @details outputs valid JSON - when a FeatureCollection is split into 
+#' many Feature's, those are put into a JSON array making a valid JSON 
+#' object
 #' @examples
 #' ################# lists 
 #' # featurecollection -> features
@@ -49,23 +52,27 @@
 geojson_atomize <- function(x) UseMethod("geojson_atomize")
 
 #' @export
+geojson_atomize.default <- function(x) {
+  stop("no 'geojson_atomize' method for ", class(x))
+}
+
+#' @export
 geojson_atomize.geo_json <- function(x) {
-  #geojson::geo_type(structure(x, class = "geojson"))
   type <- stripjqr(jqr::jq(unclass(x), ".type"))
   keys <- stripjqr(jqr::jq(unclass(x), "keys[]"))
   if (type %in% c('Point', 'MultiPoint', 
                   'Polygon', 'MultiPolygon', 
                   'LineString', 'MultiLineString')) {
-    structure(jqr::jq(unclass(x), '{ "type": "Feature", "geometry": . }'), 
-              class = "json")
+    tmp <- jqr::jq(unclass(x), '{ "type": "Feature", "geometry": . }')
   } else {
     if ("features" %in% keys) {
-      return(structure(jqr::jq(unclass(x), ".features[]"), class = "json"))
+      tmp <- jqr::jq(unclass(x), ".features[]")
     }
     if ("geometries" %in% keys) {
-      return(structure(jqr::jq(unclass(x), ".geometries[]"), class = "json"))
+      tmp <- jqr::jq(unclass(x), ".geometries[]")
     }
   }
+  structure(jqr::combine(tmp), class = "json")
 }
 
 #' @export

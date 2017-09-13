@@ -15,6 +15,11 @@ same class as input object, but modified
 \description{
 Atomize
 }
+\details{
+outputs valid JSON - when a FeatureCollection is split into 
+many Feature's, those are put into a JSON array making a valid JSON 
+object
+}
 \examples{
 ################# lists 
 # featurecollection -> features
