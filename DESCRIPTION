@@ -2,10 +2,10 @@ Package: geojsonio
 Title: Convert Data from and to 'GeoJSON' or 'TopoJSON'
 Description: Convert data to 'GeoJSON' or 'TopoJSON' from various R classes,
     including vectors, lists, data frames, shape files, and spatial classes.
-    'geojsonio' does not aim to replace packages like 'sp', 'rgdal', 'rgeos', 
-    but rather aims to be a high level client to simplify conversions of data 
+    'geojsonio' does not aim to replace packages like 'sp', 'rgdal', 'rgeos',
+    but rather aims to be a high level client to simplify conversions of data
     from and to 'GeoJSON' and 'TopoJSON'.
-Version: 0.4.2.9311
+Version: 0.4.2.9631
 License: MIT + file LICENSE
 Authors@R: c(
     person("Scott", "Chamberlain", role = c("aut", "cre"), email = "myrmecocystus@gmail.com"),

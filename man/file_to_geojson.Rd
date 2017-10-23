@@ -15,16 +15,16 @@ partial strings. This parameter determines how the data is
 read. "web" means we use the Ogre web service, and "local" means we use 
 \pkg{rgdal}. See Details fore more.}
 
-\item{output}{Destination for output geojson file. Defaults to current 
+\item{output}{Destination for output geojson file. Defaults to current
 working directory, and gives a random alphanumeric file name}
 
 \item{parse}{(logical) To parse geojson to data.frame like structures if 
 possible. Default: \code{FALSE}}
 
-\item{encoding}{(character) The encoding passed to 
+\item{encoding}{(character) The encoding passed to
 \code{\link[rgdal]{readOGR}}.  Default: CP1250}
 
-\item{verbose}{(logical) Printing of \code{\link[rgdal]{readOGR}} progress. 
+\item{verbose}{(logical) Printing of \code{\link[rgdal]{readOGR}} progress.
 Default: \code{FALSE}}
 
 \item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
@@ -87,12 +87,13 @@ file_to_geojson(shpfile, method='local', output='shp_local')
 # out <- file_to_geojson(input=url, method='web', output='cities')
 
 # geojson with .json extension
-x <- gsub("\\n", "", paste0('https://gist.githubusercontent.com/hunterowens/
-25ea24e198c80c9fbcc7/raw/7fd3efda9009f902b5a991a506cea52db19ba143/
-wards2014.json', collapse = ""))
-res <- file_to_geojson(x)
-jsonlite::fromJSON(res)
-res <- file_to_geojson(x, method = "local")
-jsonlite::fromJSON(res)
+## this doesn't work anymore, hmmm
+# x <- gsub("\\n", "", paste0('https://gist.githubusercontent.com/hunterowens/
+# 25ea24e198c80c9fbcc7/raw/7fd3efda9009f902b5a991a506cea52db19ba143/
+# wards2014.json', collapse = ""))
+# res <- file_to_geojson(x)
+# jsonlite::fromJSON(res)
+# res <- file_to_geojson(x, method = "local")
+# jsonlite::fromJSON(res)
 }
 }
