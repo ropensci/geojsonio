@@ -17,7 +17,7 @@ Functions in this package are organized first around what you're working with or
 * `geojson_json()` - convert to geojson as json
 * `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
 * `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
-* `geojson_write()` - write a geojson file locally (no write topojson yet)
+* `geojson_write()`/`topojson_write()` - write a geojson file locally (no write topojson yet)
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
@@ -213,7 +213,7 @@ geojson_list(s)
 library('maps')
 data(us.cities)
 geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-#> <geojson>
+#> <geojson-file>
 #>   Path:       myfile.geojson
 #>   From class: data.frame
 ```
@@ -274,6 +274,6 @@ Or use `as.location()` first
 (loc <- as.location(file))
 #> <location> 
 #>    Type:  file 
-#>    Location:  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/geojsonio/examples/us_states.topojson
+#>    Location:  /Users/sacmac/github/ropensci/geojsonio/inst/examples/us_states.topojson
 out <- topojson_read(loc, verbose = FALSE)
 ```

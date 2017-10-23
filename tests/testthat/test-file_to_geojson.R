@@ -132,7 +132,7 @@ kml_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 
 test_that("file_to_geojson works w/ url kml input, web method, local output", {
   skip_on_cran()
-  aa <- suppressMessages(file_to_geojson(kml_url, method = "web", output = ftog5))
+  aa <- suppressMessages(file_to_geojson(input = kml_url, method = "web", output = ftog5))
   
   aa_in <- jsonlite::fromJSON(aa)
   

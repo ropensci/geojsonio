@@ -1,6 +1,6 @@
 ## Test environments
 
-* local OS X install, R 3.4.1
+* local OS X install, R 3.4.1 patched
 * ubuntu 12.04 (on travis-ci), R 3.4.1
 * win-builder (devel and release)
 
@@ -16,15 +16,17 @@
 
 ## Reverse dependencies
 
-* I have run R CMD check on the 8 downstream dependencies.
-  (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>). 
+* I have run R CMD check on the 9 downstream dependencies.
+  (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>).
+  One package errored on check but was unrelated to this package.
 
 -------
 
-This version includes fixes to a few functions due to changes in GDAL/rgdal, 
-and changing `geojson_write` and `geojson_json` to allow passing param 
-through `...` to control whether JSON is pretty printed or not to disk
-or console.
+This version includes a bug fix - javascript code from within 
+package instead of from the internet.
+
+There is a error on oldrel-osx build on CRAN - this should fix that 
+as well.
 
 Thanks!
 Scott Chamberlain

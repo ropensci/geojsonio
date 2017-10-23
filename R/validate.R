@@ -6,8 +6,8 @@
 #' @param ... Further args passed on to helper functions.
 #'
 #' @details Uses the web service at \url{http://geojsonlint.com/}
-#' 
-#' This function is Deprecated - and will be removed in the next version of 
+#'
+#' This function is Deprecated - and will be removed in the next version of
 #' this package. See \code{\link{geojsonio-deprecated}} for more information
 #'
 #' @examples \dontrun{
@@ -117,6 +117,7 @@ validate.list <- function(x, ...) validate(geojson_list(x))
 val_fxn <- function(x){
   .Deprecated("geojson_lint", package = "geojsonlint", msg = "This function will be removed in the next version, see geojsonlint::geojson_lint()")
   file <- tempfile(fileext = ".geojson")
+  on.exit(unlink(file))
   suppressMessages(geojson_write(x, file = file))
   res <- POST(v_url(), body = upload_file(file))
   stop_for_status(res)

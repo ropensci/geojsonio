@@ -18,7 +18,7 @@ Validate a geoJSON file, json object, list, or Spatial class.
 \details{
 Uses the web service at \url{http://geojsonlint.com/}
 
-This function is Deprecated - and will be removed in the next version of 
+This function is Deprecated - and will be removed in the next version of
 this package. See \code{\link{geojsonio-deprecated}} for more information
 }
 \examples{

@@ -1,3 +1,29 @@
+geojsonio 0.4.2
+===============
+
+### BUG FIXES
+
+* Fix package so that we load `topojson-server.js` from within the 
+package instead of from the web. This makes it so that the 
+package doesn’t make any web requests on load, which prevented package
+from loading when no internet connection available. (#118)
+
+
+geojsonio 0.4.0
+===============
+
+### NEW FEATURES
+
+* Gains new functions `geo2topo`, `topo2geo`, `topojson_write`, and `topojson_read` for working with TopoJSON data - associated with this, we
+now import `geojson` package (#24) (#100)
+
+### MINOR IMPROVEMENTS
+
+* Updated vignette with details on the GeoJSON specification to the new
+specification at <https://tools.ietf.org/html/rfc7946> (#114)
+
+
+
 geojsonio 0.3.8
 ===============
 
