@@ -28,7 +28,7 @@ Imports:
     magrittr,
     readr (>= 0.2.2),
     V8,
-    geojson,
+    geojson (>= 0.1.4),
     jqr
 Suggests:
     gistr,
@@ -37,4 +37,5 @@ Suggests:
     leaflet,
     sf
 Enhances: RColorBrewer
+Remotes: ropensci/geojson
 RoxygenNote: 6.0.1

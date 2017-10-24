@@ -51,10 +51,6 @@
 #' projections(proj="albers", clipExtent='[[105 - 87, 40], [105 + 87 + 1e-6, 82 + 1e-6]]')
 #' projections(proj="albers", invert=60)
 #' projections("orthographic")
-#'
-#' @examples \dontrun{
-#' projections("alber")
-#' }
 projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NULL,
                         clipAngle=NULL, precision=NULL, parallels=NULL, clipExtent=NULL, invert=NULL){
   if (missing(proj)) stop("You must provide a character string to 'proj'", call. = FALSE)
@@ -74,6 +70,7 @@ projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NU
     transverseMercator = 'd3.geo.transverseMercator()'
   )
   got <- vals[[proj]]
+  if (is.null(got)) stop("no match for 'proj' parameter input")
   args <- tg_compact(list(rotate = rotate, center = center, translate = translate, scale = scale,
                              clipAngle = clipAngle, precision = precision, parallels = parallels,
                              clipExtent = clipExtent, invert = invert))
@@ -85,7 +82,7 @@ projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NU
   gotgo <- sprintf(got, argstogo)
   if (is.null(gotgo)) {
     "That projection doesn't exist, check your spelling"
-  } else { 
-    gotgo 
+  } else {
+    gotgo
   }
 }
