@@ -10,11 +10,13 @@ class_json <- function(x, ..., type = "FeatureCollection") {
 }
 
 geoclass <- function(x, type = "FeatureCollection") {
-  switch(
+  res <- switch(
     type,
     FeatureCollection = geojson::featurecollection(unclass(x)),
     GeometryCollection = geojson::geometrycollection(unclass(x))
   )
+  class(res) <- c(class(res), "json")
+  return(res)
 }
 
 list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCollection", unnamed = FALSE, group=NULL){
