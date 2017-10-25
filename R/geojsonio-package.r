@@ -50,6 +50,7 @@
 #' @importFrom rgdal readOGR writeOGR ogrListLayers
 #' @importFrom magrittr %>%
 #' @importFrom jsonlite toJSON fromJSON unbox
+#' @importFrom geojson featurecollection geometrycollection
 #' @name geojsonio
 #' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}
