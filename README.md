@@ -94,7 +94,7 @@ library("geojsonio")
 
 ## GeoJSON
 
-### Convert various formats to geojson
+### Convert various formats to GeoJSON
 
 From a `numeric` vector of length 2, as json or list
 
@@ -256,6 +256,46 @@ names(out$features[[1]])
 
 ## TopoJSON
 
+### to JSON
+
+
+```r
+topojson_json(c(-99.74,32.45))
+#> {"type":"Topology","objects":{"foo":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[-99.74,32.45]}]}},"arcs":[],"bbox":[-99.74,32.45,-99.74,32.45]}
+```
+
+### to list
+
+
+```r
+library(sp)
+x <- c(1,2,3,4,5)
+y <- c(3,2,5,1,4)
+s <- SpatialPoints(cbind(x,y))
+topojson_list(s)
+#> $type
+#> [1] "Topology"
+#> 
+#> $objects
+#> $objects$foo
+#> $objects$foo$type
+#> [1] "GeometryCollection"
+#> 
+#> $objects$foo$geometries
+#> $objects$foo$geometries[[1]]
+#> $objects$foo$geometries[[1]]$type
+#> [1] "Point"
+#> 
+#> $objects$foo$geometries[[1]]$coordinates
+#> [1] 1 3
+#> 
+#> $objects$foo$geometries[[1]]$id
+#> [1] 1
+#> 
+#> $objects$foo$geometries[[1]]$properties
+...
+```
+
 ### Write TopoJSON
 
 
@@ -278,7 +318,7 @@ out <- topojson_read(url, verbose = FALSE)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-19](inst/img/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-21](inst/img/unnamed-chunk-21-1.png)
 
 ## Use case: Play with US states
 
@@ -309,7 +349,7 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~.id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-21](inst/img/unnamed-chunk-21-1.png)
+![plot of chunk unnamed-chunk-23](inst/img/unnamed-chunk-23-1.png)
 
 Okay, so the maps are not quite right (stretched to fit each panel), but you get the idea.
 
