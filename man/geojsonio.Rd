@@ -6,47 +6,49 @@
 \alias{geojsonio-package}
 \title{\strong{I/O for GeoJSON}}
 \description{
-Convert various data formats to/from GeoJSON or TopoJSON. This 
-package focuses mostly on converting lists, data.frame's, numeric, 
-SpatialPolygons, SpatialPolygonsDataFrame, and more to GeoJSON with the 
-help of \code{rgdal} and friends. You can currently read TopoJSON - writing 
+Convert various data formats to/from GeoJSON or TopoJSON. This
+package focuses mostly on converting lists, data.frame's, numeric,
+SpatialPolygons, SpatialPolygonsDataFrame, and more to GeoJSON with the
+help of \code{rgdal} and friends. You can currently read TopoJSON - writing
 TopoJSON will come in a future version of this package.
 }
 \section{Package organization}{
 
-The core functions in this package are organized first around what you're 
-working with or want to get, GeoJSON or TopoJSON, then convert to or read 
+The core functions in this package are organized first around what you're
+working with or want to get, GeoJSON or TopoJSON, then convert to or read
 from various formats:
 \itemize{
- \item \code{\link{geojson_list}} - convert to GeoJSON as R list format
- \item \code{\link{geojson_json}} - convert to GeoJSON as json
- \item \code{\link{geojson_sp}} - convert to a spatial object from 
+ \item \code{\link{geojson_list}} / \code{\link{topojson_list}} - convert
+	to GeoJSON or TopoJSON as R list format
+ \item \code{\link{geojson_json}} / \code{\link{topojson_json}} - convert
+ to GeoJSON or TopoJSON as JSON
+ \item \code{\link{geojson_sp}} - convert to a spatial object from
  \code{geojson_list} or \code{geojson_json}
- \item \code{\link{geojson_read}} / \code{\link{topojson_read}} - read a 
+ \item \code{\link{geojson_read}} / \code{\link{topojson_read}} - read a
  GeoJSON/TopoJSON file from file path or URL
- \item \code{\link{geojson_write}} / \code{\link{topojson_write}} - write 
+ \item \code{\link{geojson_write}} / \code{\link{topojson_write}} - write
  a GeoJSON file locally (TopoJSON coming later)
 }
 
 Other interesting functions:
 \itemize{
- \item \code{\link{map_gist}} - Create a GitHub gist (renders as an 
+ \item \code{\link{map_gist}} - Create a GitHub gist (renders as an
  interactive map)
- \item \code{\link{map_leaf}} - Create a local interactive map using the 
+ \item \code{\link{map_leaf}} - Create a local interactive map using the
  \code{leaflet} package
- \item \code{\link{lint}} - Checks validity of GeoJSON using the Javascript 
+ \item \code{\link{lint}} - Checks validity of GeoJSON using the Javascript
  library geojsonhint. See also \code{\link{geojsonio-deprecated}}
- \item \code{\link{validate}} - Checks validity of GeoJSON using the web 
- service at http://geojsonlint.com/. See also 
+ \item \code{\link{validate}} - Checks validity of GeoJSON using the web
+ service at http://geojsonlint.com/. See also
  \code{\link{geojsonio-deprecated}}
  \item \code{\link{geo2topo}} - Convert GeoJSON to TopoJSON
- \item \code{\link{topo2geo}} - Convert TopoJSON to GeoJSON 
+ \item \code{\link{topo2geo}} - Convert TopoJSON to GeoJSON
 }
 
-All of the above functions have methods for various classes, including 
-\code{numeric} vectors, \code{data.frame}, \code{list}, 
-\code{SpatialPolygons}, \code{SpatialLines}, \code{SpatialPoints}, and many 
-more - which will try to do the right thing based on the data you give 
+All of the above functions have methods for various classes, including
+\code{numeric} vectors, \code{data.frame}, \code{list},
+\code{SpatialPolygons}, \code{SpatialLines}, \code{SpatialPoints}, and many
+more - which will try to do the right thing based on the data you give
 as input.
 }
 

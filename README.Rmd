@@ -48,11 +48,11 @@ This package is a utility to convert geographic data to GeoJSON and TopoJSON for
 
 Functions in this package are organized first around what you're working with or want to get, GeoJSON or TopoJSON, then convert to or read from various formats:
 
-* `geojson_list()` - convert to GeoJSON as R list format
-* `geojson_json()` - convert to GeoJSON as json
+* `geojson_list()`/`topojson_list()` - convert to GeoJSON/TopoJSON as R list format
+* `geojson_json()`/`topojson_json()` - convert to GeoJSON/TopoJSON as JSON
 * `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
 * `geojson_read()`/`topojson_read()` - read a GeoJSON/TopoJSON file from file path or URL
-* `geojson_write()`/`topojson_write()` - write a GeoJSON file locally (topojson coming later)
+* `geojson_write()`/`topojson_write()` - write a GeoJSON/TopoJSON file locally
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
@@ -61,7 +61,7 @@ Additional functions:
 * `map_gist()` - push up a GeoJSON or topojson file as a GitHub gist (renders as an interactive map)
 * `map_leaf()` - create a local interactive map using the `leaflet` package
 
-## *json Info
+## \*json Info
 
 * GeoJSON - [spec](https://tools.ietf.org/html/rfc7946)
 * [GeoJSON lint](http://geojsonlint.com/)

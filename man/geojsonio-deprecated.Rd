@@ -5,7 +5,7 @@
 \title{Deprecated functions in geojsonio}
 \description{
 \itemize{
- \item \code{\link{lint}}: In the next version this function will be 
+ \item \code{\link{lint}}: In the next version this function will be
  removed, defunct. See \code{geojsonlint::geojson_hint}
  \item \code{\link{validate}}: In the next version this function will be
  removed, defunct. See \code{geojsonlint::geojson_lint}
