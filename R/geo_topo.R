@@ -1,8 +1,8 @@
 #' GeoJSON to TopoJSON and back
-#' 
+#'
 #' @export
 #' @param x GeoJSON or TopoJSON as a character string, json, a file path, or url
-#' @param ... for \code{topo2geo} args passed  on to 
+#' @param ... for \code{topo2geo} args passed  on to
 #' \code{\link[rgdal]{readOGR}}
 #' @return An object of class \code{json}, of either GeoJSON or TopoJSON
 #' @seealso \code{\link{topojson_write}}, \code{\link{topojson_read}}
@@ -13,15 +13,15 @@
 #' jsonlite::prettify(z)
 #' \dontrun{
 #' library(leaflet)
-#' leaflet() %>% 
-#'   addProviderTiles(provider = "Stamen.Terrain") %>% 
+#' leaflet() %>%
+#'   addProviderTiles(provider = "Stamen.Terrain") %>%
 #'   addTopoJSON(z)
 #' }
-#' 
+#'
 #' # topojson to geojson
 #' w <- topo2geo(z)
 #' jsonlite::prettify(w)
-#' 
+#'
 #' ## larger examples
 #' file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 #' topo2geo(file)
@@ -43,6 +43,12 @@ geo2topo.character <- function(x) {
 geo2topo.json <- function(x) {
   geo_to_topo(unclass(x))
 }
+
+#' @export
+geo2topo.list <- function(x, ...) {
+  lapply(x, function(z) geo_to_topo(unclass(z), ...))
+}
+
 
 #' @export
 #' @rdname geo2topo

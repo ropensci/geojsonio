@@ -12,7 +12,7 @@ topo2geo(x, ...)
 \arguments{
 \item{x}{GeoJSON or TopoJSON as a character string, json, a file path, or url}
 
-\item{...}{for \code{topo2geo} args passed  on to 
+\item{...}{for \code{topo2geo} args passed  on to
 \code{\link[rgdal]{readOGR}}}
 }
 \value{
@@ -28,8 +28,8 @@ z <- geo2topo(x)
 jsonlite::prettify(z)
 \dontrun{
 library(leaflet)
-leaflet() \%>\% 
-  addProviderTiles(provider = "Stamen.Terrain") \%>\% 
+leaflet() \%>\%
+  addProviderTiles(provider = "Stamen.Terrain") \%>\%
   addTopoJSON(z)
 }
 
