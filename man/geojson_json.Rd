@@ -27,8 +27,8 @@ apply for points}
 
 \item{crs}{The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.}
 
-\item{...}{Further args passed on to internal functions. For Spatial* classes, it is passed through to 
-\code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics, and 
+\item{...}{Further args passed on to internal functions. For Spatial* classes, it is passed through to
+\code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics, and
 geo_lists, it is passed through to \code{\link[jsonlite]{toJSON}}.}
 }
 \value{
@@ -53,7 +53,7 @@ about it too much, but this disk round-trip is not ideal.
 For sf classes (sf, sfc, sfg), the following conversions are made:
 
 \itemize{
- \item sfg: the appropriate geometry \code{Point, LineString, Polygon, MultiPoint, 
+ \item sfg: the appropriate geometry \code{Point, LineString, Polygon, MultiPoint,
  MultiLineString, MultiPolygon, GeometryCollection}
  \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry as above
  \item sf: \code{FeatureCollection}
@@ -212,13 +212,13 @@ if (require(sf)) {
   poly <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
   poly_sfg <-st_polygon(list(p1))
   geojson_json(poly_sfg)
-  
+
 ## sfc (a collection of geometries)
   p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
   p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))
   poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
   geojson_json(poly_sfc)
-  
+
 ## sf (collection of geometries with attributes)
   p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
   p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))

@@ -15,7 +15,7 @@ geoclass <- function(x, type = "FeatureCollection") {
     FeatureCollection = geojson::featurecollection(unclass(x)),
     GeometryCollection = geojson::geometrycollection(unclass(x))
   )
-  class(res) <- c(class(res), "json")
+  class(res) <- c(class(res), c("geo_json", "json"))
   return(res)
 }
 
