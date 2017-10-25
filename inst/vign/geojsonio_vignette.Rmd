@@ -20,8 +20,8 @@ knitr::knit_hooks$set(output = function(x, options) {
        x <- c(head(x, lines), more)
      }
    } else {
-     x <- c(if (abs(lines[1])>1) more else NULL, 
-            x[lines], 
+     x <- c(if (abs(lines[1])>1) more else NULL,
+            x[lines],
             if (length(x)>lines[abs(length(lines))]) more else NULL
            )
    }
@@ -33,7 +33,7 @@ knitr::knit_hooks$set(output = function(x, options) {
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE
 )
 ```
@@ -45,18 +45,19 @@ geojsonio vignette
 
 Functions in this package are organized first around what you're working with or want to get, geojson or topojson, then convert to or read from various formats:
 
-* `geojson_list()` - convert to geojson as R list format
-* `geojson_json()` - convert to geojson as json
+* `geojson_list()`/`topojson_list()` - convert to GeoJSON/TopoJSON as R list format
+* `geojson_json()`/`topojson_json()` - convert to GeoJSON/TopoJSON as JSON
 * `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
-* `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
-* `geojson_write()`/`topojson_write()` - write a geojson file locally (no write topojson yet)
+* `geojson_read()`/`topojson_read()` - read a GeoJSON/TopoJSON file from file path or URL
+* `geojson_write()`/`topojson_write()` - write a GeoJSON/TopoJSON file locally
+
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
 Additional functions:
 
 * `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map) - See the _maps with geojsonio_ vignette.
-* `map_leaf()` - create a local interactive map with the `leaflet` package - See the _maps with geojsonio_ vignette. 
+* `map_leaf()` - create a local interactive map with the `leaflet` package - See the _maps with geojsonio_ vignette.
 
 ## Install
 
@@ -178,7 +179,21 @@ plot(out)
 
 ## Topojson
 
-In the current version of this package you can read topojson. Writing topojson was in this package, but is gone for now - will come back later as in interface to [topojson](https://github.com/mbostock/topojson) via [V8](https://github.com/jeroenooms/V8). 
+To JSON
+
+```{r}
+topojson_json(c(-99.74,32.45))
+```
+
+To a list
+
+```{r output.lines=1:20}
+library(sp)
+x <- c(1,2,3,4,5)
+y <- c(3,2,5,1,4)
+s <- SpatialPoints(cbind(x,y))
+topojson_list(s)
+```
 
 Read from a file
 

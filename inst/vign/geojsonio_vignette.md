@@ -13,18 +13,19 @@ geojsonio vignette
 
 Functions in this package are organized first around what you're working with or want to get, geojson or topojson, then convert to or read from various formats:
 
-* `geojson_list()` - convert to geojson as R list format
-* `geojson_json()` - convert to geojson as json
+* `geojson_list()`/`topojson_list()` - convert to GeoJSON/TopoJSON as R list format
+* `geojson_json()`/`topojson_json()` - convert to GeoJSON/TopoJSON as JSON
 * `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
-* `geojson_read()`/`topojson_read()` - read a geojson/topojson file from file path or URL
-* `geojson_write()`/`topojson_write()` - write a geojson file locally (no write topojson yet)
+* `geojson_read()`/`topojson_read()` - read a GeoJSON/TopoJSON file from file path or URL
+* `geojson_write()`/`topojson_write()` - write a GeoJSON/TopoJSON file locally
+
 
 Each of the above functions have methods for various objects/classes, including `numeric`, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`, `SpatialPoints`, etc.
 
 Additional functions:
 
 * `map_gist()` - push up a geojson or topojson file as a GitHub gist (renders as an interactive map) - See the _maps with geojsonio_ vignette.
-* `map_leaf()` - create a local interactive map with the `leaflet` package - See the _maps with geojsonio_ vignette. 
+* `map_leaf()` - create a local interactive map with the `leaflet` package - See the _maps with geojsonio_ vignette.
 
 ## Install
 
@@ -65,7 +66,10 @@ as _json_
 
 ```r
 geojson_json(c(32.45, -99.74))
-#> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[32.45,-99.74]},"properties":{}}]}
+#> <FeatureCollection> 
+#>   type:  FeatureCollection 
+#>   no. features:  1 
+#>   features (1st 5):  Point
 ```
 
 as a __list__
@@ -95,7 +99,10 @@ as __json__
 library('maps')
 data(us.cities)
 geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
-#> {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.74,32.45]},"properties":{"name":"Abilene TX","country.etc":"TX","pop":"113888","capital":"0"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-81.52,41.08]},"properties":{"name":"Akron OH","country.etc":"OH","pop":"206634","capital":"0"}}]}
+#> <FeatureCollection> 
+#>   type:  FeatureCollection 
+#>   no. features:  2 
+#>   features (1st 5):  Point, Point
 ```
 
 as a __list__
@@ -133,14 +140,10 @@ to __json__
 
 ```r
 geojson_json(sp_poly)
-#> {
-#> "type": "FeatureCollection",
-#> "features": [
-#> { "type": "Feature", "id": 1, "properties": { "dummy": 0.0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -100.0, 40.0 ], [ -90.0, 50.0 ], [ -85.0, 45.0 ], [ -100.0, 40.0 ] ] ] } },
-#> { "type": "Feature", "id": 2, "properties": { "dummy": 0.0 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -90.0, 30.0 ], [ -80.0, 40.0 ], [ -75.0, 35.0 ], [ -90.0, 30.0 ] ] ] } }
-#> ]
-#> }
-#> 
+#> <FeatureCollection> 
+#>   type:  FeatureCollection 
+#>   no. features:  2 
+#>   features (1st 5):  Polygon, Polygon
 ```
 
 to a __list__
@@ -175,17 +178,10 @@ to __json__
 
 ```r
 geojson_json(s)
-#> {
-#> "type": "FeatureCollection",
-#> "features": [
-#> { "type": "Feature", "id": 1, "properties": { "dat": 1 }, "geometry": { "type": "Point", "coordinates": [ 1.0, 3.0 ] } },
-#> { "type": "Feature", "id": 2, "properties": { "dat": 2 }, "geometry": { "type": "Point", "coordinates": [ 2.0, 2.0 ] } },
-#> { "type": "Feature", "id": 3, "properties": { "dat": 3 }, "geometry": { "type": "Point", "coordinates": [ 3.0, 5.0 ] } },
-#> { "type": "Feature", "id": 4, "properties": { "dat": 4 }, "geometry": { "type": "Point", "coordinates": [ 4.0, 1.0 ] } },
-#> { "type": "Feature", "id": 5, "properties": { "dat": 5 }, "geometry": { "type": "Point", "coordinates": [ 5.0, 4.0 ] } }
-#> ]
-#> }
-#> 
+#> <FeatureCollection> 
+#>   type:  FeatureCollection 
+#>   no. features:  5 
+#>   features (1st 5):  Point, Point, Point, Point, Point
 ```
 
 to a __list__
@@ -232,7 +228,45 @@ plot(out)
 
 ## Topojson
 
-In the current version of this package you can read topojson. Writing topojson was in this package, but is gone for now - will come back later as in interface to [topojson](https://github.com/mbostock/topojson) via [V8](https://github.com/jeroenooms/V8). 
+To JSON
+
+
+```r
+topojson_json(c(-99.74,32.45))
+#> {"type":"Topology","objects":{"foo":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[-99.74,32.45]}]}},"arcs":[],"bbox":[-99.74,32.45,-99.74,32.45]}
+```
+
+To a list
+
+
+```r
+library(sp)
+x <- c(1,2,3,4,5)
+y <- c(3,2,5,1,4)
+s <- SpatialPoints(cbind(x,y))
+topojson_list(s)
+#> $type
+#> [1] "Topology"
+#> 
+#> $objects
+#> $objects$foo
+#> $objects$foo$type
+#> [1] "GeometryCollection"
+#> 
+#> $objects$foo$geometries
+#> $objects$foo$geometries[[1]]
+#> $objects$foo$geometries[[1]]$type
+#> [1] "Point"
+#> 
+#> $objects$foo$geometries[[1]]$coordinates
+#> [1] 1 3
+#> 
+#> $objects$foo$geometries[[1]]$id
+#> [1] 1
+#> 
+#> $objects$foo$geometries[[1]]$properties
+...
+```
 
 Read from a file
 
@@ -274,6 +308,6 @@ Or use `as.location()` first
 (loc <- as.location(file))
 #> <location> 
 #>    Type:  file 
-#>    Location:  /Users/sacmac/github/ropensci/geojsonio/inst/examples/us_states.topojson
+#>    Location:  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/geojsonio/examples/us_states.topojson
 out <- topojson_read(loc, verbose = FALSE)
 ```
