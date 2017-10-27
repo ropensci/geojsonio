@@ -7,7 +7,8 @@
 #' @param lat (character) Latitude name. The default is \code{NULL}, and we attempt to guess.
 #' @param lon (character) Longitude name. The default is \code{NULL}, and we attempt to guess.
 #' @param geometry (character) One of point (Default) or polygon.
-#' @param type  (character)The type of collection. One of FeatureCollection (default) or GeometryCollection. 
+#' @param type  (character) The type of collection. One of 'auto' (default for 'sf' objects), 
+#' 'FeatureCollection' (default for everything else), or 'GeometryCollection'. 
 #' This is ignored for \code{Spatial} objects as it will always produce a "FeatureCollection"
 #' @param group (character) A grouping variable to perform grouping for polygons - doesn't
 #' apply for points
@@ -298,21 +299,21 @@ geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL,
 
 #' @export
 geojson_json.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
-                            geometry = "point",  type='FeatureCollection',
+                            geometry = "point",  type='auto',
                             convert_wgs84 = FALSE, crs = NULL, ...) {
   geoclass(as.json(geojson_list(input, convert_wgs84 = convert_wgs84, crs = crs), ...), type)
 }
 
 #' @export
 geojson_json.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
-                             geometry = "point",  type='FeatureCollection',
+                             geometry = "point",  type='auto',
                              convert_wgs84 = FALSE, crs = NULL, ...) {
   geoclass(as.json(geojson_list(input, convert_wgs84 = convert_wgs84, crs = crs), ...), type)
 }
 
 #' @export
 geojson_json.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
-                             geometry = "point",  type='FeatureCollection',
+                             geometry = "point",  type='auto',
                              convert_wgs84 = FALSE, crs = NULL, ...) {
   geoclass(as.json(geojson_list(input), ...), type)
 }
@@ -362,7 +363,7 @@ geojson_json.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
 
 #' @export
 geojson_json.list <- function(input, lat = NULL, lon = NULL, group = NULL,
-                              geometry = "point",  type='FeatureCollection', ...){
+                              geometry = "point", type='FeatureCollection', ...){
   if (geometry == "polygon") lint_polygon_list(input)
   tmp <- if (!is.named(input)) {
     list(lon = NULL, lat = NULL)
