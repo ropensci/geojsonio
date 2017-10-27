@@ -10,10 +10,17 @@ class_json <- function(x, ..., type = "FeatureCollection") {
 }
 
 geoclass <- function(x, type = "FeatureCollection") {
-  res <- switch(
-    type,
-    FeatureCollection = geojson::featurecollection(unclass(x)),
-    GeometryCollection = geojson::geometrycollection(unclass(x))
+  res <- switch(type,
+    "auto" = geojson::to_geojson(unclass(x)),
+    "Point" = geojson::point(unclass(x)),
+    "LineString" = geojson::linestring(unclass(x)),
+    "Polygon" = geojson::polygon(unclass(x)),
+    "MultiPoint" = geojson::multipoint(unclass(x)),
+    "MultiLineString" = geojson::multilinestring(unclass(x)),
+    "MultiPolygon" = geojson::multipolygon(unclass(x)),
+    "Feature" = geojson::feature(unclass(x)),
+    "FeatureCollection" = geojson::featurecollection(unclass(x)),
+    "GeometryCollection" = geojson::geometrycollection(unclass(x))
   )
   class(res) <- c(class(res), c("geo_json", "json"))
   return(res)
