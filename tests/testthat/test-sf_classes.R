@@ -297,10 +297,6 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
                           st_point, dim = "XYZM")
     pt_sfc_xyzm <- st_sfc(p_list_xyzm)
     pt_sf_xyzm <- st_sf(x = c("a", "b", "c"), pt_sfc_xyzm)
-
-
-
-    expect_equal
   })
 
   test_that("Deal with M dimensions: multipoint", {
