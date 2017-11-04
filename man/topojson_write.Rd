@@ -2,7 +2,7 @@
 % Please edit documentation in R/topojson_write.R
 \name{topojson_write}
 \alias{topojson_write}
-\title{Write topojson from various inputs}
+\title{Write TopoJSON from various inputs}
 \usage{
 topojson_write(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE,
@@ -57,22 +57,24 @@ geo_lists and json classes, it is passed through to
 \code{\link[jsonlite]{toJSON}}.}
 }
 \value{
-A \code{topojson_write} class, with two elements: 
+A \code{topojson_write} class, with two elements:
 \itemize{
  \item path: path to the file with the TopoJSON
  \item type: type of object the TopoJSON came from, e.g., SpatialPoints
 }
 }
 \description{
-Write topojson from various inputs
+Write TopoJSON from various inputs
 }
 \details{
 Under the hood we simply wrap \code{\link{geojson_write}}, then
-take the GeoJSON output of that operation, then convert to TopoJSON with 
-\code{\link{geo2topo}}, then write to disk. 
+take the GeoJSON output of that operation, then convert to TopoJSON with
+\code{\link{geo2topo}}, then write to disk.
 
 Unfortunately, this process requires a number of round trips to disk, so
 speed ups will hopefully come soon.
+
+Any intermediate geojson files are cleaned up (deleted).
 }
 \examples{
 # From a data.frame
@@ -168,12 +170,12 @@ readLines(res$path)
 # From SpatialGrid
 x <- GridTopology(c(0,0), c(1,1), c(5,5))
 y <- SpatialGrid(x)
-topojson_write(y) 
+topojson_write(y)
 
 # From SpatialGrid
 x <- GridTopology(c(0,0), c(1,1), c(5,5))
 y <- SpatialGrid(x)
-res <- topojson_write(y) 
+res <- topojson_write(y)
 readLines(res$path)
 
 # From SpatialGridDataFrame
@@ -210,6 +212,7 @@ geojson_write(r1r2df)
 
 # From SpatialCollections
 library("sp")
+library("rgeos")
 poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
 poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
 poly <- SpatialPolygons(list(poly1, poly2), 1:2)
