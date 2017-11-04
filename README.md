@@ -303,8 +303,8 @@ topojson_list(s)
 library('maps')
 data(us.cities)
 topojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-#> <geojson-file>
-#>   Path:       myfile.geojson
+#> <topojson-file>
+#>   Path:       myfile.json
 #>   From class: data.frame
 ```
 
