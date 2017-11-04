@@ -302,7 +302,7 @@ topojson_list(s)
 ```r
 library('maps')
 data(us.cities)
-geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
+topojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> <geojson-file>
 #>   Path:       myfile.geojson
 #>   From class: data.frame
