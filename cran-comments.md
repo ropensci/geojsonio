@@ -1,7 +1,7 @@
 ## Test environments
 
-* local OS X install, R 3.4.1 patched
-* ubuntu 12.04 (on travis-ci), R 3.4.1
+* local OS X install, R 3.4.2 patched
+* ubuntu 12.04 (on travis-ci), R 3.4.2
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -16,17 +16,13 @@
 
 ## Reverse dependencies
 
-* I have run R CMD check on the 9 downstream dependencies.
+* I have run R CMD check on the 8 downstream dependencies.
   (Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>).
-  One package errored on check but was unrelated to this package.
+  One package errored on check but the errors are unrelated to this package.
 
 -------
 
-This version includes a bug fix - javascript code from within 
-package instead of from the internet.
-
-There is a error on oldrel-osx build on CRAN - this should fix that 
-as well.
+This version includes xxxx.
 
 Thanks!
 Scott Chamberlain
