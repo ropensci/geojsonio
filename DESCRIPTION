@@ -28,7 +28,7 @@ Imports:
     magrittr,
     readr (>= 0.2.2),
     V8,
-    geojson (>= 0.1.4),
+    geojson (>= 0.2.0),
     jqr
 Suggests:
     gistr,
