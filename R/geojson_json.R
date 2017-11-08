@@ -1,43 +1,62 @@
-#' Convert many input types with spatial data to geojson specified as a json string
+#' Convert many input types with spatial data to geojson specified as a json
+#' string
 #'
 #' @export
 #'
-#' @param input Input list, data.frame, spatial class, or sf class. Inputs can also be dplyr \code{tbl_df}
-#' class since it inherits from \code{data.frame}.
-#' @param lat (character) Latitude name. The default is \code{NULL}, and we attempt to guess.
-#' @param lon (character) Longitude name. The default is \code{NULL}, and we attempt to guess.
+#' @param input Input list, data.frame, spatial class, or sf class. Inputs can
+#' also be dplyr \code{tbl_df} class since it inherits from \code{data.frame}.
+#' @param lat (character) Latitude name. The default is \code{NULL}, and we
+#' attempt to guess.
+#' @param lon (character) Longitude name. The default is \code{NULL}, and we
+#' attempt to guess.
 #' @param geometry (character) One of point (Default) or polygon.
-#' @param type  (character) The type of collection. One of 'auto' (default for 'sf' objects),
+#' @param type  (character) The type of collection. One of 'auto' (default
+#' for 'sf' objects),
 #' 'FeatureCollection' (default for everything else), or 'GeometryCollection'.
-#' This is ignored for \code{Spatial} objects as it will always produce a "FeatureCollection"
-#' @param group (character) A grouping variable to perform grouping for polygons - doesn't
-#' apply for points
-#' @param convert_wgs84 Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude units of decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.
-#' @param crs The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.
-#' @param ... Further args passed on to internal functions. For Spatial* classes, it is passed through to
-#' \code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics, and
-#' geo_lists, it is passed through to \code{\link[jsonlite]{toJSON}}.
+#' This is ignored for \code{Spatial} objects as it will always produce a
+#' "FeatureCollection"
+#' @param group (character) A grouping variable to perform grouping for
+#' polygons - doesn't apply for points
+#' @param convert_wgs84 Should the input be converted to the
+#' \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference
+#' system defined for GeoJSON}  (geographic coordinate reference system, using
+#' the WGS84 datum, with longitude and latitude units of decimal degrees;
+#' EPSG: 4326). Default is \code{FALSE} though this may change in a future
+#' package version. This will only work for \code{sf} or \code{Spatial}
+#' objects with a CRS already defined. If one is not defined but you know
+#' what it is, you may define it in the \code{crs} argument below.
+#' @param crs The CRS of the input if it is not already defined. This can be
+#' an epsg code as a four or five digit integer or a valid proj4 string.
+#' This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or
+#' the object already has a CRS.
+#' @param ... Further args passed on to internal functions. For Spatial*
+#' classes, it is passed through to
+#' \code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics,
+#' and geo_lists, it is passed through to \code{\link[jsonlite]{toJSON}}.
 #'
 #' @return An object of class \code{geo_json} (and \code{json})
 #'
-#' @details This function creates a geojson structure as a json character string; it does not
-#' write a file using \code{rgdal} - see \code{\link{geojson_write}} for that.
+#' @details This function creates a geojson structure as a json character
+#' string; it does not write a file using \code{rgdal} - see
+#' \code{\link{geojson_write}} for that.
 #'
-#' Note that all sp class objects will output as \code{FeatureCollection} objects, while other
-#' classes (numeric, list, data.frame) can be output as \code{FeatureCollection} or
-#' \code{GeometryCollection} objects. We're working on allowing \code{GeometryCollection}
-#' option for sp class objects.
+#' Note that all sp class objects will output as \code{FeatureCollection}
+#' objects, while other classes (numeric, list, data.frame) can be output as
+#' \code{FeatureCollection} or \code{GeometryCollection} objects. We're working
+#' on allowing \code{GeometryCollection} option for sp class objects.
 #'
-#' Also note that with sp classes we do make a round-trip, using \code{\link[rgdal]{writeOGR}}
-#' to write GeoJSON to disk, then read it back in. This is fast and we don't have to think
-#' about it too much, but this disk round-trip is not ideal.
+#' Also note that with sp classes we do make a round-trip, using
+#' \code{\link[rgdal]{writeOGR}} to write GeoJSON to disk, then read it back
+#' in. This is fast and we don't have to think about it too much, but this
+#' disk round-trip is not ideal.
 #'
 #' For sf classes (sf, sfc, sfg), the following conversions are made:
 #'
 #' \itemize{
-#'  \item sfg: the appropriate geometry \code{Point, LineString, Polygon, MultiPoint,
-#'  MultiLineString, MultiPolygon, GeometryCollection}
-#'  \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry as above
+#'  \item sfg: the appropriate geometry \code{Point, LineString, Polygon,
+#'  MultiPoint, MultiLineString, MultiPolygon, GeometryCollection}
+#'  \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then
+#'  the geometry as above
 #'  \item sf: \code{FeatureCollection}
 #' }
 #'
@@ -47,7 +66,8 @@
 #' geojson_json(c(-99.74,32.45), type = "GeometryCollection", pretty=TRUE)
 #'
 #' ## polygon type
-#' ### this requires numeric class input, so inputting a list will dispatch on the list method
+#' ### this requires numeric class input, so inputting a list will dispatch
+#' ### on the list method
 #' poly <- c(c(-114.345703125,39.436192999314095),
 #'           c(-114.345703125,43.45291889355468),
 #'           c(-106.61132812499999,43.45291889355468),

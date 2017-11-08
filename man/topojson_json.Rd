@@ -10,29 +10,44 @@ topojson_json(input, lat = NULL, lon = NULL, group = NULL,
   crs = NULL, ...)
 }
 \arguments{
-\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can also be dplyr \code{tbl_df}
-class since it inherits from \code{data.frame}.}
+\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can
+also be dplyr \code{tbl_df} class since it inherits from \code{data.frame}.}
 
-\item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt to guess.}
+\item{lat}{(character) Latitude name. The default is \code{NULL}, and we
+attempt to guess.}
 
-\item{lon}{(character) Longitude name. The default is \code{NULL}, and we attempt to guess.}
+\item{lon}{(character) Longitude name. The default is \code{NULL}, and we
+attempt to guess.}
 
-\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't
-apply for points}
+\item{group}{(character) A grouping variable to perform grouping for
+polygons - doesn't apply for points}
 
 \item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{type}{(character) The type of collection. One of 'auto' (default for 'sf' objects),
+\item{type}{(character) The type of collection. One of 'auto' (default
+for 'sf' objects),
 'FeatureCollection' (default for everything else), or 'GeometryCollection'.
-This is ignored for \code{Spatial} objects as it will always produce a "FeatureCollection"}
+This is ignored for \code{Spatial} objects as it will always produce a
+"FeatureCollection"}
 
-\item{convert_wgs84}{Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude units of decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.}
+\item{convert_wgs84}{Should the input be converted to the
+\href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference
+system defined for GeoJSON}  (geographic coordinate reference system, using
+the WGS84 datum, with longitude and latitude units of decimal degrees;
+EPSG: 4326). Default is \code{FALSE} though this may change in a future
+package version. This will only work for \code{sf} or \code{Spatial}
+objects with a CRS already defined. If one is not defined but you know
+what it is, you may define it in the \code{crs} argument below.}
 
-\item{crs}{The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.}
+\item{crs}{The CRS of the input if it is not already defined. This can be
+an epsg code as a four or five digit integer or a valid proj4 string.
+This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or
+the object already has a CRS.}
 
-\item{...}{Further args passed on to internal functions. For Spatial* classes, it is passed through to
-\code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics, and
-geo_lists, it is passed through to \code{\link[jsonlite]{toJSON}}.}
+\item{...}{Further args passed on to internal functions. For Spatial*
+classes, it is passed through to
+\code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics,
+and geo_lists, it is passed through to \code{\link[jsonlite]{toJSON}}.}
 }
 \value{
 An object of class \code{geo_json} (and \code{json})
