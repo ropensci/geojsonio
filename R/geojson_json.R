@@ -7,8 +7,8 @@
 #' @param lat (character) Latitude name. The default is \code{NULL}, and we attempt to guess.
 #' @param lon (character) Longitude name. The default is \code{NULL}, and we attempt to guess.
 #' @param geometry (character) One of point (Default) or polygon.
-#' @param type  (character) The type of collection. One of 'auto' (default for 'sf' objects), 
-#' 'FeatureCollection' (default for everything else), or 'GeometryCollection'. 
+#' @param type  (character) The type of collection. One of 'auto' (default for 'sf' objects),
+#' 'FeatureCollection' (default for everything else), or 'GeometryCollection'.
 #' This is ignored for \code{Spatial} objects as it will always produce a "FeatureCollection"
 #' @param group (character) A grouping variable to perform grouping for polygons - doesn't
 #' apply for points
@@ -350,12 +350,14 @@ geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_json.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
                                  geometry = "point", type='FeatureCollection', ...) {
+  check_type(type)
   geoclass(to_json(num_to_geo_list(input, geometry, type), ...), type)
 }
 
 #' @export
 geojson_json.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
                                     geometry = "point", type='FeatureCollection', ...) {
+  check_type(type)
   tmp <- guess_latlon(names(input), lat, lon)
   res <- df_to_geo_list(input, tmp$lat, tmp$lon, geometry, type, group)
   geoclass(to_json(res, ...), type)
@@ -364,6 +366,7 @@ geojson_json.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_json.list <- function(input, lat = NULL, lon = NULL, group = NULL,
                               geometry = "point", type='FeatureCollection', ...){
+  check_type(type)
   if (geometry == "polygon") lint_polygon_list(input)
   tmp <- if (!is.named(input)) {
     list(lon = NULL, lat = NULL)

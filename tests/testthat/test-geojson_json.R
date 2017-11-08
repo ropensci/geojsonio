@@ -92,3 +92,15 @@ test_that("geojson_json detects inproper polygons passed as lists inputs", {
   # doesn't matter if geometry != polygon
   expect_is(geojson_json(bad), "json")
 })
+
+test_that("geojson_json - acceptable type values for numeric/data.frame/list", {
+  expect_error(geojson_json(c(-99.74,32.45), type = "LineString"),
+    "'type' must be one of")
+
+  vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+  expect_error(geojson_json(vecs, geometry="polygon", type = "LineString"),
+    "'type' must be one of")
+
+  expect_error(geojson_json(us_cities[1:2,], type = "LineString"),
+    "'type' must be one of")
+})

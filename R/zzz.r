@@ -409,3 +409,7 @@ is.named <- function(x) {
   is.character(names(x[[1]]))
 }
 
+check_type <- function(x) {
+  types <- c('FeatureCollection', 'GeometryCollection')
+  if (!x %in% types) stop("'type' must be one of: ", paste0(types, collapse=", "))
+}
