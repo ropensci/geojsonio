@@ -22,7 +22,9 @@ apply for points}
 
 \item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{type}{(character)The type of collection. One of FeatureCollection (default) or GeometryCollection.}
+\item{type}{(character) The type of collection. One of 'auto' (default for 'sf' objects), 
+'FeatureCollection' (default for everything else), or 'GeometryCollection'. 
+This is ignored for \code{Spatial} objects as it will always produce a "FeatureCollection"}
 
 \item{convert_wgs84}{Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude units of decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.}
 

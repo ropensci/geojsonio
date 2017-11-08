@@ -57,10 +57,10 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     pt_sf_json <- geojson_json(pt_sf)
 
     expect_equal(un_class(pt_sfg_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"Point\",\"coordinates\":[3.2,4]}] }")
+                 "{\"type\":\"Point\",\"coordinates\":[3.2,4]}")
 
     expect_equal(un_class(pt_sfc_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[3.2,4]},{\"type\":\"Point\",\"coordinates\":[3,4.6]},{\"type\":\"Point\",\"coordinates\":[3.8,4.4]}]}] }")
+                 "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[3.2,4]},{\"type\":\"Point\",\"coordinates\":[3,4.6]},{\"type\":\"Point\",\"coordinates\":[3.8,4.4]}]}")
 
     expect_equal(un_class(pt_sf_json),
                  "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.2,4]}},{\"type\":\"Feature\",\"properties\":{\"x\":\"b\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3,4.6]}},{\"type\":\"Feature\",\"properties\":{\"x\":\"c\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.8,4.4]}}]}")
@@ -92,10 +92,10 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     expect_s3_class(mp_sf_json, "geojson")
 
     expect_equal(un_class(mp_sfg_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]}] }")
+                 "{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]}")
 
     expect_equal(un_class(mp_sfc_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]}] }")
+                 "{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]}")
 
     expect_equal(un_class(mp_sf_json),
                  "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]}}]}")
@@ -128,10 +128,10 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     expect_s3_class(pol_sf_json, "geojson")
 
     expect_equal(un_class(pol_sfg_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"Polygon\",\"coordinates\":[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]]}] }")
+                 "{\"type\":\"Polygon\",\"coordinates\":[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]]}")
 
     expect_equal(un_class(pol_sfc_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"Polygon\",\"coordinates\":[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]]}] }")
+                 "{\"type\":\"Polygon\",\"coordinates\":[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]]}")
 
     expect_equal(un_class(pol_sf_json),
                  "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]]}}]}")
@@ -165,10 +165,10 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     expect_s3_class(mpol_sf_json, "geojson")
 
     expect_equal(un_class(mpol_sfg_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]}] }")
+                 "{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]}")
 
     expect_equal(un_class(mpol_sfc_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]}] }")
+                 "{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]}")
 
     expect_equal(un_class(mpol_sf_json),
                  "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]}}]}")
@@ -203,10 +203,10 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     expect_s3_class(ls_sf_json, "geojson")
 
     expect_equal(un_class(ls_sfg_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}] }")
+                 "{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}")
 
     expect_equal(un_class(ls_sfc_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}] }")
+                 "{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}")
 
     expect_equal(un_class(ls_sf_json),
                  "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}}]}")
@@ -240,10 +240,10 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     expect_s3_class(mls_sf_json, "geojson")
 
     expect_equal(un_class(mls_sfg_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"MultiLineString\",\"coordinates\":[[[0,3],[0,4],[1,5],[2,5]],[[0.2,3],[0.2,4],[1,4.8],[2,4.8]],[[0,4.4],[0.6,5]]]}] }")
+                 "{\"type\":\"MultiLineString\",\"coordinates\":[[[0,3],[0,4],[1,5],[2,5]],[[0.2,3],[0.2,4],[1,4.8],[2,4.8]],[[0,4.4],[0.6,5]]]}")
 
     expect_equal(un_class(mls_sfc_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"MultiLineString\",\"coordinates\":[[[0,3],[0,4],[1,5],[2,5]],[[0.2,3],[0.2,4],[1,4.8],[2,4.8]],[[0,4.4],[0.6,5]]]}] }")
+                 "{\"type\":\"MultiLineString\",\"coordinates\":[[[0,3],[0,4],[1,5],[2,5]],[[0.2,3],[0.2,4],[1,4.8],[2,4.8]],[[0,4.4],[0.6,5]]]}")
 
     expect_equal(un_class(mls_sf_json),
                  "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"MultiLineString\",\"coordinates\":[[[0,3],[0,4],[1,5],[2,5]],[[0.2,3],[0.2,4],[1,4.8],[2,4.8]],[[0,4.4],[0.6,5]]]}}]}")
@@ -275,10 +275,10 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     expect_s3_class(gc_sf_json, "geojson")
 
     expect_equal(un_class(gc_sfg_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]},{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]},{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}]}] }")
+                 "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]},{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]},{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}]}")
 
     expect_equal(un_class(gc_sfc_json),
-                 "{ \"type\": \"FeatureCollection\", \"features\": [{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]},{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]},{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}]}] }")
+                 "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]},{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]},{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}]}")
 
     expect_equal(un_class(gc_sf_json),
                  "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":\"a\"},\"geometry\":{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"MultiPoint\",\"coordinates\":[[3.2,4],[3,4.6],[3.8,4.4],[3.5,3.8],[3.4,3.6],[3.9,4.5]]},{\"type\":\"MultiPolygon\",\"coordinates\":[[[[0,0],[1,0],[3,2],[2,4],[1,4],[0,0]],[[1,1],[1,2],[2,2],[1,1]]],[[[3,0],[4,0],[4,1],[3,1],[3,0]],[[3.3,0.3],[3.3,0.8],[3.8,0.8],[3.8,0.3],[3.3,0.3]]],[[[3,3],[4,2],[4,3],[3,3]]]]},{\"type\":\"LineString\",\"coordinates\":[[0,3],[0,4],[1,5],[2,5]]}]}}]}")
@@ -309,10 +309,10 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     out <- geojson_list(mp_sf)
     expect_equal(dim(out$features[[1]]$geometry$coordinates), c(6, 3))
   })
-
+  
   test_that("sf columns of class units are processed as numeric", {
     pol_sf$area <- structure(rep(1, nrow(pol_sf)), class = "units")
-
+    
     expect_s3_class(geojson_json(pol_sf), "geojson")
     expect_equal(read_sf(geojson_json(pol_sf))[["area"]], as.numeric(pol_sf$area))
   })
