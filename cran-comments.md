@@ -22,7 +22,8 @@
 
 -------
 
-This version includes xxxx.
+Major change in this version is some new functions - also some minor
+improvements - and a bug fix.
 
 Thanks!
 Scott Chamberlain

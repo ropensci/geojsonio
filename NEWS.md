@@ -18,7 +18,8 @@ brief summary of the GeoJSON object (#86) (#124)
 
 * doing a much more thorough job of cleaning up temp files that are
 necessarily generated due to having to go to disk sometimes (#122)
-* @ateucher made improvements to `geojson_json` to xxxx (#125)
+* @ateucher made improvements to `geojson_json` to make `type`
+parameter more flexible (#125)
 
 ### BUG FIXES
 
