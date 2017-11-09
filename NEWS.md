@@ -3,21 +3,27 @@ geojsonio 0.5.0
 
 ### NEW FEATURES
 
-* xxx (#xxx)
-* xxx (#xxx)
-* xxx (#xxx)
+* gains new function `geojson_atomize` to "atomize" a FeatureCollection
+into its features, or a GeometryCollection into its geometries (#120)
+via (#119) thx @SymbolixAU
+* gains new functions `topojson_list` and `topojson_json` for converting
+many input types with spatial data to TopoJSON, both as lists and
+as JSON (#117)
+* `geojson_json` uses brief output provided by the `geojson`
+package - this makes it less frustrating when you have an especially
+large geojson string that prints to console - this instead prints a
+brief summary of the GeoJSON object (#86) (#124)
 
 ### MINOR IMPROVEMENTS
 
-* xxx (#xxx)
-* xxx (#xxx)
-* xxx (#xxx)
+* doing a much more thorough job of cleaning up temp files that are
+necessarily generated due to having to go to disk sometimes (#122)
+* @ateucher made improvements to `geojson_json` to xxxx (#125)
 
 ### BUG FIXES
 
-* xxx (#xxx)
-* xxx (#xxx)
-* xxx (#xxx)
+* Fixe bug in `topojson_write` - we were writing topojson file, but also
+a geojson file - we now cleanup the geojson file (#127)
 
 
 geojsonio 0.4.2

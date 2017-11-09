@@ -62,8 +62,8 @@
 #'
 #' @examples \dontrun{
 #' # From a numeric vector of length 2, making a point type
-#' geojson_json(c(-99.74,32.45), pretty=TRUE)
-#' geojson_json(c(-99.74,32.45), type = "GeometryCollection", pretty=TRUE)
+#' geojson_json(c(-99.74,32.45))
+#' geojson_json(c(-99.74,32.45), type = "GeometryCollection")
 #'
 #' ## polygon type
 #' ### this requires numeric class input, so inputting a list will dispatch
@@ -73,12 +73,12 @@
 #'           c(-106.61132812499999,43.45291889355468),
 #'           c(-106.61132812499999,39.436192999314095),
 #'           c(-114.345703125,39.436192999314095))
-#' geojson_json(poly, geometry = "polygon", pretty=TRUE)
+#' geojson_json(poly, geometry = "polygon")
 #'
 #' # Lists
 #' ## From a list of numeric vectors to a polygon
 #' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
-#' geojson_json(vecs, geometry="polygon", pretty=TRUE)
+#' geojson_json(vecs, geometry="polygon")
 #'
 #' ## from a named list
 #' mylist <- list(list(latitude=30, longitude=120, marker="red"),
@@ -86,9 +86,9 @@
 #' geojson_json(mylist, lat='latitude', lon='longitude')
 #'
 #' # From a data.frame to points
-#' geojson_json(us_cities[1:2,], lat='lat', lon='long', pretty=TRUE)
+#' geojson_json(us_cities[1:2,], lat='lat', lon='long')
 #' geojson_json(us_cities[1:2,], lat='lat', lon='long',
-#'    type="GeometryCollection", pretty=TRUE)
+#'    type="GeometryCollection")
 #'
 #' # from data.frame to polygons
 #' head(states)
@@ -109,7 +109,7 @@
 #'    c(30,40,35,30)))), "2")
 #' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 #' geojson_json(sp_poly)
-#' geojson_json(sp_poly, pretty=TRUE)
+#' geojson_json(sp_poly)
 #'
 #' ## Another SpatialPolygons
 #' library("sp")
@@ -158,7 +158,7 @@
 #'                  Z = c("Road", "River"), row.names = c("a", "b"))
 #' sldf <- SpatialLinesDataFrame(sl12, dat)
 #' geojson_json(sldf)
-#' geojson_json(sldf, pretty=TRUE)
+#' geojson_json(sldf)
 #'
 #' ## From SpatialGrid
 #' x <- GridTopology(c(0,0), c(1,1), c(5,5))

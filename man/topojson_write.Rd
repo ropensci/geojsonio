@@ -86,6 +86,7 @@ head(states)
 topojson_write(input=states, lat='lat', lon='long',
   geometry='polygon', group="group")
 
+\dontrun{
 ## partial states dataset to points (defaults to points)
 topojson_write(input=states, lat='lat', lon='long')
 
@@ -225,6 +226,7 @@ if (require(sf)) {
   file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
   sf_fc <- st_read(file, quiet = TRUE)
   topojson_write(sf_fc)
+}
 }
 }
 \seealso{
