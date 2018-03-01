@@ -20,7 +20,8 @@ geoclass <- function(x, type = "FeatureCollection") {
     "MultiPolygon" = geojson::multipolygon(unclass(x)),
     "Feature" = geojson::feature(unclass(x)),
     "FeatureCollection" = geojson::featurecollection(unclass(x)),
-    "GeometryCollection" = geojson::geometrycollection(unclass(x))
+    "GeometryCollection" = geojson::geometrycollection(unclass(x)),
+    "skip" = unclass(x)
   )
   class(res) <- c(class(res), c("geo_json", "json"))
   return(res)

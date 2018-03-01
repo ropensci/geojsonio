@@ -14,7 +14,9 @@
 #' for 'sf' objects),
 #' 'FeatureCollection' (default for everything else), or 'GeometryCollection'.
 #' This is ignored for \code{Spatial} objects as it will always produce a
-#' "FeatureCollection"
+#' "FeatureCollection". "skip" skips the coercion with package \pkg{geojson} 
+#' functions; skipping can save significant run time on larger geojson 
+#' objects
 #' @param group (character) A grouping variable to perform grouping for
 #' polygons - doesn't apply for points
 #' @param convert_wgs84 Should the input be converted to the
@@ -231,6 +233,16 @@
 #' ## Pretty print a json string
 #' geojson_json(c(-99.74,32.45))
 #' geojson_json(c(-99.74,32.45)) %>% pretty
+#' 
+#' # skipping the pretty geojson class coercion with the geojson pkg
+#' if (require(sf)) {
+#'   library(sf)
+#'   p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
+#'   p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))
+#'   poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
+#'   geojson_json(poly_sfc)
+#'   geojson_json(poly_sfc, type = "skip")
+#' }
 #' }
 geojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
                          geometry = "point", type='FeatureCollection',
@@ -321,14 +333,16 @@ geojson_json.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL,
 geojson_json.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
                             geometry = "point",  type='auto',
                             convert_wgs84 = FALSE, crs = NULL, ...) {
-  geoclass(as.json(geojson_list(input, convert_wgs84 = convert_wgs84, crs = crs), ...), type)
+  geoclass(
+    as.json(geojson_list(input, convert_wgs84 = convert_wgs84, crs = crs), ...), type)
 }
 
 #' @export
 geojson_json.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point",  type='auto',
                              convert_wgs84 = FALSE, crs = NULL, ...) {
-  geoclass(as.json(geojson_list(input, convert_wgs84 = convert_wgs84, crs = crs), ...), type)
+  geoclass(
+    as.json(geojson_list(input, convert_wgs84 = convert_wgs84, crs = crs), ...), type)
 }
 
 #' @export

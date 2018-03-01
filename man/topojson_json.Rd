@@ -28,7 +28,9 @@ polygons - doesn't apply for points}
 for 'sf' objects),
 'FeatureCollection' (default for everything else), or 'GeometryCollection'.
 This is ignored for \code{Spatial} objects as it will always produce a
-"FeatureCollection"}
+"FeatureCollection". "skip" skips the coercion with package \pkg{geojson} 
+functions; skipping can save significant run time on larger geojson 
+objects}
 
 \item{convert_wgs84}{Should the input be converted to the
 \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference
