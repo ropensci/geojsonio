@@ -20,6 +20,7 @@ Depends:
 Imports:
     methods,
     sp,
+    sf (>= 0.6),
     rgdal (>= 1.1-1),
     rgeos,
     httr (>= 1.1.0),
@@ -34,7 +35,6 @@ Suggests:
     gistr,
     testthat,
     knitr,
-    leaflet,
-    sf
+    leaflet
 Enhances: RColorBrewer
 RoxygenNote: 6.0.1
