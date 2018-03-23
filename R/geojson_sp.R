@@ -60,17 +60,17 @@ geojson_sp <- function(x, disambiguateFIDs = FALSE, stringsAsFactors = FALSE, ..
 }
 
 #' @export
-geojson_sp.geo_list <- function(x, stringsAsFactors = FALSE, ...) {
+geojson_sp.geo_list <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) {
   tosp(as.json(x), stringsAsFactors = stringsAsFactors, ...)
 }
 
 #' @export
-geojson_sp.geo_json <- function(x, stringsAsFactors = FALSE, ...) {
+geojson_sp.geo_json <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) {
   tosp(x, stringsAsFactors = stringsAsFactors, ...)
 }
 
 #' @export
-geojson_sp.json <- function(x, stringsAsFactors = FALSE, ...) {
+geojson_sp.json <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) {
   tosp(x, stringsAsFactors = stringsAsFactors, ...)
 }
 
