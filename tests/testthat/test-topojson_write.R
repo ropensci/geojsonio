@@ -98,3 +98,13 @@ test_that("topojson_write unclasses columns with special classes so writeOGR wor
     expect_is(spdf2@data$b, "character")
   }
 })
+
+test_that("topojson_write works with different object name", {
+  vec <- c(-99.74, 32.45)
+  gwf9 <- tempfile(fileext = ".topojson")
+  x <- topojson_write(vec, file = gwf9, object_name = "California")
+  expect_s3_class(x, "topojson_file")
+  expect_true(grepl("California", readLines(gwf9)))
+  
+})
+
