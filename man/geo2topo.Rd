@@ -17,7 +17,7 @@ url}
 Default: "foo"}
 
 \item{...}{for \code{topo2geo} args passed  on to
-\code{\link[rgdal]{readOGR}}}
+\code{\link[sf]{st_read}}}
 }
 \value{
 An object of class \code{json}, of either GeoJSON or TopoJSON
