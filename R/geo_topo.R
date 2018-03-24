@@ -6,7 +6,7 @@
 #' @param name (character) name to give to the TopoJSON object created. 
 #' Default: "foo"
 #' @param ... for \code{topo2geo} args passed  on to
-#' \code{\link[rgdal]{readOGR}}
+#' \code{\link[sf]{st_read}}
 #' @return An object of class \code{json}, of either GeoJSON or TopoJSON
 #' @seealso \code{\link{topojson_write}}, \code{\link{topojson_read}}
 #' @examples
@@ -114,6 +114,7 @@ geo_to_topo <- function(x, name) {
 }
 
 topo_to_geo <- function(x, ...) {
-  res <- readOGR(x, rgdal::ogrListLayers(x)[1], ...)
+  # res <- readOGR(x, rgdal::ogrListLayers(x)[1], ...)
+  res <- sf::st_read(x, quiet = TRUE, stringsAsFactors = FALSE, ...)
   geojson_json(res)
 }
