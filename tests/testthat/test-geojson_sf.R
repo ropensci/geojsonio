@@ -1,34 +1,34 @@
-context("geojson_sp")
+context("geojson_sf")
 
-test_that("geojson_sp works with geo_list inputs", {
+test_that("geojson_sf works with geo_list inputs", {
   # numeric vector of length 2, making a point type
   vec <- c(-99.74,32.45)
-  a <- geojson_sp(geojson_list(vec))
-  expect_is(a, "SpatialPointsDataFrame")
+  a <- geojson_sf(geojson_list(vec))
+  expect_is(a, "sf")
   
   # from a list to a data.frame
   mylist <- list(list(latitude=30, longitude=120, marker="red"),
                  list(latitude=30, longitude=130, marker="blue"))
-  b <- geojson_sp(suppressMessages(geojson_list(mylist)))
-  expect_is(b, "SpatialPointsDataFrame")
+  b <- geojson_sf(suppressMessages(geojson_list(mylist)))
+  expect_is(b, "sf")
   
   # from a list of numeric vectors to a polygon
   # vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
-  # d <- geojson_sp(geojson_list(vecs, geometry="polygon"))
+  # d <- geojson_sf(geojson_list(vecs, geometry="polygon"))
   # expect_is(d, "SpatialPolygonsDataFrame")
 })
 
-test_that("geojson_sp works with json inputs", {
+test_that("geojson_sf works with json inputs", {
   # numeric vector of length 2, making a point type
   vec <- c(-99.74,32.45)
-  a <- geojson_sp(geojson_json(vec))
-  expect_is(a, "SpatialPointsDataFrame")
+  a <- geojson_sf(geojson_json(vec))
+  expect_is(a, "sf")
   
   # from a list to a data.frame
   mylist <- list(list(latitude=30, longitude=120, marker="red"),
                  list(latitude=30, longitude=130, marker="blue"))
-  b <- geojson_sp(suppressMessages(geojson_json(mylist)))
-  expect_is(b, "SpatialPointsDataFrame")
+  b <- geojson_sf(suppressMessages(geojson_json(mylist)))
+  expect_is(b, "sf")
   
   # from a polygon
   poly <- structure('{"type":"FeatureCollection","features":[{
@@ -47,6 +47,6 @@ test_that("geojson_sp works with json inputs", {
 ]
 }}]
 }', class = c("json", "geo_json"))
-  d <- geojson_sp(poly)
-  # expect_is(d, "SpatialPolygonsDataFrame")  
+  d <- geojson_sf(poly)
+  expect_is(d, "sf")  
 })

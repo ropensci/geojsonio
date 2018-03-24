@@ -1,11 +1,10 @@
 #' Convert output of \code{geojson_list} or \code{geojson_json} to spatial classes
 #'
 #' @export
-#' @param x Object of class \code{geo_list} or \code{geo_json}
-#' @param disambiguateFIDs (logical) default \code{FALSE}, if \code{TRUE}, and FID
-#' values are not unique, they will be set to unique values 1:N for N features;
-#' problem observed in GML files
-#' @param ... Further args passed on to \code{\link[rgdal]{readOGR}}
+#'
+#' @inheritParams geojson_sf
+#' @param disambiguateFIDs Ignored, and will be removed in a future version. 
+#' Previously was passed to rgdal::readOGR, which is no longer used.
 #'
 #' @return A spatial class object, see Details.
 #' @details The spatial class object returned will depend on the input GeoJSON.
@@ -14,8 +13,8 @@
 #' structure of the GeoJSON.
 #'
 #' The reading and writing of the CRS to/from geojson is inconsistent. You can
-#' directly set the CRS by passing a valid PROJ4 string to the \code{p4s} argument in
-#' \code{\link[rgdal]{readOGR}}.
+#' directly set the CRS by passing a valid PROJ4 string or epsg code to the crs 
+#' argument in \code{\link[sf]{st_read}}.
 #'
 #' @examples \dontrun{
 #' library(sp)
@@ -53,26 +52,29 @@
 #' x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
 #' geojson_sp(x)
 #' }
-geojson_sp <- function(x, disambiguateFIDs = TRUE, ...) {
+geojson_sp <- function(x, disambiguateFIDs = FALSE, stringsAsFactors = FALSE, ...) {
+  if (disambiguateFIDs) {
+    warning("disambiguateFIDs is no longer used in geojson_sp")
+  }
   UseMethod("geojson_sp")
 }
 
 #' @export
-geojson_sp.geo_list <- function(x, disambiguateFIDs = TRUE, ...) {
-  tosp(as.json(x), ...)
+geojson_sp.geo_list <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) {
+  tosp(as.json(x), stringsAsFactors = stringsAsFactors, ...)
 }
 
 #' @export
-geojson_sp.geo_json <- function(x, disambiguateFIDs = TRUE, ...) {
-  tosp(x, ...)
+geojson_sp.geo_json <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) {
+  tosp(x, stringsAsFactors = stringsAsFactors, ...)
 }
 
 #' @export
-geojson_sp.json <- function(x, disambiguateFIDs = TRUE, ...) {
-  tosp(x, disambiguateFIDs, ...)
+geojson_sp.json <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) {
+  tosp(x, stringsAsFactors = stringsAsFactors, ...)
 }
 
-tosp <- function(x, disambiguateFIDs, ...) {
-  rgdal::readOGR(x, layer = "OGRGeoJSON", disambiguateFIDs = disambiguateFIDs,
-                 verbose = FALSE, ...)
+tosp <- function(x, stringsAsFactors, ...) {
+  x_sf <- tosf(x, stringsAsFactors = stringsAsFactors, ...)
+  as(x_sf, "Spatial")
 }
