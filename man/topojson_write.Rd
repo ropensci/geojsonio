@@ -6,7 +6,8 @@
 \usage{
 topojson_write(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE,
-  precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...)
+  precision = NULL, convert_wgs84 = FALSE, crs = NULL,
+  object_name = "foo", ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, spatial class, or sf class. Inputs can 
@@ -48,6 +49,9 @@ it is, you may define it in the \code{crs} argument below.}
 an epsg code as a four or five digit integer or a valid proj4 string. This 
 argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the 
 object already has a CRS.}
+
+\item{object_name}{(character) name to give to the TopoJSON object created.
+Default: "foo"}
 
 \item{...}{Further args passed on to internal functions. For Spatial* 
 classes, data.frames,
@@ -227,6 +231,11 @@ if (require(sf)) {
   sf_fc <- st_read(file, quiet = TRUE)
   topojson_write(sf_fc)
 }
+
+# Change the object name created
+vec <- c(-99.74, 32.45)
+x <- topojson_write(vec, object_name = "California")
+readLines(x$path)
 }
 }
 \seealso{
