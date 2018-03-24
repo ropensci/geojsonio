@@ -104,3 +104,9 @@ test_that("geojson_json - acceptable type values for numeric/data.frame/list", {
   expect_error(geojson_json(us_cities[1:2,], type = "LineString"),
     "'type' must be one of")
 })
+
+test_that("skipping geoclass works with type = skip", {
+  x <- geojson_sp(geojson_json(c(-99.74,32.45)))
+  expect_match(attr(geojson_json(x), "type"), "FeatureCollection")
+  expect_null(attr(geojson_json(x, type = "skip"), "type"))
+})
