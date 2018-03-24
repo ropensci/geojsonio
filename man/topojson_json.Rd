@@ -29,7 +29,9 @@ for 'sf' objects),
 'FeatureCollection' (default for everything else), or 'GeometryCollection'.
 "skip" skips the coercion with package \pkg{geojson} 
 functions; skipping can save significant run time on larger geojson 
-objects. \code{Spatial} objects can only accept "FeatureCollection" or "skip".}
+objects. \code{Spatial} objects can only accept "FeatureCollection" or "skip".
+"skip" is not available as an option for \code{numeric}, \code{list}, 
+and \code{data.frame} classes}
 
 \item{convert_wgs84}{Should the input be converted to the
 \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference
