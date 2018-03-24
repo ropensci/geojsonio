@@ -361,9 +361,8 @@ topojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL,
 ## normal R classes -----------------
 #' @export
 topojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                  group = NULL, file = "myfile.topojson",
-                                  overwrite = TRUE, precision = NULL, 
-                                  object_name = "foo", ...) {
+  group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
 
   sp_helper(input, lat = lat, lon = lon, geometry = geometry,
             file = file, precision = precision, overwrite = overwrite,
@@ -372,8 +371,8 @@ topojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "po
 
 #' @export
 topojson_write.data.frame <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                     group = NULL, file = "myfile.topojson", overwrite = TRUE,
-                                     precision = NULL, object_name = "foo", ...) {
+  group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
 
   sp_helper(input, lat = lat, lon = lon, geometry = geometry, group = group,
             file = file, precision = precision, overwrite = overwrite,
@@ -382,9 +381,8 @@ topojson_write.data.frame <- function(input, lat = NULL, lon = NULL, geometry = 
 
 #' @export
 topojson_write.list <- function(input, lat = NULL, lon = NULL, geometry="point",
-                               group = NULL, file = "myfile.topojson",
-                               overwrite = TRUE, precision = NULL, 
-                               object_name = "foo", ...) {
+  group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
 
   sp_helper(input, lat = lat, lon = lon, geometry = geometry, group = group,
             file = file, precision = precision, overwrite = overwrite,
@@ -393,8 +391,8 @@ topojson_write.list <- function(input, lat = NULL, lon = NULL, geometry="point",
 
 #' @export
 topojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                   group = NULL, file = "myfile.topojson",
-                                   overwrite = TRUE, object_name = "foo", ...) {
+  group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
 
   sp_helper(input, file = file, overwrite = overwrite, class = "geo_list", 
     object_name = object_name, ...)
@@ -403,8 +401,8 @@ topojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "p
 # JSON -----------------
 #' @export
 topojson_write.json <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                group = NULL, file = "myfile.topojson",
-                                overwrite = TRUE, object_name = "foo", ...) {
+  group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
 
   topo_file(write_topojson(unclass(input), file, ...), "json")
 }

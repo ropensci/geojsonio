@@ -5,7 +5,7 @@
 \alias{topo2geo}
 \title{GeoJSON to TopoJSON and back}
 \usage{
-geo2topo(x, name = "foo")
+geo2topo(x, name = "foo", ...)
 
 topo2geo(x, ...)
 }
@@ -16,7 +16,8 @@ url}
 \item{name}{(character) name to give to the TopoJSON object created. 
 Default: "foo"}
 
-\item{...}{for \code{topo2geo} args passed  on to
+\item{...}{for \code{geo2topo} args passed  on to
+\code{\link[jsonlite]{fromJSON}}, and for \code{topo2geo} args passed  on to
 \code{\link[sf]{st_read}}}
 }
 \value{

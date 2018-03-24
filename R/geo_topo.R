@@ -5,7 +5,8 @@
 #' url
 #' @param name (character) name to give to the TopoJSON object created. 
 #' Default: "foo"
-#' @param ... for \code{topo2geo} args passed  on to
+#' @param ... for \code{geo2topo} args passed  on to
+#' \code{\link[jsonlite]{fromJSON}}, and for \code{topo2geo} args passed  on to
 #' \code{\link[sf]{st_read}}
 #' @return An object of class \code{json}, of either GeoJSON or TopoJSON
 #' @seealso \code{\link{topojson_write}}, \code{\link{topojson_read}}
@@ -50,17 +51,17 @@
 #' ## larger examples
 #' file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 #' topo2geo(file)
-geo2topo <- function(x, name = "foo") {
+geo2topo <- function(x, name = "foo", ...) {
   UseMethod("geo2topo")
 }
 
 #' @export
-geo2topo.default <- function(x, name = "foo") {
+geo2topo.default <- function(x, name = "foo", ...) {
   stop("no 'geo2topo' method for ", class(x), call. = FALSE)
 }
 
 #' @export
-geo2topo.character <- function(x, name = "foo") {
+geo2topo.character <- function(x, name = "foo", ...) {
   if (!inherits(name, "character")) stop("'name' must be of class character")
   if (length(name) > 1) {
     if (length(x) != length(name)) {
@@ -73,9 +74,9 @@ geo2topo.character <- function(x, name = "foo") {
 }
 
 #' @export
-geo2topo.json <- function(x, name = "foo") {
+geo2topo.json <- function(x, name = "foo", ...) {
   if (!inherits(name, "character")) stop("'name' must be of class character")
-  geo_to_topo(unclass(x), name)
+  geo_to_topo(unclass(x), name, ...)
 }
 
 #' @export
@@ -106,7 +107,7 @@ topo2geo.json <- function(x, ...) {
 }
 
 # helpers  --------------------------
-geo_to_topo <- function(x, name) {
+geo_to_topo <- function(x, name, ...) {
   topo$eval(
     sprintf("var output = JSON.stringify(topojson.topology({%s: %s}))", 
       name, x))
@@ -114,7 +115,6 @@ geo_to_topo <- function(x, name) {
 }
 
 topo_to_geo <- function(x, ...) {
-  # res <- readOGR(x, rgdal::ogrListLayers(x)[1], ...)
   res <- sf::st_read(x, quiet = TRUE, stringsAsFactors = FALSE, ...)
   geojson_json(res)
 }
