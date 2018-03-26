@@ -3,7 +3,7 @@
 #' @export
 #' @param x GeoJSON or TopoJSON as a character string, json, a file path, or 
 #' url
-#' @param name (character) name to give to the TopoJSON object created. 
+#' @param object_name (character) name to give to the TopoJSON object created. 
 #' Default: "foo"
 #' @param ... for \code{geo2topo} args passed  on to
 #' \code{\link[jsonlite]{fromJSON}}, and for \code{topo2geo} args passed  on to
@@ -32,8 +32,8 @@
 #' 
 #' # change the object name created
 #' x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
-#' geo2topo(x, name = "HelloWorld")
-#' geo2topo(x, name = "4")
+#' geo2topo(x, object_name = "HelloWorld")
+#' geo2topo(x, object_name = "4")
 #' 
 #' x <- list(
 #'  '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
@@ -51,37 +51,38 @@
 #' ## larger examples
 #' file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 #' topo2geo(file)
-geo2topo <- function(x, name = "foo", ...) {
+geo2topo <- function(x, object_name = "foo", ...) {
   UseMethod("geo2topo")
 }
 
 #' @export
-geo2topo.default <- function(x, name = "foo", ...) {
+geo2topo.default <- function(x, object_name = "foo", ...) {
   stop("no 'geo2topo' method for ", class(x), call. = FALSE)
 }
 
 #' @export
-geo2topo.character <- function(x, name = "foo", ...) {
-  if (!inherits(name, "character")) stop("'name' must be of class character")
-  if (length(name) > 1) {
-    if (length(x) != length(name)) {
-      stop("length of `x` and `name` must be equal, unless `name` length == 1")
+geo2topo.character <- function(x, object_name = "foo", ...) {
+  if (!inherits(object_name, "character")) stop("'object_name' must be of class character")
+  if (length(object_name) > 1) {
+    if (length(x) != length(object_name)) {
+      stop("length of `x` and `object_name` must be equal, unless `object_name` length == 1")
     }
-    Map(function(z, w) geo_to_topo(unclass(z), w, ...), x, name)
+    Map(function(z, w) geo_to_topo(unclass(z), w, ...), x, object_name)
   } else {
-    geo_to_topo(x, name)
+    geo_to_topo(x, object_name)
   }
 }
 
 #' @export
-geo2topo.json <- function(x, name = "foo", ...) {
-  if (!inherits(name, "character")) stop("'name' must be of class character")
-  geo_to_topo(unclass(x), name, ...)
+geo2topo.json <- function(x, object_name = "foo", ...) {
+  if (!inherits(object_name, "character")) 
+    stop("'object_name' must be of class character")
+  geo_to_topo(unclass(x), object_name, ...)
 }
 
 #' @export
-geo2topo.list <- function(x, name = "foo", ...) {
-  Map(function(z, w) geo_to_topo(unclass(z), w, ...), x, name)
+geo2topo.list <- function(x, object_name = "foo", ...) {
+  Map(function(z, w) geo_to_topo(unclass(z), w, ...), x, object_name)
 }
 
 
@@ -107,10 +108,10 @@ topo2geo.json <- function(x, ...) {
 }
 
 # helpers  --------------------------
-geo_to_topo <- function(x, name, ...) {
+geo_to_topo <- function(x, object_name, ...) {
   topo$eval(
     sprintf("var output = JSON.stringify(topojson.topology({%s: %s}))", 
-      name, x))
+      object_name, x))
   structure(topo$get("output"), class = "json")
 }
 

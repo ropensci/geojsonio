@@ -19,9 +19,9 @@ test_that("geo2topo works on a list", {
   lapply(z, expect_s3_class, "json")
 })
 
-test_that("setting the name in geo2topo works", {
+test_that("setting the object_name in geo2topo works", {
   x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
-  z <- geo2topo(x, name = "HelloWorld")
+  z <- geo2topo(x, object_name = "HelloWorld")
   expect_true(grepl("HelloWorld", z))
   
   y <- list(
