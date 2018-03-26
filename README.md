@@ -16,7 +16,8 @@ Functions in this package are organized first around what you're working with or
 
 * `geojson_list()`/`topojson_list()` - convert to GeoJSON/TopoJSON as R list format
 * `geojson_json()`/`topojson_json()` - convert to GeoJSON/TopoJSON as JSON
-* `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
+* `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to `sp` spatial objects
+* `geojson_sf()` - convert output of `geojson_list()` or `geojson_json()` to `sf` objects
 * `geojson_read()`/`topojson_read()` - read a GeoJSON/TopoJSON file from file path or URL
 * `geojson_write()`/`topojson_write()` - write a GeoJSON/TopoJSON file locally
 
@@ -304,7 +305,7 @@ library('maps')
 data(us.cities)
 topojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #> <topojson-file>
-#>   Path:       myfile.json
+#>   Path:       myfile.topojson
 #>   From class: data.frame
 ```
 
@@ -363,10 +364,6 @@ x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
 (topo_json <- geo2topo(x))
 #> {"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}
 topo2geo(topo_json)
-#> OGR data source with driver: GeoJSON 
-#> Source: "{"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}", layer: "TopoJSON"
-#> with 1 features
-#> It has 1 fields
 #> <FeatureCollection> 
 #>   type:  FeatureCollection 
 #>   no. features:  1 

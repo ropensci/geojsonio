@@ -50,7 +50,8 @@ Functions in this package are organized first around what you're working with or
 
 * `geojson_list()`/`topojson_list()` - convert to GeoJSON/TopoJSON as R list format
 * `geojson_json()`/`topojson_json()` - convert to GeoJSON/TopoJSON as JSON
-* `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to spatial objects
+* `geojson_sp()` - convert output of `geojson_list()` or `geojson_json()` to `sp` spatial objects
+* `geojson_sf()` - convert output of `geojson_list()` or `geojson_json()` to `sf` objects
 * `geojson_read()`/`topojson_read()` - read a GeoJSON/TopoJSON file from file path or URL
 * `geojson_write()`/`topojson_write()` - write a GeoJSON/TopoJSON file locally
 
