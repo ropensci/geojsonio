@@ -21,7 +21,7 @@
 -------
 
 This version includes a number of bug fixes, some minor improvements, and 
-some performance improvements.
+some performance improvements. Fixes herein should fix the CRAN check errors.
 
 Thanks!
 Scott Chamberlain
