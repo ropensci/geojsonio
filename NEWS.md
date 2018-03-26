@@ -1,3 +1,20 @@
+geojsonio 0.6.0
+===============
+
+## NEW FEATURES
+
+* `topojson_write()` gains a new parameter `object_name`. With it you can set the name for the resulting TopoJSON object name created. As part of this `geo2topo()` also gains a new parameter, similarly called `object_name`, that does the same thing as for `topojson_write()`. (#129) (thanks @josiekre) PR (#131)
+* As part of PR (#132) we added a new function `geojson_sf()` to convert output of `geojson_list()` or `geojson_json()` to `sf` package classes - as an analog to `geojson_sp()`
+
+### MINOR IMPROVEMENTS
+
+* `geojson_json()` gains option with the `type` parameter to skip a coercion to the `geojson` package class `geoclass`. Using `type = "skip"` you can skip the `geoclass` class coercion, which in some cases with large datasets should have performance improvements (#128) PR (#133)
+
+### BUG FIXES
+
+* A bug arose in `geojson_sp()` with the newest version of `rgdal`. This was resolved by using the `sf` package instead to read GeoJSON. This had a knock-on benefit of speeding up reading GeoJSON. In addition, `sf` is now in `Imports` instead of `Suggests`  (#130) PR (#132)
+
+
 geojsonio 0.5.0
 ===============
 
