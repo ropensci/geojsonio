@@ -1,6 +1,7 @@
 context("validate")
 
 test_that("validate works with character inputs", {
+  skip_on_cran()
   a <- supw(validate('{"type": "FooBar"}'))
   expect_is(a, "list")
   expect_is(a$message, "character")
@@ -15,6 +16,7 @@ test_that("validate works with character inputs", {
 })
 
 test_that("validate works with geo_list inputs", {
+  skip_on_cran()
   mylist <- list(list(latitude=30, longitude=120, marker="red"),
                  list(latitude=30, longitude=130, marker="blue"))
   x <- suppressMessages(geojson_list(mylist))
@@ -25,6 +27,7 @@ test_that("validate works with geo_list inputs", {
 })
 
 test_that("validate works with file inputs", {
+  skip_on_cran()
   file <- system.file("examples", "zillow_or.geojson", package = "geojsonio")
   d <- supw(validate(as.location(file)))
   expect_is(as.location(file), "location")
@@ -43,6 +46,7 @@ test_that("validate works with url inputs", {
 })
 
 test_that("validate works with json inputs", {
+  skip_on_cran()
   x <- jsonlite::minify('{ "type": "FeatureCollection" }')
   f <- supw(validate(x))
   expect_is(x, "json")
@@ -51,17 +55,20 @@ test_that("validate works with json inputs", {
 })
 
 test_that("validate works with data.frame inputs", {
+  skip_on_cran()
   h <- supw(validate(us_cities[1:2,], lat = 'lat', lon = 'long'))
   expect_is(h, "list")
   expect_equal(h$status, "ok")
 })
 
 test_that("validate works with numeric vector inputs", {
+  skip_on_cran()
   expect_is(supw(validate(c(32.45, -99.74))), "list")
   expect_equal(supw(validate(c(32.45, -99.74)))$status, "ok")
 })
 
 test_that("validate works with list inputs", {
+  skip_on_cran()
   mylist <- list(list(latitude=30, longitude=120, marker="red"),
                  list(latitude=30, longitude=130, marker="blue"))
   ii <- suppressMessages(supw(validate(mylist)))
@@ -103,6 +110,7 @@ sp_grid <- local({
 })
 
 test_that("validate works with SpatialPolygons inputs", {
+  skip_on_cran()
   jj <- supw(validate(sp_poly))
 
   expect_is(jj, "list")
@@ -110,6 +118,7 @@ test_that("validate works with SpatialPolygons inputs", {
 })
 
 test_that("validate works with SpatialPolygonsDataFrame inputs", {
+  skip_on_cran()
   sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
   jj <- supw(validate(sp_polydf))
 
@@ -118,6 +127,7 @@ test_that("validate works with SpatialPolygonsDataFrame inputs", {
 })
 
 test_that("validate works with SpatialPoints inputs", {
+  skip_on_cran()
   kk <- supw(validate(sp_pts))
   expect_is(sp_pts, "SpatialPoints")
   expect_is(kk, "list")
@@ -125,6 +135,7 @@ test_that("validate works with SpatialPoints inputs", {
 })
 
 test_that("validate works with SpatialPointsDataFrame inputs", {
+  skip_on_cran()
   sp_ptsdf <- as(sp_pts, "SpatialPointsDataFrame")
   ll <- supw(validate(sp_ptsdf))
   expect_is(sp_ptsdf, "SpatialPointsDataFrame")
@@ -133,6 +144,7 @@ test_that("validate works with SpatialPointsDataFrame inputs", {
 })
 
 test_that("validate works with SpatialLines inputs", {
+  skip_on_cran()
   mm <- supw(validate(sp_lines))
   expect_is(sp_lines, "SpatialLines")
   expect_is(mm, "list")
@@ -140,6 +152,7 @@ test_that("validate works with SpatialLines inputs", {
 })
 
 test_that("validate works with SpatialLinesDataFrame inputs", {
+  skip_on_cran()
   sp_linesdf <- as(sp_lines, "SpatialLinesDataFrame")
   nn <- supw(validate(sp_linesdf))
   expect_is(sp_linesdf, "SpatialLinesDataFrame")
@@ -149,6 +162,7 @@ test_that("validate works with SpatialLinesDataFrame inputs", {
 
 
 test_that("validate works with SpatialGrid inputs", {
+  skip_on_cran()
   mm <- supw(validate(sp_grid))
   expect_is(sp_grid, "SpatialGrid")
   expect_is(mm, "list")
@@ -156,6 +170,7 @@ test_that("validate works with SpatialGrid inputs", {
 })
 
 test_that("validate works with SpatialGridDataFrame inputs", {
+  skip_on_cran()
   sp_griddf <- SpatialGridDataFrame(sp_grid, data.frame(val = 1:25))
   nn <- supw(validate(sp_griddf))
   expect_is(sp_griddf, "SpatialGridDataFrame")
