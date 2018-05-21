@@ -108,3 +108,23 @@ test_that("topojson_write works with different object name", {
   
 })
 
+
+test_that("topojson_write works with quantization >0", {
+  vec <- c(-99.74, 32.45)
+  gwf9 <- tempfile(fileext = ".topojson")
+  x <- topojson_write(vec, file = gwf9, quantization = 1e4)
+  expect_s3_class(x, "topojson_file")
+  expect_true(grepl("transform", readLines(gwf9)))
+  expect_true(grepl("scale", readLines(gwf9)))
+  expect_true(grepl("translate", readLines(gwf9)))
+})
+
+test_that("topojson_write works with quantization =0", {
+  vec <- c(-99.74, 32.45)
+  gwf9 <- tempfile(fileext = ".topojson")
+  x <- topojson_write(vec, file = gwf9, quantization = 0)
+  expect_s3_class(x, "topojson_file")
+  expect_false(grepl("transform", readLines(gwf9)))
+  expect_false(grepl("scale", readLines(gwf9)))
+  expect_false(grepl("translate", readLines(gwf9)))
+})
