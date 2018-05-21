@@ -42,3 +42,53 @@ test_that("topo2geo works", {
   expect_s3_class(w, "geofeaturecollection")
 })
 
+
+
+
+test_that("quantization=0 in geo2topo", {
+  x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
+  z <- geo2topo(x, object_name = "HelloWorld", quantization = 0)
+  # no transform attribute
+  expect_false(grepl("transform", z))
+  expect_false(grepl("scale", z))
+  expect_false(grepl("translate", z))
+  
+  y <- list(
+    '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
+    '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
+    '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
+  )
+  a <- geo2topo(y)
+  
+  lapply(seq_along(a), function(x) {
+    expect_false(grepl("transform", a[[x]]))
+    expect_false(grepl("scale", a[[x]]))
+    expect_false(grepl("translate", a[[x]]))
+  })
+})
+
+
+test_that("quantization>0 in geo2topo", {
+  x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
+  z <- geo2topo(x, object_name = "HelloWorld", quantization = 1e4)
+  # no transform attribute
+  expect_true(grepl("transform", z))
+  expect_true(grepl("scale", z))
+  expect_true(grepl("translate", z))
+  
+  y <- list(
+    '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
+    '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
+    '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
+  )
+  a <- geo2topo(y, quantization = 1e4)
+  
+  lapply(seq_along(a), function(x) {
+    expect_true(grepl("transform", a[[x]]))
+    expect_true(grepl("scale", a[[x]]))
+    expect_true(grepl("translate", a[[x]]))
+  })
+})
+
+
+
