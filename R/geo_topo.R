@@ -5,6 +5,9 @@
 #' url
 #' @param object_name (character) name to give to the TopoJSON object created. 
 #' Default: "foo"
+#' @param quantization (numeric) quantization parameter, use this to
+#'  quantize geometry prior to computing topology. Typical values are powers of 
+#'  ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.
 #' @param ... for \code{geo2topo} args passed  on to
 #' \code{\link[jsonlite]{fromJSON}}, and for \code{topo2geo} args passed  on to
 #' \code{\link[sf]{st_read}}
@@ -51,38 +54,38 @@
 #' ## larger examples
 #' file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 #' topo2geo(file)
-geo2topo <- function(x, object_name = "foo", ...) {
+geo2topo <- function(x, object_name = "foo", quantization = 0, ...) {
   UseMethod("geo2topo")
 }
 
 #' @export
-geo2topo.default <- function(x, object_name = "foo", ...) {
+geo2topo.default <- function(x, object_name = "foo", quantization = 0, ...) {
   stop("no 'geo2topo' method for ", class(x), call. = FALSE)
 }
 
 #' @export
-geo2topo.character <- function(x, object_name = "foo", ...) {
+geo2topo.character <- function(x, object_name = "foo", quantization = 0, ...) {
   if (!inherits(object_name, "character")) stop("'object_name' must be of class character")
   if (length(object_name) > 1) {
     if (length(x) != length(object_name)) {
       stop("length of `x` and `object_name` must be equal, unless `object_name` length == 1")
     }
-    Map(function(z, w) geo_to_topo(unclass(z), w, ...), x, object_name)
+    Map(function(z, w) geo_to_topo(unclass(z), w, ...), x, object_name, quantization)
   } else {
-    geo_to_topo(x, object_name)
+    geo_to_topo(x, object_name, quantization)
   }
 }
 
 #' @export
-geo2topo.json <- function(x, object_name = "foo", ...) {
+geo2topo.json <- function(x, object_name = "foo", quantization = 0, ...) {
   if (!inherits(object_name, "character")) 
     stop("'object_name' must be of class character")
-  geo_to_topo(unclass(x), object_name, ...)
+  geo_to_topo(unclass(x), object_name, quantization, ...)
 }
 
 #' @export
-geo2topo.list <- function(x, object_name = "foo", ...) {
-  Map(function(z, w) geo_to_topo(unclass(z), w, ...), x, object_name)
+geo2topo.list <- function(x, object_name = "foo", quantization = 0, ...) {
+  Map(function(z, w, q) geo_to_topo(unclass(z), w, q, ...), x, object_name, quantization)
 }
 
 
@@ -108,10 +111,10 @@ topo2geo.json <- function(x, ...) {
 }
 
 # helpers  --------------------------
-geo_to_topo <- function(x, object_name, ...) {
+geo_to_topo <- function(x, object_name, quantization = 0, ...) {
   topo$eval(
-    sprintf("var output = JSON.stringify(topojson.topology({%s: %s}))", 
-      object_name, x))
+    sprintf("var output = JSON.stringify(topojson.topology({%s: %s}, %s))", 
+      object_name, x, quantization))
   structure(topo$get("output"), class = "json")
 }
 

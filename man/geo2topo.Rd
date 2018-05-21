@@ -5,7 +5,7 @@
 \alias{topo2geo}
 \title{GeoJSON to TopoJSON and back}
 \usage{
-geo2topo(x, object_name = "foo", ...)
+geo2topo(x, object_name = "foo", quantization = 0, ...)
 
 topo2geo(x, ...)
 }
@@ -15,6 +15,10 @@ url}
 
 \item{object_name}{(character) name to give to the TopoJSON object created. 
 Default: "foo"}
+
+\item{quantization}{(numeric) quantization parameter, use this to
+quantize geometry prior to computing topology. Typical values are powers of 
+ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.}
 
 \item{...}{for \code{geo2topo} args passed  on to
 \code{\link[jsonlite]{fromJSON}}, and for \code{topo2geo} args passed  on to

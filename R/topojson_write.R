@@ -5,6 +5,9 @@
 #' @inheritParams geojson_write
 #' @param object_name (character) name to give to the TopoJSON object created.
 #' Default: "foo"
+#' @param quantization (numeric) quantization parameter, use this to
+#'  quantize geometry prior to computing topology. Typical values are powers of 
+#'  ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.
 #' @return A \code{topojson_write} class, with two elements:
 #' \itemize{
 #'  \item path: path to the file with the TopoJSON
@@ -181,7 +184,7 @@ topojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
                            group = NULL, file = "myfile.topojson",
                            overwrite = TRUE, precision = NULL,
                            convert_wgs84 = FALSE, crs = NULL, 
-                           object_name = "foo", ...) {
+                           object_name = "foo", quantization = 0, ...) {
   UseMethod("topojson_write")
 }
 
@@ -191,7 +194,7 @@ topojson_write.default <- function(input, lat = NULL, lon = NULL, geometry = "po
                                            group = NULL, file = "myfile.topojson",
                                            overwrite = TRUE, precision = NULL,
                                            convert_wgs84 = FALSE, crs = NULL, 
-                                           object_name = "foo", ...) {
+                                           object_name = "foo", quantization = 0, ...) {
   stop("no 'topojson_write' method for ", class(input), call. = FALSE)
 }
 
@@ -200,11 +203,12 @@ topojson_write.SpatialPolygons <- function(input, lat = NULL, lon = NULL, geomet
                                            group = NULL, file = "myfile.topojson",
                                            overwrite = TRUE, precision = NULL,
                                            convert_wgs84 = FALSE, crs = NULL, 
-                                           object_name = "foo", ...) {
+                                           object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialPolygons", object_name = object_name, ...)
+            class = "SpatialPolygons", object_name = object_name,
+            quantization = quantization, ...)
 }
 
 #' @export
@@ -212,11 +216,12 @@ topojson_write.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NUL
                                                     group = NULL, file = "myfile.topojson",
                                                     overwrite = TRUE, precision = NULL,
                                                     convert_wgs84 = FALSE, crs = NULL, 
-                                                    object_name = "foo", ...) {
+                                                    object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialPolygonsDataFrame", object_name = object_name, ...)
+            class = "SpatialPolygonsDataFrame", object_name = object_name, 
+            quantization = quantization, ...)
 }
 
 #' @export
@@ -224,11 +229,12 @@ topojson_write.SpatialPoints <- function(input, lat = NULL, lon = NULL, geometry
                                          group = NULL, file = "myfile.topojson",
                                          overwrite = TRUE, precision = NULL,
                                          convert_wgs84 = FALSE, crs = NULL, 
-                                         object_name = "foo", ...) {
+                                         object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialPoints", object_name = object_name, ...)
+            class = "SpatialPoints", object_name = object_name, 
+            quantization = quantization, ...)
 }
 
 #' @export
@@ -236,11 +242,12 @@ topojson_write.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL,
                                                   group = NULL, file = "myfile.topojson",
                                                   overwrite = TRUE, precision = NULL,
                                                   convert_wgs84 = FALSE, crs = NULL, 
-                                                  object_name = "foo", ...) {
+                                                  object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialPointsDataFrame", object_name = object_name, ...)
+            class = "SpatialPointsDataFrame", object_name = object_name,
+            quantization = quantization, ...)
 }
 
 #' @export
@@ -248,11 +255,12 @@ topojson_write.SpatialLines <- function(input, lat = NULL, lon = NULL, geometry 
                                         group = NULL, file = "myfile.topojson",
                                         overwrite = TRUE, precision = NULL,
                                         convert_wgs84 = FALSE, crs = NULL, 
-                                        object_name = "foo", ...) {
+                                        object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialLines", object_name = object_name, ...)
+            class = "SpatialLines", object_name = object_name,
+            quantization = quantization, ...)
 }
 
 #' @export
@@ -260,32 +268,35 @@ topojson_write.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                  group = NULL, file = "myfile.topojson",
                                                  overwrite = TRUE, precision = NULL,
                                                  convert_wgs84 = FALSE, crs = NULL, 
-                                                 object_name = "foo", ...) {
+                                                 object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialLinesDataFrame", object_name = object_name, ...)
+            class = "SpatialLinesDataFrame", object_name = object_name, 
+            quantization = quantization, ...)
 }
 
 #' @export
 topojson_write.SpatialGrid <- function(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL,
-  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialGrid", object_name = object_name, ...)
+            class = "SpatialGrid", object_name = object_name, 
+            quantization = quantization, ...)
 }
 
 #' @export
 topojson_write.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL,
   geometry = "point", group = NULL, file = "myfile.topojson",
   overwrite = TRUE, precision = NULL, convert_wgs84 = FALSE, crs = NULL, 
-  object_name = "foo", ...) {
+  object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialGridDataFrame", object_name = object_name, ...)
+            class = "SpatialGridDataFrame", object_name = object_name, 
+            quantization = quantization, ...)
 }
 
 #' @export
@@ -293,11 +304,12 @@ topojson_write.SpatialPixels <- function(input, lat = NULL, lon = NULL, geometry
                                         group = NULL, file = "myfile.topojson",
                                         overwrite = TRUE, precision = NULL,
                                         convert_wgs84 = FALSE, crs = NULL, 
-                                        object_name = "foo", ...) {
+                                        object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialPixelsDataFrame", object_name = object_name, ...)
+            class = "SpatialPixelsDataFrame", object_name = object_name, 
+            quantization = quantization, ...)
 }
 
 #' @export
@@ -305,11 +317,11 @@ topojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL,
                                                  group = NULL, file = "myfile.topojson",
                                                  overwrite = TRUE, precision = NULL,
                                                  convert_wgs84 = FALSE, crs = NULL, 
-                                                 object_name = "foo", ...) {
+                                                 object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialPixelsDataFrame", object_name = object_name, ...)
+            class = "SpatialPixelsDataFrame", object_name = object_name, quantization = quantization, ...)
 }
 
 ## spatial classes from rgeos -----------------
@@ -318,27 +330,27 @@ topojson_write.SpatialRings <- function(input, lat = NULL, lon = NULL, geometry 
                                        group = NULL, file = "myfile.topojson",
                                        overwrite = TRUE, precision = NULL,
                                        convert_wgs84 = FALSE, crs = NULL, 
-                                       object_name = "foo", ...) {
+                                       object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialRings", object_name = object_name, ...)
+            class = "SpatialRings", object_name = object_name, quantization = quantization, ...)
 }
 
 #' @export
 topojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL,
   geometry = "point", group = NULL, file = "myfile.topojson", overwrite = TRUE,
-  precision = NULL, convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
+  precision = NULL, convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, precision = precision,
             convert_wgs84 = convert_wgs84, crs = crs,
-            class = "SpatialRingsDataFrame", object_name = object_name, ...)
+            class = "SpatialRingsDataFrame", object_name = object_name, quantization = quantization, ...)
 }
 
 #' @export
 topojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL,
   geometry = "point", group = NULL, file = "myfile.topojson", overwrite = TRUE,
-  precision = NULL, convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
+  precision = NULL, convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   tmp <- suppressMessages(
     geojson_write(input, lat, lon, geometry, group,
@@ -349,7 +361,7 @@ topojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL,
     if (!is.null(z)) {
       topo_file(
         write_topojson(
-          geo2topo(paste0(readLines(z$path), collapse = ""), object_name),
+          geo2topo(paste0(readLines(z$path), collapse = ""), object_name, quantization),
           sub("\\.geojson|\\.json", "\\.topojson", z$path)
         ),
         z$type
@@ -362,47 +374,47 @@ topojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL,
 #' @export
 topojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
-  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, lat = lat, lon = lon, geometry = geometry,
             file = file, precision = precision, overwrite = overwrite,
-            class = "numeric", object_name = object_name, ...)
+            class = "numeric", object_name = object_name, quantization = quantization, ...)
 }
 
 #' @export
 topojson_write.data.frame <- function(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
-  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, lat = lat, lon = lon, geometry = geometry, group = group,
             file = file, precision = precision, overwrite = overwrite,
-            class = "data.frame", object_name = object_name, ...)
+            class = "data.frame", object_name = object_name, quantization = quantization, ...)
 }
 
 #' @export
 topojson_write.list <- function(input, lat = NULL, lon = NULL, geometry="point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
-  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, lat = lat, lon = lon, geometry = geometry, group = group,
             file = file, precision = precision, overwrite = overwrite,
-            class = "list", object_name = object_name, ...)
+            class = "list", object_name = object_name, quantization, ...)
 }
 
 #' @export
 topojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
-  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, overwrite = overwrite, class = "geo_list", 
-    object_name = object_name, ...)
+    object_name = object_name, quantization, ...)
 }
 
 # JSON -----------------
 #' @export
 topojson_write.json <- function(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE, precision = NULL, 
-  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", ...) {
+  convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   topo_file(write_topojson(unclass(input), file, ...), "json")
 }
@@ -413,10 +425,10 @@ topojson_write.sf <- function(input, lat = NULL, lon = NULL, geometry = "point",
                              group = NULL, file = "myfile.topojson",
                              overwrite = TRUE, precision = NULL,
                              convert_wgs84 = FALSE, crs = NULL, 
-                             object_name = "foo", ...) {
+                             object_name = "foo", quantization = 0, ...) {
 
   topo_write_sf(input, convert_wgs84, crs, file, overwrite, "sf", 
-    object_name, ...)
+    object_name, quantization, ...)
 }
 
 #' @export
@@ -424,10 +436,10 @@ topojson_write.sfc <- function(input, lat = NULL, lon = NULL, geometry = "point"
                               group = NULL, file = "myfile.topojson",
                               overwrite = TRUE, precision = NULL,
                               convert_wgs84 = FALSE, crs = NULL,
-                              object_name = "foo", ...) {
+                              object_name = "foo", quantization = 0, ...) {
 
   topo_write_sf(input, convert_wgs84, crs, file, overwrite, "sfc", 
-    object_name, ...)
+    object_name, quantization, ...)
 }
 
 #' @export
@@ -435,14 +447,14 @@ topojson_write.sfg <- function(input, lat = NULL, lon = NULL, geometry = "point"
                               group = NULL, file = "myfile.topojson",
                               overwrite = TRUE, precision = NULL,
                               convert_wgs84 = FALSE, crs = NULL,
-                              object_name = "foo", ...) {
+                              object_name = "foo", quantization = 0, ...) {
 
   topo_write_sf(input, convert_wgs84, crs, file, overwrite, "sfg", 
-    object_name, ...)
+    object_name, quantization, ...)
 }
 
 topo_write_sf <- function(input, convert_wgs84, crs, file, overwrite, 
-  class, object_name, ...) {
+  class, object_name, quantization, ...) {
 
   tmp <- suppressMessages(
     geojson_write(input, convert_wgs84 = convert_wgs84,
@@ -452,7 +464,7 @@ topo_write_sf <- function(input, convert_wgs84, crs, file, overwrite,
   topo_file(
     write_topojson(
       geo2topo(paste0(readLines(tmp$path, warn = FALSE), collapse = ""), 
-        object_name), file),
+        object_name, quantization), file),
     "sfc"
   )
 }
@@ -474,7 +486,7 @@ sp_helper <- function(input, lat = NULL, lon = NULL, geometry = "point",
                       group = NULL, file = "myfile.topojson",
                       overwrite = TRUE, precision = NULL,
                       convert_wgs84 = FALSE, crs = NULL, 
-                      class, object_name, ...) {
+                      class, object_name, quantization, ...) {
 
   res <- suppressMessages(
     geojson_write(
@@ -487,7 +499,7 @@ sp_helper <- function(input, lat = NULL, lon = NULL, geometry = "point",
     write_topojson(
       geo2topo(
         paste0(readLines(res$path, warn = FALSE), collapse = ""), 
-        object_name
+        object_name, quantization
       ), 
       file
     ),

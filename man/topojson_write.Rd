@@ -7,7 +7,7 @@
 topojson_write(input, lat = NULL, lon = NULL, geometry = "point",
   group = NULL, file = "myfile.topojson", overwrite = TRUE,
   precision = NULL, convert_wgs84 = FALSE, crs = NULL,
-  object_name = "foo", ...)
+  object_name = "foo", quantization = 0, ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, spatial class, or sf class. Inputs can 
@@ -52,6 +52,10 @@ object already has a CRS.}
 
 \item{object_name}{(character) name to give to the TopoJSON object created.
 Default: "foo"}
+
+\item{quantization}{(numeric) quantization parameter, use this to
+quantize geometry prior to computing topology. Typical values are powers of 
+ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.}
 
 \item{...}{Further args passed on to internal functions. For Spatial* 
 classes, data.frames,
