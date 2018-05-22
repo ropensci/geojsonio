@@ -398,7 +398,7 @@ topojson_write.list <- function(input, lat = NULL, lon = NULL, geometry="point",
 
   sp_helper(input, lat = lat, lon = lon, geometry = geometry, group = group,
             file = file, precision = precision, overwrite = overwrite,
-            class = "list", object_name = object_name, quantization, ...)
+            class = "list", object_name = object_name, quantization = quantization, ...)
 }
 
 #' @export
@@ -407,7 +407,7 @@ topojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "p
   convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   sp_helper(input, file = file, overwrite = overwrite, class = "geo_list", 
-    object_name = object_name, quantization, ...)
+    object_name = object_name, quantization = quantization, ...)
 }
 
 # JSON -----------------
