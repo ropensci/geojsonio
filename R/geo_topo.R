@@ -122,6 +122,6 @@ geo_to_topo <- function(x, object_name, quantization = 0, ...) {
 }
 
 topo_to_geo <- function(x, ...) {
-  res <- sf::st_read(x, quiet = TRUE, stringsAsFactors = FALSE, ...)
+  res <- tosf(x, stringsAsFactors = FALSE, ...)
   geojson_json(res)
 }

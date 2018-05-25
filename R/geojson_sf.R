@@ -72,5 +72,5 @@ geojson_sf.json <- function(x, stringsAsFactors = FALSE, ...) {
 }
 
 tosf <- function(x, stringsAsFactors, ...) {
-  sf::st_read(x, quiet = TRUE, stringsAsFactors = stringsAsFactors, ...)
+  sf::st_read(unclass(x), quiet = TRUE, stringsAsFactors = stringsAsFactors, ...)
 }
