@@ -55,7 +55,10 @@ Default: "foo"}
 
 \item{quantization}{(numeric) quantization parameter, use this to
 quantize geometry prior to computing topology. Typical values are powers of 
-ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.}
+ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.
+For more information about quantization, see this 
+\href{https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}{
+StackOverflow post by Mike Bostock}.}
 
 \item{...}{Further args passed on to internal functions. For Spatial* 
 classes, data.frames,

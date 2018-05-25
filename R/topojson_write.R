@@ -8,6 +8,9 @@
 #' @param quantization (numeric) quantization parameter, use this to
 #'  quantize geometry prior to computing topology. Typical values are powers of 
 #'  ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.
+#'  For more information about quantization, see this 
+#'  \href{https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}{
+#'  StackOverflow post by Mike Bostock}.
 #' @return A \code{topojson_write} class, with two elements:
 #' \itemize{
 #'  \item path: path to the file with the TopoJSON
