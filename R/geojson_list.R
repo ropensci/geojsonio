@@ -364,6 +364,10 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
 geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "FeatureCollection",
                              convert_wgs84 = FALSE, crs = NULL, ...) {
+  
+  ## Remove names of input otherwise produces invalid geojson
+  names(input) <- NULL
+  
   if (convert_wgs84) {
     input <- convert_wgs84(input, crs)
   }

@@ -318,6 +318,19 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   })
 
 }
+
+test_that("geojson is valid with named sfc input", {
+  x <- st_sfc(st_point(0:1), st_point(1:2))
+  
+  names(x) <- 1:2
+  
+  x_json <- geojson_json(x)
+  
+  expect_equivalent(unclass(x_json), 
+                    "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[0,1]},{\"type\":\"Point\",\"coordinates\":[1,2]}]}")
+  
+})
+
 ## Big test ------------------------------------------------------
 ## devtools::install_github("bcgov/bcmaps")
 # library(bcmaps)
