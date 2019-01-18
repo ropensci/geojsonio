@@ -1,0 +1,11 @@
+PKG_CPPFLAGS=-I/usr/local/Cellar/mapnik/3.0.21/include/mapnik
+PKG_CXXFLAGS=$(shell mapnik-config --includes --defines --cxxflags --dep-includes)
+CXX_STD=CXX11
+LDFLAGS=$(shell mapnik-config --libs --dep-libs --ldflags)
+PKG_LIBS=-L/usr/local/Cellar/mapnik/3.0.21/lib -lmapnik
+
+all: clean
+
+clean:
+	rm -Rf $(SHLIB) $(OBJECTS)
+	

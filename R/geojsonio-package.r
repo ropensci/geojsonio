@@ -54,6 +54,8 @@
 #' @importFrom magrittr %>%
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @importFrom geojson featurecollection geometrycollection
+#' @importFrom Rcpp sourceCpp
+#' @useDynLib geojsonio
 #' @name geojsonio
 #' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}

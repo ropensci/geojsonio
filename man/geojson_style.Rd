@@ -6,10 +6,10 @@
 \usage{
 geojson_style(input, var = NULL, var_col = NULL, var_sym = NULL,
   var_size = NULL, var_stroke = NULL, var_stroke_width = NULL,
-  var_stroke_opacity = NULL, var_fill = NULL, var_fill_opacity = NULL,
-  color = NULL, symbol = NULL, size = NULL, stroke = NULL,
-  stroke_width = NULL, stroke_opacity = NULL, fill = NULL,
-  fill_opacity = NULL)
+  var_stroke_opacity = NULL, var_fill = NULL,
+  var_fill_opacity = NULL, color = NULL, symbol = NULL,
+  size = NULL, stroke = NULL, stroke_width = NULL,
+  stroke_opacity = NULL, fill = NULL, fill_opacity = NULL)
 }
 \arguments{
 \item{input}{A data.frame or a list}

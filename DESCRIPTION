@@ -30,14 +30,17 @@ Imports:
     readr (>= 0.2.2),
     V8,
     geojson (>= 0.2.0),
-    jqr
+    jqr,
+    Rcpp (>= 1.0.0)
 Suggests:
     gistr,
     testthat,
     knitr,
     leaflet
 Enhances: RColorBrewer
-RoxygenNote: 6.0.1
+LinkingTo: Rcpp
+SystemRequirements: C++11
+RoxygenNote: 6.1.1
 X-schema.org-applicationCategory: Geospatial
 X-schema.org-keywords: geojson, topojson, geospatial, conversion, data, input-output
 X-schema.org-isPartOf: https://ropensci.org
