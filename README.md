@@ -63,6 +63,8 @@ Get deps first
 sudo apt-get install libgdal1-dev libgdal-dev libgeos-c1 libproj-dev
 ```
 
+> Note: if you have trouble installing rgeos, try installing `libgeos++-dev`
+
 Then install `rgdal` and `rgeos`
 
 
