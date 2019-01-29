@@ -40,8 +40,8 @@ topojson_read <- function(x, ...) {
 }
 
 #' @export
-topojson_read.default <- function(x, ...) { 
-  stop("no 'topojson_read' method for ", class(x), call. = FALSE)
+topojson_read.default <- function(x, ...) {
+  stop("no 'topojson_read' method for ", class(x)[1L])
 }
 
 #' @export
@@ -58,10 +58,10 @@ topojson_read.location <- function(x, ...) {
 read_topojson <- function(x, ...) {
   if (is_file(x)) x <- normalizePath(x)
   stopifnot(ftype(x) %in% c("json", "topojson", "url"))
-  rgdal::readOGR(x, layer = rgdal::ogrListLayers(x)[1], 
+  rgdal::readOGR(x, layer = rgdal::ogrListLayers(x)[1],
                  drop_unsupported_fields = TRUE, ...)
 }
 
 is_file <- function(x) {
-  !is.na(file.info(x)$isdir) && !file.info(x)$isdir  
+  !is.na(file.info(x)$isdir) && !file.info(x)$isdir
 }
