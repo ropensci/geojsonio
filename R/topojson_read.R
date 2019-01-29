@@ -3,16 +3,15 @@
 #' @export
 #'
 #' @param x Path to a local file or a URL.
-#' @param ... Further args passed on to \code{\link[rgdal]{readOGR}}
+#' @param ... Further args passed on to \code{\link[sf]{st_read}}
 #' 
-#' @return A Spatial Class, varies depending on input
+#' @return an object of class \code{sf}
 #' 
-#' @details Returns a Spatial class (e.g., SpatialPolygonsDataFrame), but 
-#' you can easily and quickly get this to geojson, see examples. 
+#' @details Returns a \code{sf} class, but you can easily and quickly get 
+#' this to geojson, see examples. 
 #' 
-#' Note that this does not give you Topojson, but gives you a \code{sp}
-#' style spatial class - which you can use then to turn it into geojson as a 
-#' list or json.
+#' Note that this does not give you Topojson, but gives you a \code{sf}
+#' class - which you can use then to turn it into geojson as a list or json
 #' 
 #' @seealso \code{\link{geojson_read}}, \code{\link{topojson_write}}
 #'
@@ -33,6 +32,10 @@
 #' tmp <- topojson_read(file)
 #' geojson_list(tmp)
 #' geojson_json(tmp)
+#' 
+#' # pass on args
+#' topojson_read(file, quiet = TRUE)
+#' topojson_read(file, stringsAsFactors = FALSE)
 #' }
 
 topojson_read <- function(x, ...) {
@@ -58,8 +61,7 @@ topojson_read.location <- function(x, ...) {
 read_topojson <- function(x, ...) {
   if (is_file(x)) x <- normalizePath(x)
   stopifnot(ftype(x) %in% c("json", "topojson", "url"))
-  rgdal::readOGR(x, layer = rgdal::ogrListLayers(x)[1],
-                 drop_unsupported_fields = TRUE, ...)
+  sf::st_read(x, ...)
 }
 
 is_file <- function(x) {
