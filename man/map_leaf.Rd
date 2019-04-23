@@ -4,7 +4,8 @@
 \alias{map_leaf}
 \title{Make an interactive map locally}
 \usage{
-map_leaf(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...)
+map_leaf(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner",
+  ...)
 }
 \arguments{
 \item{input}{Input object}

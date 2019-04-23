@@ -6,8 +6,8 @@
 as a JSON string}
 \usage{
 topojson_json(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type = "FeatureCollection", convert_wgs84 = FALSE,
-  crs = NULL, ...)
+  geometry = "point", type = "FeatureCollection",
+  convert_wgs84 = FALSE, crs = NULL, ...)
 }
 \arguments{
 \item{input}{Input list, data.frame, spatial class, or sf class. Inputs can
