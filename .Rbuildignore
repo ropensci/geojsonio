@@ -20,3 +20,4 @@ man-roxygen
 ^\.httr-oauth$
 .github
 ^codemeta\.json$
+.txt

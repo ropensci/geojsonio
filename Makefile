@@ -1,3 +1,5 @@
+RSCRIPT = Rscript --no-init-file
+
 all: move rmd2md
 
 move:
@@ -11,3 +13,15 @@ rmd2md:
 	mv geojsonio_vignette.md geojsonio_vignette.Rmd;\
 	mv geojson_spec.md geojson_spec.Rmd;\
 	mv maps.md maps.Rmd
+
+install: doc build
+	R CMD INSTALL . && rm *.tar.gz
+
+build:
+	R CMD build .
+
+doc:
+	${RSCRIPT} -e "devtools::document()"
+
+eg:
+	${RSCRIPT} -e "devtools::run_examples()"

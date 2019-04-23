@@ -9,21 +9,20 @@ topojson_read(x, ...)
 \arguments{
 \item{x}{Path to a local file or a URL.}
 
-\item{...}{Further args passed on to \code{\link[rgdal]{readOGR}}}
+\item{...}{Further args passed on to \code{\link[sf]{st_read}}}
 }
 \value{
-A Spatial Class, varies depending on input
+an object of class \code{sf}/\code{data.frame}
 }
 \description{
 Read topojson from a local file or a URL
 }
 \details{
-Returns a Spatial class (e.g., SpatialPolygonsDataFrame), but 
-you can easily and quickly get this to geojson, see examples. 
+Returns a \code{sf} class, but you can easily and quickly get 
+this to geojson, see examples. 
 
-Note that this does not give you Topojson, but gives you a \code{sp}
-style spatial class - which you can use then to turn it into geojson as a 
-list or json.
+Note that this does not give you Topojson, but gives you a \code{sf}
+class - which you can use then to turn it into geojson as a list or json
 }
 \examples{
 \dontrun{
@@ -43,6 +42,10 @@ file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 tmp <- topojson_read(file)
 geojson_list(tmp)
 geojson_json(tmp)
+
+# pass on args
+topojson_read(file, quiet = TRUE)
+topojson_read(file, stringsAsFactors = FALSE)
 }
 }
 \seealso{

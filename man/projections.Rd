@@ -5,8 +5,8 @@
 \title{topojson projections and extensions}
 \usage{
 projections(proj, rotate = NULL, center = NULL, translate = NULL,
-  scale = NULL, clipAngle = NULL, precision = NULL, parallels = NULL,
-  clipExtent = NULL, invert = NULL)
+  scale = NULL, clipAngle = NULL, precision = NULL,
+  parallels = NULL, clipExtent = NULL, invert = NULL)
 }
 \arguments{
 \item{proj}{Map projection name. One of albers, albersUsa, azimuthalEqualArea,
