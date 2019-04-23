@@ -5,7 +5,7 @@
 #' @param x Path to a local file or a URL.
 #' @param ... Further args passed on to \code{\link[sf]{st_read}}
 #' 
-#' @return an object of class \code{sf}
+#' @return an object of class \code{sf}/\code{data.frame}
 #' 
 #' @details Returns a \code{sf} class, but you can easily and quickly get 
 #' this to geojson, see examples. 

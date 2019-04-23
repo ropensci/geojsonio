@@ -12,7 +12,7 @@ topojson_read(x, ...)
 \item{...}{Further args passed on to \code{\link[sf]{st_read}}}
 }
 \value{
-an object of class \code{sf}
+an object of class \code{sf}/\code{data.frame}
 }
 \description{
 Read topojson from a local file or a URL
