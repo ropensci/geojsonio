@@ -58,7 +58,7 @@ test_that("map_gist works with SpatialPointsDataFrame inputs", {
   a <- c(1,2,3,4,5)
   b <- c(3,2,5,1,4)
   s <- SpatialPointsDataFrame(cbind(a, b), mtcars[1:5,])
-  h <- map_gist(s, browse = FALSE)
+  h <- supw(map_gist(s, browse = FALSE))
   expect_is(h, "gist")
   expect_is(h$url, "character")
   expect_named(h$files, "myfile.geojson")

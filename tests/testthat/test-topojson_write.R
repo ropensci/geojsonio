@@ -10,13 +10,13 @@ test_that("precision argument works with polygons", {
             c(-106.61132812499999,39.436192999314095),
             c(-114.345703125,39.436192999314095))
   gwf1 <- tempfile(fileext = ".topojson")
-  a <- suppressMessages(topojson_write(poly, geometry = "polygon", file = gwf1))
+  a <- supw(suppressMessages(topojson_write(poly, geometry = "polygon", file = gwf1)))
   expect_is(a, "topojson_file")
   a_txt <- gsub("\\s+", " ", paste0(readLines(gwf1), collapse = ""))
   expect_equal(a_txt, "{\"type\":\"Topology\",\"objects\":{\"foo\":{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Polygon\",\"arcs\":[[0]],\"id\":0,\"properties\":{\"dummy\":0}}]}},\"arcs\":[[[-114.345703125,39.436192999314095],[-114.345703125,43.45291889355468],[-106.61132812499999,43.45291889355468],[-106.61132812499999,39.436192999314095],[-114.345703125,39.436192999314095]]],\"bbox\":[-114.345703125,39.436192999314095,-106.61132812499999,43.45291889355468]}")
 
   gwf2 <- tempfile(fileext = ".topojson")
-  b <- suppressMessages(topojson_write(poly, geometry = "polygon", precision = 2, file = gwf2))
+  b <- supw(suppressMessages(topojson_write(poly, geometry = "polygon", precision = 2, file = gwf2)))
   expect_is(b, "topojson_file")
   b_txt <- gsub("\\s+", " ", paste0(readLines(gwf2), collapse = ""))
   expect_equal(b_txt, "{\"type\":\"Topology\",\"objects\":{\"foo\":{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Polygon\",\"arcs\":[[0]],\"id\":0,\"properties\":{\"dummy\":0}}]}},\"arcs\":[[[-114.35,39.44],[-114.35,43.45],[-106.61,43.45],[-106.61,39.44],[-114.35,39.44]]],\"bbox\":[-114.35,39.44,-106.61,43.45]}")
@@ -69,7 +69,7 @@ test_that("topojson_write detects inproper polygons passed as lists inputs", {
 
   # fine
   gwf7 <- tempfile(fileext = ".topojson")
-  fine <- suppressMessages(topojson_write(good, geometry = "polygon", file = gwf7))
+  fine <- supw(suppressMessages(topojson_write(good, geometry = "polygon", file = gwf7)))
   expect_is(fine, "topojson_file")
   expect_is(fine[[1]], "character")
 
