@@ -29,8 +29,8 @@ test_that("as.json works with data.frame class inputs", {
   )
   
   tf11 <- tempfile(fileext = ".geojson")
-  d <- suppressMessages(geojson_write(input=states, lat='lat', lon='long', 
-    geometry='polygon', group="group", file = tf11))
+  d <- supw(suppressMessages(geojson_write(input=states, lat='lat', lon='long', 
+    geometry='polygon', group="group", file = tf11)))
   expect_is(d, "geojson_file")
   expect_is(unclass(d), "list")
   expect_is(as.json(d, verbose = FALSE), "json")
@@ -61,9 +61,9 @@ test_that("as.json works with file name inputs", {
   expect_is(ee, "geojson_file")
   expect_is(unclass(ee), "list")
   expect_is(ee$path, "character")
-  expect_is(as.json(ee$path), "json")
+  expect_is(as.json(ee$path, verbose = FALSE), "json")
   expect_equal_to_reference(
-    unclass(as.json(ee)), 
+    unclass(as.json(ee, verbose = FALSE)), 
     "us_citites_two_row.rds"
   )
 })
