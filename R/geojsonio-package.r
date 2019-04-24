@@ -31,11 +31,6 @@
 #'  interactive map)
 #'  \item \code{\link{map_leaf}} - Create a local interactive map using the
 #'  \code{leaflet} package
-#'  \item \code{\link{lint}} - Checks validity of GeoJSON using the Javascript
-#'  library geojsonhint. See also \code{\link{geojsonio-deprecated}}
-#'  \item \code{\link{validate}} - Checks validity of GeoJSON using the web
-#'  service at http://geojsonlint.com/. See also
-#'  \code{\link{geojsonio-deprecated}}
 #'  \item \code{\link{geo2topo}} - Convert GeoJSON to TopoJSON
 #'  \item \code{\link{topo2geo}} - Convert TopoJSON to GeoJSON
 #' }
@@ -101,14 +96,12 @@ NULL
 NULL
 
 
-#' Deprecated functions in geojsonio
+#' Defunct functions in geojsonio
 #'
 #' \itemize{
-#'  \item \code{\link{lint}}: In the next version this function will be
-#'  removed, defunct. See \code{geojsonlint::geojson_hint}
-#'  \item \code{\link{validate}}: In the next version this function will be
-#'  removed, defunct. See \code{geojsonlint::geojson_lint}
+#'  \item \code{\link{lint}}: See \code{geojsonlint::geojson_hint}
+#'  \item \code{\link{validate}}: See \code{geojsonlint::geojson_lint}
 #' }
 #'
-#' @name geojsonio-deprecated
+#' @name geojsonio-defunct
 NULL
