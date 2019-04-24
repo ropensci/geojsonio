@@ -38,11 +38,6 @@ Other interesting functions:
  interactive map)
  \item \code{\link{map_leaf}} - Create a local interactive map using the
  \code{leaflet} package
- \item \code{\link{lint}} - Checks validity of GeoJSON using the Javascript
- library geojsonhint. See also \code{\link{geojsonio-deprecated}}
- \item \code{\link{validate}} - Checks validity of GeoJSON using the web
- service at http://geojsonlint.com/. See also
- \code{\link{geojsonio-deprecated}}
  \item \code{\link{geo2topo}} - Convert GeoJSON to TopoJSON
  \item \code{\link{topo2geo}} - Convert TopoJSON to GeoJSON
 }
