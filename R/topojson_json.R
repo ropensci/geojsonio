@@ -9,7 +9,7 @@
 #' @examples \dontrun{
 #' # From a numeric vector of length 2, making a point type
 #' topojson_json(c(-99.74,32.45), pretty=TRUE)
-#' topojson_json(c(-99.74,32.45), type = "GeometryCollection", pretty=TRUE)
+#' topojson_json(c(-99.74,32.45), type = "GeometryCollection")
 #'
 #' ## polygon type
 #' ### this requires numeric class input, so inputting a list will dispatch on the list method
