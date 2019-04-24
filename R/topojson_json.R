@@ -3,11 +3,13 @@
 #'
 #' @export
 #' @inheritParams geojson_json
+#' @details The \code{type} parameter is automatically converted to 
+#' \code{type="auto"} if a sf, sfc, or sfg class is passed to \code{input}
 #' @return An object of class \code{geo_json} (and \code{json})
 #' @examples \dontrun{
 #' # From a numeric vector of length 2, making a point type
 #' topojson_json(c(-99.74,32.45), pretty=TRUE)
-#' topojson_json(c(-99.74,32.45), type = "GeometryCollection", pretty=TRUE)
+#' topojson_json(c(-99.74,32.45), type = "GeometryCollection")
 #'
 #' ## polygon type
 #' ### this requires numeric class input, so inputting a list will dispatch on the list method
@@ -154,7 +156,7 @@
 #' ## sfg (a single simple features geometry)
 #'   p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
 #'   poly <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
-#'   poly_sfg <-st_polygon(list(p1))
+#'   poly_sfg <- st_polygon(list(p1))
 #'   topojson_json(poly_sfg)
 #'
 #' ## sfc (a collection of geometries)
@@ -176,9 +178,13 @@
 #' topojson_json(c(-99.74,32.45)) %>% pretty
 #' }
 topojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
-                         geometry = "point", type='FeatureCollection',
+                         geometry = "point", type = "FeatureCollection",
                          convert_wgs84 = FALSE, crs = NULL, ...) {
 
+  if (inherits(input, c("sf", "sfc", "sfg"))) {
+    type <- "auto"
+    message("sf/sfc/sfg class detected; using type=\"auto\"")
+  }
   geo2topo(geojson_json(input = input, lat = lat, lon = lon,
     group = group, geometry = geometry, type = type,
     convert_wgs84 = convert_wgs84, crs = crs, ...))

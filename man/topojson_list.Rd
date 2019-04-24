@@ -41,6 +41,9 @@ as a list
 \details{
 Internally, we call \code{\link{topojson_json}}, then use
 an internal function to convert that JSON output to a list
+
+The \code{type} parameter is automatically converted to 
+\code{type="auto"} if a sf, sfc, or sfg class is passed to \code{input}
 }
 \examples{
 \dontrun{

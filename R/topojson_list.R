@@ -6,6 +6,9 @@
 #' @return a list with TopoJSON
 #' @details Internally, we call \code{\link{topojson_json}}, then use
 #' an internal function to convert that JSON output to a list
+#' 
+#' The \code{type} parameter is automatically converted to 
+#' \code{type="auto"} if a sf, sfc, or sfg class is passed to \code{input}
 #' @examples \dontrun{
 #' # From a numeric vector of length 2 to a point
 #' vec <- c(-99.74,32.45)
