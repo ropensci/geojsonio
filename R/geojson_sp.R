@@ -45,8 +45,9 @@
 #' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp
 #' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp %>% plot
 #'
-#' # Set the CRS via the p4s argument
-#' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp(p4s = "+init=epsg:4326")
+#' # Set the CRS via the crs argument
+#' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>%
+#'   geojson_sp(crs = "+init=epsg:4326")
 #'
 #' # json ----------------------
 #' x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')

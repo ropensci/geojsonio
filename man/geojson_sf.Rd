@@ -59,7 +59,7 @@ geojson_json(c(-99.74,32.45)) \%>\% geojson_sf \%>\% plot
 geojson_json(us_cities[1:2,], lat='lat', lon='long') \%>\% geojson_sf
 geojson_json(us_cities[1:2,], lat='lat', lon='long') \%>\% geojson_sf \%>\% plot
 
-# Set the CRS via the p4s argument
+# Set the CRS via the crs argument
 geojson_json(us_cities[1:2,], lat='lat', lon='long') \%>\% geojson_sf(crs = "+init=epsg:4326")
 
 # json ----------------------
