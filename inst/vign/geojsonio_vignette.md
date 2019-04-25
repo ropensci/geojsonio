@@ -308,6 +308,6 @@ Or use `as.location()` first
 (loc <- as.location(file))
 #> <location> 
 #>    Type:  file 
-#>    Location:  /Library/Frameworks/R.framework/Versions/3.4/Resources/library/geojsonio/examples/us_states.topojson
+#>    Location:  /Library/Frameworks/R.framework/Versions/3.5/Resources/library/geojsonio/examples/us_states.topojson
 out <- topojson_read(loc, verbose = FALSE)
 ```
