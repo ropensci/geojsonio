@@ -1,3 +1,22 @@
+geojsonio 0.7.0
+===============
+
+## NEW FEATURES
+
+* `geo2topo()` gains a new parameter `quantization` to quantize geometry prior to computing topology. because `topojson_write()` uses `geo2topo()` internally, `topojson_write()` also gains a `quantization` parameter that's passed to `geo2topo()` internally (#138) thanks @pvictor
+
+### MINOR IMPROVEMENTS
+
+* use package `sf` instead of `sp` in `topojson_read()`. note that the return object is now class sf instead of classes from the sp package (#144) (#145)
+* the `type` parameter in `topojson_json()` now set to `type="auto"` if the input is an sf/sfc/sfg class object (#139) (#146)
+* fix to `geojson_list.sfc()` for changes in sf >= v0.7, which names geometries, but that's not valid geojson (#142)
+
+### DEPRECATED AND DEFUNCT
+
+* The two linting functions in this package, `lint()` and `validate()`
+are now defunct. They have been marked as deprecated since `v0.2`. See the package `geojsonlint` on CRAN for linting geojson functionality (#135) (#147)
+
+
 geojsonio 0.6.0
 ===============
 
