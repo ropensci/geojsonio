@@ -38,7 +38,7 @@ Additional functions:
 
 ## Install
 
-A note about installing `rgdal` and `rgeos` - these two packages are built on top of C libraries, and their installation often causes trouble for Mac and Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`. Change to the version of `rgdal` and `GDAL` you have):
+A note about installing `rgdal` and `rgeos` - these two packages are built on top of C libraries, and their installation often causes trouble for Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`. Change to the version of `rgdal` and `GDAL` you have):
 
 _Mac_
 
@@ -316,9 +316,15 @@ topojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 
 
 ```r
-library("sp")
-url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
-out <- topojson_read(url, verbose = FALSE)
+file <- system.file("examples", "us_states.topojson", package = "geojsonio")
+out <- topojson_read(file)
+#> Reading layer `states' from data source `/Library/Frameworks/R.framework/Versions/3.6/Resources/library/geojsonio/examples/us_states.topojson' using driver `GeoJSON'
+#> Simple feature collection with 51 features and 1 field
+#> geometry type:  MULTIPOLYGON
+#> dimension:      XY
+#> bbox:           xmin: -171.7911 ymin: 18.91619 xmax: -66.96466 ymax: 71.35776
+#> epsg (SRID):    NA
+#> proj4string:    NA
 plot(out)
 ```
 
