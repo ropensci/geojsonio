@@ -6,7 +6,7 @@ addons:
   apt:
     sources:
       - sourceline: 'ppa:jeroen/jq'
-      - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
+      - sourceline: 'ppa:ubuntugis/ppa'
     packages:
     - libudunits2-dev
     - libv8-dev
