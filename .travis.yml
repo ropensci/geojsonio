@@ -1,36 +1,34 @@
 language: r
-dist: trusty
-sudo: required
+dist: xenial
 cache: packages
 
-r_github_packages:
-  - jimhester/covr
-
-apt_packages:
-  - libudunits2-dev
-  - libv8-dev
-  - libprotobuf-dev
-  - libprotoc-dev
-  - protobuf-compiler
-  - valgrind
-
-before_install:
-  - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
-  - sudo add-apt-repository -y ppa:jeroen/jq
-  - sudo apt-get --yes --force-yes update -qq
-  - sudo apt-get install -y libudunits2-dev libproj-dev libgeos-dev libgdal-dev netcdf-bin libv8-dev libjq-dev
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:jeroen/jq'
+      - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
+    packages:
+    - libudunits2-dev
+    - libv8-dev
+    - libprotobuf-dev
+    - libprotoc-dev
+    - libproj-dev
+    - libgeos-dev
+    - libgdal-dev
+    - protobuf-compiler
+    - valgrind
+    - libjq-dev
+    - netcdf-bin
 
 after_success:
   - Rscript -e 'covr::codecov()'
-
-compiler:
-  - clang
 
 warnings_are_errors: false
 
 r_packages:
   - colorspace
   - gistr
+  - covr
 
 env:
    global:
