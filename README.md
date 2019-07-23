@@ -52,7 +52,7 @@ Then install `rgdal` and `rgeos`
 
 
 ```r
-install.packages("rgdal", type = "source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.11/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
+install.packages("rgdal", type = "source", configure.args = "--with-gdal-config=/usr/local/Cellar/gdal/2.4.2/bin/gdal-config --with-proj-include=/usr/local/Cellar/gdal/2.4.2/include --with-proj-lib=/usr/local/Cellar/gdal/2.4.2/lib")
 install.packages("rgeos", type = "source")
 ```
 
