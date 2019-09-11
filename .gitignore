@@ -3,6 +3,7 @@
 .RData
 yep.geojson
 myfile.geojson
+myfile.topojson
 .V8history
 .DS_Store
 .httr-oauth
