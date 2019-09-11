@@ -25,3 +25,8 @@ doc:
 
 eg:
 	${RSCRIPT} -e "devtools::run_examples()"
+
+check:
+	${RSCRIPT} -e 'rcmdcheck::rcmdcheck(args = c("--as-cran"))'
+		
+
