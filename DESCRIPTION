@@ -36,7 +36,9 @@ Suggests:
     gistr,
     testthat,
     knitr,
-    leaflet
+    leaflet,
+    DBI,
+    RPostgres
 Enhances: RColorBrewer
 RoxygenNote: 6.1.1
 X-schema.org-applicationCategory: Geospatial

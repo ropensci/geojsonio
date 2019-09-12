@@ -414,3 +414,9 @@ check_type <- function(x) {
   types <- c('FeatureCollection', 'GeometryCollection')
   if (!x %in% types) stop("'type' must be one of: ", paste0(types, collapse=", "))
 }
+
+check4pkg <- function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    stop("Please install '", pkg, "'", call. = FALSE)
+  }
+}

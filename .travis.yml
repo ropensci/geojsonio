@@ -17,6 +17,7 @@ addons:
     - libgdal-dev
     - protobuf-compiler
     - valgrind
+    - libpq-dev
     - libjq-dev
     - netcdf-bin
 

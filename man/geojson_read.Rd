@@ -4,10 +4,12 @@
 \alias{geojson_read}
 \title{Read geojson or other formats from a local file or a URL}
 \usage{
-geojson_read(x, method = "web", parse = FALSE, what = "list", ...)
+geojson_read(x, method = "web", parse = FALSE, what = "list",
+  query = NULL, ...)
 }
 \arguments{
-\item{x}{(character) Path to a local file or a URL.}
+\item{x}{(character) Path to a local file, a URL, or a database connection
+of class \code{PqConnection} (a PostgreSQL connection)}
 
 \item{method}{(character) One of "web" (default) or "local". Matches on 
 partial strings. This parameter determines how the data is 
@@ -17,23 +19,31 @@ read. "web" means we use the Ogre web service, and "local" means we use
 \item{parse}{(logical) To parse geojson to data.frame like structures if 
 possible. Default: \code{FALSE}}
 
-\item{what}{(character) What to return. One of "list" or "sp" (for 
-Spatial class). Default: "list". If "sp" chosen, forced to 
-\code{method="local"}.}
+\item{what}{(character) What to return. One of "list", "sp" (for
+Spatial class), or "json". Default: "list". If "sp" chosen, forced to
+\code{method="local"}. if "json", returns json as character class}
+
+\item{query}{(character) A SQL query}
 
 \item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
 }
 \value{
-various, depending on what's chosen in \code{what} parameter
+various, depending on what's chosen in \code{what} parameter:
+
+\itemize{
+ \item list: geojson as a list using \code{jsonlite::fromJSON}
+ \item sp: geojson as an sp class object using \code{rgdal::readOGR}
+ \item json: geojson as character string, to parse downstream as you wish
+}
 }
 \description{
 Read geojson or other formats from a local file or a URL
 }
 \details{
-Uses \code{\link{file_to_geojson}} internally to give back geojson, 
+Uses \code{\link{file_to_geojson}} internally to give back geojson,
 and other helper functions when returning spatial classes.
 
-This function supports various geospatial file formats from a URL, as well 
+This function supports various geospatial file formats from a URL, as well
 as local kml, shp, and geojson file formats.
 }
 \section{Method parameter}{
@@ -64,6 +74,7 @@ has a variety of different GeoJSON linters.
 # From a file
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 (out <- geojson_read(file))
+geojson_read(file, what = "json")
 
 # From a URL
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
@@ -99,12 +110,28 @@ geojson_read(x, method = "local", what = "list")
 utils::download.file(x, destfile = basename(x))
 geojson_read(basename(x), method = "local", what = "sp")
 
+# from a Postgres database - your Postgres instance must be running
+if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
+library(DBI)
+conn <- dbConnect(RPostgres::Postgres(), dbname = 'postgistest')
+state <- "SELECT row_to_json(fc)
+ FROM (SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
+ FROM (SELECT 'Feature' As type
+    , ST_AsGeoJSON(lg.geog)::json As geometry
+    , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
+      )) As properties
+   FROM locations As lg   ) As f )  As fc;"
+json <- geojson_read(conn, query = state, what = "json")
+map_leaf(json)
+}
+
 # doesn't work right now
-## file <- system.file("examples", "feature_collection.geojson", 
+## file <- system.file("examples", "feature_collection.geojson",
 ##   package = "geojsonio")
 ## geojson_read(file, what = "sp")
 }
 }
 \seealso{
-\code{\link{topojson_read}}, \code{\link{geojson_write}}
+\code{\link{topojson_read}}, \code{\link{geojson_write}},
+\code{\link{postgis}}
 }

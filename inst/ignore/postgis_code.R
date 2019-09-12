@@ -1,5 +1,5 @@
 #' @param query A SQL query.
-
+#' @examples
 #' # Query PostGIS/Postgres
 #' library("DBI")
 #' library("RPostgres")
@@ -11,7 +11,7 @@
 #'     , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
 #'       )) As properties
 #'    FROM locations As lg   ) As f )  As fc;"
-#' json <- geojson_read(conn, state)[[1]]
+#' json <- geojson_read(conn, query = state)
 #' map_leaf(json)
 
 #' @export
@@ -32,4 +32,3 @@ check4dbi <- function() {
     stop("Please install DBI", call. = FALSE)
   }
 }
-

@@ -13,6 +13,7 @@
 #' Once you have both of those installed, you can proceed below.
 #'
 #' @examples \dontrun{
+#' if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
 #' library("DBI")
 #' library("RPostgres")
 #' 
@@ -42,6 +43,21 @@
 #'
 #' # Get data (notice warnings of unknown field type for geog)
 #' dbGetQuery(conn, "SELECT * from locations")
+#' 
+#' 
+#' # Once you're setup, use geojson_read()
+#' conn <- dbConnect(RPostgres::Postgres(), dbname = 'postgistest')
+#' state <- "SELECT row_to_json(fc)
+#'  FROM (SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
+#'  FROM (SELECT 'Feature' As type
+#'     , ST_AsGeoJSON(lg.geog)::json As geometry
+#'     , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
+#'       )) As properties
+#'    FROM locations As lg   ) As f )  As fc;"
+#' json <- geojson_read(conn, query = state, what = "json")
+#' 
+#' ## map the geojson with map_leaf()
+#' map_leaf(json)
 #' }
 #' @name postgis
 NULL
