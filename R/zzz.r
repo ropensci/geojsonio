@@ -334,7 +334,8 @@ convert_unsupported_classes <- function(df) {
 }
 
 geojson_rw <- function(input, target = c("char", "list"),
-                       convert_wgs84 = FALSE, crs = NULL, ...){
+                       precision = NULL, convert_wgs84 = FALSE, 
+                       crs = NULL, ...){
 
   read_fun <- switch(target,
                      char = geojson_file_to_char,
@@ -343,14 +344,14 @@ geojson_rw <- function(input, target = c("char", "list"),
   if (inherits(input, "SpatialCollections")) {
     tmp <- tempfile(fileext = ".geojson")
     on.exit(unlink(tmp))
-    tmp2 <- suppressMessages(geojson_write(input, file = tmp,
+    tmp2 <- suppressMessages(geojson_write(input, file = tmp, precision = precision,
                                            convert_wgs84 = convert_wgs84, crs = crs))
     paths <- vapply(tg_compact(tmp2), "[[", "", "path")
     lapply(paths, read_fun, ...)
   } else {
     tmp <- tempfile(fileext = ".geojson")
     on.exit(unlink(tmp))
-    suppressMessages(geojson_write(input, file = tmp,
+    suppressMessages(geojson_write(input, file = tmp, precision = precision,
                                    convert_wgs84 = convert_wgs84, crs = crs))
     read_fun(tmp, ...)
   }
