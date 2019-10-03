@@ -44,6 +44,27 @@ test_that("geojson_list works with numeric inputs", {
   )
 })
 
+test_that("geojson precision arguement works with sp classes") {
+  ## polygon type
+  x_coord <- c(-114.345703125, -114.345703125, -106.61132812499999, -106.61132812499999,-114.345703125)
+  y_coord <- c(39.436192999314095, 43.45291889355468, 43.45291889355468, 39.436192999314095, 39.436192999314095)
+  coords <- cbind(x_coord, y_coord)
+  poly <- Polygon(coords)
+  polys <- Polygons(list(poly), 1)
+  sp_poly <- SpatialPolygons(list(polys))
+  expect_equal(
+    unclass(geojson_list(sp_poly, geometry = "polygon", precision = 4)),
+    structure(list(type = "FeatureCollection", features = list(structure(list(
+        type = "Feature", id = as.integer(1), properties = structure(list(dummy = 0)), geometry = structure(list(type = "Polygon",
+            coordinates = list(list(c(-114.3457, 39.4362
+            ), c(-114.3457, 43.4529), c(-106.6113,
+            43.4529), c(-106.6113, 39.4362
+            ), c(-114.3457, 39.4362)))), .Names = c("type",
+        "coordinates"))), .Names = c("type", "id", "properties", "geometry"
+    )))), .Names = c("type", "features"), from = "SpatialPolygons")
+  )
+}
+
 test_that("geojson_list works with data.frame inputs", {
   # From a data.frame to points
   expect_equal(
