@@ -334,8 +334,8 @@ convert_unsupported_classes <- function(df) {
 }
 
 geojson_rw <- function(input, target = c("char", "list"),
-                       precision = NULL, convert_wgs84 = FALSE, 
-                       crs = NULL, ...){
+                       convert_wgs84 = FALSE, crs = NULL, 
+                       precision = NULL, ...){
 
   read_fun <- switch(target,
                      char = geojson_file_to_char,
