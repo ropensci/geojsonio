@@ -44,7 +44,7 @@ test_that("geojson_list works with numeric inputs", {
   )
 })
 
-test_that("geojson precision arguement works with sp classes") {
+test_that("geojson precision arguement works with sp classes", {
   ## polygon type
   x_coord <- c(-114.345703125, -114.345703125, -106.61132812499999, -106.61132812499999,-114.345703125)
   y_coord <- c(39.436192999314095, 43.45291889355468, 43.45291889355468, 39.436192999314095, 39.436192999314095)
@@ -63,7 +63,7 @@ test_that("geojson precision arguement works with sp classes") {
         "coordinates"))), .Names = c("type", "id", "properties", "geometry"
     )))), .Names = c("type", "features"), from = "SpatialPolygons")
   )
-}
+})
 
 test_that("geojson_list works with data.frame inputs", {
   # From a data.frame to points
