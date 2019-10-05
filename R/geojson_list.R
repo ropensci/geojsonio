@@ -198,7 +198,7 @@
 
 geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
                          geometry = "point", type = "FeatureCollection",
-                         precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                         convert_wgs84 = FALSE, crs = NULL, precision = NULL, ...) {
   UseMethod("geojson_list")
 }
 
@@ -206,7 +206,7 @@ geojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
 #' @export
 geojson_list.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = NULL,
                                          geometry = "point", type = "FeatureCollection",
-                                         precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                         convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPolygons")
 }
@@ -215,7 +215,7 @@ geojson_list.SpatialPolygons <- function(input, lat = NULL, lon = NULL, group = 
 geojson_list.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                   group = NULL, geometry = "point", 
                                                   type = "FeatureCollection",
-                                                  precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                                  convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPolygonsDataFrame")
 }
@@ -223,7 +223,7 @@ geojson_list.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_list.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point", type = "FeatureCollection",
-                                       precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                       convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   dat <- SpatialPointsDataFrame(input, data.frame(dat = 1:NROW(input@coords)))
   as.geo_list(geojson_rw(dat, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs), "SpatialPoints")
 }
@@ -232,7 +232,7 @@ geojson_list.SpatialPoints <- function(input, lat = NULL, lon = NULL, group = NU
 geojson_list.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                 group = NULL, geometry = "point", 
                                                 type = "FeatureCollection",
-                                                precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                                convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPointsDataFrame")
 }
@@ -240,7 +240,7 @@ geojson_list.SpatialPointsDataFrame <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_list.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point", type = "FeatureCollection",
-                                      precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                      convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialLines")
 }
@@ -249,7 +249,7 @@ geojson_list.SpatialLines <- function(input, lat = NULL, lon = NULL, group = NUL
 geojson_list.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                group = NULL, geometry = "point", 
                                                type = "FeatureCollection",
-                                               precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                               convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialLinesDataFrame")
 }
@@ -257,7 +257,7 @@ geojson_list.SpatialLinesDataFrame <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_list.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL,
                                      geometry = "point", type = "FeatureCollection",
-                                     precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                     convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialGrid")
 }
@@ -266,7 +266,7 @@ geojson_list.SpatialGrid <- function(input, lat = NULL, lon = NULL, group = NULL
 geojson_list.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL, 
                                               group = NULL, geometry = "point", 
                                               type = "FeatureCollection",
-                                              precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                              convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialGridDataFrame")
 }
@@ -274,7 +274,7 @@ geojson_list.SpatialGridDataFrame <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_list.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NULL,
                                        geometry = "point",  type='FeatureCollection',
-                                       precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                       convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPixels")
 }
@@ -283,7 +283,7 @@ geojson_list.SpatialPixels <- function(input, lat = NULL, lon = NULL, group = NU
 geojson_list.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                 group = NULL, geometry = "point", 
                                                 type = "FeatureCollection",
-                                                precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                                convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialPixelsDataFrame")
 }
@@ -292,7 +292,7 @@ geojson_list.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL,
 #' @export
 geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NULL,
                                       geometry = "point",  type='FeatureCollection',
-                                      precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                      convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialRings")
 }
@@ -301,7 +301,7 @@ geojson_list.SpatialRings <- function(input, lat = NULL, lon = NULL, group = NUL
 geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, 
                                                group = NULL, geometry = "point", 
                                                type = "FeatureCollection",
-                                               precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                               convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   as.geo_list(geojson_rw(input, target = "list", precision = precision, convert_wgs84 = convert_wgs84, crs = crs),
               "SpatialRingsDataFrame")
 }
@@ -310,7 +310,7 @@ geojson_list.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL,
 geojson_list.SpatialCollections <- function(input, lat = NULL, lon = NULL, 
                                             group = NULL, geometry = "point", 
                                             type = "FeatureCollection",
-                                            precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...) {
+                                            convert_wgs84 = FALSE, crs = NULL, precision = NULL,  ...) {
   pt <- donotnull(input@pointobj, geojson_rw, target = "list", 
                   convert_wgs84 = convert_wgs84, crs = crs)
   ln <- donotnull(input@lineobj, geojson_rw, target = "list", 
