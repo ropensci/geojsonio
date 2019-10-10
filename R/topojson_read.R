@@ -53,7 +53,7 @@ topojson_read.character <- function(x, ...) {
 }
 
 #' @export
-topojson_read.location <- function(x, ...) {
+topojson_read.location_ <- function(x, ...) {
   read_topojson(x, ...)
 }
 

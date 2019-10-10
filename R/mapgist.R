@@ -299,7 +299,7 @@ map_gist.list <- function(input, lat = "lat", lon = "long", geometry = "point", 
 
 # Other methods: location, json, geo_list ------------------------
 #' @export
-map_gist.location <- function(input, lat = "lat", lon = "long", geometry = "point",
+map_gist.location_ <- function(input, lat = "lat", lon = "long", geometry = "point",
                               group = NULL, type = "FeatureCollection", file = "myfile.geojson",
                               description = "", public = TRUE, browse = TRUE, ...) {
   check4gistr()

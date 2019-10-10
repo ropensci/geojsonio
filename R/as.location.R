@@ -20,7 +20,7 @@ as.location <- function(x, ...) UseMethod("as.location")
 as.location.character <- function(x, ...) check_location(x, ...)
 
 #' @export
-as.location.location <- function(x, ...) x
+as.location.location_ <- function(x, ...) x
 
 check_location <- function(x, ...){
   if (is.url(x)) {
@@ -32,11 +32,11 @@ check_location <- function(x, ...){
 }
 
 as_location <- function(x, type){
-  structure(x, class = "location", type = type)
+  structure(x, class = "location_", type = type)
 }
 
 #' @export
-print.location <- function(x, ...){
+print.location_ <- function(x, ...){
   cat("<location>", "\n")
   cat("   Type: ", attr(x, "type"), "\n")
   cat("   Location: ", x[[1]], "\n")

@@ -252,7 +252,7 @@ map_leaf.list <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner
 
 # Other methods: location, json, geo_list ------------------------
 #' @export
-map_leaf.location <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
+map_leaf.location_ <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
   check_4_leaflet()
   input <- as.json(jsonlite::fromJSON(input, FALSE))
   petiole(input, bounds = geojson_bounds(input), basemap = basemap, ...)

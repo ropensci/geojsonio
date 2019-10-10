@@ -84,7 +84,7 @@ geojson_read.character <- function(x, method = "web", parse = FALSE, what = "lis
 }
 
 #' @export
-geojson_read.location <- function(x, method = "web", parse = FALSE, what = "list", ...) {
+geojson_read.location_ <- function(x, method = "web", parse = FALSE, what = "list", ...) {
   read_json(x, method, parse, what, ...)
 }
 
