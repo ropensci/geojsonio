@@ -7,7 +7,7 @@ test_that("map_leaf works with file inputs", {
   file <- "myfile.geojson"
   supp_invis(geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file))
   a_map <- map_leaf(as.location(file))
-  expect_is(as.location(file), "location")
+  expect_is(as.location(file), "location_")
   expect_is(a_map, "leaflet")
   expect_null(a_map$width)
   expect_is(a_map$x$calls[[2]]$args[[1]], "json")
@@ -35,7 +35,7 @@ test_that("map_leaf works with url inputs", {
 
   url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
   e_map <- map_leaf(as.location(url))
-  expect_is(as.location(url), "location")
+  expect_is(as.location(url), "location_")
   expect_is(e_map, "leaflet")
 })
 
