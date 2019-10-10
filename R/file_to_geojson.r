@@ -12,6 +12,12 @@
 #' @param verbose (logical) Printing of \code{\link[rgdal]{readOGR}} progress.
 #' Default: \code{FALSE}
 #' @template read
+#' @section File size:
+#' When using \code{method="web"}, be aware of file sizes.
+#' https://ogre.adc4gis.com that we use for this option does not document 
+#' what file size is too large, but you should get an error message like 
+#' "maximum file length exceeded" when that happens. \code{method="local"}
+#' shouldn't be sensitive to file sizes.
 #' @examples \dontrun{
 #' file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
 #'
@@ -62,7 +68,7 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
   mem <- ifelse(output == ":memory:", TRUE, FALSE)
 
   if (method == "web") {
-    url <- "http://ogre.adc4gis.com/convert"
+    url <- "https://ogre.adc4gis.com/convert"
     tt <- httr::POST(url, body = list(upload = httr::upload_file(input)))
     if (tt$status_code > 201) {
       res <- tryCatch(
@@ -75,7 +81,12 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
         error = function(e) e
       )
       if (inherits(res2, "error")) httr::stop_for_status(tt)
-      stop(paste0(res2[[1]], collapse = "\n"), call. = FALSE)
+      if ("msg" %in% names(res2))
+        stop(paste0(res2$msg, collapse = "\n"), call. = FALSE)
+      else 
+        stop("something went wrong, ",
+          "open an issue at https://github.com/ropensci/geojsonio",
+          call. = FALSE)
     }
     out <- httr::content(tt, as = "text", encoding = "UTF-8")
     if (mem) {

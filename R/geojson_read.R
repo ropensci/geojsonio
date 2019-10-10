@@ -17,6 +17,13 @@
 #' 
 #' This function supports various geospatial file formats from a URL, as well 
 #' as local kml, shp, and geojson file formats.
+#' 
+#' @section File size:
+#' When using \code{method="web"}, be aware of file sizes.
+#' https://ogre.adc4gis.com that we use for this option does not document 
+#' what file size is too large, but you should get an error message like 
+#' "maximum file length exceeded" when that happens. \code{method="local"}
+#' shouldn't be sensitive to file sizes.
 #'
 #' @examples \dontrun{
 #' # From a file
