@@ -19,33 +19,35 @@
 Add together geo_list or json objects
 }
 \details{
-If the first object is an object of class \code{geo_list}, you can add
-another object of class \code{geo_list} or of class \code{json}, and will result 
-in a \code{geo_list} object. 
+If the first object is an object of class \code{geo_list}, you
+can add another object of class \code{geo_list} or of class \code{json},
+and will result  in a \code{geo_list} object.
 
 If the first object is an object of class \code{json}, you can add
-another object of class \code{json} or of class \code{geo_list}, and will result 
+another object of class \code{json} or of class \code{geo_list}, and will result
 in a \code{json} object.
 }
 \examples{
 \dontrun{
 # geo_list + geo_list
-## Note: geo_list is the output type from geojson_list, it's just a list with 
+## Note: geo_list is the output type from geojson_list, it's just a list with
 ## a class attached so we know it's geojson :)
 vec <- c(-99.74,32.45)
 a <- geojson_list(vec)
-vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0),
+  c(100.0,1.0), c(100.0,0.0))
 b <- geojson_list(vecs, geometry="polygon")
 a + b
 
 # json + json
 c <- geojson_json(c(-99.74,32.45))
-vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0),
+  c(100.0,1.0), c(100.0,0.0))
 d <- geojson_json(vecs, geometry="polygon")
 c + d
 (c + d) \%>\% pretty
 }
 }
 \seealso{
-\code{\link{geojson_list}}, \code{\link{geojson_json}}
+\code{\link[=geojson_list]{geojson_list()}}, \code{\link[=geojson_json]{geojson_json()}}
 }

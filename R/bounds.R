@@ -3,7 +3,8 @@
 #' @export
 #' @param x An object of class list or geo_list
 #' @param ... Ignored
-#' @return A vector of the form min longitude, min latitude, max longitude, max latitude
+#' @return A vector of the form min longitude, min latitude, max longitude,
+#' max latitude
 #' @examples
 #' # numeric 
 #' vec <- c(-99.74,32.45)

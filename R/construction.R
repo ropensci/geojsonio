@@ -1,31 +1,33 @@
 #' Add together geo_list or json objects
 #'
 #' @name geojson-add
-#' @param x1 An object of class \code{geo_list} or \code{json}
-#' @param x2 A component to add to \code{x1}, of class \code{geo_list} or \code{json}
-#' 
-#' @details If the first object is an object of class \code{geo_list}, you can add
-#' another object of class \code{geo_list} or of class \code{json}, and will result 
-#' in a \code{geo_list} object. 
-#' 
-#' If the first object is an object of class \code{json}, you can add
-#' another object of class \code{json} or of class \code{geo_list}, and will result 
-#' in a \code{json} object.
-#' 
-#' @seealso \code{\link{geojson_list}}, \code{\link{geojson_json}}
+#' @param x1 An object of class `geo_list` or `json`
+#' @param x2 A component to add to `x1`, of class `geo_list` or `json`
+#'
+#' @details If the first object is an object of class `geo_list`, you
+#' can add another object of class `geo_list` or of class `json`,
+#' and will result  in a `geo_list` object.
+#'
+#' If the first object is an object of class `json`, you can add
+#' another object of class `json` or of class `geo_list`, and will result
+#' in a `json` object.
+#'
+#' @seealso [geojson_list()], [geojson_json()]
 #' @examples \dontrun{
 #' # geo_list + geo_list
-#' ## Note: geo_list is the output type from geojson_list, it's just a list with 
+#' ## Note: geo_list is the output type from geojson_list, it's just a list with
 #' ## a class attached so we know it's geojson :)
 #' vec <- c(-99.74,32.45)
 #' a <- geojson_list(vec)
-#' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+#' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0),
+#'   c(100.0,1.0), c(100.0,0.0))
 #' b <- geojson_list(vecs, geometry="polygon")
 #' a + b
-#' 
+#'
 #' # json + json
 #' c <- geojson_json(c(-99.74,32.45))
-#' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+#' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0),
+#'   c(100.0,1.0), c(100.0,0.0))
 #' d <- geojson_json(vecs, geometry="polygon")
 #' c + d
 #' (c + d) %>% pretty
@@ -59,12 +61,12 @@ add_geolist <- function(t1, t2, t2name) {
   if (!xor(!inherits(t2, "geo_list"), !inherits(t2, "json"))) {
     stop("Don't know how to add ", t2name, " to a geo_list object", call. = FALSE)
   }
-  if (inherits(t2, "geo_list")) { 
+  if (inherits(t2, "geo_list")) {
     t1$features <- c(t1$features, t2$features)
     att1 <- attr(t1, "from")
     att2 <- attr(t2, "from")
   } else {
-    t1$features <- c(t1$features, geojson_list(t2)$features) 
+    t1$features <- c(t1$features, geojson_list(t2)$features)
     att1 <- attr(t1, "from")
     att2 <- "json"
   }
@@ -75,12 +77,12 @@ add_json <- function(t1, t2, t2name) {
   if (!xor(!inherits(t2, "json"), !inherits(t2, "geo_list"))) {
     stop("Don't know how to add ", t2name, " to a json object", call. = FALSE)
   }
-  if (inherits(t2, "geo_list")) { 
-    jsonlite::toJSON(list(type = "FeatureCollection", 
+  if (inherits(t2, "geo_list")) {
+    jsonlite::toJSON(list(type = "FeatureCollection",
         features = c(geojson_list(t1)$features, geojson_list(t2)$features)
     ), auto_unbox = TRUE)
   } else {
-    jsonlite::toJSON(list(type = "FeatureCollection", 
+    jsonlite::toJSON(list(type = "FeatureCollection",
         features = c(geojson_list(t1)$features, geojson_list(t2)$features)
     ), auto_unbox = TRUE)
   }

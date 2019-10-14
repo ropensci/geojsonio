@@ -9,17 +9,17 @@ geojson_read(x, method = "web", parse = FALSE, what = "list", ...)
 \arguments{
 \item{x}{(character) Path to a local file or a URL.}
 
-\item{method}{(character) One of "web" (default) or "local". Matches on 
-partial strings. This parameter determines how the data is 
-read. "web" means we use the Ogre web service, and "local" means we use 
+\item{method}{(character) One of "web" (default) or "local". Matches on
+partial strings. This parameter determines how the data is
+read. "web" means we use the Ogre web service, and "local" means we use
 \pkg{rgdal}. See Details fore more.}
 
-\item{parse}{(logical) To parse geojson to data.frame like structures if 
+\item{parse}{(logical) To parse geojson to data.frame like structures if
 possible. Default: \code{FALSE}}
 
-\item{what}{(character) What to return. One of "list" or "sp" (for 
-Spatial class). Default: "list". If "sp" chosen, forced to 
-\code{method="local"}.}
+\item{what}{(character) What to return. One of "list" or "sp" (for
+Spatial class). Default: "list". If "sp" chosen, forced to
+\code{method="local"}}
 
 \item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
 }
@@ -30,17 +30,17 @@ various, depending on what's chosen in \code{what} parameter
 Read geojson or other formats from a local file or a URL
 }
 \details{
-Uses \code{\link{file_to_geojson}} internally to give back geojson, 
+Uses \code{\link[=file_to_geojson]{file_to_geojson()}} internally to give back geojson,
 and other helper functions when returning spatial classes.
 
-This function supports various geospatial file formats from a URL, as well 
+This function supports various geospatial file formats from a URL, as well
 as local kml, shp, and geojson file formats.
 }
 \section{Method parameter}{
 
-The web option uses the Ogre web API. Ogre currently has an output size 
-limit of 15MB. See here \url{http://ogre.adc4gis.com/} for info on the 
-Ogre web API. The local option uses the function \code{\link{writeOGR}} 
+The web option uses the Ogre web API. Ogre currently has an output size
+limit of 15MB. See here \url{http://ogre.adc4gis.com/} for info on the
+Ogre web API. The local option uses the function \code{\link{writeOGR}}
 from the package rgdal.
 }
 
@@ -48,22 +48,22 @@ from the package rgdal.
 
 Note that for Shapefiles, GML, MapInfo, and VRT, you need to send zip files
 to Ogre. For other file types (.bna, .csv, .dgn, .dxf, .gxt, .txt, .json,
-.geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file 
+.geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file
 with that file extension.
 }
 
 \section{Linting GeoJSON}{
 
 If you're having trouble rendering GeoJSON files, ensure you have a valid
-GeoJSON file by running it through the package \pkg{geojsonlint}, which 
+GeoJSON file by running it through the package \pkg{geojsonlint}, which
 has a variety of different GeoJSON linters.
 }
 
 \section{File size}{
 
 When using \code{method="web"}, be aware of file sizes.
-https://ogre.adc4gis.com that we use for this option does not document 
-what file size is too large, but you should get an error message like 
+https://ogre.adc4gis.com that we use for this option does not document
+what file size is too large, but you should get an error message like
 "maximum file length exceeded" when that happens. \code{method="local"}
 shouldn't be sensitive to file sizes.
 }
@@ -115,5 +115,5 @@ geojson_read(basename(x), method = "local", what = "sp")
 }
 }
 \seealso{
-\code{\link{topojson_read}}, \code{\link{geojson_write}}
+\code{\link[=topojson_read]{topojson_read()}}, \code{\link[=geojson_write]{geojson_write()}}
 }

@@ -9,7 +9,7 @@ topojson_read(x, ...)
 \arguments{
 \item{x}{Path to a local file or a URL.}
 
-\item{...}{Further args passed on to \code{\link[sf]{st_read}}}
+\item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}}
 }
 \value{
 an object of class \code{sf}/\code{data.frame}
@@ -18,8 +18,8 @@ an object of class \code{sf}/\code{data.frame}
 Read topojson from a local file or a URL
 }
 \details{
-Returns a \code{sf} class, but you can easily and quickly get 
-this to geojson, see examples. 
+Returns a \code{sf} class, but you can easily and quickly get
+this to geojson, see examples.
 
 Note that this does not give you Topojson, but gives you a \code{sf}
 class - which you can use then to turn it into geojson as a list or json
@@ -49,5 +49,5 @@ topojson_read(file, stringsAsFactors = FALSE)
 }
 }
 \seealso{
-\code{\link{geojson_read}}, \code{\link{topojson_write}}
+\code{\link[=geojson_read]{geojson_read()}}, \code{\link[=topojson_write]{topojson_write()}}
 }

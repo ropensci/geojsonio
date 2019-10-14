@@ -5,32 +5,46 @@
 \title{Convert many input types with spatial data to geojson specified as a list}
 \usage{
 geojson_list(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type = "FeatureCollection", precision = NULL,
-  convert_wgs84 = FALSE, crs = NULL, ...)
+  geometry = "point", type = "FeatureCollection",
+  convert_wgs84 = FALSE, crs = NULL, precision = NULL, ...)
 }
 \arguments{
-\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can also be dplyr \code{tbl_df}
-class since it inherits from \code{data.frame}.}
+\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can
+also be dplyr \code{tbl_df} class since it inherits from \code{data.frame}}
 
-\item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt to guess.}
+\item{lat}{(character) Latitude name. The default is \code{NULL}, and we
+attempt to guess.}
 
-\item{lon}{(character) Longitude name. The default is \code{NULL}, and we attempt to guess.}
+\item{lon}{(character) Longitude name. The default is \code{NULL}, and we
+attempt to guess.}
 
-\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't apply
-for points}
+\item{group}{(character) A grouping variable to perform grouping for
+polygons - doesn't apply for points}
 
 \item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{type}{(character) The type of collection. One of FeatureCollection (default) or
-GeometryCollection.}
+\item{type}{(character) The type of collection. One of FeatureCollection
+(default) or GeometryCollection.}
+
+\item{convert_wgs84}{Should the input be converted to the
+\href{https://tools.ietf.org/html/rfc7946}{standard CRS for GeoJSON}
+(geographic coordinate reference system, using the WGS84 datum, with
+longitude and latitude units of decimal degrees; EPSG: 4326).
+Default is \code{FALSE} though this may change in a future package version.
+This will only work for \code{sf} or \code{Spatial} objects with a CRS
+already defined. If one is not defined but you know what it is, you
+may define it in the \code{crs} argument below.}
+
+\item{crs}{The CRS of the input if it is not already defined. This can
+be an epsg code as a four or five digit integer or a valid proj4 string.
+This argument will be ignored if \code{convert_wgs84} is \code{FALSE}
+or the object already has a CRS.}
 
 \item{precision}{desired number of decimal places for the coordinates in the
 geojson file. Using fewer decimal places can decrease file sizes (at the
-cost of precision).}
-
-\item{convert_wgs84}{Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude units of decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.}
-
-\item{crs}{The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.}
+cost of precision). This changes the underlying precision stored in the
+data. If you want to change the number of digits displayed use
+\code{options(digits = <some number>)}}
 
 \item{...}{Ignored}
 }
@@ -38,31 +52,33 @@ cost of precision).}
 Convert many input types with spatial data to geojson specified as a list
 }
 \details{
-This function creates a geojson structure as an R list; it does not write a file
-using \code{rgdal} - see \code{\link{geojson_write}} for that.
+This function creates a geojson structure as an R list; it does
+not write a file using \pkg{rgdal} - see \code{\link[=geojson_write]{geojson_write()}}
+for that.
 
-Note that all sp class objects will output as \code{FeatureCollection} objects, while other
-classes (numeric, list, data.frame) can be output as \code{FeatureCollection} or
-\code{GeometryCollection} objects. We're working on allowing \code{GeometryCollection}
-option for sp class objects.
+Note that all sp class objects will output as \code{FeatureCollection} objects,
+while other classes (numeric, list, data.frame) can be output as
+\code{FeatureCollection} or \code{GeometryCollection} objects. We're working
+on allowing \code{GeometryCollection} option for sp class objects.
 
-Also note that with sp classes we do make a round-trip, using \code{\link[rgdal]{writeOGR}}
-to write GeoJSON to disk, then read it back in. This is fast and we don't have to think
+Also note that with sp classes we do make a round-trip,
+using \code{\link[rgdal:writeOGR]{rgdal::writeOGR()}} to write GeoJSON to disk, then read it back in.
+This is fast and we don't have to think
 about it too much, but this disk round-trip is not ideal.
 
 For sf classes (sf, sfc, sfg), the following conversions are made:
-
 \itemize{
- \item sfg: the appropriate geometry \code{Point, LineString, Polygon, MultiPoint, 
- MultiLineString, MultiPolygon, GeometryCollection}
- \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry as above
- \item sf: \code{FeatureCollection}
+\item sfg: the appropriate geometry \code{Point, LineString, Polygon, MultiPoint,   MultiLineString, MultiPolygon, GeometryCollection}
+\item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry
+as above
+\item sf: \code{FeatureCollection}
 }
 
 For \code{list} and \code{data.frame} objects, you don't have to pass in \code{lat} and
-\code{lon} parameters if they are named appropriately (e.g., lat/latitude, lon/long/longitude),
-as they will be auto-detected. If they can not be found, the function will stop and warn
-you to specify the parameters specifically.
+\code{lon} parameters if they are named appropriately (e.g., lat/latitude,
+lon/long/longitude), as they will be auto-detected. If they can not be
+found, the function will stop and warn you to specify the parameters
+specifically.
 }
 \examples{
 \dontrun{
@@ -77,7 +93,8 @@ mylist <- list(list(latitude=30, longitude=120, marker="red"),
 geojson_list(mylist)
 
 ## From a list of numeric vectors to a polygon
-vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0),
+  c(100.0,1.0), c(100.0,0.0))
 geojson_list(vecs, geometry="polygon")
 
 # from data.frame to points
@@ -88,14 +105,16 @@ geojson_list(us_cities[1:2,])
 geojson_list(states[1:3,])
 geojson_list(states[1:351,], geometry="polygon", group='group')
 geojson_list(canada_cities[1:30,])
-## a data.frame with columsn not named appropriately, but you can specify them
+## a data.frame with columsn not named appropriately, but you can
+## specify them
 # dat <- data.frame(a = c(31, 41), b = c(-120, -110))
 # geojson_list(dat)
 # geojson_list(dat, lat="a", lon="b")
 
 # from data.frame to polygons
 head(states)
-geojson_list(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
+geojson_list(states[1:351, ], lat='lat', lon='long',
+  geometry="polygon", group='group')
 
 # From SpatialPolygons class
 library('sp')
@@ -105,6 +124,21 @@ poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
    c(30,40,35,30)))), "2")
 sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 geojson_list(sp_poly)
+
+# From SpatialPolygons class with precision agreement
+x_coord <- c(-114.345703125, -114.345703125, -106.61132812499999,
+  -106.61132812499999, -114.345703125)
+y_coord <- c(39.436192999314095, 43.45291889355468, 43.45291889355468,
+  39.436192999314095, 39.436192999314095)
+coords <- cbind(x_coord, y_coord)
+poly <- Polygon(coords)
+polys <- Polygons(list(poly), 1)
+sp_poly2 <- SpatialPolygons(list(polys))
+geojson_list(sp_poly2, geometry = "polygon", precision = 4)
+
+# From SpatialPoints class with precision
+points <- SpatialPoints(cbind(x_coord,y_coord))
+geojson_list(points)
 
 # From SpatialPolygonsDataFrame class
 sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
@@ -171,21 +205,25 @@ geojson_list(r1r2df)
 
 # From SpatialPixels
 library("sp")
-pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
+pixels <- suppressWarnings(
+  SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
 summary(pixels)
 geojson_list(pixels)
 
 # From SpatialPixelsDataFrame
 library("sp")
 pixelsdf <- suppressWarnings(
- SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
+ SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")],
+ data = canada_cities)
 )
 geojson_list(pixelsdf)
 
 # From SpatialCollections
 library("sp")
-poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
+poly1 <- Polygons(
+  list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
+poly2 <- Polygons(
+  list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
 poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 coordinates(us_cities) <- ~long+lat
 dat <- SpatialCollections(points = us_cities, polygons = poly)

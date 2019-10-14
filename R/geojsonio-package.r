@@ -1,45 +1,42 @@
-#' @title \strong{I/O for GeoJSON}
+#' @title **I/O for GeoJSON**
 #'
 #' @description Convert various data formats to/from GeoJSON or TopoJSON. This
 #' package focuses mostly on converting lists, data.frame's, numeric,
 #' SpatialPolygons, SpatialPolygonsDataFrame, and more to GeoJSON with the
-#' help of \code{rgdal} and friends. You can currently read TopoJSON - writing
+#' help of \pkg{rgdal} and friends. You can currently read TopoJSON - writing
 #' TopoJSON will come in a future version of this package.
 #'
 #' @section Package organization:
 #' The core functions in this package are organized first around what you're
 #' working with or want to get, GeoJSON or TopoJSON, then convert to or read
 #' from various formats:
-#' \itemize{
-#'  \item \code{\link{geojson_list}} / \code{\link{topojson_list}} - convert
+#' 
+#' - [geojson_list()] / [topojson_list()] - convert
 #' 	to GeoJSON or TopoJSON as R list format
-#'  \item \code{\link{geojson_json}} / \code{\link{topojson_json}} - convert
+#' - [geojson_json()] / [topojson_json()] - convert
 #'  to GeoJSON or TopoJSON as JSON
-#'  \item \code{\link{geojson_sp}} - convert to a spatial object from
-#'  \code{geojson_list} or \code{geojson_json}
-#'  \item \code{\link{geojson_sf}} - convert to an sf object from
-#'  \code{geojson_list} or \code{geojson_json}
-#'  \item \code{\link{geojson_read}} / \code{\link{topojson_read}} - read a
+#' - [geojson_sp()] - convert to a spatial object from
+#'  `geojson_list` or `geojson_json`
+#' - [geojson_sf()] - convert to an sf object from
+#'  `geojson_list` or `geojson_json`
+#' - [geojson_read()] / [topojson_read()] - read a
 #'  GeoJSON/TopoJSON file from file path or URL
-#'  \item \code{\link{geojson_write}} / \code{\link{topojson_write}} - write
+#' - [geojson_write()] / [topojson_write()] - write
 #'  a GeoJSON file locally (TopoJSON coming later)
-#' }
 #'
 #' Other interesting functions:
-#' \itemize{
-#'  \item \code{\link{map_gist}} - Create a GitHub gist (renders as an
+#' 
+#' - [map_gist()] - Create a GitHub gist (renders as an
 #'  interactive map)
-#'  \item \code{\link{map_leaf}} - Create a local interactive map using the
-#'  \code{leaflet} package
-#'  \item \code{\link{geo2topo}} - Convert GeoJSON to TopoJSON
-#'  \item \code{\link{topo2geo}} - Convert TopoJSON to GeoJSON
-#' }
+#' - [map_leaf()] - Create a local interactive map using the
+#'  `leaflet` package
+#' - [geo2topo()] - Convert GeoJSON to TopoJSON
+#' - [topo2geo()] - Convert TopoJSON to GeoJSON
 #'
 #' All of the above functions have methods for various classes, including
-#' \code{numeric} vectors, \code{data.frame}, \code{list},
-#' \code{SpatialPolygons}, \code{SpatialLines}, \code{SpatialPoints}, and many
-#' more - which will try to do the right thing based on the data you give
-#' as input.
+#' `numeric` vectors, `data.frame`, `list`, `SpatialPolygons`, `SpatialLines`,
+#' `SpatialPoints`, and many more - which will try to do the right thing
+#' based on the data you give as input.
 #'
 #' @import methods sp rgeos
 #' @importFrom sf st_crs st_transform st_read
@@ -98,10 +95,8 @@ NULL
 
 #' Defunct functions in geojsonio
 #'
-#' \itemize{
-#'  \item \code{\link{lint}}: See \code{geojsonlint::geojson_hint}
-#'  \item \code{\link{validate}}: See \code{geojsonlint::geojson_lint}
-#' }
+#' - [lint()]: See `geojsonlint::geojson_hint`
+#' - [validate()]: See `geojsonlint::geojson_lint`
 #'
 #' @name geojsonio-defunct
 NULL

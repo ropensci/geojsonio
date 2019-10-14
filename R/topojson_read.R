@@ -3,17 +3,17 @@
 #' @export
 #'
 #' @param x Path to a local file or a URL.
-#' @param ... Further args passed on to \code{\link[sf]{st_read}}
+#' @param ... Further args passed on to [sf::st_read()]
 #' 
-#' @return an object of class \code{sf}/\code{data.frame}
+#' @return an object of class `sf`/`data.frame`
 #' 
-#' @details Returns a \code{sf} class, but you can easily and quickly get 
+#' @details Returns a `sf` class, but you can easily and quickly get 
 #' this to geojson, see examples. 
 #' 
-#' Note that this does not give you Topojson, but gives you a \code{sf}
+#' Note that this does not give you Topojson, but gives you a `sf`
 #' class - which you can use then to turn it into geojson as a list or json
 #' 
-#' @seealso \code{\link{geojson_read}}, \code{\link{topojson_write}}
+#' @seealso [geojson_read()], [topojson_write()]
 #'
 #' @examples \dontrun{
 #' # From a file

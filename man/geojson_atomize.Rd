@@ -7,12 +7,12 @@
 geojson_atomize(x, combine = TRUE)
 }
 \arguments{
-\item{x}{(geo_list/geo_json/json/character) input object, either 
+\item{x}{(geo_list/geo_json/json/character) input object, either
 \code{geo_json}, \code{geo_list}, \code{json}, or \code{character} class.
 If \code{character}, must be valid JSON}
 
 \item{combine}{(logical) only applies to \code{geo_json/json} type inputs.
-combine valid JSON objects into a single valid JSON object. Default: 
+combine valid JSON objects into a single valid JSON object. Default:
 \code{TRUE}}
 }
 \value{
@@ -22,7 +22,7 @@ same class as input object, but modified
 Atomize
 }
 \details{
-A FeatureCollection is split into many Feature's, and 
+A FeatureCollection is split into many Feature's, and
 a GeometryCollection is split into many geometries
 
 Internally we use \pkg{jqr} for JSON parsing

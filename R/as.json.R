@@ -2,7 +2,7 @@
 #'
 #' @export
 #' @param x Input
-#' @param ... Further args passed on to \code{\link[jsonlite]{toJSON}}
+#' @param ... Further args passed on to [jsonlite::toJSON()]
 #' @examples \dontrun{
 #' (res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
 #' as.json(res)

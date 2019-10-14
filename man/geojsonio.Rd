@@ -9,7 +9,7 @@
 Convert various data formats to/from GeoJSON or TopoJSON. This
 package focuses mostly on converting lists, data.frame's, numeric,
 SpatialPolygons, SpatialPolygonsDataFrame, and more to GeoJSON with the
-help of \code{rgdal} and friends. You can currently read TopoJSON - writing
+help of \pkg{rgdal} and friends. You can currently read TopoJSON - writing
 TopoJSON will come in a future version of this package.
 }
 \section{Package organization}{
@@ -18,35 +18,34 @@ The core functions in this package are organized first around what you're
 working with or want to get, GeoJSON or TopoJSON, then convert to or read
 from various formats:
 \itemize{
- \item \code{\link{geojson_list}} / \code{\link{topojson_list}} - convert
-	to GeoJSON or TopoJSON as R list format
- \item \code{\link{geojson_json}} / \code{\link{topojson_json}} - convert
- to GeoJSON or TopoJSON as JSON
- \item \code{\link{geojson_sp}} - convert to a spatial object from
- \code{geojson_list} or \code{geojson_json}
- \item \code{\link{geojson_sf}} - convert to an sf object from
- \code{geojson_list} or \code{geojson_json}
- \item \code{\link{geojson_read}} / \code{\link{topojson_read}} - read a
- GeoJSON/TopoJSON file from file path or URL
- \item \code{\link{geojson_write}} / \code{\link{topojson_write}} - write
- a GeoJSON file locally (TopoJSON coming later)
+\item \code{\link[=geojson_list]{geojson_list()}} / \code{\link[=topojson_list]{topojson_list()}} - convert
+to GeoJSON or TopoJSON as R list format
+\item \code{\link[=geojson_json]{geojson_json()}} / \code{\link[=topojson_json]{topojson_json()}} - convert
+to GeoJSON or TopoJSON as JSON
+\item \code{\link[=geojson_sp]{geojson_sp()}} - convert to a spatial object from
+\code{geojson_list} or \code{geojson_json}
+\item \code{\link[=geojson_sf]{geojson_sf()}} - convert to an sf object from
+\code{geojson_list} or \code{geojson_json}
+\item \code{\link[=geojson_read]{geojson_read()}} / \code{\link[=topojson_read]{topojson_read()}} - read a
+GeoJSON/TopoJSON file from file path or URL
+\item \code{\link[=geojson_write]{geojson_write()}} / \code{\link[=topojson_write]{topojson_write()}} - write
+a GeoJSON file locally (TopoJSON coming later)
 }
 
 Other interesting functions:
 \itemize{
- \item \code{\link{map_gist}} - Create a GitHub gist (renders as an
- interactive map)
- \item \code{\link{map_leaf}} - Create a local interactive map using the
- \code{leaflet} package
- \item \code{\link{geo2topo}} - Convert GeoJSON to TopoJSON
- \item \code{\link{topo2geo}} - Convert TopoJSON to GeoJSON
+\item \code{\link[=map_gist]{map_gist()}} - Create a GitHub gist (renders as an
+interactive map)
+\item \code{\link[=map_leaf]{map_leaf()}} - Create a local interactive map using the
+\code{leaflet} package
+\item \code{\link[=geo2topo]{geo2topo()}} - Convert GeoJSON to TopoJSON
+\item \code{\link[=topo2geo]{topo2geo()}} - Convert TopoJSON to GeoJSON
 }
 
 All of the above functions have methods for various classes, including
-\code{numeric} vectors, \code{data.frame}, \code{list},
-\code{SpatialPolygons}, \code{SpatialLines}, \code{SpatialPoints}, and many
-more - which will try to do the right thing based on the data you give
-as input.
+\code{numeric} vectors, \code{data.frame}, \code{list}, \code{SpatialPolygons}, \code{SpatialLines},
+\code{SpatialPoints}, and many more - which will try to do the right thing
+based on the data you give as input.
 }
 
 \author{

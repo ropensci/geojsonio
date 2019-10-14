@@ -5,24 +5,24 @@
 #' @param x (character) Path to a local file or a URL.
 #' @param what (character) What to return. One of "list" or "sp" (for 
 #' Spatial class). Default: "list". If "sp" chosen, forced to 
-#' \code{method="local"}. 
+#' `method="local"` 
 #' @template read
 #' 
-#' @seealso \code{\link{topojson_read}}, \code{\link{geojson_write}}
+#' @seealso [topojson_read()], [geojson_write()]
 #' 
-#' @return various, depending on what's chosen in \code{what} parameter
+#' @return various, depending on what's chosen in `what` parameter
 #' 
-#' @details Uses \code{\link{file_to_geojson}} internally to give back geojson, 
+#' @details Uses [file_to_geojson()] internally to give back geojson, 
 #' and other helper functions when returning spatial classes.
 #' 
 #' This function supports various geospatial file formats from a URL, as well 
 #' as local kml, shp, and geojson file formats.
 #' 
 #' @section File size:
-#' When using \code{method="web"}, be aware of file sizes.
+#' When using `method="web"`, be aware of file sizes.
 #' https://ogre.adc4gis.com that we use for this option does not document 
 #' what file size is too large, but you should get an error message like 
-#' "maximum file length exceeded" when that happens. \code{method="local"}
+#' "maximum file length exceeded" when that happens. `method="local"`
 #' shouldn't be sensitive to file sizes.
 #'
 #' @examples \dontrun{

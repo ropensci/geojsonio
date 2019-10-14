@@ -6,20 +6,19 @@
 #' @param object_name (character) name to give to the TopoJSON object created.
 #' Default: "foo"
 #' @param quantization (numeric) quantization parameter, use this to
-#'  quantize geometry prior to computing topology. Typical values are powers of 
-#'  ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.
-#'  For more information about quantization, see this 
-#'  \href{https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}{
-#'  StackOverflow post by Mike Bostock}.
-#' @return A \code{topojson_write} class, with two elements:
-#' \itemize{
-#'  \item path: path to the file with the TopoJSON
-#'  \item type: type of object the TopoJSON came from, e.g., SpatialPoints
-#' }
-#' @seealso \code{\link{geojson_write}}, \code{\link{topojson_read}}
-#' @details Under the hood we simply wrap \code{\link{geojson_write}}, then
+#' quantize geometry prior to computing topology. Typical values are powers of 
+#' ten (`1e4`, `1e5`, ...), default is `0` to not perform quantization.
+#' For more information about quantization, see this by Mike Bostock
+#' https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214
+#' @return A `topojson_write` class, with two elements:
+#' 
+#' - path: path to the file with the TopoJSON
+#' - type: type of object the TopoJSON came from, e.g., SpatialPoints
+#' 
+#' @seealso [geojson_write()], [topojson_read()]
+#' @details Under the hood we simply wrap [geojson_write()], then
 #' take the GeoJSON output of that operation, then convert to TopoJSON with
-#' \code{\link{geo2topo}}, then write to disk.
+#' [geo2topo()], then write to disk.
 #'
 #' Unfortunately, this process requires a number of round trips to disk, so
 #' speed ups will hopefully come soon.

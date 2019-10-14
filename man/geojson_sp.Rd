@@ -9,12 +9,12 @@ geojson_sp(x, disambiguateFIDs = FALSE, stringsAsFactors = FALSE, ...)
 \arguments{
 \item{x}{Object of class \code{geo_list} or \code{geo_json}}
 
-\item{disambiguateFIDs}{Ignored, and will be removed in a future version. 
-Previously was passed to rgdal::readOGR, which is no longer used.}
+\item{disambiguateFIDs}{Ignored, and will be removed in a future version.
+Previously was passed to \code{\link[rgdal:readOGR]{rgdal::readOGR()}}, which is no longer used.}
 
 \item{stringsAsFactors}{Convert strings to Factors? Default \code{FALSE}.}
 
-\item{...}{Further args passed on to \code{\link[sf]{st_read}}.}
+\item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}}
 }
 \value{
 A spatial class object, see Details.
@@ -29,8 +29,8 @@ Sometimes you will get back a \code{SpatialPoints} class, and sometimes a
 structure of the GeoJSON.
 
 The reading and writing of the CRS to/from geojson is inconsistent. You can
-directly set the CRS by passing a valid PROJ4 string or epsg code to the crs 
-argument in \code{\link[sf]{st_read}}.
+directly set the CRS by passing a valid PROJ4 string or epsg code to the crs
+argument in \code{\link[sf:st_read]{sf::st_read()}}
 }
 \examples{
 \dontrun{

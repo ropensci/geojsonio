@@ -25,17 +25,16 @@ polygons - doesn't apply for points}
 \item{geometry}{(character) One of point (Default) or polygon.}
 
 \item{type}{(character) The type of collection. One of 'auto' (default
-for 'sf' objects),
-'FeatureCollection' (default for everything else), or 'GeometryCollection'.
-"skip" skips the coercion with package \pkg{geojson} 
-functions; skipping can save significant run time on larger geojson 
+for 'sf' objects), 'FeatureCollection' (default for everything else), or
+'GeometryCollection'. "skip" skips the coercion with package \pkg{geojson}
+functions; skipping can save significant run time on larger geojson
 objects. \code{Spatial} objects can only accept "FeatureCollection" or "skip".
-"skip" is not available as an option for \code{numeric}, \code{list}, 
+"skip" is not available as an option for \code{numeric}, \code{list},
 and \code{data.frame} classes}
 
 \item{convert_wgs84}{Should the input be converted to the
-\href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference
-system defined for GeoJSON}  (geographic coordinate reference system, using
+\href{https://tools.ietf.org/html/rfc7946}{standard CRS system for GeoJSON}
+(geographic coordinate reference system, using
 the WGS84 datum, with longitude and latitude units of decimal degrees;
 EPSG: 4326). Default is \code{FALSE} though this may change in a future
 package version. This will only work for \code{sf} or \code{Spatial}
@@ -49,8 +48,8 @@ the object already has a CRS.}
 
 \item{...}{Further args passed on to internal functions. For Spatial*
 classes, it is passed through to
-\code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics,
-and geo_lists, it is passed through to \code{\link[jsonlite]{toJSON}}.}
+\code{\link[rgdal:writeOGR]{rgdal::writeOGR()}}. For sf classes, data.frames, lists, numerics,
+and geo_lists, it is passed through to \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}}
 }
 \value{
 An object of class \code{geo_json} (and \code{json})
@@ -61,8 +60,8 @@ string
 }
 \details{
 This function creates a geojson structure as a json character
-string; it does not write a file using \code{rgdal} - see
-\code{\link{geojson_write}} for that.
+string; it does not write a file using \pkg{rgdal} - see
+\code{\link[=geojson_write]{geojson_write()}} for that
 
 Note that all sp class objects will output as \code{FeatureCollection}
 objects, while other classes (numeric, list, data.frame) can be output as
@@ -70,18 +69,16 @@ objects, while other classes (numeric, list, data.frame) can be output as
 on allowing \code{GeometryCollection} option for sp class objects.
 
 Also note that with sp classes we do make a round-trip, using
-\code{\link[rgdal]{writeOGR}} to write GeoJSON to disk, then read it back
+\code{\link[rgdal:writeOGR]{rgdal::writeOGR()}} to write GeoJSON to disk, then read it back
 in. This is fast and we don't have to think about it too much, but this
 disk round-trip is not ideal.
 
 For sf classes (sf, sfc, sfg), the following conversions are made:
-
 \itemize{
- \item sfg: the appropriate geometry \code{Point, LineString, Polygon,
- MultiPoint, MultiLineString, MultiPolygon, GeometryCollection}
- \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then
- the geometry as above
- \item sf: \code{FeatureCollection}
+\item sfg: the appropriate geometry \code{Point, LineString, Polygon,  MultiPoint, MultiLineString, MultiPolygon, GeometryCollection}
+\item sfc: \code{GeometryCollection}, unless the sfc is length 1, then
+the geometry as above
+\item sf: \code{FeatureCollection}
 }
 }
 \examples{

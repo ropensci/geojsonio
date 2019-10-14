@@ -8,15 +8,15 @@
 #' @param output Destination for output geojson file. Defaults to current
 #' working directory, and gives a random alphanumeric file name
 #' @param encoding (character) The encoding passed to
-#' \code{\link[rgdal]{readOGR}}.  Default: CP1250
-#' @param verbose (logical) Printing of \code{\link[rgdal]{readOGR}} progress.
-#' Default: \code{FALSE}
+#' [rgdal::readOGR()].  Default: CP1250
+#' @param verbose (logical) Printing of [rgdal::readOGR()] progress.
+#' Default: `FALSE`
 #' @template read
 #' @section File size:
-#' When using \code{method="web"}, be aware of file sizes.
+#' When using `method="web"`, be aware of file sizes.
 #' https://ogre.adc4gis.com that we use for this option does not document 
 #' what file size is too large, but you should get an error message like 
-#' "maximum file length exceeded" when that happens. \code{method="local"}
+#' "maximum file length exceeded" when that happens. `method="local"`
 #' shouldn't be sensitive to file sizes.
 #' @examples \dontrun{
 #' file <- system.file("examples", "norway_maple.kml", package = "geojsonio")

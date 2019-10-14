@@ -5,11 +5,10 @@
 #' @param input Input object
 #' @param lat Name of latitude variable
 #' @param lon Name of longitude variable
-#' @param basemap Basemap to use. See \code{\link[leaflet]{addProviderTiles}}.
-#' Default: \code{Stamen.Toner}
-#' @param ... Further arguments passed on to \code{\link[leaflet]{addPolygons}},
-#' \code{\link[leaflet]{addMarkers}}, \code{\link[leaflet]{addGeoJSON}}, or
-#' \code{\link[leaflet]{addPolylines}}
+#' @param basemap Basemap to use. See `leaflet::addProviderTiles`.
+#' Default: `Stamen.Toner`
+#' @param ... Further arguments passed on to `leaflet::addPolygons`,
+#' `leaflet::addMarkers`, `leaflet::addGeoJSON`, or `leaflet::addPolylines`
 #' @examples \dontrun{
 #' # We'll need leaflet below
 #' library("leaflet")
