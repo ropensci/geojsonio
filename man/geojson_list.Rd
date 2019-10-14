@@ -40,11 +40,16 @@ be an epsg code as a four or five digit integer or a valid proj4 string.
 This argument will be ignored if \code{convert_wgs84} is \code{FALSE}
 or the object already has a CRS.}
 
-\item{precision}{desired number of decimal places for the coordinates in the
-geojson file. Using fewer decimal places can decrease file sizes (at the
+\item{precision}{(integer) desired number of decimal places for the
+coordinates in the
+geojson file. Only used with classes from \pkg{sp}\pkg{rgeos} classes;
+ignored for other classes. Using fewer decimal places can decrease file
+sizes (at the
 cost of precision). This changes the underlying precision stored in the
-data. If you want to change the number of digits displayed use
-\code{options(digits = <some number>)}}
+data. \code{options(digits = <some number>)} changes the maximum number of
+digits displayed (to find out what yours is set at see
+\code{getOption("digits")}); the value of this parameter will change what's
+displayed in your console up to the value of \code{getOption("digits")}}
 
 \item{...}{Ignored}
 }
@@ -68,7 +73,7 @@ about it too much, but this disk round-trip is not ideal.
 
 For sf classes (sf, sfc, sfg), the following conversions are made:
 \itemize{
-\item sfg: the appropriate geometry \code{Point, LineString, Polygon, MultiPoint,   MultiLineString, MultiPolygon, GeometryCollection}
+\item sfg: the appropriate geometry \code{Point, LineString, Polygon, MultiPoint,  MultiLineString, MultiPolygon, GeometryCollection}
 \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then the geometry
 as above
 \item sf: \code{FeatureCollection}
@@ -135,6 +140,8 @@ poly <- Polygon(coords)
 polys <- Polygons(list(poly), 1)
 sp_poly2 <- SpatialPolygons(list(polys))
 geojson_list(sp_poly2, geometry = "polygon", precision = 4)
+geojson_list(sp_poly2, geometry = "polygon", precision = 3)
+geojson_list(sp_poly2, geometry = "polygon", precision = 2)
 
 # From SpatialPoints class with precision
 points <- SpatialPoints(cbind(x_coord,y_coord))
@@ -239,13 +246,13 @@ if (require(sf)) {
   poly <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
   poly_sfg <-st_polygon(list(p1))
   geojson_list(poly_sfg)
-  
+
 ## sfc (a collection of geometries)
   p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
   p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))
   poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
   geojson_list(poly_sfc)
-  
+
 ## sf (collection of geometries with attributes)
   p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
   p2 <- rbind(c(5,5), c(5,6), c(4,5), c(5,5))
