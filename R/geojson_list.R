@@ -13,7 +13,8 @@
 #' for points
 #' @param precision desired number of decimal places for the coordinates in the
 #'   geojson file. Using fewer decimal places can decrease file sizes (at the
-#'   cost of precision).
+#'   cost of precision). This changes the underlying precision stored in the data.
+#'   If you want to change the number of digits displayed use options(digits = <some number>).
 #' @param convert_wgs84 Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude units of decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.
 #' @param crs The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.
 #' @param ... Ignored
@@ -84,7 +85,20 @@
 #'    c(30,40,35,30)))), "2")
 #' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 #' geojson_list(sp_poly)
+#' 
+#' # From SpatialPolygons class with precision agreement
+#' x_coord <- c(-114.345703125, -114.345703125, -106.61132812499999, -106.61132812499999,-114.345703125)
+#' y_coord <- c(39.436192999314095, 43.45291889355468, 43.45291889355468, 39.436192999314095, 39.436192999314095)
+#' coords <- cbind(x_coord, y_coord)
+#' poly <- Polygon(coords)
+#' polys <- Polygons(list(poly), 1)
+#' sp_poly2 <- SpatialPolygons(list(polys))
+#' geojson_list(sp_poly2, geometry = "polygon", precision = 4)
 #'
+#' # From SpatialPoints class with precision
+#' points <- SpatialPoints(cbind(x_coord,y_coord))
+#' geojson_list(points)
+#' 
 #' # From SpatialPolygonsDataFrame class
 #' sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
 #' geojson_list(input = sp_polydf)
@@ -94,7 +108,7 @@
 #' y <- c(3,2,5,1,4)
 #' s <- SpatialPoints(cbind(x,y))
 #' geojson_list(s)
-#'
+#' 
 #' # From SpatialPointsDataFrame class
 #' s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
 #' geojson_list(s)
