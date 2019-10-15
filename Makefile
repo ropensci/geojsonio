@@ -29,4 +29,5 @@ eg:
 check:
 	${RSCRIPT} -e 'rcmdcheck::rcmdcheck(args = c("--as-cran"))'
 		
-
+test:
+	${RSCRIPT} -e 'devtools::test()'
