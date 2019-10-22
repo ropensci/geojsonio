@@ -97,6 +97,9 @@ head(states)
 topojson_write(input=states, lat='lat', lon='long',
   geometry='polygon', group="group")
 
+##### cleanup
+unlink("myfile.topojson")
+
 \dontrun{
 ## partial states dataset to points (defaults to points)
 topojson_write(input=states, lat='lat', lon='long')

@@ -240,6 +240,11 @@ data(us.cities)
 topojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```
 
+```{r echo=FALSE}
+# cleanup
+unlink("myfile.topojson")
+```
+
 ### Read TopoJSON
 
 ```{r}
