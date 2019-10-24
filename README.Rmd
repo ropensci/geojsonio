@@ -273,7 +273,7 @@ Make a faceted plot
 library('ggplot2')
 library('plyr')
 st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, method = "local", what = "sp")
+geo <- lapply(st_use, geojson_read, what = "sp")
 df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
 ggplot(df, aes(long, lat, group = group)) +
   geom_polygon() +
@@ -298,6 +298,9 @@ topo2geo(topo_json)
 * Please [report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
 * License: MIT
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
-* Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+* Please note that this project is released with a [Contributor Code of Conduct][coc].
+By participating in this project you agree to abide by its terms.
 
 [![rofooter](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
+
+[coc]: https://github.com/ropensci/geojsonio/blob/master/CODE_OF_CONDUCT.md

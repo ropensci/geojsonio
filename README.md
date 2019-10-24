@@ -253,9 +253,9 @@ geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- geojson_read(file)
 names(out)
-#> [1] "type"     "crs"      "features"
+#> [1] "type"     "name"     "crs"      "features"
 names(out$features[[1]])
-#> [1] "type"       "_id"        "properties" "geometry"
+#> [1] "type"       "properties" "geometry"
 ```
 
 ## TopoJSON
@@ -312,13 +312,15 @@ topojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 #>   From class: data.frame
 ```
 
+
+
 ### Read TopoJSON
 
 
 ```r
 file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 out <- topojson_read(file)
-#> Reading layer `states' from data source `/Library/Frameworks/R.framework/Versions/3.6/Resources/library/geojsonio/examples/us_states.topojson' using driver `GeoJSON'
+#> Reading layer `states' from data source `/Library/Frameworks/R.framework/Versions/3.6/Resources/library/geojsonio/examples/us_states.topojson' using driver `TopoJSON'
 #> Simple feature collection with 51 features and 1 field
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -328,7 +330,7 @@ out <- topojson_read(file)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-21](inst/img/unnamed-chunk-21-1.png)
+![plot of chunk unnamed-chunk-22](inst/img/unnamed-chunk-22-1.png)
 
 ## Use case: Play with US states
 
@@ -352,14 +354,14 @@ Make a faceted plot
 library('ggplot2')
 library('plyr')
 st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, method = "local", what = "sp")
+geo <- lapply(st_use, geojson_read, what = "sp")
 df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
 ggplot(df, aes(long, lat, group = group)) +
   geom_polygon() +
   facet_wrap(~.id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-23](inst/img/unnamed-chunk-23-1.png)
+![plot of chunk unnamed-chunk-24](inst/img/unnamed-chunk-24-1.png)
 
 Okay, so the maps are not quite right (stretched to fit each panel), but you get the idea.
 
@@ -385,6 +387,9 @@ topo2geo(topo_json)
 * Please [report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
 * License: MIT
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
-* Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+* Please note that this project is released with a [Contributor Code of Conduct][coc].
+By participating in this project you agree to abide by its terms.
 
 [![rofooter](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
+
+[coc]: https://github.com/ropensci/geojsonio/blob/master/CODE_OF_CONDUCT.md
