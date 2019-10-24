@@ -41,7 +41,7 @@ as well as local kml, shp, and geojson file formats.
 \section{Linting GeoJSON}{
 
 If you're having trouble rendering GeoJSON files, ensure you have a valid
-GeoJSON file by running it through the package \pkg{geojsonlint}, which
+GeoJSON file by running it through the package \code{geojsonlint}, which
 has a variety of different GeoJSON linters.
 }
 

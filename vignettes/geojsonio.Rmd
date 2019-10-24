@@ -16,8 +16,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   warning = FALSE,
   message = FALSE,
-  purl = NOT_CRAN,
-  eval = NOT_CRAN
+  purl = FALSE,
+  eval = FALSE
 )
 library("knitr")
 hook_output <- knitr::knit_hooks$get("output")

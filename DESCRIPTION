@@ -39,6 +39,7 @@ Suggests:
     knitr,
     rmarkdown,
     leaflet,
+    maps,
     DBI,
     RPostgres
 Enhances: RColorBrewer
