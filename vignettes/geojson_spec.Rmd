@@ -1,13 +1,23 @@
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{GeoJSON Specification}
-%\VignetteEncoding{UTF-8}
--->
+---
+title: "GeoJSON Specification"
+author: "Scott Chamberlain"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GeoJSON Specification}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-
-
-Selected GeoJSON Specification Sections
-=======================================
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  purl = NOT_CRAN,
+  eval = NOT_CRAN
+)
+```
 
 In `geojsonio` we follow the below guidelines (RFC7946) for GeoJSON, and try
 to preserve CRS information, and bbox information when converting formats.

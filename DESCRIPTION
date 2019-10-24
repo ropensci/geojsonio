@@ -37,6 +37,7 @@ Suggests:
     gistr,
     testthat,
     knitr,
+    rmarkdown,
     leaflet
 Enhances: RColorBrewer
 RoxygenNote: 6.1.1

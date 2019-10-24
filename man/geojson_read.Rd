@@ -83,11 +83,6 @@ geojson_read(x, what = "list")
 
 utils::download.file(x, destfile = basename(x))
 geojson_read(basename(x), what = "sp")
-
-# doesn't work right now
-## file <- system.file("examples", "feature_collection.geojson", 
-##   package = "geojsonio")
-## geojson_read(file, what = "sp")
 }
 }
 \seealso{

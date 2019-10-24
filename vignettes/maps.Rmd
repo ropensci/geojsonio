@@ -1,18 +1,29 @@
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{maps with geojsonio}
-%\VignetteEncoding{UTF-8}
--->
+---
+title: "maps with geojsonio"
+author: "Scott Chamberlain"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{maps with geojsonio}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-
-
-maps with geojsonio
-===================
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  purl = NOT_CRAN,
+  eval = NOT_CRAN
+)
+```
 
 `geojsonio` creates geojson from various inputs - and can easily feed into tools for making maps with geojson data.
 
-
-```r
+```{r}
 library("geojsonio")
 ```
 
@@ -23,8 +34,7 @@ library("geojsonio")
 
 #### From a file
 
-
-```r
+```{r eval=FALSE}
 file <- "myfile.geojson"
 geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
 map_leaf(as.location(file))
@@ -34,8 +44,7 @@ map_leaf(as.location(file))
 
 #### From a SpatialGridDataFrame
 
-
-```r
+```{r eval=FALSE}
 sgdim <- c(3, 4)
 sg <- SpatialGrid(GridTopology(rep(0, 2), rep(10, 2), sgdim))
 sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
@@ -48,8 +57,7 @@ map_leaf(sgdf)
 
 #### Example 1: Map of California
 
-
-```r
+```{r eval=FALSE}
 library("leaflet")
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 out <- as.json(geojson_read(file))
@@ -63,8 +71,7 @@ leaflet() %>%
 
 #### Example 2: Map of two polygons
 
-
-```r
+```{r eval=FALSE}
 library('sp')
 poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
     c(40,50,45,40)))), "1")
@@ -87,8 +94,7 @@ leaflet() %>%
 
 > Also, can do so from data.frames with polygons, lists, matrices, vectors, and json strings
 
-
-```r
+```{r eval=FALSE}
 map_gist(us_cities)
 ```
 
@@ -96,8 +102,7 @@ map_gist(us_cities)
 
 ### `SpatialPoints` class
 
-
-```r
+```{r eval=FALSE}
 library("sp")
 x <- c(1,2,3,4,5)
 y <- c(3,2,5,1,4)
@@ -109,8 +114,7 @@ map_gist(s)
 
 ### `SpatialPixelsDataFrame` class
 
-
-```r
+```{r eval=FALSE}
 library("sp")
 pixelsdf <- suppressWarnings(
  SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
