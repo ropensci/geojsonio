@@ -38,7 +38,8 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    leaflet
+    leaflet,
+    maps
 Enhances: RColorBrewer
 RoxygenNote: 6.1.1
 X-schema.org-applicationCategory: Geospatial
