@@ -10,7 +10,7 @@
 #' @param ... Further args passed on to [sf::st_read()]
 #' @section Linting GeoJSON:
 #' If you're having trouble rendering GeoJSON files, ensure you have a valid
-#' GeoJSON file by running it through the package \pkg{geojsonlint}, which 
+#' GeoJSON file by running it through the package `geojsonlint`, which 
 #' has a variety of different GeoJSON linters.
 #' @section File size:
 #' We previously used [file_to_geojson()] in this function, leading to 
