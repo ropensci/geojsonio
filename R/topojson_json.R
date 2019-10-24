@@ -3,9 +3,9 @@
 #'
 #' @export
 #' @inheritParams geojson_json
-#' @details The \code{type} parameter is automatically converted to 
-#' \code{type="auto"} if a sf, sfc, or sfg class is passed to \code{input}
-#' @return An object of class \code{geo_json} (and \code{json})
+#' @details The `type` parameter is automatically converted to 
+#' `type="auto"` if a sf, sfc, or sfg class is passed to `input`
+#' @return An object of class `geo_json` (and `json`)
 #' @examples \dontrun{
 #' # From a numeric vector of length 2, making a point type
 #' topojson_json(c(-99.74,32.45), pretty=TRUE)

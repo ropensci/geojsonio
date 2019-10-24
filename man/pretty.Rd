@@ -16,5 +16,5 @@ Convert json input to pretty printed output
 }
 \details{
 Only works with json class input. This is a simple wrapper around
-\code{\link[jsonlite]{prettify}}, so you can easily use that yourself.
+\code{\link[jsonlite:prettify]{jsonlite::prettify()}}, so you can easily use that yourself.
 }

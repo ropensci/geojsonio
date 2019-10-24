@@ -4,69 +4,52 @@
 \alias{geojson_read}
 \title{Read geojson or other formats from a local file or a URL}
 \usage{
-geojson_read(x, method = "web", parse = FALSE, what = "list",
-  query = NULL, ...)
+geojson_read(x, parse = FALSE, what = "list",
+  stringsAsFactors = FALSE, ...)
 }
 \arguments{
-\item{x}{(character) Path to a local file, a URL, or a database connection
-of class \code{PqConnection} (a PostgreSQL connection)}
+\item{x}{(character) Path to a local file or a URL.}
 
-\item{method}{(character) One of "web" (default) or "local". Matches on 
-partial strings. This parameter determines how the data is 
-read. "web" means we use the Ogre web service, and "local" means we use 
-\pkg{rgdal}. See Details fore more.}
-
-\item{parse}{(logical) To parse geojson to data.frame like structures if 
+\item{parse}{(logical) To parse geojson to data.frame like structures if
 possible. Default: \code{FALSE}}
 
 \item{what}{(character) What to return. One of "list", "sp" (for
-Spatial class), or "json". Default: "list". If "sp" chosen, forced to
-\code{method="local"}. if "json", returns json as character class}
+Spatial class), or "json". Default: "list". list and sp run through
+package \pkg{sf}. if "json", returns json as character class}
+
+\item{stringsAsFactors}{Convert strings to Factors? Default \code{FALSE}.}
+
+\item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}}
 
 \item{query}{(character) A SQL query}
-
-\item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
 }
 \value{
-various, depending on what's chosen in \code{what} parameter:
-
+various, depending on what's chosen in \code{what} parameter
 \itemize{
- \item list: geojson as a list using \code{jsonlite::fromJSON}
- \item sp: geojson as an sp class object using \code{rgdal::readOGR}
- \item json: geojson as character string, to parse downstream as you wish
+\item list: geojson as a list using \code{\link[jsonlite:fromJSON]{jsonlite::fromJSON()}}
+\item sp: geojson as an sp class object using \code{\link[sf:st_read]{sf::st_read()}}
+\item json: geojson as character string, to parse downstream as you wish
 }
 }
 \description{
 Read geojson or other formats from a local file or a URL
 }
 \details{
-Uses \code{\link{file_to_geojson}} internally to give back geojson,
-and other helper functions when returning spatial classes.
-
-This function supports various geospatial file formats from a URL, as well
-as local kml, shp, and geojson file formats.
+This function supports various geospatial file formats from a URL,
+as well as local kml, shp, and geojson file formats.
 }
-\section{Method parameter}{
-
-The web option uses the Ogre web API. Ogre currently has an output size 
-limit of 15MB. See here \url{http://ogre.adc4gis.com/} for info on the 
-Ogre web API. The local option uses the function \code{\link{writeOGR}} 
-from the package rgdal.
-}
-
-\section{Ogre}{
-
-Note that for Shapefiles, GML, MapInfo, and VRT, you need to send zip files
-to Ogre. For other file types (.bna, .csv, .dgn, .dxf, .gxt, .txt, .json,
-.geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file 
-with that file extension.
-}
-
 \section{Linting GeoJSON}{
 
 If you're having trouble rendering GeoJSON files, ensure you have a valid
-GeoJSON file by running it through the package \pkg{geojsonlint}, which 
+GeoJSON file by running it through the package \pkg{geojsonlint}, which
 has a variety of different GeoJSON linters.
+}
+
+\section{File size}{
+
+We previously used \code{\link[=file_to_geojson]{file_to_geojson()}} in this function, leading to
+file size problems; this should no longer be a concern, but let us know
+if you run into file size problems
 }
 
 \examples{
@@ -78,13 +61,11 @@ geojson_read(file, what = "json")
 
 # From a URL
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
-geojson_read(url, method = "local")
+geojson_read(url)
+geojson_read(url, parse = TRUE)
 
 # Use as.location first if you want
 geojson_read(as.location(file))
-
-# use jsonlite to parse to data.frame structures where possible
-geojson_read(url, method = "local", parse = TRUE)
 
 # output a SpatialClass object
 ## read kml
@@ -104,11 +85,11 @@ shpfile <- list.files(dir, pattern = ".shp", full.names = TRUE)
 geojson_read(shpfile, what = "sp")
 
 x <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
-geojson_read(x, method = "local", what = "sp")
-geojson_read(x, method = "local", what = "list")
+geojson_read(x, what = "sp")
+geojson_read(x, what = "list")
 
 utils::download.file(x, destfile = basename(x))
-geojson_read(basename(x), method = "local", what = "sp")
+geojson_read(basename(x), what = "sp")
 
 # from a Postgres database - your Postgres instance must be running
 if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
@@ -124,14 +105,8 @@ state <- "SELECT row_to_json(fc)
 json <- geojson_read(conn, query = state, what = "json")
 map_leaf(json)
 }
-
-# doesn't work right now
-## file <- system.file("examples", "feature_collection.geojson",
-##   package = "geojsonio")
-## geojson_read(file, what = "sp")
 }
 }
 \seealso{
-\code{\link{topojson_read}}, \code{\link{geojson_write}},
-\code{\link{postgis}}
+\code{\link[=topojson_read]{topojson_read()}}, \code{\link[=geojson_write]{geojson_write()}} \code{\link[=postgis]{postgis()}}
 }

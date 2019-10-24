@@ -6,16 +6,15 @@
 #' @param object_name (character) name to give to the TopoJSON object created. 
 #' Default: "foo"
 #' @param quantization (numeric) quantization parameter, use this to
-#'  quantize geometry prior to computing topology. Typical values are powers of 
-#'  ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.
-#'  For more information about quantization, see this 
-#'  \href{https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}{
-#'  StackOverflow post by Mike Bostock}.
-#' @param ... for \code{geo2topo} args passed  on to
-#' \code{\link[jsonlite]{fromJSON}}, and for \code{topo2geo} args passed  on to
-#' \code{\link[sf]{st_read}}
-#' @return An object of class \code{json}, of either GeoJSON or TopoJSON
-#' @seealso \code{\link{topojson_write}}, \code{\link{topojson_read}}
+#' quantize geometry prior to computing topology. Typical values are powers of 
+#' ten (`1e4`, `1e5`, ...), default is `0` to not perform quantization.
+#' For more information about quantization, see this by Mike Bostock
+#' https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214
+#' @param ... for `geo2topo` args passed  on to
+#' [jsonlite::fromJSON()], and for `topo2geo` args passed  on to
+#' [sf::st_read()]
+#' @return An object of class `json`, of either GeoJSON or TopoJSON
+#' @seealso [topojson_write()], [topojson_read()]
 #' @examples
 #' # geojson to topojson
 #' x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'

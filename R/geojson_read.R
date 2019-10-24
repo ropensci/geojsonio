@@ -1,32 +1,32 @@
 #' Read geojson or other formats from a local file or a URL
 #'
 #' @export
-#'
-#' @param x (character) Path to a local file, a URL, or a database connection
-#' of class \code{PqConnection} (a PostgreSQL connection)
-#' @param what (character) What to return. One of "list", "sp" (for
-#' Spatial class), or "json". Default: "list". If "sp" chosen, forced to
-#' \code{method="local"}. if "json", returns json as character class
+#' @param x (character) Path to a local file or a URL.
+#' @param parse (logical) To parse geojson to data.frame like structures if 
+#' possible. Default: `FALSE`
+#' @param what (character) What to return. One of "list", "sp" (for 
+#' Spatial class), or "json". Default: "list". list and sp run through
+#' package \pkg{sf}. if "json", returns json as character class
 #' @param query (character) A SQL query
-#' @template read
-#'
-#' @seealso \code{\link{topojson_read}}, \code{\link{geojson_write}},
-#' \code{\link{postgis}}
-#'
-#' @return various, depending on what's chosen in \code{what} parameter:
+#' @param stringsAsFactors Convert strings to Factors? Default `FALSE`.
+#' @param ... Further args passed on to [sf::st_read()]
+#' @section Linting GeoJSON:
+#' If you're having trouble rendering GeoJSON files, ensure you have a valid
+#' GeoJSON file by running it through the package \pkg{geojsonlint}, which 
+#' has a variety of different GeoJSON linters.
+#' @section File size:
+#' We previously used [file_to_geojson()] in this function, leading to 
+#' file size problems; this should no longer be a concern, but let us know
+#' if you run into file size problems
+#' @details This function supports various geospatial file formats from a URL,
+#' as well as local kml, shp, and geojson file formats.
+#' @return various, depending on what's chosen in `what` parameter
 #' 
-#' \itemize{
-#'  \item list: geojson as a list using \code{jsonlite::fromJSON}
-#'  \item sp: geojson as an sp class object using \code{rgdal::readOGR}
-#'  \item json: geojson as character string, to parse downstream as you wish
-#' }
-#'
-#' @details Uses \code{\link{file_to_geojson}} internally to give back geojson,
-#' and other helper functions when returning spatial classes.
-#'
-#' This function supports various geospatial file formats from a URL, as well
-#' as local kml, shp, and geojson file formats.
-#'
+#' - list: geojson as a list using [jsonlite::fromJSON()]
+#' - sp: geojson as an sp class object using [sf::st_read()]
+#' - json: geojson as character string, to parse downstream as you wish
+#' 
+#' @seealso [topojson_read()], [geojson_write()] [postgis()]
 #' @examples \dontrun{
 #' # From a file
 #' file <- system.file("examples", "california.geojson", package = "geojsonio")
@@ -35,14 +35,12 @@
 #'
 #' # From a URL
 #' url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
-#' geojson_read(url, method = "local")
-#'
+#' geojson_read(url)
+#' geojson_read(url, parse = TRUE)
+#' 
 #' # Use as.location first if you want
 #' geojson_read(as.location(file))
-#'
-#' # use jsonlite to parse to data.frame structures where possible
-#' geojson_read(url, method = "local", parse = TRUE)
-#'
+#' 
 #' # output a SpatialClass object
 #' ## read kml
 #' file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
@@ -61,11 +59,11 @@
 #' geojson_read(shpfile, what = "sp")
 #'
 #' x <- "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
-#' geojson_read(x, method = "local", what = "sp")
-#' geojson_read(x, method = "local", what = "list")
+#' geojson_read(x, what = "sp")
+#' geojson_read(x, what = "list")
 #'
 #' utils::download.file(x, destfile = basename(x))
-#' geojson_read(basename(x), method = "local", what = "sp")
+#' geojson_read(basename(x), what = "sp")
 #' 
 #' # from a Postgres database - your Postgres instance must be running
 #' if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
@@ -81,41 +79,32 @@
 #' json <- geojson_read(conn, query = state, what = "json")
 #' map_leaf(json)
 #' }
-#'
-#' # doesn't work right now
-#' ## file <- system.file("examples", "feature_collection.geojson",
-#' ##   package = "geojsonio")
-#' ## geojson_read(file, what = "sp")
 #' }
-geojson_read <- function(x, method = "web", parse = FALSE, what = "list",
-  query = NULL, ...) {
-
+geojson_read <- function(x, parse = FALSE, what = "list",
+  stringsAsFactors = FALSE, ...) {
   UseMethod("geojson_read")
 }
 
 #' @export
-geojson_read.default <- function(x, method = "web", parse = FALSE,
-  what = "list", query = NULL, ...) {
-
+geojson_read.default <- function(x, parse = FALSE, what = "list",
+  stringsAsFactors = FALSE, ...) { 
   stop("no 'geojson_read' method for ", class(x), call. = FALSE)
 }
 
 #' @export
-geojson_read.character <- function(x, method = "web", parse = FALSE,
-  what = "list", query = NULL, ...) {
-
-  read_json(as.location(x), method, parse, what, ...)
+geojson_read.character <- function(x, parse = FALSE, what = "list",
+  stringsAsFactors = FALSE, ...) {
+  read_json(as.location(x), parse, what, stringsAsFactors, ...)
 }
 
 #' @export
-geojson_read.location <- function(x, method = "web", parse = FALSE,
-  what = "list", query = NULL, ...) {
-
-  read_json(x, method, parse, what, ...)
+geojson_read.location_ <- function(x, parse = FALSE, what = "list",
+  stringsAsFactors = FALSE, ...) {
+  read_json(x, parse, what, stringsAsFactors, ...)
 }
 
 #' @export
-geojson_read.PqConnection <- function(x, method = "web", parse = FALSE,
+geojson_read.PqConnection <- function(x, parse = FALSE,
   what = "list", query = NULL, ...) {
 
   check4pkg("DBI")
@@ -135,25 +124,45 @@ read_from_sql <- function(x, parse, what, ...) {
   )
 }
 
-read_json <- function(x, method, parse, what, ...) {
+read_json <- function(x, parse, what, stringsAsFactors = FALSE, ...) {
   what <- match.arg(what, c("list", "sp", "json"))
-  switch(what,
-    list = file_to_geojson(x, method, output = ":memory:", parse, ...),
-    sp = file_to_sp(x, ...),
+  switch(what, 
+    list = file_to_list(x, stringsAsFactors, parse, ...),
+    sp = file_to_sp(x, stringsAsFactors, ...),
     json = stop("what='json' not supported for file and url inputs yet")
   )
 }
 
-file_to_sp <- function(input, ...) {
+file_to_list <- function(input, stringsAsFactors = FALSE, parse = FALSE, ...) {
   fileext <- ftype(input)
   fileext <- match.arg(fileext, c("shp", "kml", "geojson", "json"))
   input <- handle_remote(input)
   switch(
     fileext,
-    kml = rgdal::readOGR(input, rgdal::ogrListLayers(input)[1],
-                         drop_unsupported_fields = TRUE, verbose = FALSE, ...),
-    shp = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
-    geojson = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...),
-    json = rgdal::readOGR(input, rgdal::ogrListLayers(input), verbose = FALSE, ...)
+    kml = tosp_list(input, stringsAsFactors, parse, ...),
+    shp = tosp_list(input, stringsAsFactors, parse, ...),
+    geojson = tosp_list(input, stringsAsFactors, parse, ...),
+    json = tosp_list(input, stringsAsFactors, parse, ...)
   )
+}
+
+file_to_sp <- function(input, stringsAsFactors = FALSE, ...) {
+  fileext <- ftype(input)
+  fileext <- match.arg(fileext, c("shp", "kml", "geojson", "json"))
+  input <- handle_remote(input)
+  switch(
+    fileext, 
+    kml = tosp(input, stringsAsFactors, ...),
+    shp = tosp(input, stringsAsFactors, ...),
+    geojson = tosp(input, stringsAsFactors, ...),
+    json = tosp(input, stringsAsFactors, ...)
+  )
+}
+
+sf2list <- function(x, parse) {
+  stopifnot(inherits(x, "sf"))
+  tfile <- tempfile(fileext = ".geojson")
+  sf::st_write(x, tfile, quiet = TRUE)
+  on.exit(unlink(x))
+  jsonlite::fromJSON(tfile, parse)
 }

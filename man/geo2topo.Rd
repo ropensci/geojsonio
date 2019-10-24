@@ -10,22 +10,21 @@ geo2topo(x, object_name = "foo", quantization = 0, ...)
 topo2geo(x, ...)
 }
 \arguments{
-\item{x}{GeoJSON or TopoJSON as a character string, json, a file path, or 
+\item{x}{GeoJSON or TopoJSON as a character string, json, a file path, or
 url}
 
-\item{object_name}{(character) name to give to the TopoJSON object created. 
+\item{object_name}{(character) name to give to the TopoJSON object created.
 Default: "foo"}
 
 \item{quantization}{(numeric) quantization parameter, use this to
-quantize geometry prior to computing topology. Typical values are powers of 
+quantize geometry prior to computing topology. Typical values are powers of
 ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.
-For more information about quantization, see this 
-\href{https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}{
-StackOverflow post by Mike Bostock}.}
+For more information about quantization, see this by Mike Bostock
+https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}
 
 \item{...}{for \code{geo2topo} args passed  on to
-\code{\link[jsonlite]{fromJSON}}, and for \code{topo2geo} args passed  on to
-\code{\link[sf]{st_read}}}
+\code{\link[jsonlite:fromJSON]{jsonlite::fromJSON()}}, and for \code{topo2geo} args passed  on to
+\code{\link[sf:st_read]{sf::st_read()}}}
 }
 \value{
 An object of class \code{json}, of either GeoJSON or TopoJSON
@@ -76,5 +75,5 @@ file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 topo2geo(file)
 }
 \seealso{
-\code{\link{topojson_write}}, \code{\link{topojson_read}}
+\code{\link[=topojson_write]{topojson_write()}}, \code{\link[=topojson_read]{topojson_read()}}
 }

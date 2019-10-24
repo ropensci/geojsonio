@@ -14,12 +14,11 @@ map_leaf(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner",
 
 \item{lon}{Name of longitude variable}
 
-\item{basemap}{Basemap to use. See \code{\link[leaflet]{addProviderTiles}}.
+\item{basemap}{Basemap to use. See \code{leaflet::addProviderTiles}.
 Default: \code{Stamen.Toner}}
 
-\item{...}{Further arguments passed on to \code{\link[leaflet]{addPolygons}},
-\code{\link[leaflet]{addMarkers}}, \code{\link[leaflet]{addGeoJSON}}, or
-\code{\link[leaflet]{addPolylines}}}
+\item{...}{Further arguments passed on to \code{leaflet::addPolygons},
+\code{leaflet::addMarkers}, \code{leaflet::addGeoJSON}, or \code{leaflet::addPolylines}}
 }
 \description{
 Make an interactive map locally

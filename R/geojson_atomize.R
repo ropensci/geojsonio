@@ -3,11 +3,11 @@
 #' @importFrom jqr jq
 #' @export
 #' @param x (geo_list/geo_json/json/character) input object, either 
-#' \code{geo_json}, \code{geo_list}, \code{json}, or \code{character} class.
+#' `geo_json`, `geo_list`, `json`, or `character` class.
 #' If \code{character}, must be valid JSON
-#' @param combine (logical) only applies to \code{geo_json/json} type inputs.
+#' @param combine (logical) only applies to `geo_json/json` type inputs.
 #' combine valid JSON objects into a single valid JSON object. Default: 
-#' \code{TRUE}
+#' `TRUE`
 #' 
 #' @return same class as input object, but modified
 #' 

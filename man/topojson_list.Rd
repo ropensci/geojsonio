@@ -10,24 +10,36 @@ topojson_list(input, lat = NULL, lon = NULL, group = NULL,
   convert_wgs84 = FALSE, crs = NULL, ...)
 }
 \arguments{
-\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can also be dplyr \code{tbl_df}
-class since it inherits from \code{data.frame}.}
+\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can
+also be dplyr \code{tbl_df} class since it inherits from \code{data.frame}}
 
-\item{lat}{(character) Latitude name. The default is \code{NULL}, and we attempt to guess.}
+\item{lat}{(character) Latitude name. The default is \code{NULL}, and we
+attempt to guess.}
 
-\item{lon}{(character) Longitude name. The default is \code{NULL}, and we attempt to guess.}
+\item{lon}{(character) Longitude name. The default is \code{NULL}, and we
+attempt to guess.}
 
-\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't apply
-for points}
+\item{group}{(character) A grouping variable to perform grouping for
+polygons - doesn't apply for points}
 
 \item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{type}{(character) The type of collection. One of FeatureCollection (default) or
-GeometryCollection.}
+\item{type}{(character) The type of collection. One of FeatureCollection
+(default) or GeometryCollection.}
 
-\item{convert_wgs84}{Should the input be converted to the \href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference system defined for GeoJSON} (geographic coordinate reference system, using the WGS84 datum, with longitude and latitude units of decimal degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a future package version. This will only work for \code{sf} or \code{Spatial} objects with a CRS already defined. If one is not defined but you know what it is, you may define it in the \code{crs} argument below.}
+\item{convert_wgs84}{Should the input be converted to the
+\href{https://tools.ietf.org/html/rfc7946}{standard CRS for GeoJSON}
+(geographic coordinate reference system, using the WGS84 datum, with
+longitude and latitude units of decimal degrees; EPSG: 4326).
+Default is \code{FALSE} though this may change in a future package version.
+This will only work for \code{sf} or \code{Spatial} objects with a CRS
+already defined. If one is not defined but you know what it is, you
+may define it in the \code{crs} argument below.}
 
-\item{crs}{The CRS of the input if it is not already defined. This can be an epsg code as a four or five digit integer or a valid proj4 string. This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the object already has a CRS.}
+\item{crs}{The CRS of the input if it is not already defined. This can
+be an epsg code as a four or five digit integer or a valid proj4 string.
+This argument will be ignored if \code{convert_wgs84} is \code{FALSE}
+or the object already has a CRS.}
 
 \item{...}{Ignored}
 }
@@ -39,10 +51,10 @@ Convert many input types with spatial data to TopoJSON
 as a list
 }
 \details{
-Internally, we call \code{\link{topojson_json}}, then use
+Internally, we call \code{\link[=topojson_json]{topojson_json()}}, then use
 an internal function to convert that JSON output to a list
 
-The \code{type} parameter is automatically converted to 
+The \code{type} parameter is automatically converted to
 \code{type="auto"} if a sf, sfc, or sfg class is passed to \code{input}
 }
 \examples{

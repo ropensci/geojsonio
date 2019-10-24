@@ -25,17 +25,16 @@ polygons - doesn't apply for points}
 \item{geometry}{(character) One of point (Default) or polygon.}
 
 \item{type}{(character) The type of collection. One of 'auto' (default
-for 'sf' objects),
-'FeatureCollection' (default for everything else), or 'GeometryCollection'.
-"skip" skips the coercion with package \pkg{geojson} 
-functions; skipping can save significant run time on larger geojson 
+for 'sf' objects), 'FeatureCollection' (default for everything else), or
+'GeometryCollection'. "skip" skips the coercion with package \pkg{geojson}
+functions; skipping can save significant run time on larger geojson
 objects. \code{Spatial} objects can only accept "FeatureCollection" or "skip".
-"skip" is not available as an option for \code{numeric}, \code{list}, 
+"skip" is not available as an option for \code{numeric}, \code{list},
 and \code{data.frame} classes}
 
 \item{convert_wgs84}{Should the input be converted to the
-\href{https://tools.ietf.org/html/rfc7946}{standard coordinate reference
-system defined for GeoJSON}  (geographic coordinate reference system, using
+\href{https://tools.ietf.org/html/rfc7946}{standard CRS system for GeoJSON}
+(geographic coordinate reference system, using
 the WGS84 datum, with longitude and latitude units of decimal degrees;
 EPSG: 4326). Default is \code{FALSE} though this may change in a future
 package version. This will only work for \code{sf} or \code{Spatial}
@@ -49,8 +48,8 @@ the object already has a CRS.}
 
 \item{...}{Further args passed on to internal functions. For Spatial*
 classes, it is passed through to
-\code{\link[rgdal]{writeOGR}}. For sf classes, data.frames, lists, numerics,
-and geo_lists, it is passed through to \code{\link[jsonlite]{toJSON}}.}
+\code{\link[rgdal:writeOGR]{rgdal::writeOGR()}}. For sf classes, data.frames, lists, numerics,
+and geo_lists, it is passed through to \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}}
 }
 \value{
 An object of class \code{geo_json} (and \code{json})
@@ -60,7 +59,7 @@ Convert many input types with spatial data to TopoJSON
 as a JSON string
 }
 \details{
-The \code{type} parameter is automatically converted to 
+The \code{type} parameter is automatically converted to
 \code{type="auto"} if a sf, sfc, or sfg class is passed to \code{input}
 }
 \examples{

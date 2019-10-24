@@ -1,20 +1,20 @@
-#' Convert output of \code{geojson_list} or \code{geojson_json} to spatial classes
+#' Convert output of `geojson_list` or `geojson_json` to spatial classes
 #'
 #' @export
 #'
 #' @inheritParams geojson_sf
 #' @param disambiguateFIDs Ignored, and will be removed in a future version. 
-#' Previously was passed to rgdal::readOGR, which is no longer used.
+#' Previously was passed to [rgdal::readOGR()], which is no longer used.
 #'
 #' @return A spatial class object, see Details.
 #' @details The spatial class object returned will depend on the input GeoJSON.
-#' Sometimes you will get back a \code{SpatialPoints} class, and sometimes a
-#' \code{SpatialPolygonsDataFrame} class, etc., depending on what the
+#' Sometimes you will get back a `SpatialPoints` class, and sometimes a
+#' `SpatialPolygonsDataFrame` class, etc., depending on what the
 #' structure of the GeoJSON.
 #'
 #' The reading and writing of the CRS to/from geojson is inconsistent. You can
-#' directly set the CRS by passing a valid PROJ4 string or epsg code to the crs 
-#' argument in \code{\link[sf]{st_read}}.
+#' directly set the CRS by passing a valid PROJ4 string or epsg code to the crs
+#' argument in [sf::st_read()]
 #'
 #' @examples \dontrun{
 #' library(sp)
@@ -75,12 +75,20 @@ geojson_sp.json <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) 
   tosp(x, stringsAsFactors = stringsAsFactors, ...)
 }
 
-tosp <- function(x, stringsAsFactors, ...) {
+tosp_base <- function(x, stringsAsFactors, ...) {
   x_sf <- tosf(x, stringsAsFactors = stringsAsFactors, ...)
   # Mimic behaviour of rgdal::readOGR where an FID column is added when no
   # attributes exist
   if (ncol(x_sf) == 1) {
     x_sf <- cbind(FID = seq_along(x_sf[[1]]), x_sf)
   }
-  as(x_sf, "Spatial")
+  return(x_sf)
+}
+
+tosp <- function(x, stringsAsFactors, ...) {
+  as(tosp_base(x, stringsAsFactors, ...), "Spatial")
+}
+
+tosp_list <- function(x, stringsAsFactors = FALSE, parse = FALSE, ...) {
+  sf2list(tosp_base(x, stringsAsFactors, ...), parse)
 }

@@ -11,7 +11,7 @@ geojson_sf(x, stringsAsFactors = FALSE, ...)
 
 \item{stringsAsFactors}{Convert strings to Factors? Default \code{FALSE}.}
 
-\item{...}{Further args passed on to \code{\link[sf]{st_read}}.}
+\item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}}
 }
 \value{
 An sf class object, see Details.
@@ -22,12 +22,11 @@ Convert output of \code{geojson_list} or \code{geojson_json} to sf classes
 \details{
 The type of sf object returned will depend on the input GeoJSON.
 Sometimes you will get back a \code{POINTS} class, and sometimes a
-\code{POLYGON} class, etc., depending on what the
-structure of the GeoJSON.
+\code{POLYGON} class, etc., depending on what the structure of the GeoJSON.
 
 The reading and writing of the CRS to/from geojson is inconsistent. You can
-directly set the CRS by passing a valid PROJ4 string or epsg code to the crs 
-argument in \code{\link[sf]{st_read}}.
+directly set the CRS by passing a valid PROJ4 string or epsg code to the crs
+argument in \code{\link[sf:st_read]{sf::st_read()}}
 }
 \examples{
 \dontrun{

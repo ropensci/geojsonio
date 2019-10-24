@@ -9,8 +9,9 @@ geojson_write(input, lat = NULL, lon = NULL, geometry = "point",
   precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...)
 }
 \arguments{
-\item{input}{Input list, data.frame, spatial class, or sf class. Inputs can 
-also be dplyr \code{tbl_df} class since it inherits from \code{data.frame}.}
+\item{input}{Input list, data.frame, spatial class, or sf class.
+Inputs can  also be dplyr \code{tbl_df} class since it inherits
+from \code{data.frame}}
 
 \item{lat}{(character) Latitude name. The default is \code{NULL}, and we
 attempt to guess.}
@@ -20,8 +21,8 @@ attempt to guess.}
 
 \item{geometry}{(character) One of point (Default) or polygon.}
 
-\item{group}{(character) A grouping variable to perform grouping for polygons
-- doesn't apply for points}
+\item{group}{(character) A grouping variable to perform grouping for
+polygons - doesn't apply for points}
 
 \item{file}{(character) A path and file name (e.g., myfile), with the
 \code{.geojson} file extension. Default writes to current working
@@ -35,32 +36,32 @@ the file already exists, we stop with error message.}
 geojson file. Using fewer decimal places can decrease file sizes (at the
 cost of precision).}
 
-\item{convert_wgs84}{Should the input be converted to the 
-\href{https://tools.ietf.org/html/rfc7946}{standard coordinate 
-reference system defined for GeoJSON} (geographic coordinate reference 
-system, using the WGS84 datum, with longitude and latitude units of decimal 
-degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a 
-future package version. This will only work for \code{sf} or \code{Spatial} 
-objects with a CRS already defined. If one is not defined but you know what 
+\item{convert_wgs84}{Should the input be converted to the
+\href{https://tools.ietf.org/html/rfc7946}{standard CRS for GeoJSON}
+(geographic coordinate reference
+system, using the WGS84 datum, with longitude and latitude units of decimal
+degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a
+future package version. This will only work for \code{sf} or \code{Spatial}
+objects with a CRS already defined. If one is not defined but you know what
 it is, you may define it in the \code{crs} argument below.}
 
-\item{crs}{The CRS of the input if it is not already defined. This can be 
-an epsg code as a four or five digit integer or a valid proj4 string. This 
-argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the 
+\item{crs}{The CRS of the input if it is not already defined. This can be
+an epsg code as a four or five digit integer or a valid proj4 string. This
+argument will be ignored if \code{convert_wgs84} is \code{FALSE} or the
 object already has a CRS.}
 
-\item{...}{Further args passed on to internal functions. For Spatial* 
+\item{...}{Further args passed on to internal functions. For Spatial*
 classes, data.frames,
-regular lists, and numerics, it is passed through to 
-\code{\link[rgdal]{writeOGR}}. For sf classes,
-geo_lists and json classes, it is passed through to 
-\code{\link[jsonlite]{toJSON}}.}
+regular lists, and numerics, it is passed through to
+\code{\link[rgdal:writeOGR]{rgdal::writeOGR()}}. For sf classes,
+geo_lists and json classes, it is passed through to
+\code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}.}
 }
 \value{
-A \code{geojson_write} class, with two elements: 
+A \code{geojson_write} class, with two elements:
 \itemize{
- \item path: path to the file with the GeoJSON
- \item type: type of object the GeoJSON came from, e.g., SpatialPoints
+\item path: path to the file with the GeoJSON
+\item type: type of object the GeoJSON came from, e.g., SpatialPoints
 }
 }
 \description{
@@ -186,6 +187,5 @@ if (require(sf)) {
 }
 }
 \seealso{
-\code{\link{geojson_list}}, \code{\link{geojson_json}},
-\code{\link{topojson_write}}
+\code{\link[=geojson_list]{geojson_list()}}, \code{\link[=geojson_json]{geojson_json()}}, \code{\link[=topojson_write]{topojson_write()}}
 }

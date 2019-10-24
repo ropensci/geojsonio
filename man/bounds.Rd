@@ -12,7 +12,8 @@ bounds(x, ...)
 \item{...}{Ignored}
 }
 \value{
-A vector of the form min longitude, min latitude, max longitude, max latitude
+A vector of the form min longitude, min latitude, max longitude,
+max latitude
 }
 \description{
 Get bounds for a list or geo_list

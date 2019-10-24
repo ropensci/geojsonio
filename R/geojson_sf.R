@@ -1,20 +1,19 @@
-#' Convert output of \code{geojson_list} or \code{geojson_json} to sf classes
+#' Convert output of `geojson_list` or `geojson_json` to sf classes
 #'
 #' @export
 #'
-#' @param x Object of class \code{geo_list} or \code{geo_json}
-#' @param stringsAsFactors Convert strings to Factors? Default \code{FALSE}.
-#' @param ... Further args passed on to \code{\link[sf]{st_read}}.
+#' @param x Object of class `geo_list` or `geo_json`
+#' @param stringsAsFactors Convert strings to Factors? Default `FALSE`.
+#' @param ... Further args passed on to [sf::st_read()]
 #'
 #' @return An sf class object, see Details.
 #' @details The type of sf object returned will depend on the input GeoJSON.
-#' Sometimes you will get back a \code{POINTS} class, and sometimes a
-#' \code{POLYGON} class, etc., depending on what the
-#' structure of the GeoJSON.
+#' Sometimes you will get back a `POINTS` class, and sometimes a
+#' `POLYGON` class, etc., depending on what the structure of the GeoJSON.
 #'
 #' The reading and writing of the CRS to/from geojson is inconsistent. You can
-#' directly set the CRS by passing a valid PROJ4 string or epsg code to the crs 
-#' argument in \code{\link[sf]{st_read}}.
+#' directly set the CRS by passing a valid PROJ4 string or epsg code to the crs
+#' argument in [sf::st_read()]
 #'
 #' @examples \dontrun{
 #' library(sf)

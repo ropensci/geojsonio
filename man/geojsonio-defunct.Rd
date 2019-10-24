@@ -5,7 +5,7 @@
 \title{Defunct functions in geojsonio}
 \description{
 \itemize{
- \item \code{\link{lint}}: See \code{geojsonlint::geojson_hint}
- \item \code{\link{validate}}: See \code{geojsonlint::geojson_lint}
+\item \code{\link[=lint]{lint()}}: See \code{geojsonlint::geojson_hint}
+\item \code{\link[=validate]{validate()}}: See \code{geojsonlint::geojson_lint}
 }
 }

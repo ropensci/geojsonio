@@ -14,7 +14,8 @@ geojson_style(input, var = NULL, var_col = NULL, var_sym = NULL,
 \arguments{
 \item{input}{A data.frame or a list}
 
-\item{var}{(character) A single variable to map colors, symbols, and/or sizes to.}
+\item{var}{(character) A single variable to map colors, symbols,
+and/or sizes to}
 
 \item{var_col}{(character) A single variable to map colors to.}
 
@@ -24,55 +25,63 @@ geojson_style(input, var = NULL, var_col = NULL, var_sym = NULL,
 
 \item{var_stroke}{(character) A single variable to map stroke to.}
 
-\item{var_stroke_width}{(character) A single variable to map stroke width to.}
+\item{var_stroke_width}{(character) A single variable to map stroke
+width to.}
 
-\item{var_stroke_opacity}{(character) A single variable to map stroke opacity to.}
+\item{var_stroke_opacity}{(character) A single variable to map stroke
+opacity to.}
 
 \item{var_fill}{(character) A single variable to map fill to.}
 
-\item{var_fill_opacity}{(character) A single variable to map fill opacity to.}
+\item{var_fill_opacity}{(character) A single variable to map fill opacity to}
 
-\item{color}{(character) Valid RGB hex color. Assigned to the variable \code{marker-color}}
+\item{color}{(character) Valid RGB hex color. Assigned to the variable
+\code{marker-color}}
 
-\item{symbol}{(character) An icon ID from the Maki project \url{http://www.mapbox.com/maki/} 
-or a single alphanumeric character (a-z or 0-9). Assigned to the variable \code{marker-symbol}}
+\item{symbol}{(character) An icon ID from the Maki project
+http://www.mapbox.com/maki/
+or a single alphanumeric character (a-z or 0-9). Assigned to the variable
+\code{marker-symbol}}
 
-\item{size}{(character) One of 'small', 'medium', or 'large'. Assigned to the 
-variable \code{marker-size}}
+\item{size}{(character) One of 'small', 'medium', or 'large'. Assigned
+to the variable \code{marker-size}}
 
-\item{stroke}{(character) Color of a polygon edge or line (RGB). Assigned to the 
-variable \code{stroke}}
+\item{stroke}{(character) Color of a polygon edge or line (RGB). Assigned
+to the variable \code{stroke}}
 
-\item{stroke_width}{(numeric) Width of a polygon edge or line (number > 0). Assigned 
-to the variable \code{stroke-width}}
+\item{stroke_width}{(numeric) Width of a polygon edge or line (number > 0).
+Assigned  to the variable \code{stroke-width}}
 
-\item{stroke_opacity}{(numeric) Opacity of a polygon edge or line (0.0 - 1.0). Assigned 
-to the variable \code{stroke-opacity}}
+\item{stroke_opacity}{(numeric) Opacity of a polygon edge or line
+(0.0 - 1.0). Assigned to the variable \code{stroke-opacity}}
 
-\item{fill}{(character) The color of the interior of a polygon (GRB). Assigned to the 
-variable \code{fill}}
+\item{fill}{(character) The color of the interior of a polygon (GRB).
+Assigned to the variable \code{fill}}
 
-\item{fill_opacity}{(character) The opacity of the interior of a polygon (0.0-1.0). 
-Assigned to the variable \code{fill-opacity}}
+\item{fill_opacity}{(character) The opacity of the interior of a polygon
+(0.0-1.0). Assigned to the variable \code{fill-opacity}}
 }
 \description{
 This helps you add styling following the Simplestyle Spec. See Details
 }
 \details{
-The parameters color, symbol, size, stroke, stroke_width, stroke_opacity, 
-fill, and fill_opacity expect a vector of size 1 (recycled), or exact length of vector 
-being applied to in your input data. 
+The parameters color, symbol, size, stroke, stroke_width,
+stroke_opacity, fill, and fill_opacity expect a vector of size 1 (recycled),
+or exact length of vector being applied to in your input data.
 
-This function helps add styling data to a list or data.frame following the 
-Simplestyle Spec (\url{https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0}), 
-used by MapBox and GitHub Gists (that renders geoJSON/topoJSON as interactive maps). 
+This function helps add styling data to a list or data.frame following the
+Simplestyle Spec
+(https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0),
+used by MapBox and GitHub Gists (that renders geoJSON/topoJSON
+as interactive maps).
 
 There are a few other style variables, but deal with polygons
 
-GitHub has a nice help article on geoJSON files 
-\url{https://help.github.com/articles/mapping-geojson-files-on-github/}
+GitHub has a nice help article on geoJSON files
+https://help.github.com/articles/mapping-geojson-files-on-github/
 
-Please do get in touch if you think anything should change in this function.
+Please do get in touch if you think anything should change in this
+function.
 }
 \examples{
 \dontrun{

@@ -10,21 +10,21 @@ file_to_geojson(input, method = "web", output = ".", parse = FALSE,
 \arguments{
 \item{input}{The file being uploaded, path to the file on your machine.}
 
-\item{method}{(character) One of "web" (default) or "local". Matches on 
-partial strings. This parameter determines how the data is 
-read. "web" means we use the Ogre web service, and "local" means we use 
+\item{method}{(character) One of "web" (default) or "local". Matches on
+partial strings. This parameter determines how the data is
+read. "web" means we use the Ogre web service, and "local" means we use
 \pkg{rgdal}. See Details fore more.}
 
 \item{output}{Destination for output geojson file. Defaults to current
 working directory, and gives a random alphanumeric file name}
 
-\item{parse}{(logical) To parse geojson to data.frame like structures if 
+\item{parse}{(logical) To parse geojson to data.frame like structures if
 possible. Default: \code{FALSE}}
 
 \item{encoding}{(character) The encoding passed to
-\code{\link[rgdal]{readOGR}}.  Default: CP1250}
+\code{\link[rgdal:readOGR]{rgdal::readOGR()}}.  Default: CP1250}
 
-\item{verbose}{(logical) Printing of \code{\link[rgdal]{readOGR}} progress.
+\item{verbose}{(logical) Printing of \code{\link[rgdal:readOGR]{rgdal::readOGR()}} progress.
 Default: \code{FALSE}}
 
 \item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
@@ -35,9 +35,9 @@ rgdal package.
 }
 \section{Method parameter}{
 
-The web option uses the Ogre web API. Ogre currently has an output size 
-limit of 15MB. See here \url{http://ogre.adc4gis.com/} for info on the 
-Ogre web API. The local option uses the function \code{\link{writeOGR}} 
+The web option uses the Ogre web API. Ogre currently has an output size
+limit of 15MB. See here \url{http://ogre.adc4gis.com/} for info on the
+Ogre web API. The local option uses the function \code{\link{writeOGR}}
 from the package rgdal.
 }
 
@@ -45,15 +45,24 @@ from the package rgdal.
 
 Note that for Shapefiles, GML, MapInfo, and VRT, you need to send zip files
 to Ogre. For other file types (.bna, .csv, .dgn, .dxf, .gxt, .txt, .json,
-.geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file 
+.geojson, .rss, .georss, .xml, .gmt, .kml, .kmz) you send the actual file
 with that file extension.
 }
 
 \section{Linting GeoJSON}{
 
 If you're having trouble rendering GeoJSON files, ensure you have a valid
-GeoJSON file by running it through the package \pkg{geojsonlint}, which 
+GeoJSON file by running it through the package \pkg{geojsonlint}, which
 has a variety of different GeoJSON linters.
+}
+
+\section{File size}{
+
+When using \code{method="web"}, be aware of file sizes.
+https://ogre.adc4gis.com that we use for this option does not document
+what file size is too large, but you should get an error message like
+"maximum file length exceeded" when that happens. \code{method="local"}
+shouldn't be sensitive to file sizes.
 }
 
 \examples{

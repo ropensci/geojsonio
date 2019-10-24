@@ -7,14 +7,14 @@
 #' @param rotate If rotation is specified, sets the projection's three-axis rotation to the
 #' specified angles yaw, pitch and roll (or equivalently longitude, latitude and roll)
 #' in degrees and returns the projection. If rotation is not specified, returns the current
-#' rotation which defaults [0, 0, 0]. If the specified rotation has only two values, rather than
+#' rotation which defaults `[0, 0, 0]`. If the specified rotation has only two values, rather than
 #' three, the roll is assumed to be 0.
 #' @param center If center is specified, sets the projection's center to the specified location, a
 #' two-element array of longitude and latitude in degrees and returns the projection. If center is
 #' not specified, returns the current center which defaults to (0,0)
 #' @param translate If point is specified, sets the projection's translation offset to the
-#' specified two-element array [x, y] and returns the projection. If point is not specified,
-#' returns the current translation offset which defaults to [480, 250]. The translation offset
+#' specified two-element array `[x, y]` and returns the projection. If point is not specified,
+#' returns the current translation offset which defaults to `[480, 250]`. The translation offset
 #' determines the pixel coordinates of the projection's center. The default translation offset
 #' places (0,0) at the center of a 960x500 area.
 #' @param scale If scale is specified, sets the projection's scale factor to the specified value
@@ -34,12 +34,12 @@
 #' \url{https://github.com/mbostock/d3/wiki/Geo-Projections#standard-projections} for help
 #' @param clipExtent If extent is specified, sets the projection's viewport clip extent to the
 #' specified bounds in pixels and returns the projection. The extent bounds are specified as an
-#' array [[x0, y0], [x1, y1]], where x0 is the left-side of the viewport, y0 is the top, x1 is
+#' array `[[x0, y0], [x1, y1]]`, where x0 is the left-side of the viewport, y0 is the top, x1 is
 #' the right and y1 is the bottom. If extent is null, no viewport clipping is performed. If extent
 #' is not specified, returns the current viewport clip extent which defaults to null. Viewport
 #' clipping is independent of small-circle clipping via clipAngle.
 #' @param invert Projects backward from Cartesian coordinates (in pixels) to spherical coordinates
-#' (in degrees). Returns an array [longitude, latitude] given the input array [x, y].
+#' (in degrees). Returns an array `[longitude, latitude]` given the input array `[x, y]`.
 #' @examples
 #' projections(proj="albers")
 #' projections(proj="albers", rotate='[98 + 00 / 60, -35 - 00 / 60]', scale=5700)

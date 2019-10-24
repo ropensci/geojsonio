@@ -17,36 +17,39 @@ map_gist(input, lat = "lat", lon = "long", geometry = "point",
 
 \item{geometry}{(character) Are polygons in the object}
 
-\item{group}{(character) A grouping variable to perform grouping for polygons - doesn't
-apply for points}
+\item{group}{(character) A grouping variable to perform grouping for
+polygons - doesn't apply for points}
 
 \item{type}{(character) One of FeatureCollection or GeometryCollection}
 
 \item{file}{File name to use to put up as the gist file}
 
-\item{description}{Description for the GitHub gist, or leave to default (=no description)}
+\item{description}{Description for the GitHub gist, or leave to default
+(=no description)}
 
-\item{public}{(logical) Want gist to be public or not? Default: TRUE}
+\item{public}{(logical) Want gist to be public or not? Default: \code{TRUE}}
 
-\item{browse}{If TRUE (default) the map opens in your default browser.}
+\item{browse}{If \code{TRUE} (default) the map opens in your default browser.}
 
-\item{...}{Further arguments passed on to \code{\link[httr]{POST}}}
+\item{...}{Further arguments passed on to \code{\link[httr:POST]{httr::POST()}}}
 }
 \description{
-There are two ways to authorize to work with your GitHub account:
-
+There are two ways to authorize to work with your GitHub
+account:
 \itemize{
- \item PAT - Generate a personal access token (PAT) at
- \url{https://help.github.com/articles/creating-an-access-token-for-command-line-use} and
- record it in the GITHUB_PAT envar in your \code{.Renviron} file.
- \item Interactive - Interactively login into your GitHub account and authorise with OAuth.
+\item PAT - Generate a personal access token (PAT) at
+https://help.github.com/articles/creating-an-access-token-for-command-line-use
+and record it in the \code{GITHUB_PAT} envar in your \code{.Renviron} file.
+\item Interactive - Interactively login into your GitHub account and authorise
+with OAuth.
 }
 
 Using the PAT method is recommended.
 
-Using the gist_auth() function you can authenticate separately first, or if you're not
-authenticated, this function will run internally with each function call. If you have a
-PAT, that will be used, if not, OAuth will be used.
+Using the \code{gist_auth()} function you can authenticate separately first, or
+if you're not authenticated, this function will run internally with each
+function call. If you have a PAT, that will be used, if not, OAuth will
+be used.
 }
 \examples{
 \dontrun{

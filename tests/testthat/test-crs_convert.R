@@ -132,7 +132,7 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
                  geojson_list(geojson_json(sf_3005, convert_wgs84 = TRUE, crs = 3005)))
   })
   
-  file_to_list <- function(x) geojson_read(x$path, method = "local", what = "list")
+  file_to_list <- function(x) geojson_read(x$path, what = "list")
   
   test_that("geojson_write: convert_wgs84 works with Spatial classes", {
     expect_equal(file_to_list(geojson_write(spdf_4326, convert_wgs84 = TRUE))$crs, 
