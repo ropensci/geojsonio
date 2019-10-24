@@ -75,12 +75,20 @@ geojson_sp.json <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) 
   tosp(x, stringsAsFactors = stringsAsFactors, ...)
 }
 
-tosp <- function(x, stringsAsFactors, ...) {
+tosp_base <- function(x, stringsAsFactors, ...) {
   x_sf <- tosf(x, stringsAsFactors = stringsAsFactors, ...)
   # Mimic behaviour of rgdal::readOGR where an FID column is added when no
   # attributes exist
   if (ncol(x_sf) == 1) {
     x_sf <- cbind(FID = seq_along(x_sf[[1]]), x_sf)
   }
-  as(x_sf, "Spatial")
+  return(x_sf)
+}
+
+tosp <- function(x, stringsAsFactors, ...) {
+  as(tosp_base(x, stringsAsFactors, ...), "Spatial")
+}
+
+tosp_list <- function(x, stringsAsFactors = FALSE, parse = FALSE, ...) {
+  sf2list(tosp_base(x, stringsAsFactors, ...), parse)
 }

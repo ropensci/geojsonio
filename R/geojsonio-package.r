@@ -39,7 +39,7 @@
 #' based on the data you give as input.
 #'
 #' @import methods sp rgeos
-#' @importFrom sf st_crs st_transform st_read
+#' @importFrom sf st_crs st_transform st_read st_write
 #' @importFrom httr GET POST content stop_for_status upload_file
 #' @importFrom maptools readShapeSpatial
 #' @importFrom rgdal readOGR writeOGR ogrListLayers
