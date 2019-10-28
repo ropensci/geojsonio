@@ -40,7 +40,6 @@ geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
 map_leaf(as.location(file))
 ```
 
-![map_leaf1](figure/map_leaf1.png)
 
 #### From a SpatialGridDataFrame
 
@@ -51,7 +50,6 @@ sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 map_leaf(sgdf)
 ```
 
-![map_leaf2](figure/map_leaf2.png)
 
 ### DIY
 
@@ -67,7 +65,6 @@ leaflet() %>%
   addGeoJSON(out)
 ```
 
-![leafletmap1](figure/leafletmap1.png)
 
 #### Example 2: Map of two polygons
 
@@ -86,7 +83,6 @@ leaflet() %>%
   addGeoJSON(json)
 ```
 
-![leafletmap2](figure/leafletmap2.png)
 
 ## Mapping with GitHub gists
 
@@ -98,7 +94,6 @@ leaflet() %>%
 map_gist(us_cities)
 ```
 
-![dataframe](figure/maps_dataframe.png)
 
 ### `SpatialPoints` class
 
@@ -110,7 +105,6 @@ s <- SpatialPoints(cbind(x,y))
 map_gist(s)
 ```
 
-![sppts](figure/maps_sppts.png)
 
 ### `SpatialPixelsDataFrame` class
 
@@ -122,6 +116,5 @@ pixelsdf <- suppressWarnings(
 map_gist(pixelsdf)
 ```
 
-![sppixles](figure/maps_sppixels.png)
 
 > Many other spatial classes supported
