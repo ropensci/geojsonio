@@ -57,7 +57,7 @@ if you run into file size problems
 # From a file
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 (out <- geojson_read(file))
-geojson_read(file, what = "json")
+geojson_read(file)
 
 # From a URL
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
@@ -95,16 +95,19 @@ geojson_read(basename(x), what = "sp")
 ## MAKE SURE to run the setup in the postgis manual file first!
 if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
 library(DBI)
-conn <- dbConnect(RPostgres::Postgres(), dbname = 'postgistest')
-state <- "SELECT row_to_json(fc)
- FROM (SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
- FROM (SELECT 'Feature' As type
-    , ST_AsGeoJSON(lg.geog)::json As geometry
-    , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
-      )) As properties
-   FROM locations As lg   ) As f )  As fc;"
-json <- geojson_read(conn, query = state, what = "json")
-map_leaf(json)
+conn <- tryCatch(dbConnect(RPostgres::Postgres(), dbname = 'postgistest'), 
+ error = function(e) e)
+if (inherits(conn, "PqConnection")) {
+  state <- "SELECT row_to_json(fc)
+   FROM (SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
+   FROM (SELECT 'Feature' As type
+     , ST_AsGeoJSON(lg.geog)::json As geometry
+     , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
+       )) As properties
+    FROM locations As lg   ) As f )  As fc;"
+  json <- geojson_read(conn, query = state, what = "json")
+  map_leaf(json)
+ }
 }
 }
 }
