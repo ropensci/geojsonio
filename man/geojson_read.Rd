@@ -5,7 +5,7 @@
 \title{Read geojson or other formats from a local file or a URL}
 \usage{
 geojson_read(x, parse = FALSE, what = "list",
-  stringsAsFactors = FALSE, ...)
+  stringsAsFactors = FALSE, query = NULL, ...)
 }
 \arguments{
 \item{x}{(character) Path to a local file or a URL.}
@@ -14,14 +14,14 @@ geojson_read(x, parse = FALSE, what = "list",
 possible. Default: \code{FALSE}}
 
 \item{what}{(character) What to return. One of "list", "sp" (for
-Spatial class), or "json". Default: "list". list and sp run through
+Spatial class), or "json". Default: "list". "list" "and" sp run through
 package \pkg{sf}. if "json", returns json as character class}
 
 \item{stringsAsFactors}{Convert strings to Factors? Default \code{FALSE}.}
 
-\item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}}
+\item{query}{(character) A SQL query, see also \link{postgis}}
 
-\item{query}{(character) A SQL query}
+\item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}}
 }
 \value{
 various, depending on what's chosen in \code{what} parameter
@@ -92,6 +92,7 @@ utils::download.file(x, destfile = basename(x))
 geojson_read(basename(x), what = "sp")
 
 # from a Postgres database - your Postgres instance must be running
+## MAKE SURE to run the setup in the postgis manual file first!
 if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
 library(DBI)
 conn <- dbConnect(RPostgres::Postgres(), dbname = 'postgistest')
@@ -108,5 +109,5 @@ map_leaf(json)
 }
 }
 \seealso{
-\code{\link[=topojson_read]{topojson_read()}}, \code{\link[=geojson_write]{geojson_write()}} \code{\link[=postgis]{postgis()}}
+\code{\link[=topojson_read]{topojson_read()}}, \code{\link[=geojson_write]{geojson_write()}} \link{postgis}
 }
