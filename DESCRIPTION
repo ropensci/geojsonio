@@ -39,7 +39,9 @@ Suggests:
     knitr,
     rmarkdown,
     leaflet,
-    maps
+    maps,
+    DBI,
+    RPostgres
 Enhances: RColorBrewer
 RoxygenNote: 6.1.1
 X-schema.org-applicationCategory: Geospatial

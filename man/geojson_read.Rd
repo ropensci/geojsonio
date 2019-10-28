@@ -5,7 +5,7 @@
 \title{Read geojson or other formats from a local file or a URL}
 \usage{
 geojson_read(x, parse = FALSE, what = "list",
-  stringsAsFactors = FALSE, ...)
+  stringsAsFactors = FALSE, query = NULL, ...)
 }
 \arguments{
 \item{x}{(character) Path to a local file or a URL.}
@@ -13,15 +13,23 @@ geojson_read(x, parse = FALSE, what = "list",
 \item{parse}{(logical) To parse geojson to data.frame like structures if
 possible. Default: \code{FALSE}}
 
-\item{what}{(character) What to return. One of "list" or "sp" (for
-Spatial class). Default: "list". both options run through package \pkg{sf}}
+\item{what}{(character) What to return. One of "list", "sp" (for
+Spatial class), or "json". Default: "list". "list" "and" sp run through
+package \pkg{sf}. if "json", returns json as character class}
 
 \item{stringsAsFactors}{Convert strings to Factors? Default \code{FALSE}.}
+
+\item{query}{(character) A SQL query, see also \link{postgis}}
 
 \item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}}
 }
 \value{
 various, depending on what's chosen in \code{what} parameter
+\itemize{
+\item list: geojson as a list using \code{\link[jsonlite:fromJSON]{jsonlite::fromJSON()}}
+\item sp: geojson as an sp class object using \code{\link[sf:st_read]{sf::st_read()}}
+\item json: geojson as character string, to parse downstream as you wish
+}
 }
 \description{
 Read geojson or other formats from a local file or a URL
@@ -49,16 +57,15 @@ if you run into file size problems
 # From a file
 file <- system.file("examples", "california.geojson", package = "geojsonio")
 (out <- geojson_read(file))
+geojson_read(file)
 
 # From a URL
 url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 geojson_read(url)
+geojson_read(url, parse = TRUE)
 
 # Use as.location first if you want
 geojson_read(as.location(file))
-
-# use jsonlite to parse to data.frame structures where possible
-geojson_read(url, parse = TRUE)
 
 # output a SpatialClass object
 ## read kml
@@ -83,8 +90,27 @@ geojson_read(x, what = "list")
 
 utils::download.file(x, destfile = basename(x))
 geojson_read(basename(x), what = "sp")
+
+# from a Postgres database - your Postgres instance must be running
+## MAKE SURE to run the setup in the postgis manual file first!
+if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
+library(DBI)
+conn <- tryCatch(dbConnect(RPostgres::Postgres(), dbname = 'postgistest'), 
+ error = function(e) e)
+if (inherits(conn, "PqConnection")) {
+  state <- "SELECT row_to_json(fc)
+   FROM (SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
+   FROM (SELECT 'Feature' As type
+     , ST_AsGeoJSON(lg.geog)::json As geometry
+     , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
+       )) As properties
+    FROM locations As lg   ) As f )  As fc;"
+  json <- geojson_read(conn, query = state, what = "json")
+  map_leaf(json)
+ }
+}
 }
 }
 \seealso{
-\code{\link[=topojson_read]{topojson_read()}}, \code{\link[=geojson_write]{geojson_write()}}
+\code{\link[=topojson_read]{topojson_read()}}, \code{\link[=geojson_write]{geojson_write()}} \link{postgis}
 }

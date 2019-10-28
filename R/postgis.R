@@ -1,18 +1,18 @@
 #' PostGIS setup
 #' 
-#' \code{\link{geojson_read}} allows you to get data out of a PostgreSQL 
+#' [geojson_read()] allows you to get data out of a PostgreSQL 
 #' database set up with PostGIS. Below are steps for setting up data
-#' that we can at the end query with \code{\link{geojson_read}}.
+#' that we can at the end query with [geojson_read()]
 #' 
 #' If you don't already have PostgreSQL or PostGIS:
-#' \itemize{
-#'  \item PostgreSQL installation: http://www.postgresql.org/download/
-#'  \item PostGIS installation: http://postgis.net/install
-#' }
+#' 
+#' - PostgreSQL installation: http://www.postgresql.org/download/
+#' - PostGIS installation: http://postgis.net/install
 #' 
 #' Once you have both of those installed, you can proceed below.
 #'
 #' @examples \dontrun{
+#' if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
 #' library("DBI")
 #' library("RPostgres")
 #' 
@@ -42,6 +42,22 @@
 #'
 #' # Get data (notice warnings of unknown field type for geog)
 #' dbGetQuery(conn, "SELECT * from locations")
+#' 
+#' 
+#' # Once you're setup, use geojson_read()
+#' conn <- dbConnect(RPostgres::Postgres(), dbname = 'postgistest')
+#' state <- "SELECT row_to_json(fc)
+#'  FROM (SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
+#'  FROM (SELECT 'Feature' As type
+#'     , ST_AsGeoJSON(lg.geog)::json As geometry
+#'     , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
+#'       )) As properties
+#'    FROM locations As lg   ) As f )  As fc;"
+#' json <- geojson_read(conn, query = state, what = "json")
+#' 
+#' ## map the geojson with map_leaf()
+#' map_leaf(json)
+#' }
 #' }
 #' @name postgis
 NULL
