@@ -1,3 +1,24 @@
+geojsonio 0.8.0
+===============
+
+## NEW FEATURES
+
+* `geojson_read()` gains new S3 method `geojson_read.PqConnection` for connecting to a PostgreSQL database set up with PostGIS. See also `?postgis` for notes on Postgis installation, and setting up some simple data in Postgis from this package (#61) (#155) thanks to @fxi
+
+### MINOR IMPROVEMENTS
+
+* `geojson_read()` instead of going through package `sp` now goes through package `sf` for a significant speed up, see https://github.com/ropensci/geojsonio/issues/136#issuecomment-546123078 (#136)
+* `geojson_list()` gains parameter `precision` to adjust number of decimal places used. only applies to classes from packages sp and rgeos (#152) (related to #141) thanks to @ChrisJones687
+* improve dependency installation notes in README (#149) (#151) thanks @setgree and @nickto
+* move to using markdown docs
+* `file_to_geojson()` now using https protocol instead of http for the online ogre service called when using `method = "web"`
+
+### BUG FIXES
+
+* fix `geojson_read()` to fail better when using `method="web"`; and update docs to note that `method="web"` can result if file size issues, but `method="local"` should not have such issues (#153)
+* change name of `print.location` method to not conflict with `dplyr` (#154)
+
+
 geojsonio 0.7.0
 ===============
 
