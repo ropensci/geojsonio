@@ -1,90 +1,48 @@
-# leaflet.esri
+# MazamaSpatialUtils
 
-Version: 0.2
+<details>
 
-## In both
+* Version: 0.6.4
+* Source code: https://github.com/cran/MazamaSpatialUtils
+* URL: https://github.com/MazamaScience/MazamaSpatialUtils
+* BugReports: https://github.com/MazamaScience/MazamaSpatialUtils/issues
+* Date/Publication: 2019-09-28 19:40:03 UTC
+* Number of recursive dependencies: 88
 
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespaces in Imports field not imported from:
-      ‘htmlwidgets’ ‘shiny’
-      All declared Imports should be used.
-    ```
+Run `revdep_details(,"MazamaSpatialUtils")` for more info
 
-# leaflet.extras
-
-Version: 0.2
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘shiny’
-      All declared Imports should be used.
-    ```
-
-# rmapshaper
-
-Version: 0.3.0
+</details>
 
 ## Newly broken
+
+*   checking installed package size ... NOTE
+    ```
+      installed size is  5.1Mb
+      sub-directories of 1Mb or more:
+        data   4.4Mb
+    ```
+
+## In both
 
 *   checking tests ...
     ```
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      Attributes: < Component "lines": Component 3: Attributes: < Component 1: 1 string mismatch > >
-      Attributes: < Component "lines": Component 4: Attributes: < Component 1: 1 string mismatch > >
+      1: testthat::expect_match(getCountryName(2, 47, countryCodes = c("FR")), "France") at testthat/test-getCountryName.R:20
+      2: quasi_label(enquo(object), label, arg = "object")
+      3: eval_bare(get_expr(quo), get_env(quo))
+      4: getCountryName(2, 47, countryCodes = c("FR"))
+      5: SPDF[SPDF$countryCode %in% countryCodes, ]
+      6: SPDF[SPDF$countryCode %in% countryCodes, ]
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 301 SKIPPED: 0 FAILED: 7
-      1. Failure: ms_filter_fields works with polygons (@test-filter_fields.R#32) 
-      2. Failure: ms_filter_fields works with lines (@test-filter_fields.R#52) 
-      3. Failure: ms_innerlines works with all classes (@test-innerlines.R#45) 
-      4. Failure: ms_innerlines works with all classes (@test-innerlines.R#46) 
-      5. Failure: ms_lines works with all classes (@test-lines.R#42) 
-      6. Failure: ms_lines works with all classes (@test-lines.R#43) 
-      7. Failure: ms_lines works with fields specified (@test-lines.R#62) 
+      [ OK: 90 | SKIPPED: 26 | WARNINGS: 0 | FAILED: 3 ]
+      1. Error: subsetting with countryCodes works (@test-getCountry.R#20) 
+      2. Error: subsetting with countryCodes works (@test-getCountryCode.R#20) 
+      3. Error: subsetting with countryCodes works (@test-getCountryName.R#20) 
       
       Error: testthat unit tests failed
       Execution halted
-    ```
-
-## In both
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error in re-building vignettes:
-      ...
-    Quitting from lines 58-60 (rmapshaper.Rmd) 
-    Error: processing vignette 'rmapshaper.Rmd' failed with diagnostics:
-    Cannot open data source
-    Execution halted
-    ```
-
-# rmapzen
-
-Version: 0.3.3
-
-## In both
-
-*   checking data for non-ASCII characters ... NOTE
-    ```
-      Note: found 31 marked UTF-8 strings
-    ```
-
-# webglobe
-
-Version: 1.0.2
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 10.5Mb
-      sub-directories of 1Mb or more:
-        client   9.4Mb
-        doc      1.0Mb
     ```
 
