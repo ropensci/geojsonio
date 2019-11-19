@@ -24,7 +24,8 @@ library("DBI")
 library("RPostgres")
 
 # Create connection
-conn <- dbConnect(RPostgres::Postgres())
+conn <- tryCatch(dbConnect(RPostgres::Postgres()), error = function(e) e)
+if (inherits(conn, "PqConnection")) {
 
 # Create database
 dbSendQuery(conn, "CREATE DATABASE postgistest")
@@ -64,6 +65,8 @@ json <- geojson_read(conn, query = state, what = "json")
 
 ## map the geojson with map_leaf()
 map_leaf(json)
+
+}
 }
 }
 }

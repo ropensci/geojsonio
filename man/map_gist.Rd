@@ -53,6 +53,8 @@ be used.
 }
 \examples{
 \dontrun{
+if (!identical(Sys.getenv("GITHUB_PAT"), "")) {
+
 # From file
 file <- "myfile.geojson"
 geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
@@ -172,5 +174,7 @@ map_gist(r1r2)
 dat <- data.frame(id = c(1,2), value = 3:4)
 r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
 map_gist(r1r2df)
+
+}
 }
 }
