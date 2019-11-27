@@ -4,9 +4,19 @@
 \alias{geojson_write}
 \title{Convert many input types with spatial data to a geojson file}
 \usage{
-geojson_write(input, lat = NULL, lon = NULL, geometry = "point",
-  group = NULL, file = "myfile.geojson", overwrite = TRUE,
-  precision = NULL, convert_wgs84 = FALSE, crs = NULL, ...)
+geojson_write(
+  input,
+  lat = NULL,
+  lon = NULL,
+  geometry = "point",
+  group = NULL,
+  file = "myfile.geojson",
+  overwrite = TRUE,
+  precision = NULL,
+  convert_wgs84 = FALSE,
+  crs = NULL,
+  ...
+)
 }
 \arguments{
 \item{input}{Input list, data.frame, spatial class, or sf class.

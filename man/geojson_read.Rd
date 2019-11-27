@@ -4,8 +4,14 @@
 \alias{geojson_read}
 \title{Read geojson or other formats from a local file or a URL}
 \usage{
-geojson_read(x, parse = FALSE, what = "list",
-  stringsAsFactors = FALSE, query = NULL, ...)
+geojson_read(
+  x,
+  parse = FALSE,
+  what = "list",
+  stringsAsFactors = FALSE,
+  query = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{(character) Path to a local file or a URL.}

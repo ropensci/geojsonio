@@ -5,9 +5,17 @@
 \title{Convert many input types with spatial data to geojson specified as a json
 string}
 \usage{
-geojson_json(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type = "FeatureCollection",
-  convert_wgs84 = FALSE, crs = NULL, ...)
+geojson_json(
+  input,
+  lat = NULL,
+  lon = NULL,
+  group = NULL,
+  geometry = "point",
+  type = "FeatureCollection",
+  convert_wgs84 = FALSE,
+  crs = NULL,
+  ...
+)
 }
 \arguments{
 \item{input}{Input list, data.frame, spatial class, or sf class. Inputs can
@@ -75,7 +83,7 @@ disk round-trip is not ideal.
 
 For sf classes (sf, sfc, sfg), the following conversions are made:
 \itemize{
-\item sfg: the appropriate geometry \code{Point, LineString, Polygon,  MultiPoint, MultiLineString, MultiPolygon, GeometryCollection}
+\item sfg: the appropriate geometry \verb{Point, LineString, Polygon,  MultiPoint, MultiLineString, MultiPolygon, GeometryCollection}
 \item sfc: \code{GeometryCollection}, unless the sfc is length 1, then
 the geometry as above
 \item sf: \code{FeatureCollection}
@@ -137,7 +145,7 @@ library("sp")
 library("rgeos")
 pt <- SpatialPoints(coordinates(list(x = 0, y = 0)), CRS("+proj=longlat +datum=WGS84"))
 ## transfrom to web mercator becuase geos needs project coords
-crs <- gsub("\\n", "", paste0("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0
+crs <- gsub("\n", "", paste0("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0
    +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs", collapse = ""))
 pt <- spTransform(pt, CRS(crs))
 ## buffer

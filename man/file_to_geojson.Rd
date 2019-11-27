@@ -4,8 +4,15 @@
 \alias{file_to_geojson}
 \title{Convert spatial data files to GeoJSON from various formats.}
 \usage{
-file_to_geojson(input, method = "web", output = ".", parse = FALSE,
-  encoding = "CP1250", verbose = FALSE, ...)
+file_to_geojson(
+  input,
+  method = "web",
+  output = ".",
+  parse = FALSE,
+  encoding = "CP1250",
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{input}{The file being uploaded, path to the file on your machine.}
@@ -97,7 +104,7 @@ file_to_geojson(shpfile, method='local', output='shp_local')
 
 # geojson with .json extension
 ## this doesn't work anymore, hmmm
-# x <- gsub("\\n", "", paste0('https://gist.githubusercontent.com/hunterowens/
+# x <- gsub("\n", "", paste0('https://gist.githubusercontent.com/hunterowens/
 # 25ea24e198c80c9fbcc7/raw/7fd3efda9009f902b5a991a506cea52db19ba143/
 # wards2014.json', collapse = ""))
 # res <- file_to_geojson(x)

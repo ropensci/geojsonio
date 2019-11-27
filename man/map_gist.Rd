@@ -4,9 +4,19 @@
 \alias{map_gist}
 \title{Publish an interactive map as a GitHub gist}
 \usage{
-map_gist(input, lat = "lat", lon = "long", geometry = "point",
-  group = NULL, type = "FeatureCollection", file = "myfile.geojson",
-  description = "", public = TRUE, browse = TRUE, ...)
+map_gist(
+  input,
+  lat = "lat",
+  lon = "long",
+  geometry = "point",
+  group = NULL,
+  type = "FeatureCollection",
+  file = "myfile.geojson",
+  description = "",
+  public = TRUE,
+  browse = TRUE,
+  ...
+)
 }
 \arguments{
 \item{input}{Input object}

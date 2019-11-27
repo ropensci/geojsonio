@@ -3,7 +3,6 @@
 \docType{package}
 \name{geojsonio}
 \alias{geojsonio}
-\alias{geojsonio-package}
 \title{\strong{I/O for GeoJSON}}
 \description{
 Convert various data formats to/from GeoJSON or TopoJSON. This

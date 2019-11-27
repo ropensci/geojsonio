@@ -4,10 +4,21 @@
 \alias{topojson_write}
 \title{Write TopoJSON from various inputs}
 \usage{
-topojson_write(input, lat = NULL, lon = NULL, geometry = "point",
-  group = NULL, file = "myfile.topojson", overwrite = TRUE,
-  precision = NULL, convert_wgs84 = FALSE, crs = NULL,
-  object_name = "foo", quantization = 0, ...)
+topojson_write(
+  input,
+  lat = NULL,
+  lon = NULL,
+  geometry = "point",
+  group = NULL,
+  file = "myfile.topojson",
+  overwrite = TRUE,
+  precision = NULL,
+  convert_wgs84 = FALSE,
+  crs = NULL,
+  object_name = "foo",
+  quantization = 0,
+  ...
+)
 }
 \arguments{
 \item{input}{Input list, data.frame, spatial class, or sf class.
