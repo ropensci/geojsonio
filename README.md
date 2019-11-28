@@ -38,7 +38,7 @@ Additional functions:
 
 ## Install
 
-A note about installing `rgdal` and `rgeos` - these two packages are built on top of C libraries, and their installation often causes trouble for Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`. Change to the version of `rgdal` and `GDAL` you have):
+A note about installing `rgeos` - built on top of C libraries, and installation often causes trouble for Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`.
 
 _Mac_
 
@@ -48,11 +48,10 @@ Install `GDAL` on the command line first, e.g., using `homebrew`
 brew install gdal
 ```
 
-Then install `rgdal` and `rgeos`
+Then install `rgeos`
 
 
 ```r
-install.packages("rgdal", type = "source", configure.args = "--with-gdal-config=/usr/local/Cellar/gdal/2.4.2/bin/gdal-config --with-proj-include=/usr/local/Cellar/gdal/2.4.2/include --with-proj-lib=/usr/local/Cellar/gdal/2.4.2/lib")
 install.packages("rgeos", type = "source")
 ```
 
@@ -66,11 +65,10 @@ sudo apt-get install libgdal1-dev libgdal-dev libgeos-c1 libproj-dev
 
 > Note: if you have trouble installing rgeos, try installing `libgeos++-dev`
 
-Then install `rgdal` and `rgeos`
+Then install `rgeos`
 
 
 ```r
-install.packages("rgdal", type = "source")
 install.packages("rgeos", type = "source")
 ```
 
@@ -187,13 +185,13 @@ geojson_list(sp_poly)$features[[1]]
 #> $type
 #> [1] "Feature"
 #> 
-#> $id
-#> [1] 1
-#> 
 #> $properties
 #> $properties$dummy
 #> [1] 0
 #> 
+#> 
+#> $geometry
+#> $geometry$type
 ...
 ```
 
@@ -293,10 +291,10 @@ topojson_list(s)
 #> $objects$foo$geometries[[1]]$coordinates
 #> [1] 1 3
 #> 
-#> $objects$foo$geometries[[1]]$id
+#> $objects$foo$geometries[[1]]$properties
+#> $objects$foo$geometries[[1]]$properties$dat
 #> [1] 1
 #> 
-#> $objects$foo$geometries[[1]]$properties
 ...
 ```
 
