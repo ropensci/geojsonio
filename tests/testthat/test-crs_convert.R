@@ -20,7 +20,7 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   df = data.frame(a = 1:5)
   spdf <- spdf_4326 <- spdf_3005 <- SpatialPointsDataFrame(pts, df)
   proj4string(spdf_4326) <- CRS("+init=epsg:4326")
-  spdf_3005 <- spTransform(spdf_4326, CRS("+init=epsg:3005"))
+  spdf_3005 <- supw(as(sf::st_transform(sf::st_as_sf(spdf_4326), 3005), 'Spatial'))
 
   test_that("works with sf", {
     expect_is(st_crs(convert_wgs84(sf_4326))[["proj4string"]],
@@ -80,7 +80,7 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   test_that("is_wgs84 works with Spatial", {
     proj4string(spdf) <- "+init=epsg:4326"
     expect_true(is_wgs84(spdf))
-    spdf_3005 <- spTransform(spdf, "+init=epsg:3005")
+    spdf_3005 <- supw(as(sf::st_transform(sf::st_as_sf(spdf), 3005), 'Spatial'))
     expect_false(suppressWarnings(is_wgs84(spdf_3005)))
     expect_warning(is_wgs84(spdf_3005), "WGS84")
   })

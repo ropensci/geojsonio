@@ -22,7 +22,7 @@ convert_wgs84.Spatial <- function(x, crs = NULL) {
     return(x)
   }
   message("Converting CRS from '", proj4string(x), "' to WGS84.")
-  sp::spTransform(x, CRS("+init=epsg:4326"))
+  as(sf::st_transform(sf::st_as_sf(x), 4326), "Spatial")
 }
 
 convert_wgs84_sf_sfc <- function(x, crs) {
