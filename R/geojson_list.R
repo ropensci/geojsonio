@@ -38,8 +38,7 @@
 #' @param ... Ignored
 #'
 #' @details This function creates a geojson structure as an R list; it does
-#' not write a file using \pkg{rgdal} - see [geojson_write()]
-#' for that.
+#' not write a file - see [geojson_write()] for that.
 #'
 #' Note that all sp class objects will output as `FeatureCollection` objects,
 #' while other classes (numeric, list, data.frame) can be output as
@@ -47,7 +46,7 @@
 #' on allowing `GeometryCollection` option for sp class objects.
 #'
 #' Also note that with sp classes we do make a round-trip,
-#' using [rgdal::writeOGR()] to write GeoJSON to disk, then read it back in.
+#' using [sf::st_write()] to write GeoJSON to disk, then read it back in.
 #' This is fast and we don't have to think
 #' about it too much, but this disk round-trip is not ideal.
 #'

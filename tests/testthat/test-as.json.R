@@ -9,7 +9,7 @@ test_that("as.json works with geo_list class inputs", {
     unclass(as.json(a)),
     "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}"
   )
-  
+
   b <- geojson_list(c(-99.74, 32.45), type = "GeometryCollection")
   expect_equal(
     unclass(as.json(b)),
@@ -22,18 +22,18 @@ test_that("as.json works with data.frame class inputs", {
   cc <- suppressMessages(geojson_write(us_cities[1:2,], lat='lat', lon='long', file = tf1))
   expect_is(cc, "geojson_file")
   expect_is(unclass(cc), "list")
-  expect_is(as.json(cc, verbose = FALSE), "json")
+  expect_is(as.json(cc), "json")
   expect_equal(
-    unclass(as.json(cc, verbose = FALSE)),
-    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":\"113888\",\"capital\":\"0\",\"coords.x1\":\"-99.74\",\"coords.x2\":\"32.45\",\"optional\":\"TRUE\"}},{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-81.52,41.08]},\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":\"206634\",\"capital\":\"0\",\"coords.x1\":\"-81.52\",\"coords.x2\":\"41.08\",\"optional\":\"TRUE\"}}]}"
+    unclass(jqr::jq(unclass(as.json(cc)), "del(.name) | del(.crs)")),
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":113888,\"lat\":32.45,\"long\":-99.74,\"capital\":0},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]}},{\"type\":\"Feature\",\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":206634,\"lat\":41.08,\"long\":-81.52,\"capital\":0},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-81.52,41.08]}}]}"
   )
-  
+
   tf11 <- tempfile(fileext = ".geojson")
-  d <- supw(suppressMessages(geojson_write(input=states, lat='lat', lon='long', 
+  d <- supw(suppressMessages(geojson_write(input=states, lat='lat', lon='long',
     geometry='polygon', group="group", file = tf11)))
   expect_is(d, "geojson_file")
   expect_is(unclass(d), "list")
-  expect_is(as.json(d, verbose = FALSE), "json")
+  expect_is(supw(as.json(d)), "json")
 })
 
 
@@ -48,10 +48,10 @@ test_that("as.json works with geojson class inputs", {
   e <- suppressMessages(geojson_write(sp_poly, file = tf2))
   expect_is(e, "geojson_file")
   expect_is(unclass(e), "list")
-  expect_is(as.json(e, verbose = FALSE), "json")
+  expect_is(as.json(e), "json")
   expect_equal(
-    unclass(as.json(e, verbose = FALSE)),
-    "{\"type\":\"FeatureCollection\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"urn:ogc:def:crs:OGC:1.3:CRS84\"}},\"features\":[{\"type\":\"Feature\",\"id\":1,\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-100,40],[-90,50],[-85,45],[-100,40]]]}},{\"type\":\"Feature\",\"id\":2,\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-90,30],[-80,40],[-75,35],[-90,30]]]}}]}"
+    unclass(jqr::jq(unclass(as.json(e)), "del(.name) | del(.crs)")),
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-100,40],[-90,50],[-85,45],[-100,40]]]}},{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-90,30],[-80,40],[-75,35],[-90,30]]]}}]}",
   )
 })
 
@@ -61,9 +61,9 @@ test_that("as.json works with file name inputs", {
   expect_is(ee, "geojson_file")
   expect_is(unclass(ee), "list")
   expect_is(ee$path, "character")
-  expect_is(as.json(ee$path, verbose = FALSE), "json")
-  expect_equal_to_reference(
-    unclass(as.json(ee, verbose = FALSE)), 
-    "us_citites_two_row.rds"
+  expect_is(as.json(ee$path), "json")
+  expect_equal(
+    unclass(jqr::jq(unclass(as.json(ee)), "del(.name) | del(.crs)")),
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":113888,\"lat\":32.45,\"long\":-99.74,\"capital\":0},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]}},{\"type\":\"Feature\",\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":206634,\"lat\":41.08,\"long\":-81.52,\"capital\":0},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-81.52,41.08]}}]}"
   )
 })

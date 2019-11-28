@@ -67,8 +67,7 @@ Convert many input types with spatial data to geojson specified as a list
 }
 \details{
 This function creates a geojson structure as an R list; it does
-not write a file using \pkg{rgdal} - see \code{\link[=geojson_write]{geojson_write()}}
-for that.
+not write a file - see \code{\link[=geojson_write]{geojson_write()}} for that.
 
 Note that all sp class objects will output as \code{FeatureCollection} objects,
 while other classes (numeric, list, data.frame) can be output as
@@ -76,7 +75,7 @@ while other classes (numeric, list, data.frame) can be output as
 on allowing \code{GeometryCollection} option for sp class objects.
 
 Also note that with sp classes we do make a round-trip,
-using \code{\link[rgdal:writeOGR]{rgdal::writeOGR()}} to write GeoJSON to disk, then read it back in.
+using \code{\link[sf:st_write]{sf::st_write()}} to write GeoJSON to disk, then read it back in.
 This is fast and we don't have to think
 about it too much, but this disk round-trip is not ideal.
 

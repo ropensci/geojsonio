@@ -56,7 +56,7 @@ the object already has a CRS.}
 
 \item{...}{Further args passed on to internal functions. For Spatial*
 classes, it is passed through to
-\code{\link[rgdal:writeOGR]{rgdal::writeOGR()}}. For sf classes, data.frames, lists, numerics,
+\code{\link[sf:st_write]{sf::st_write()}}. For sf classes, data.frames, lists, numerics,
 and geo_lists, it is passed through to \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}}
 }
 \value{

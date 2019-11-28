@@ -1,5 +1,5 @@
 features_names <- sort(c("type", "properties", "geometry"))
-top_names <- sort(c("type", "crs", "features", "name"))
+top_names <- sort(c("type", "features", "name"))
 
 context("geojson_read")
 
@@ -9,11 +9,10 @@ test_that("geojson_read works with file inputs", {
   
   expect_is(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
-  expect_is(aa$crs, "list")
   expect_is(aa$features, "list")
   expect_equal(aa$features[[1]]$type, "Feature")
   expect_equal(sort(names(aa$features[[1]])), features_names)
-  expect_equal(sort(names(aa)), top_names)
+  expect_true(all(top_names %in% names(aa)))
 })
 
 test_that("geojson_read works with url inputs", {
@@ -35,11 +34,10 @@ test_that("geojson_read works with as.location inputs", {
   
   expect_is(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
-  expect_is(aa$crs, "list")
   expect_is(aa$features, "list")
   expect_equal(aa$features[[1]]$type, "Feature")
   expect_equal(sort(names(aa$features[[1]])), features_names)
-  expect_equal(sort(names(aa)), top_names)
+  expect_true(all(top_names %in% names(aa)))
 })
 
 test_that("geojson_read works outputing spatial class object", {

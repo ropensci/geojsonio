@@ -1,15 +1,15 @@
 #' Convert spatial data files to GeoJSON from various formats.
 #'
 #' You can use a web interface called Ogre, or do conversions locally using the
-#' rgdal package.
+#' sf package.
 #'
 #' @export
 #' @param input The file being uploaded, path to the file on your machine.
 #' @param output Destination for output geojson file. Defaults to current
 #' working directory, and gives a random alphanumeric file name
-#' @param encoding (character) The encoding passed to
-#' [rgdal::readOGR()].  Default: CP1250
-#' @param verbose (logical) Printing of [rgdal::readOGR()] progress.
+#' @param encoding (character) The encoding passed to [sf::st_read()].
+#' Default: CP1250
+#' @param verbose (logical) Printing of [sf::st_read()] progress.
 #' Default: `FALSE`
 #' @template read
 #' @section File size:
@@ -18,6 +18,7 @@
 #' what file size is too large, but you should get an error message like 
 #' "maximum file length exceeded" when that happens. `method="local"`
 #' shouldn't be sensitive to file sizes.
+#' @return path for the geojson file
 #' @examples \dontrun{
 #' file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
 #'
@@ -119,12 +120,10 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
 
     output <- path.expand(output)
     if (fileext == "kml") {
-      my_layer <- rgdal::ogrListLayers(input)
-      x <- rgdal::readOGR(input, layer = my_layer[1],
-                          drop_unsupported_fields = TRUE,
-                          verbose = FALSE, stringsAsFactors = FALSE,
-                          encoding = encoding, ...)
-      write_ogr2(x, output)
+      x <- tosf(input, stringsAsFactors = FALSE,
+        options = paste0("ENCODING=", encoding), ...)
+      x <- sf::st_transform(x, 4326)
+      write_ogr2sf(x, output)
       if (mem) {
         from_json(output, parse)
       } else {
@@ -132,10 +131,10 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
         file_ret(output)
       }
     } else if (fileext == "shp") {
-      x <- rgdal::readOGR(input, rgdal::ogrListLayers(input),
-                          verbose = FALSE, stringsAsFactors = FALSE,
-                          encoding = encoding, ...)
-      write_ogr2(x, output)
+      x <- tosf(input, stringsAsFactors = FALSE,
+        options = paste0("ENCODING=", encoding), ...)
+      x <- sf::st_transform(x, 4326)
+      write_ogr2sf(x, output)
       if (mem) {
         from_json(output, parse)
       } else {
@@ -143,12 +142,9 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
         file_ret(output)
       }
     } else if (fileext %in% c("geojson", "json")) {
-      unlink(paste0(output, ".geojson"))
-      x <- rgdal::readOGR(input, rgdal::ogrListLayers(input),
-                          verbose = FALSE, stringsAsFactors = FALSE,
-                          encoding = encoding, ...)
-
-      write_ogr2(x, output)
+      x <- tosf(input, stringsAsFactors = FALSE, ...)
+      x <- sf::st_transform(x, 4326)
+      write_ogr2sf(x, output)
       if (mem) {
         from_json(output, parse)
       } else {
@@ -162,10 +158,9 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
   }
 }
 
-write_ogr2 <- function(x, y) {
+write_ogr2sf <- function(x, y, ...) {
   unlink(paste0(y, ".geojson"))
-  rgdal::writeOGR(x, paste0(y, ".geojson"), basename(y), driver = "GeoJSON",
-                  check_exists = FALSE)
+  sf::st_write(x, paste0(y, ".geojson"), quiet = TRUE, delete_dsn = TRUE, ...)
 }
 
 file_at <- function(x) {

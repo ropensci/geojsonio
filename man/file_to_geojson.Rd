@@ -20,7 +20,7 @@ file_to_geojson(
 \item{method}{(character) One of "web" (default) or "local". Matches on
 partial strings. This parameter determines how the data is
 read. "web" means we use the Ogre web service, and "local" means we use
-\pkg{rgdal}. See Details fore more.}
+\pkg{sf}. See Details fore more.}
 
 \item{output}{Destination for output geojson file. Defaults to current
 working directory, and gives a random alphanumeric file name}
@@ -28,23 +28,26 @@ working directory, and gives a random alphanumeric file name}
 \item{parse}{(logical) To parse geojson to data.frame like structures if
 possible. Default: \code{FALSE}}
 
-\item{encoding}{(character) The encoding passed to
-\code{\link[rgdal:readOGR]{rgdal::readOGR()}}.  Default: CP1250}
+\item{encoding}{(character) The encoding passed to \code{\link[sf:st_read]{sf::st_read()}}.
+Default: CP1250}
 
-\item{verbose}{(logical) Printing of \code{\link[rgdal:readOGR]{rgdal::readOGR()}} progress.
+\item{verbose}{(logical) Printing of \code{\link[sf:st_read]{sf::st_read()}} progress.
 Default: \code{FALSE}}
 
-\item{...}{Additional parameters passed to \code{\link[rgdal]{readOGR}}}
+\item{...}{Additional parameters passed to \code{\link[sf]{st_read}}}
+}
+\value{
+path for the geojson file
 }
 \description{
 You can use a web interface called Ogre, or do conversions locally using the
-rgdal package.
+sf package.
 }
 \section{Method parameter}{
 
 The web option uses the Ogre web API. Ogre currently has an output size
 limit of 15MB. See here \url{http://ogre.adc4gis.com/} for info on the
-Ogre web API. The local option uses the function \code{\link{writeOGR}}
+Ogre web API. The local option uses the function \code{\link[sf]{st_write}}
 from the package rgdal.
 }
 

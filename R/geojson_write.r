@@ -36,7 +36,7 @@
 #' @param ... Further args passed on to internal functions. For Spatial* 
 #' classes, data.frames,
 #' regular lists, and numerics, it is passed through to 
-#' [rgdal::writeOGR()]. For sf classes,
+#' [sf::st_write()]. For sf classes,
 #' geo_lists and json classes, it is passed through to 
 #' [jsonlite::toJSON()].
 #' 

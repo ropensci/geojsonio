@@ -33,14 +33,13 @@
 #' the object already has a CRS.
 #' @param ... Further args passed on to internal functions. For Spatial*
 #' classes, it is passed through to
-#' [rgdal::writeOGR()]. For sf classes, data.frames, lists, numerics,
+#' [sf::st_write()]. For sf classes, data.frames, lists, numerics,
 #' and geo_lists, it is passed through to [jsonlite::toJSON()]
 #'
 #' @return An object of class `geo_json` (and `json`)
 #'
 #' @details This function creates a geojson structure as a json character
-#' string; it does not write a file using \pkg{rgdal} - see
-#' [geojson_write()] for that
+#' string; it does not write a file - see [geojson_write()] for that
 #'
 #' Note that all sp class objects will output as `FeatureCollection`
 #' objects, while other classes (numeric, list, data.frame) can be output as
@@ -48,7 +47,7 @@
 #' on allowing `GeometryCollection` option for sp class objects.
 #'
 #' Also note that with sp classes we do make a round-trip, using
-#' [rgdal::writeOGR()] to write GeoJSON to disk, then read it back
+#' [sf::st_write()] to write GeoJSON to disk, then read it back
 #' in. This is fast and we don't have to think about it too much, but this
 #' disk round-trip is not ideal.
 #'

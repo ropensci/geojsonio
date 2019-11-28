@@ -56,7 +56,7 @@ the object already has a CRS.}
 
 \item{...}{Further args passed on to internal functions. For Spatial*
 classes, it is passed through to
-\code{\link[rgdal:writeOGR]{rgdal::writeOGR()}}. For sf classes, data.frames, lists, numerics,
+\code{\link[sf:st_write]{sf::st_write()}}. For sf classes, data.frames, lists, numerics,
 and geo_lists, it is passed through to \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}}
 }
 \value{
@@ -68,8 +68,7 @@ string
 }
 \details{
 This function creates a geojson structure as a json character
-string; it does not write a file using \pkg{rgdal} - see
-\code{\link[=geojson_write]{geojson_write()}} for that
+string; it does not write a file - see \code{\link[=geojson_write]{geojson_write()}} for that
 
 Note that all sp class objects will output as \code{FeatureCollection}
 objects, while other classes (numeric, list, data.frame) can be output as
@@ -77,7 +76,7 @@ objects, while other classes (numeric, list, data.frame) can be output as
 on allowing \code{GeometryCollection} option for sp class objects.
 
 Also note that with sp classes we do make a round-trip, using
-\code{\link[rgdal:writeOGR]{rgdal::writeOGR()}} to write GeoJSON to disk, then read it back
+\code{\link[sf:st_write]{sf::st_write()}} to write GeoJSON to disk, then read it back
 in. This is fast and we don't have to think about it too much, but this
 disk round-trip is not ideal.
 

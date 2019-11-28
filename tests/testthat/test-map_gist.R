@@ -1,5 +1,7 @@
 context("map_gist")
 
+skip_if_not(Sys.getenv('GITHUB_PAT') != "")
+
 test_that("map_gist works with file inputs", {
   skip_on_cran()
   

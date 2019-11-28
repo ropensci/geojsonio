@@ -74,7 +74,7 @@ https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplifica
 \item{...}{Further args passed on to internal functions. For Spatial*
 classes, data.frames,
 regular lists, and numerics, it is passed through to
-\code{\link[rgdal:writeOGR]{rgdal::writeOGR()}}. For sf classes,
+\code{\link[sf:st_write]{sf::st_write()}}. For sf classes,
 geo_lists and json classes, it is passed through to
 \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}.}
 }

@@ -1,6 +1,12 @@
 tg_compact <- function(l) Filter(Negate(is.null), l)
 
+json_val_safe <- function(x) {
+  tmp <- tryCatch(jsonlite::validate(x), error = function(e) e)
+  if (inherits(tmp, "error")) FALSE else tmp
+}
+
 to_json <- function(x, ...) {
+  if (is.character(x) && json_val_safe(x)) return(structure(x, class = "json"))
   structure(jsonlite::toJSON(x, ..., digits = 7, auto_unbox = TRUE, force = TRUE),
             class = c('json','geo_json'))
 }
@@ -274,6 +280,11 @@ spdftogeolist <- function(x){
     list_to_geo_list(temp, nms$lat, nms$lon, NULL, type = "FeatureCollection")
   } else if (inherits(x, "SpatialPolygonsDataFrame")) {
     geojson_list(x)
+  } else if (inherits(x, "sf")) {
+    temp <- paste0(tempfile(), ".geojson")
+    on.exit(unlink(temp))
+    sf::st_write(x, temp, quiet = TRUE, delete_dsn = TRUE)
+    paste0(readLines(temp), collapse = "")
   } else {
     list(type = "MultiPoint",
          bbox = bbox2df(x@bbox),
@@ -294,31 +305,30 @@ write_geojson <- function(input, file = "myfile.geojson", precision = NULL,
   if (!file.exists(destpath)) dir.create(destpath)
   temp <- tempfile()
   on.exit(unlink(temp))
-  write_ogr(input, temp, file, precision, overwrite,
-            convert_wgs84 = convert_wgs84, crs = crs, ...)
+  write_ogr_sf(input, file, precision, overwrite,
+               convert_wgs84 = convert_wgs84, crs = crs, ...)
 }
 
-write_ogr <- function(input, dir, file, precision = NULL, overwrite,
-                      convert_wgs84 = FALSE, crs = NULL, ...){
-
+write_ogr_sf <- function(input, file, precision = NULL, overwrite,
+                         convert_wgs84 = FALSE, crs = NULL, ...) {
+  if (inherits(input, c("SpatialPolygonsDataFrame"))) {
+    message("checking polygons with maptools::checkPolygonsHoles ...")
+    input_polys <- slot(input, "polygons")
+    input_fix <- lapply(input_polys, suppressWarnings(maptools::checkPolygonsHoles))
+    polys <- sp::SpatialPolygons(input_fix, proj4string = sp::CRS("+init=epsg:4326"))
+    input <- sp::SpatialPolygonsDataFrame(polys, data = input@data)
+  }
   if (convert_wgs84) {
     input <- convert_wgs84(input, crs = crs)
   }
-
-  input@data <- convert_unsupported_classes(input@data)
-  dots <- list(...)
+  input_sf <- as(input, "sf")
+  layer_options <- NULL
   if (!is.null(precision)) {
-    ## add precision to vector of layer_options in '...'
-    dots$layer_options <- c(dots$layer_options, paste0("COORDINATE_PRECISION=", precision))
+    layer_options <- paste0("COORDINATE_PRECISION=", precision)
   }
-  args <- c(list(obj = input, dsn = dir, layer = "", driver = "GeoJSON"), dots)
-  do.call(writeOGR, args)
-  res <- file.copy(dir, file, overwrite = overwrite)
-  if (res) {
-    message("Success! File is at ", file)
-  } else {
-    stop(file, " already exists and overwrite = FALSE", call. = FALSE)
-  }
+  sf::st_write(input_sf, file, layer_options = layer_options, quiet = TRUE,
+               delete_dsn = overwrite, ...)
+  message("Success! File is at ", file)
 }
 
 convert_unsupported_classes <- function(df) {

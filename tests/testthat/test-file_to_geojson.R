@@ -72,7 +72,7 @@ test_that("file_to_geojson works w/ kml input, local method, output memory", {
   expect_is(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
   expect_is(aa$features, "list")
-  expect_named(aa$features[[1]], c('type', 'id', 'properties', 'geometry'))
+  expect_named(aa$features[[1]], c('type', 'properties', 'geometry'))
 
   expect_is(as.json(aa), "json")
 })
@@ -190,7 +190,7 @@ test_that("file_to_geojson works w/ url kml input, local method, memory output",
   expect_is(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
   expect_is(aa$features, "list")
-  expect_named(aa$features[[1]], c('type', 'id', 'properties', 'geometry'))
+  expect_named(aa$features[[1]], c('type', 'properties', 'geometry'))
   
   expect_is(as.json(aa), "json")
   
