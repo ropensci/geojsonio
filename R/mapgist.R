@@ -14,7 +14,7 @@
 #' (=no description)
 #' @param public (logical) Want gist to be public or not? Default: `TRUE`
 #' @param browse If `TRUE` (default) the map opens in your default browser.
-#' @param ... Further arguments passed on to [httr::POST()]
+#' @param ... Further arguments passed on to `httr::POST`
 #'
 #' @description There are two ways to authorize to work with your GitHub
 #' account:

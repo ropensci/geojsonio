@@ -328,7 +328,7 @@ out <- topojson_read(file)
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-22](inst/img/unnamed-chunk-22-1.png)
+![plot of chunk unnamed-chunk-22](man/figures/unnamed-chunk-22-1.png)
 
 ## Use case: Play with US states
 
@@ -338,9 +338,10 @@ Get some geojson
 
 
 ```r
-library('httr')
-res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
+library('crul')
+res <- HttpClient$new('https://api.github.com')$get('repos/glynnbird/usstatesgeojson/contents')
+out <- jsonlite::fromJSON(res$parse("UTF-8"), FALSE)
+st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(out, "[[", "name"))
 base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
 st_files <- paste0(base, st_names)
 ```
@@ -359,7 +360,7 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~.id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-24](inst/img/unnamed-chunk-24-1.png)
+![plot of chunk unnamed-chunk-24](man/figures/unnamed-chunk-24-1.png)
 
 Okay, so the maps are not quite right (stretched to fit each panel), but you get the idea.
 

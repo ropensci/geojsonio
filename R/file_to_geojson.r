@@ -43,10 +43,9 @@
 #' shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
 #' file_to_geojson(shpfile, method='local', output='shp_local')
 #'
-#' # Neighborhoods in the US
-#' ## beware, this is a long running example
-#' # url <- 'http://www.nws.noaa.gov/geodata/catalog/national/data/ci08au12.zip'
-#' # out <- file_to_geojson(input=url, method='web', output='cities')
+#' # US National Weather Service Hydrologic service area boundaries
+#' url <- 'https://www.weather.gov/source/gis/Shapefiles/Misc/hs05jn19.zip'
+#' out <- file_to_geojson(input=url, method='web', output='hsa')
 #'
 #' # geojson with .json extension
 #' ## this doesn't work anymore, hmmm
@@ -69,19 +68,19 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
   mem <- ifelse(output == ":memory:", TRUE, FALSE)
 
   if (method == "web") {
-    url <- "https://ogre.adc4gis.com/convert"
-    tt <- httr::POST(url, body = list(upload = httr::upload_file(input)))
+    con <- crul::HttpClient$new("https://ogre.adc4gis.com/convert")
+    tt <- con$post(body = list(upload = crul::upload(input)))
     if (tt$status_code > 201) {
       res <- tryCatch(
-        httr::content(tt, as = "text", encoding = "UTF-8"),
+        tt$parse("UTF-8"),
         error = function(e) e
       )
-      if (inherits(res, "error")) httr::stop_for_status(tt)
+      if (inherits(res, "error")) tt$raise_for_status()
       res2 <- tryCatch(
         jsonlite::fromJSON(res),
         error = function(e) e
       )
-      if (inherits(res2, "error")) httr::stop_for_status(tt)
+      if (inherits(res2, "error")) tt$raise_for_status()
       if ("msg" %in% names(res2))
         stop(paste0(res2$msg, collapse = "\n"), call. = FALSE)
       else 
@@ -89,7 +88,7 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
           "open an issue at https://github.com/ropensci/geojsonio",
           call. = FALSE)
     }
-    out <- httr::content(tt, as = "text", encoding = "UTF-8")
+    out <- tt$parse("UTF-8")
     if (mem) {
       jsonlite::fromJSON(out, parse)
     } else {
@@ -178,20 +177,21 @@ from_json <- function(x, parse) {
 
 ftype <- function(z) {
   if (is.url(z)) {
-    z <- httr::parse_url(z)$path
+    z <- crul::url_parse(z)$path
   }
   fileext <- strsplit(z, "\\.")[[1]]
   fileext[length(fileext)]
 }
 
-# If given a url for a zip file, download it give back a path to the temporary file
+# If given a url for a zip file, download it give back a path to the
+# temporary file
 handle_remote <- function(x){
   if (!is.url(x)) {
     return(x)
   } else {
     tfile <- tempfile(fileext = paste0(".", ftype(x)))
-    res <- httr::GET(x, httr::write_disk(tfile))
-    httr::stop_for_status(res)
-    res$request$output$path
+    res <- crul::HttpClient$new(x)$get(disk = tfile)
+    res$raise_for_status()
+    res$content
   }
 }

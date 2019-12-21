@@ -41,7 +41,7 @@ polygons - doesn't apply for points}
 
 \item{browse}{If \code{TRUE} (default) the map opens in your default browser.}
 
-\item{...}{Further arguments passed on to \code{\link[httr:POST]{httr::POST()}}}
+\item{...}{Further arguments passed on to \code{httr::POST}}
 }
 \description{
 There are two ways to authorize to work with your GitHub

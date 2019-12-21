@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   fig.width = 10,
-  fig.path = "inst/img/"
+  fig.path = "man/figures/"
 )
 ```
 
@@ -258,9 +258,10 @@ Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.co
 Get some geojson
 
 ```{r}
-library('httr')
-res <- GET('https://api.github.com/repos/glynnbird/usstatesgeojson/contents')
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(content(res), "[[", "name"))
+library('crul')
+res <- HttpClient$new('https://api.github.com')$get('repos/glynnbird/usstatesgeojson/contents')
+out <- jsonlite::fromJSON(res$parse("UTF-8"), FALSE)
+st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(out, "[[", "name"))
 base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
 st_files <- paste0(base, st_names)
 ```
