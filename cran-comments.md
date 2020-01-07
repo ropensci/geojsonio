@@ -1,7 +1,7 @@
 ## Test environments
 
-* local OS X install, R 3.6.1 patched
-* ubuntu 14.04 (on travis-ci), R 3.6.1
+* local OS X install, R 3.6.2 patched
+* ubuntu 14.04 (on travis-ci), R 3.6.2
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -14,7 +14,7 @@ I have run R CMD check on the 9 reverse dependencies. Summary at <https://github
 
 -------
 
-This version adds a new method for reading geojson from a Postgres Postgis connection, makes some speed improvements to fxns, improves docs, and more. This version also cleans up a file left on disk as highlighted in some of the CRAN checks.
+This version swaps out two package dependencies for other packages.
 
 Thanks!
 Scott Chamberlain
