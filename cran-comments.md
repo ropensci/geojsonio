@@ -10,7 +10,7 @@
 
 ## Reverse dependencies
 
-I have run R CMD check on the 9 reverse dependencies. Summary at <https://github.com/ropensci/rgbif/blob/master/revdep/README.md>. No problems were found related to this package. MazamaSpatialUtils package errors on check, but errors with both current CRAN version of this package and the version being submitted.
+I have run R CMD check on the 14 reverse dependencies. Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>. No problems were found related to this package.
 
 -------
 
