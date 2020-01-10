@@ -10,14 +10,13 @@
 |collate  |en_US.UTF-8                                 |
 |ctype    |en_US.UTF-8                                 |
 |tz       |US/Pacific                                  |
-|date     |2020-01-07                                  |
+|date     |2020-01-10                                  |
 
 # Dependencies
 
-|package   |old   |new        |Δ  |
-|:---------|:-----|:----------|:--|
-|geojsonio |0.8.0 |0.9.0      |*  |
-|rlang     |NA    |0.4.2.9000 |*  |
+|package   |old   |new   |Δ  |
+|:---------|:-----|:-----|:--|
+|geojsonio |0.8.0 |0.9.0 |*  |
 
 # Revdeps
 

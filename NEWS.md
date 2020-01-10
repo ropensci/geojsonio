@@ -3,6 +3,7 @@ geojsonio 0.9.0
 
 ### MINOR IMPROVEMENTS
 
+* `topojson_json()` and `topojson_list()` gain params `object_name` and `quantization` to pass through to `geojson_json()` (#158)
 * replace httr with crul (#105)
 * rgdal replaced with sf throughout the package; all `writeOGR` replaced with `st_write` and `readOGR` with `st_read`; this should not create any user facing changes, but please let us know if you have problems with this version (#41) (#150) (#157)
 

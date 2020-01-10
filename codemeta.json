@@ -296,7 +296,7 @@
   "contIntegration": ["https://travis-ci.org/ropensci/geojsonio", "https://codecov.io/github/ropensci/geojsonio?branch=master"],
   "releaseNotes": "https://github.com/ropensci/geojsonio/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/geojsonio/blob/master/README.md",
-  "fileSize": "1848.017KB",
+  "fileSize": "1848.391KB",
   "applicationCategory": "Geospatial",
   "isPartOf": "https://ropensci.org",
   "keywords": ["geojson", "topojson", "geospatial", "conversion", "data", "input-output", "io", "rstats", "r", "r-package"],
