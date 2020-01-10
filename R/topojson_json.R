@@ -3,7 +3,10 @@
 #'
 #' @export
 #' @inheritParams geojson_json
-#' @details The `type` parameter is automatically converted to 
+#' @inheritParams topojson_write
+#' @param ... args passed down to [geojson_json()]; see [geojson_json()] for
+#' help on what's supported here
+#' @details The `type` parameter is automatically converted to
 #' `type="auto"` if a sf, sfc, or sfg class is passed to `input`
 #' @return An object of class `geo_json` (and `json`)
 #' @examples \dontrun{
@@ -178,8 +181,8 @@
 #' topojson_json(c(-99.74,32.45)) %>% pretty
 #' }
 topojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
-                         geometry = "point", type = "FeatureCollection",
-                         convert_wgs84 = FALSE, crs = NULL, ...) {
+  geometry = "point", type = "FeatureCollection", convert_wgs84 = FALSE,
+  crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   if (inherits(input, c("sf", "sfc", "sfg"))) {
     type <- "auto"
@@ -187,5 +190,6 @@ topojson_json <- function(input, lat = NULL, lon = NULL, group = NULL,
   }
   geo2topo(geojson_json(input = input, lat = lat, lon = lon,
     group = group, geometry = geometry, type = type,
-    convert_wgs84 = convert_wgs84, crs = crs, ...))
+    convert_wgs84 = convert_wgs84, crs = crs, ...),
+  object_name = object_name, quantization = quantization)
 }

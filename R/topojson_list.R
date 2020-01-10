@@ -3,6 +3,9 @@
 #'
 #' @export
 #' @inheritParams geojson_list
+#' @inheritParams topojson_write
+#' @param ... args passed down through [topojson_json()] to [geojson_json()];
+#' see [geojson_json()] for help on what's supported here
 #' @return a list with TopoJSON
 #' @details Internally, we call [topojson_json()], then use
 #' an internal function to convert that JSON output to a list
@@ -158,12 +161,13 @@
 #'
 
 topojson_list <- function(input, lat = NULL, lon = NULL, group = NULL,
-                         geometry = "point", type = "FeatureCollection",
-                         convert_wgs84 = FALSE, crs = NULL, ...) {
+  geometry = "point", type = "FeatureCollection", convert_wgs84 = FALSE,
+  crs = NULL, object_name = "foo", quantization = 0, ...) {
 
   res <- topojson_json(input = input, lat = lat, lon = lon,
       group = group, geometry = geometry, type = type,
-      convert_wgs84 = convert_wgs84, crs = crs, ...)
+      convert_wgs84 = convert_wgs84, crs = crs,
+      object_name = object_name, quantization = quantization, ...)
   if (inherits(res, c("character", "json", "geojson"))) {
     geojson_file_to_list(res)
   } else if (inherits(res, "list")) {

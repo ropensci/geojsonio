@@ -26,3 +26,12 @@ test_that("topojson_json works with data.frame inputs", {
   aa <- topojson_json(us_cities[1:2,], lat='lat', lon='long')
   expect_is(aa, "json")
 })
+
+test_that("topojson_json object_name param works", {
+  # default
+  aa <- topojson_json(us_cities[1:2,], quiet=TRUE)
+  expect_named(jsonlite::fromJSON(aa)$objects, "foo")
+  # custom object name
+  bb <- topojson_json(us_cities[1:2,], object_name = "stuff", quiet=TRUE)
+  expect_named(jsonlite::fromJSON(bb)$objects, "stuff")
+})

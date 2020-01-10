@@ -14,6 +14,8 @@ topojson_list(
   type = "FeatureCollection",
   convert_wgs84 = FALSE,
   crs = NULL,
+  object_name = "foo",
+  quantization = 0,
   ...
 )
 }
@@ -48,6 +50,15 @@ may define it in the \code{crs} argument below.}
 be an epsg code as a four or five digit integer or a valid proj4 string.
 This argument will be ignored if \code{convert_wgs84} is \code{FALSE}
 or the object already has a CRS.}
+
+\item{object_name}{(character) name to give to the TopoJSON object created.
+Default: "foo"}
+
+\item{quantization}{(numeric) quantization parameter, use this to
+quantize geometry prior to computing topology. Typical values are powers of
+ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantization.
+For more information about quantization, see this by Mike Bostock
+https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}
 
 \item{...}{Ignored}
 }
