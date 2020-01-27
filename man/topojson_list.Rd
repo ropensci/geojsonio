@@ -60,7 +60,8 @@ ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantizati
 For more information about quantization, see this by Mike Bostock
 https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}
 
-\item{...}{Ignored}
+\item{...}{args passed down through \code{\link[=topojson_json]{topojson_json()}} to \code{\link[=geojson_json]{geojson_json()}};
+see \code{\link[=geojson_json]{geojson_json()}} for help on what's supported here}
 }
 \value{
 a list with TopoJSON

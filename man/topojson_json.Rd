@@ -65,10 +65,8 @@ ten (\code{1e4}, \code{1e5}, ...), default is \code{0} to not perform quantizati
 For more information about quantization, see this by Mike Bostock
 https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214}
 
-\item{...}{Further args passed on to internal functions. For Spatial*
-classes, it is passed through to
-\code{\link[sf:st_write]{sf::st_write()}}. For sf classes, data.frames, lists, numerics,
-and geo_lists, it is passed through to \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}}
+\item{...}{args passed down to \code{\link[=geojson_json]{geojson_json()}}; see \code{\link[=geojson_json]{geojson_json()}} for
+help on what's supported here}
 }
 \value{
 An object of class \code{geo_json} (and \code{json})
