@@ -43,10 +43,10 @@ jobs:
 
 
       - name: install macOS system dependencies
-        if: runner.os == 'macOS' && matrix.config.r == 'devel'
+        if: runner.os == 'macOS'
         continue-on-error: true
         run: |
-          brew install pkg-config gdal openssl udunits v8 protobuf
+          brew install pkg-config gdal openssl udunits v8 protobuf jq
 
       - name: add modern cran/v8 ppa
         # default libv8-dev on Xenial (16) and Bionic (18) is old libv8-3.14.5.
@@ -61,7 +61,6 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable
-          sudo add-apt-repository -y ppa:cran/jq
           sudo apt-get -y update
           sudo apt-get -y install libgdal-dev gdal-bin libgeos-dev \
           libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \

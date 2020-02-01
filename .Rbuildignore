@@ -22,4 +22,3 @@ man-roxygen
 ^codemeta\.json$
 .txt
 inst/ignore/Dockerfile
-^\.github/workflows/R-CMD-check\.yaml$
