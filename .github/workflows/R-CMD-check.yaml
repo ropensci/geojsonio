@@ -65,7 +65,7 @@ jobs:
           sudo apt-get -y install libgdal-dev gdal-bin libgeos-dev \
           libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
           libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
-          protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin\
+          protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
           ${{ matrix.config.v8 }}
 
       - name: Install dependencies
