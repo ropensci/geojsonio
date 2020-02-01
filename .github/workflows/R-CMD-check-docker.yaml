@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
 
-      - name: Check${{ 
+      - name: Check
         run: Rscript -e "rcmdcheck::rcmdcheck(args = '--as-cran --no-manual', error_on = 'warning', check_dir = 'check')"
 
       - name: Upload check results
