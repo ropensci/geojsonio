@@ -1,0 +1,33 @@
+on: [push, pull_request]
+
+name: R-CMD-check-docker
+
+jobs:
+  R-CMD-check-docker:
+    runs-on: ubuntu-latest
+    container: jakubnowosad/geocompr_proj6
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: r-lib/actions/setup-pandoc@master
+
+      - uses: r-lib/actions/setup-tinytex@master
+
+      - name: Install system dependencies
+        run: |
+          sudo add-apt-repository -y ppa:cran/v8
+          sudo apt-get -y update
+          sudo apt-get install -y libnode-dev
+
+      - name: Install dependencies
+        run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
+
+      - name: Check${{ 
+        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--as-cran --no-manual', error_on = 'warning', check_dir = 'check')"
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ runner.os }}-docker-geocompr-results
+          path: check
