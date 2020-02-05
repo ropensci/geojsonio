@@ -2,12 +2,12 @@
 % Please edit documentation in R/geojson_sp.R
 \name{geojson_sp}
 \alias{geojson_sp}
-\title{Convert output of \code{geojson_list} or \code{geojson_json} to spatial classes}
+\title{Convert objects to spatial classes}
 \usage{
 geojson_sp(x, disambiguateFIDs = FALSE, stringsAsFactors = FALSE, ...)
 }
 \arguments{
-\item{x}{Object of class \code{geo_list} or \code{geo_json}}
+\item{x}{Object of class \code{geo_list}, \code{geo_json}, string, or json}
 
 \item{disambiguateFIDs}{Ignored, and will be removed in a future version.
 Previously was passed to \code{\link[rgdal:readOGR]{rgdal::readOGR()}}, which is no longer used.}
@@ -20,7 +20,7 @@ Previously was passed to \code{\link[rgdal:readOGR]{rgdal::readOGR()}}, which is
 A spatial class object, see Details.
 }
 \description{
-Convert output of \code{geojson_list} or \code{geojson_json} to spatial classes
+Convert objects to spatial classes
 }
 \details{
 The spatial class object returned will depend on the input GeoJSON.
@@ -68,6 +68,10 @@ geojson_json(us_cities[1:2,], lat='lat', lon='long') \%>\%
 
 # json ----------------------
 x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
+geojson_sp(x)
+
+# character string ----------------------
+x <- unclass(geojson_json(c(-99.74,32.45)))
 geojson_sp(x)
 }
 }

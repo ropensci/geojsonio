@@ -19,7 +19,7 @@ test_that("geojson_sf works with geo_list inputs", {
 })
 
 test_that("geojson_sf works with string inputs", {
-  x <- '{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}'
+  x <- unclass(geojson_json(c(-99.74,32.45)))
   a <- geojson_sf(x)
   expect_is(a, "sf")
 })

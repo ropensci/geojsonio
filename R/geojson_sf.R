@@ -1,8 +1,7 @@
 #' Convert objects to an sf class
 #'
 #' @export
-#' @param x Object of class `geo_list` or `geo_json`, or a character string
-#' or json
+#' @param x Object of class `geo_list`, `geo_json`, string, or json
 #' @param stringsAsFactors Convert strings to Factors? Default `FALSE`.
 #' @param ... Further args passed on to [sf::st_read()]
 #'
@@ -52,7 +51,7 @@
 #' geojson_sf(x)
 #' 
 #' # character string ----------------------
-#' x <- '{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}'
+#' x <- unclass(geojson_json(c(-99.74,32.45)))
 #' geojson_sf(x)
 #' }
 geojson_sf <- function(x, stringsAsFactors = FALSE, ...) {

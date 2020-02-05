@@ -1,4 +1,4 @@
-#' Convert output of `geojson_list` or `geojson_json` to spatial classes
+#' Convert objects to spatial classes
 #'
 #' @export
 #'
@@ -52,12 +52,21 @@
 #' # json ----------------------
 #' x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
 #' geojson_sp(x)
+#' 
+#' # character string ----------------------
+#' x <- unclass(geojson_json(c(-99.74,32.45)))
+#' geojson_sp(x)
 #' }
 geojson_sp <- function(x, disambiguateFIDs = FALSE, stringsAsFactors = FALSE, ...) {
   if (disambiguateFIDs) {
     warning("disambiguateFIDs is no longer used in geojson_sp")
   }
   UseMethod("geojson_sp")
+}
+
+#' @export
+geojson_sp.character <- function(x, disambiguateFIDs, stringsAsFactors = FALSE, ...) {
+  tosp(as.json(x), stringsAsFactors = stringsAsFactors, ...)
 }
 
 #' @export

@@ -7,7 +7,7 @@
 geojson_sf(x, stringsAsFactors = FALSE, ...)
 }
 \arguments{
-\item{x}{Object of class \code{geo_list} or \code{geo_json}}
+\item{x}{Object of class \code{geo_list}, \code{geo_json}, string, or json}
 
 \item{stringsAsFactors}{Convert strings to Factors? Default \code{FALSE}.}
 
@@ -66,7 +66,7 @@ x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
 geojson_sf(x)
 
 # character string ----------------------
-x <- '{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}'
+x <- unclass(geojson_json(c(-99.74,32.45)))
 geojson_sf(x)
 }
 }
