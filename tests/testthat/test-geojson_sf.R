@@ -18,6 +18,12 @@ test_that("geojson_sf works with geo_list inputs", {
   # expect_is(d, "SpatialPolygonsDataFrame")
 })
 
+test_that("geojson_sf works with string inputs", {
+  x <- '{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}'
+  a <- geojson_sf(x)
+  expect_is(a, "sf")
+})
+
 test_that("geojson_sf works with json inputs", {
   # numeric vector of length 2, making a point type
   vec <- c(-99.74,32.45)

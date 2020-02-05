@@ -1,8 +1,8 @@
-#' Convert output of `geojson_list` or `geojson_json` to sf classes
+#' Convert objects to an sf class
 #'
 #' @export
-#'
-#' @param x Object of class `geo_list` or `geo_json`
+#' @param x Object of class `geo_list` or `geo_json`, or a character string
+#' or json
 #' @param stringsAsFactors Convert strings to Factors? Default `FALSE`.
 #' @param ... Further args passed on to [sf::st_read()]
 #'
@@ -50,9 +50,18 @@
 #' # json ----------------------
 #' x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
 #' geojson_sf(x)
+#' 
+#' # character string ----------------------
+#' x <- '{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}'
+#' geojson_sf(x)
 #' }
 geojson_sf <- function(x, stringsAsFactors = FALSE, ...) {
   UseMethod("geojson_sf")
+}
+
+#' @export
+geojson_sf.character <- function(x, stringsAsFactors = FALSE, ...) {
+  tosf(as.json(x), stringsAsFactors = stringsAsFactors, ...)
 }
 
 #' @export
