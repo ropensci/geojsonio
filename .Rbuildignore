@@ -22,3 +22,4 @@ man-roxygen
 ^codemeta\.json$
 .txt
 inst/ignore/Dockerfile
+EW.geojson

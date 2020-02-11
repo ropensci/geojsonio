@@ -146,8 +146,13 @@ file_to_list <- function(input, stringsAsFactors = FALSE, parse = FALSE, ...) {
     kml = tosp_list(input, stringsAsFactors, parse, ...),
     shp = tosp_list(input, stringsAsFactors, parse, ...),
     geojson = tosp_list(input, stringsAsFactors, parse, ...),
+    # geojson = geo2list(input, parse, ...),
     json = tosp_list(input, stringsAsFactors, parse, ...)
   )
+}
+
+geo2list <- function(x, parse = FALSE, ...) {
+  jsonlite::fromJSON(x, parse, ...)
 }
 
 file_to_sp <- function(input, stringsAsFactors = FALSE, ...) {
@@ -165,8 +170,9 @@ file_to_sp <- function(input, stringsAsFactors = FALSE, ...) {
 
 sf2list <- function(x, parse) {
   stopifnot(inherits(x, "sf"))
-  tfile <- tempfile(fileext = ".geojson")
-  sf::st_write(x, tfile, quiet = TRUE)
   on.exit(unlink(x))
-  jsonlite::fromJSON(tfile, parse)
+  txt <- geojsonsf::sf_geojson(x)
+  jsonlite::fromJSON(txt, parse)
+  # tfile <- tempfile(fileext = ".geojson")
+  # sf::st_write(x, tfile, quiet = TRUE)
 }
