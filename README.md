@@ -5,6 +5,7 @@ geojsonio
 
 [![cran checks](https://cranchecks.info/badges/worst/geojsonio)](https://cranchecks.info/pkgs/geojsonio)
 [![Build Status](https://api.travis-ci.org/ropensci/geojsonio.png)](https://travis-ci.org/ropensci/geojsonio)
+[![R build status](https://github.com/ropensci/geojsonio/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/geojsonio)
 [![codecov.io](https://codecov.io/github/ropensci/geojsonio/coverage.svg?branch=master)](https://codecov.io/github/ropensci/geojsonio?branch=master)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/metacran/cranlogs.app)
 [![cran version](https://www.r-pkg.org/badges/version/geojsonio)](https://cran.r-project.org/package=geojsonio)
@@ -185,13 +186,13 @@ geojson_list(sp_poly)$features[[1]]
 #> $type
 #> [1] "Feature"
 #> 
+#> $id
+#> [1] 1
+#> 
 #> $properties
 #> $properties$dummy
 #> [1] 0
 #> 
-#> 
-#> $geometry
-#> $geometry$type
 ...
 ```
 
@@ -291,10 +292,10 @@ topojson_list(s)
 #> $objects$foo$geometries[[1]]$coordinates
 #> [1] 1 3
 #> 
-#> $objects$foo$geometries[[1]]$properties
-#> $objects$foo$geometries[[1]]$properties$dat
+#> $objects$foo$geometries[[1]]$id
 #> [1] 1
 #> 
+#> $objects$foo$geometries[[1]]$properties
 ...
 ```
 
