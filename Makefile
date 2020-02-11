@@ -20,3 +20,7 @@ check: build
 
 test:
 	${RSCRIPT} -e 'devtools::test()'
+
+check_windows:
+	${RSCRIPT} -e "devtools::check_win_devel(); devtools::check_win_release()"
+		
