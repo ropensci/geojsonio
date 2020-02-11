@@ -1,6 +1,10 @@
 geojsonio 0.9.0
 ===============
 
+### NEW FEATURES
+
+* `geojson_sf()` and `geojson_sp()` now accept strings in addition to `json`, `geoson_list` and `geojson_json` types (#164)
+
 ### MINOR IMPROVEMENTS
 
 * `topojson_json()` and `topojson_list()` gain params `object_name` and `quantization` to pass through to `geojson_json()` (#158)
