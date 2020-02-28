@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { image: "jakubnowosad/geocompr_proj6"}
+        - { image: "jakubnowosad/rspatial_proj6"}
         - { image: "rocker/geospatial:devel"}
         
     container: ${{ matrix.config.image }}
