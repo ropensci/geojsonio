@@ -5,7 +5,18 @@ name: R-CMD-check-docker
 jobs:
   R-CMD-check-docker:
     runs-on: ubuntu-latest
-    container: jakubnowosad/geocompr_proj6
+    
+    name: ${{ matrix.config.image }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { image: "jakubnowosad/geocompr_proj6"}
+        - { image: "rocker/geospatial:devel"}
+        
+    container: ${{ matrix.config.image }}
+    
     steps:
       - uses: actions/checkout@v1
 
@@ -19,5 +30,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-docker-geocompr-results
+          name: ${{ runner.os }}-${{ matrix.config.image}}
           path: check
