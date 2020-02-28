@@ -2,7 +2,7 @@ context("topojson_read")
 
 test_that("topojson_read works with file inputs", {
   file <- system.file("examples", "us_states.topojson", package = "geojsonio")
-  aa <- topojson_read(file, quiet = TRUE)
+  aa <- topojson_read(file, quiet = TRUE, stringsAsFactors = TRUE)
   df <- as.data.frame(aa)
   
   expect_is(aa, "sf")
