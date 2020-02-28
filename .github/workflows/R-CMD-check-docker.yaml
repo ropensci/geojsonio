@@ -12,8 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { image: "jakubnowosad/rspatial_proj6"}
-        - { image: "rocker/geospatial:devel"}
+        - {image: "jakubnowosad/rspatial_proj6"}
+        - {image: "rocker/geospatial:devel"}
         
     container: ${{ matrix.config.image }}
     
@@ -24,7 +24,7 @@ jobs:
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
 
       - name: Check
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
+        run: Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'), error_on = 'warning', check_dir = 'check')"
 
       - name: Upload check results
         if: failure()
