@@ -13,7 +13,7 @@ jobs:
       matrix:
         config:
         - {image: "jakubnowosad/rspatial_proj6"}
-        - {image: "rocker/geospatial:devel"}
+        - {image: "rocker/r-ver:devel"}
         
     container: ${{ matrix.config.image }}
     
@@ -30,6 +30,16 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ matrix.config.image }}-${{ hashFiles('DESCRIPTION') }}
 
+      - name: Install system dependencies
+        if: matrix.config.image == "rocker/r-ver:devel"
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install libgdal-dev gdal-bin libgeos-dev \
+          libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
+          libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
+          protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
+          libnode-dev
+          
       - name: Install dependencies
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
 
