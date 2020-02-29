@@ -31,7 +31,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.config.image }}-${{ hashFiles('DESCRIPTION') }}
 
       - name: Install system dependencies
-        if: matrix.config.image == "rocker/r-ver:devel"
+        if: contains(matrix.config.image, 'rocker/r-ver:devel') == true
         run: |
           sudo apt-get -y update
           sudo apt-get -y install libgdal-dev gdal-bin libgeos-dev \
