@@ -13,23 +13,14 @@ jobs:
       matrix:
         config:
         - {image: "jakubnowosad/rspatial_proj6"}
-        - {image: "rocker/r-devel"}
+        - {image: "rocker/geospatial:devel"}
         
     container: ${{ matrix.config.image }}
     
     steps:
       - uses: actions/checkout@v1
       
-      - name: Install system dependencies
-        if: contains(matrix.config.image, 'rocker/r-devel') == true
-        run: |
-          sudo add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable
-          sudo apt-get -y update
-          sudo apt-get -y install libgdal-dev gdal-bin libgeos-dev \
-          libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
-          libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
-          protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
-          libnode-dev
+      - uses: r-lib/actions/setup-pandoc@master
 
       - name: Install dependencies
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
