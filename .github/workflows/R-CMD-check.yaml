@@ -41,7 +41,6 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-v8-${{ matrix.config.v8 }}-${{ hashFiles('DESCRIPTION') }}
 
-
       - name: install macOS system dependencies
         if: runner.os == 'macOS'
         continue-on-error: true
