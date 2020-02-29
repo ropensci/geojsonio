@@ -33,7 +33,7 @@ jobs:
       - name: Install system dependencies
         if: contains(matrix.config.image, 'rocker/r-ver:devel') == true
         run: |
-          apt-get update \
+          apt-get update 
           apt-get install -y --no-install-recommends \
           libgdal-dev gdal-bin libgeos-dev \
           libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
