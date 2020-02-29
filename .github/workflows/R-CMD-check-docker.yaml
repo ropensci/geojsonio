@@ -35,7 +35,7 @@ jobs:
         run: |
           apt-get update 
           apt-get install -y --no-install-recommends \
-          libgdal-dev gdal-bin libgeos-dev \
+          qpdf libgdal-dev gdal-bin libgeos-dev \
           libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
           libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
           protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
