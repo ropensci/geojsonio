@@ -1,3 +1,10 @@
+geojsonio 0.9.2
+===============
+
+### BUG FIXES
+
+* fix a test for change in `stringsAsFactors` behavior in R v4 (#166) (#167)
+
 geojsonio 0.9.0
 ===============
 
