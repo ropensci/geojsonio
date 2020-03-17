@@ -4,11 +4,13 @@
 \name{canada_cities}
 \alias{canada_cities}
 \title{This is the same data set from the maps library, named differently}
-\format{A list with 6 components, namely "name", "country.etc", "pop",
+\format{
+A list with 6 components, namely "name", "country.etc", "pop",
 "lat", "long", and "capital", containing the city name, the province
 abbreviation, approximate population (as at January 2006), latitude,
 longitude and capital status indication (0 for non-capital, 1 for capital,
-2 for provincial}
+2 for provincial
+}
 \description{
 This database is of Canadian cities of population greater than about 1,000.
 Also included are province capitals of any population size.

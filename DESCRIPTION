@@ -43,7 +43,7 @@ Suggests:
     DBI,
     RPostgres
 Enhances: RColorBrewer
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 X-schema.org-applicationCategory: Geospatial
 X-schema.org-keywords: geojson, topojson, geospatial, conversion, data, input-output
 X-schema.org-isPartOf: https://ropensci.org
