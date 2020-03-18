@@ -13,7 +13,7 @@ jobs:
       matrix:
         config:
         - {image: "jakubnowosad/rspatial_proj6", rscript: "Rscript"}
-        - {image: "rocker/r-devel", gcc: "10", rscript: "RDscript"}
+        - {image: "rocker/r-devel", gcc: "10", rscript: "Rscript"}
         - {image: "rocker/r-devel", gcc: "default", rscript: "RDscript"}
         
     container: ${{ matrix.config.image }}
@@ -46,7 +46,7 @@ jobs:
           libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
           libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
           protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
-          libnode-dev \
+          libnode-dev
           
       - name: Install dependencies
         run: ${{ matrix.config.rscript }} -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
