@@ -13,7 +13,7 @@ jobs:
       matrix:
         config:
         - {image: "jakubnowosad/rspatial_proj6", rscript: "Rscript"}
-        - {image: "rocker/r-devel", gcc: "10", rscript: "Rscript"}
+        - {image: "rocker/r-devel", gcc: "10", rscript: "RDscript"}
         - {image: "rocker/r-devel", gcc: "default", rscript: "RDscript"}
         
     container: ${{ matrix.config.image }}
@@ -29,7 +29,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ matrix.config.image }}-${{ hashFiles('DESCRIPTION') }}
+          key: ${{ runner.os }}-${{ matrix.config.image }}-${{ matrix.config.gcc }}-${{ hashFiles('DESCRIPTION') }}
 
       - name: Install system dependencies
         if: contains(matrix.config.gcc, '10') == true
@@ -58,5 +58,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-${{ matrix.config.image}}
+          name: ${{ runner.os }}-${{ matrix.config.gcc }}
           path: check
