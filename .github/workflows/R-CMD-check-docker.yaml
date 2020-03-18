@@ -33,6 +33,8 @@ jobs:
       - name: Install system dependencies
         if: contains(matrix.config.image, 'rocker/r-ver:devel') == true
         run: |
+          apt update
+          apt install gcc-10
           apt-get update 
           apt-get install -y --no-install-recommends \
           qpdf libgdal-dev gdal-bin libgeos-dev \
@@ -40,7 +42,6 @@ jobs:
           libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
           protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
           libnode-dev \
-          gcc-10
           
       - name: Install dependencies
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
