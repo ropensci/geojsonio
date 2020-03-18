@@ -6,14 +6,15 @@ jobs:
   R-CMD-check-docker:
     runs-on: ubuntu-latest
     
-    name: ${{ matrix.config.image }}
+    name: ${{ matrix.config.image }}-${{ matrix.config.gcc }}
 
     strategy:
       fail-fast: false
       matrix:
         config:
-        - {image: "jakubnowosad/rspatial_proj6"}
-        - {image: "rocker/r-ver:devel"}
+        - {image: "jakubnowosad/rspatial_proj6", rscript: "Rscript"}
+        - {image: "rocker/r-devel", gcc: "10", rscript: "RDscript"}
+        - {image: "rocker/r-devel", gcc: "default", rscript: "RDscript"}
         
     container: ${{ matrix.config.image }}
     
@@ -31,10 +32,14 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.config.image }}-${{ hashFiles('DESCRIPTION') }}
 
       - name: Install system dependencies
-        if: contains(matrix.config.image, 'rocker/r-ver:devel') == true
+        if: contains(matrix.config.gcc, '10') == true
         run: |
           apt update
           apt install gcc-10
+          
+      - name: Install system dependencies
+        if: contains(matrix.config.image, 'rocker/r-devel') == true
+        run: |
           apt-get update 
           apt-get install -y --no-install-recommends \
           qpdf libgdal-dev gdal-bin libgeos-dev \
@@ -44,10 +49,16 @@ jobs:
           libnode-dev \
           
       - name: Install dependencies
-        run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
+        run: |
+          install.packages('remotes')
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran('rcmdcheck')
+        shell: ${{ matrix.config.rscript }} {0}
 
       - name: Check
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'), error_on = 'warning', check_dir = 'check')"
+        run: |
+          rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'), error_on = 'warning', check_dir = 'check')
+        shell: ${{ matrix.config.rscript}} {0}
 
       - name: Upload check results
         if: failure()
