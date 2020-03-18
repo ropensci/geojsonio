@@ -23,6 +23,10 @@ jobs:
       
       - uses: r-lib/actions/setup-pandoc@master
       
+      - name: Set R_LIBS
+        run: |
+          echo "::set-env name=R_LIBS::$(Rscript -e \"Sys.getenv('R_LIBS')\""
+      
       - name: Cache R packages
         uses: actions/cache@v1
         with:
