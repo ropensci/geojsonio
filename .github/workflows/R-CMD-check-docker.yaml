@@ -6,7 +6,7 @@ jobs:
   R-CMD-check-docker:
     runs-on: ubuntu-latest
     
-    name: ${{ matrix.config.image }}-${{ matrix.config.gcc }}
+    name: ${{ matrix.config.image }}-${{ matrix.config.gcc}}
 
     strategy:
       fail-fast: false
@@ -49,16 +49,10 @@ jobs:
           libnode-dev \
           
       - name: Install dependencies
-        run: |
-          install.packages('remotes')
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran('rcmdcheck')
-        shell: ${{ matrix.config.rscript }} {0}
+        run: ${{ matrix.config.rscript }} -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
 
       - name: Check
-        run: |
-          rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'), error_on = 'warning', check_dir = 'check')
-        shell: ${{ matrix.config.rscript}} {0}
+        run: ${{ matrix.config.rscript }} -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'), error_on = 'warning', check_dir = 'check')"
 
       - name: Upload check results
         if: failure()
