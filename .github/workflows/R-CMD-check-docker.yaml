@@ -25,7 +25,8 @@ jobs:
       
       - name: Set R_LIBS
         run: |
-          echo "::set-env name=R_LIBS::$(Rscript -e \"Sys.getenv('R_LIBS')\""
+          export R_LIBS="$(${{ matrix.config.rscript }} -e 'cat(.libPaths()[1])')"
+          echo "::set-env name=R_LIBS::$R_LIBS"
       
       - name: Cache R packages
         uses: actions/cache@v1
