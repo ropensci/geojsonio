@@ -14,7 +14,10 @@ I have run R CMD check on the 10 reverse dependencies. Summary at <https://githu
 
 -------
 
+This is a resubmission of v0.9.2 of this package fixing a problem with gcc-10.
 This version fixes stringsAsFactors behavior for the upcoming R ver 4.
+There were failing tests in the test-crs_convert.R file. These have been commented out for now as per recommendation fof Roger Bivand, suggesting that we skip these for now until sf stabilizes
+I've fixed some other tests.
 
 Thanks!
 Scott Chamberlain
