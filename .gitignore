@@ -12,3 +12,4 @@ revdep/library.noindex
 revdep/data.sqlite
 *.txt
 inst/ignore/geojson_read_old.R
+Dockerfile

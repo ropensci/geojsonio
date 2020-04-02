@@ -22,3 +22,5 @@ man-roxygen
 ^codemeta\.json$
 .txt
 inst/ignore/Dockerfile
+inst/ignore/*
+Dockerfile
