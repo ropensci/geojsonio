@@ -315,7 +315,8 @@ write_ogr_sf <- function(input, file, precision = NULL, overwrite,
     message("checking polygons with maptools::checkPolygonsHoles ...")
     input_polys <- slot(input, "polygons")
     input_fix <- lapply(input_polys, suppressWarnings(maptools::checkPolygonsHoles))
-    polys <- sp::SpatialPolygons(input_fix, proj4string = sp::CRS("+init=epsg:4326"))
+    polys <- sp::SpatialPolygons(input_fix)
+    # polys <- sp::SpatialPolygons(input_fix, proj4string = sp::CRS("+init=epsg:4326"))
     input <- sp::SpatialPolygonsDataFrame(polys, data = input@data)
   }
   if (convert_wgs84) {
