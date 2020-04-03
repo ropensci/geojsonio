@@ -1,6 +1,8 @@
 context("centroid")
 
 test_that("centroid works with geo_list input", {
+  skip_on_cran()
+  
   # numeric input
   vec <- c(-99.74, 32.45)
   x <- geojson_list(vec)

@@ -1,6 +1,8 @@
 context("geojson_atomize")
 
 test_that("geojson_atomize works with list inputs", {
+  skip_on_cran()
+
   mylist <- list(list(latitude = 30, longitude = 120, marker = "red"),
              list(latitude = 30, longitude = 130, marker = "blue"))
   lst <- geojson_list(mylist)
@@ -12,6 +14,8 @@ test_that("geojson_atomize works with list inputs", {
 })
 
 test_that("geojson_atomize works with geo_json inputs", {
+  skip_on_cran()
+
   mylist <- list(list(latitude = 30, longitude = 120, marker = "red"),
                  list(latitude = 30, longitude = 130, marker = "blue"))
   js <- geojson_json(mylist)
@@ -24,6 +28,8 @@ test_that("geojson_atomize works with geo_json inputs", {
 })
 
 test_that("geojson_atomize works with character inputs", {
+  skip_on_cran()
+  
   mylist <- list(list(latitude = 30, longitude = 120, marker = "red"),
                  list(latitude = 30, longitude = 130, marker = "blue"))
   js <- geojson_json(mylist)

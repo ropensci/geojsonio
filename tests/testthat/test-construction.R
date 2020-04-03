@@ -1,6 +1,8 @@
 context("construction")
 
 test_that("construction for geo_list + geo_list works as expected", {
+  skip_on_cran()
+
   vec <- c(-99.74,32.45)
   a <- geojson_list(vec)
   vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
@@ -16,6 +18,8 @@ test_that("construction for geo_list + geo_list works as expected", {
 })
   
 test_that("construction for json + json works as expected", {
+  skip_on_cran()
+  
   c <- geojson_json(c(-99.74,32.45))
   vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
   d <- geojson_json(vecs, geometry="polygon")

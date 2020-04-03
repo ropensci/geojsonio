@@ -1,6 +1,8 @@
 context("bounds")
 
 test_that("bounds works with geo_list input", {
+  skip_on_cran()
+
   # geo_list with numeric data
   vec <- c(-99.74, 32.45)
   x <- geojson_list(vec)
@@ -18,6 +20,8 @@ test_that("bounds works with geo_list input", {
 })
 
 test_that("bounds works with list input", {
+  skip_on_cran()
+  
   mylist <- list(list(latitude = 30, longitude = 120, marker = "red"),
                  list(latitude = 30, longitude = 130, marker = "blue"))
   x <- geojson_list(mylist)

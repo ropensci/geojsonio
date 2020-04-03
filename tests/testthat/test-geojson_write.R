@@ -82,6 +82,8 @@ test_that("precision argument works with sp objects", {
 })
 
 test_that("geojson_write detects inproper polygons passed as lists inputs", {
+  skip_on_cran()
+
   good <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
   bad <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,1))
 
@@ -100,6 +102,7 @@ test_that("geojson_write detects inproper polygons passed as lists inputs", {
 })
 
 test_that("geojson_write unclasses columns with special classes so writeOGR works", {
+  skip_on_cran()
   library('sp')
   library('sf')
 
@@ -116,6 +119,7 @@ test_that("geojson_write unclasses columns with special classes so writeOGR work
 })
 
 test_that("geojson_write passes toJSON args", {
+  skip_on_cran()
   expected_na_no_pretty <- "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":1.1},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.2,4]}},{\"type\":\"Feature\",\"properties\":{\"x\":2.2},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3,4.6]}},{\"type\":\"Feature\",\"properties\":{\"x\":\"NA\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.8,4.4]}}]}"
   expected_null_pretty <- c("{", "  \"type\": \"FeatureCollection\",", "  \"features\": [",
                             "    {", "      \"type\": \"Feature\",", "      \"properties\": {",

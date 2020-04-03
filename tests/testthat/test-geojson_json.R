@@ -1,6 +1,8 @@
 context("geojson_json")
 
 test_that("geojson_json works with numeric inputs", {
+  skip_on_cran()
+
   # From a numeric vector of length 2, making a point type
   a <- geojson_json(c(-99.74,32.45))
   expect_is(a, "json")
@@ -40,6 +42,8 @@ test_that("geojson_json works with numeric inputs", {
 })
 
 test_that("geojson_json works with data.frame inputs", {
+  skip_on_cran()
+
   # From a data.frame to points
   bb <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
   bb <- unclass(bb)
@@ -56,6 +60,8 @@ test_that("geojson_json works with data.frame inputs", {
 })
 
 test_that("geojson_json works with data.frame inputs", {
+  skip_on_cran()
+
   # from a list
   mylist <- list(list(latitude=30, longitude=120, marker="red"),
                  list(latitude=30, longitude=130, marker="blue"))
@@ -78,6 +84,8 @@ test_that("geojson_json works with data.frame inputs", {
 })
 
 test_that("geojson_json detects inproper polygons passed as lists inputs", {
+  skip_on_cran()
+
   good <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
   bad <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,1))
 
@@ -94,6 +102,8 @@ test_that("geojson_json detects inproper polygons passed as lists inputs", {
 })
 
 test_that("geojson_json - acceptable type values for numeric/data.frame/list", {
+  skip_on_cran()
+
   expect_error(geojson_json(c(-99.74,32.45), type = "LineString"),
     "'type' must be one of")
 
@@ -106,6 +116,8 @@ test_that("geojson_json - acceptable type values for numeric/data.frame/list", {
 })
 
 test_that("skipping geoclass works with type = skip", {
+  skip_on_cran()
+  
   x <- geojson_sp(geojson_json(c(-99.74,32.45)))
   expect_match(attr(geojson_json(x), "type"), "FeatureCollection")
   expect_null(attr(geojson_json(x, type = "skip"), "type"))
