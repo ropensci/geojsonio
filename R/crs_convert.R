@@ -38,7 +38,7 @@ convert_wgs84_sf_sfc <- function(x, crs) {
   if (!requireNamespace("sf", quietly = TRUE)) {
     stop("You don't have the 'sf' package installed. Please install and try again")
   } else {
-    message("Converting CRS from EPSG:", sf::st_crs(x)[["epsg"]], " to WGS84.")
+    message("Converting CRS from EPSG:", sf::st_crs(x)$epsg, " to WGS84.")
     sf::st_transform(x, 4326)
   }
 }
@@ -51,10 +51,10 @@ is_wgs84.sf <- function(x, warn = TRUE) {
 }
 
 is_wgs84.sfc <- function(x, warn = TRUE) {
-  crs_attr <- attr(x, "crs")
-  epsg <- crs_attr[["epsg"]]
+  crs_attr <- st_crs(x)
+  epsg <- crs_attr$epsg
   if (is.na(epsg)) {
-    is_it <- is_wgs84_proj4(crs_attr[["proj4string"]])
+    is_it <- is_wgs84_proj4(crs_attr$proj4string)
   } else {
     is_it <- epsg == 4326
   }
