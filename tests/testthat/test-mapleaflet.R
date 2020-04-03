@@ -4,6 +4,7 @@ library("leaflet")
 supp_invis <- function(x) suppressMessages(invisible(x))
 
 test_that("map_leaf works with file inputs", {
+  skip_on_cran()
   file <- "myfile.geojson"
   supp_invis(geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file))
   a_map <- map_leaf(as.location(file))
@@ -15,6 +16,7 @@ test_that("map_leaf works with file inputs", {
 })
 
 test_that("map_leaf works with character inputs", {
+  skip_on_cran()
   b_map <- geojson_json(c(-99.74, 32.45)) %>% as.character %>% map_leaf
   expect_is(b_map, "leaflet")
   expect_equal(b_map$x$calls[[2]]$args[[1]],
@@ -22,6 +24,7 @@ test_that("map_leaf works with character inputs", {
 })
 
 test_that("map_leaf works with geo_list inputs", {
+  skip_on_cran()
   mylist <- list(list(latitude=30, longitude=120, marker="red"),
                  list(latitude=30, longitude=130, marker="blue"))
   x <- suppressMessages(geojson_list(mylist))
@@ -40,6 +43,7 @@ test_that("map_leaf works with url inputs", {
 })
 
 test_that("map_leaf works with json inputs", {
+  skip_on_cran()
   x <- geojson_json(c(-99.74, 32.45))
   f_map <- map_leaf(x)
   expect_is(x, "json")
@@ -47,15 +51,18 @@ test_that("map_leaf works with json inputs", {
 })
 
 test_that("map_leaf works with data.frame inputs", {
+  skip_on_cran()
   h_map <- supp_invis(map_leaf(us_cities, basemap = "CartoDB.Positron"))
   expect_is(h_map, "leaflet")
 })
 
 test_that("map_leaf works with numeric vector inputs - error - not working yet", {
+  skip_on_cran()
   expect_error(map_leaf(c(32.45, -99.74)))
 })
 
 test_that("map_leaf works with list inputs", {
+  skip_on_cran()
   poly <- list(c(-114.345703125,39.436192999314095),
                c(-114.345703125,43.45291889355468),
                c(-106.61132812499999,43.45291889355468),
@@ -99,12 +106,14 @@ sp_grid <- local({
 })
 
 test_that("map_leaf works with SpatialPolygons inputs", {
+  skip_on_cran()
   jj <- map_leaf(sp_poly)
 
   expect_is(jj, "leaflet")
 })
 
 test_that("map_leaf works with SpatialPolygonsDataFrame inputs", {
+  skip_on_cran()
   sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
   jj <- map_leaf(sp_polydf)
 
@@ -112,12 +121,14 @@ test_that("map_leaf works with SpatialPolygonsDataFrame inputs", {
 })
 
 test_that("map_leaf works with SpatialPoints inputs", {
+  skip_on_cran()
   kk <- map_leaf(sp_pts)
   expect_is(sp_pts, "SpatialPoints")
   expect_is(kk, "leaflet")
 })
 
 test_that("map_leaf works with SpatialPointsDataFrame inputs", {
+  skip_on_cran()
   sp_ptsdf <- as(sp_pts, "SpatialPointsDataFrame")
   ll <- map_leaf(sp_ptsdf)
   expect_is(sp_ptsdf, "SpatialPointsDataFrame")
@@ -125,12 +136,14 @@ test_that("map_leaf works with SpatialPointsDataFrame inputs", {
 })
 
 test_that("map_leaf works with SpatialLines inputs", {
+  skip_on_cran()
   mm <- map_leaf(sp_lines)
   expect_is(sp_lines, "SpatialLines")
   expect_is(mm, "leaflet")
 })
 
 test_that("map_leaf works with SpatialLinesDataFrame inputs", {
+  skip_on_cran()
   sp_linesdf <- as(sp_lines, "SpatialLinesDataFrame")
   nn <- map_leaf(sp_linesdf)
   expect_is(sp_linesdf, "SpatialLinesDataFrame")
@@ -139,12 +152,14 @@ test_that("map_leaf works with SpatialLinesDataFrame inputs", {
 
 
 test_that("map_leaf works with SpatialGrid inputs", {
+  skip_on_cran()
   mm <- map_leaf(sp_grid)
   expect_is(sp_grid, "SpatialGrid")
   expect_is(mm, "leaflet")
 })
 
 test_that("map_leaf works with SpatialGridDataFrame inputs", {
+  skip_on_cran()
   sp_griddf <- SpatialGridDataFrame(sp_grid, data.frame(val = 1:25))
   nn <- map_leaf(sp_griddf)
   expect_is(sp_griddf, "SpatialGridDataFrame")
