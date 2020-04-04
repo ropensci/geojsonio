@@ -17,7 +17,7 @@
     "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.3 Patched (2020-02-29 r77909)",
+  "runtimePlatform": "R version 3.6.3 Patched (2020-03-11 r78112)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -293,10 +293,13 @@
       "sameAs": "https://CRAN.R-project.org/package=jqr"
     }
   ],
-  "contIntegration": ["https://travis-ci.org/ropensci/geojsonio", "https://codecov.io/github/ropensci/geojsonio?branch=master"],
+  "contIntegration": [
+    "https://travis-ci.org/ropensci/geojsonio",
+    "https://codecov.io/github/ropensci/geojsonio?branch=master"
+  ],
   "releaseNotes": "https://github.com/ropensci/geojsonio/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/geojsonio/blob/master/README.md",
-  "fileSize": "1841.746KB",
+  "fileSize": "1841.856KB",
   "applicationCategory": "Geospatial",
   "isPartOf": "https://ropensci.org",
   "keywords": ["geojson", "topojson", "geospatial", "conversion", "data", "input-output", "io", "rstats", "r", "r-package"],
