@@ -5,10 +5,11 @@ json_val_safe <- function(x) {
   if (inherits(tmp, "error")) FALSE else tmp
 }
 
-to_json <- function(x, ...) {
+to_json <- function(x, precision = 7, ...) {
   if (is.character(x) && json_val_safe(x)) return(structure(x, class = "json"))
-  structure(jsonlite::toJSON(x, ..., digits = 7, auto_unbox = TRUE, force = TRUE),
-            class = c('json','geo_json'))
+  if (is.null(precision)) precision <- 7
+  structure(jsonlite::toJSON(x, ..., digits = precision, auto_unbox = TRUE,
+    force = TRUE), class = c('json','geo_json'))
 }
 
 class_json <- function(x, ..., type = "FeatureCollection") {

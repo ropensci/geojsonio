@@ -14,6 +14,7 @@ geojson_json(
   type = "FeatureCollection",
   convert_wgs84 = FALSE,
   crs = NULL,
+  precision = NULL,
   ...
 )
 }
@@ -54,6 +55,15 @@ an epsg code as a four or five digit integer or a valid proj4 string.
 This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or
 the object already has a CRS.}
 
+\item{precision}{(integer) desired number of decimal places for coordinates.
+Only used with classes from \pkg{sp}\pkg{rgeos} classes; ignored for other
+classes. Using fewer decimal places decreases object sizes (at the
+cost of precision). This changes the underlying precision stored in the
+data. \verb{options(digits = <some number>)} changes the maximum number of
+digits displayed (to find out what yours is set at see
+\code{getOption("digits")}); the value of this parameter will change what's
+displayed in your console up to the value of \code{getOption("digits")}}
+
 \item{...}{Further args passed on to internal functions. For Spatial*
 classes, it is passed through to
 \code{\link[sf:st_write]{sf::st_write()}}. For sf classes, data.frames, lists, numerics,
@@ -87,11 +97,17 @@ For sf classes (sf, sfc, sfg), the following conversions are made:
 the geometry as above
 \item sf: \code{FeatureCollection}
 }
+
+Precision, number of digits after the decimal, is hard-coded at 22 using
+the \code{digits} parameter of \code{jsonlite::toJSON} for classes \code{numeric}, \code{list},
+\code{data.frame}, and \code{geo_list} (output of \code{\link[=geojson_list]{geojson_list()}}).
 }
 \examples{
 \dontrun{
 # From a numeric vector of length 2, making a point type
-geojson_json(c(-99.74,32.45))
+geojson_json(c(-99.74134244,32.451323223))
+geojson_json(c(-99.74134244,32.451323223))[[1]]
+geojson_json(c(-99.74134244,32.451323223), precision=2)[[1]]
 geojson_json(c(-99.74,32.45), type = "GeometryCollection")
 
 ## polygon type
@@ -106,7 +122,8 @@ geojson_json(poly, geometry = "polygon")
 
 # Lists
 ## From a list of numeric vectors to a polygon
-vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
+vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), 
+c(100.0,0.0))
 geojson_json(vecs, geometry="polygon")
 
 ## from a named list
@@ -122,7 +139,8 @@ geojson_json(us_cities[1:2,], lat='lat', lon='long',
 # from data.frame to polygons
 head(states)
 ## make list for input to e.g., rMaps
-geojson_json(states[1:351, ], lat='lat', lon='long', geometry="polygon", group='group')
+geojson_json(states[1:351, ], lat='lat', lon='long', geometry="polygon", 
+group='group')
 
 # from a geo_list
 a <- geojson_list(us_cities[1:2,], lat='lat', lon='long')
@@ -142,10 +160,12 @@ geojson_json(sp_poly)
 ## Another SpatialPolygons
 library("sp")
 library("rgeos")
-pt <- SpatialPoints(coordinates(list(x = 0, y = 0)), CRS("+proj=longlat +datum=WGS84"))
+pt <- SpatialPoints(coordinates(list(x = 0, y = 0)), 
+ CRS("+proj=longlat +datum=WGS84"))
 ## transfrom to web mercator becuase geos needs project coords
-crs <- gsub("\n", "", paste0("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0
-   +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs", collapse = ""))
+crs <- gsub("\n", "", 
+  paste0("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0
+  +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs", collapse = ""))
 pt <- spTransform(pt, CRS(crs))
 ## buffer
 pt <- gBuffer(pt, width = 100)
@@ -213,14 +233,16 @@ geojson_json(r1r2df)
 
 # From SpatialPixels
 library("sp")
-pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
+pixels <- suppressWarnings(
+ SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
 summary(pixels)
 geojson_json(pixels)
 
 # From SpatialPixelsDataFrame
 library("sp")
 pixelsdf <- suppressWarnings(
- SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
+ SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")],
+ data = canada_cities)
 )
 geojson_json(pixelsdf)
 
@@ -228,8 +250,10 @@ geojson_json(pixelsdf)
 library("sp")
 library("rgeos")
 pts <- SpatialPoints(cbind(c(1,2,3,4,5), c(3,2,5,1,4)))
-poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
+poly1 <- Polygons(
+ list(Polygon(cbind(c(-100,-90,-85,-100), c(40,50,45,40)))), "1")
+poly2 <- Polygons(
+ list(Polygon(cbind(c(-90,-80,-75,-90), c(30,40,35,30)))), "2")
 poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 dat <- SpatialCollections(pts, polygons = poly)
 geojson_json(dat)
