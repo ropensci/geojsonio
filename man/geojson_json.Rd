@@ -57,7 +57,7 @@ the object already has a CRS.}
 \item{...}{Further args passed on to internal functions. For Spatial*
 classes, it is passed through to
 \code{\link[sf:st_write]{sf::st_write()}}. For sf classes, data.frames, lists, numerics,
-and geo_lists, it is passed through to \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}}
+and geo_lists, it is passed through to \code{\link[jsonlite:fromJSON]{jsonlite::toJSON()}}}
 }
 \value{
 An object of class \code{geo_json} (and \code{json})

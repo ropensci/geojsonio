@@ -9,7 +9,7 @@ as.json(x, ...)
 \arguments{
 \item{x}{Input}
 
-\item{...}{Further args passed on to \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}}
+\item{...}{Further args passed on to \code{\link[jsonlite:fromJSON]{jsonlite::toJSON()}}}
 }
 \description{
 Convert inputs to JSON

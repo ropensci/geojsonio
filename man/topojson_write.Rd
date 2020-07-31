@@ -76,7 +76,7 @@ classes, data.frames,
 regular lists, and numerics, it is passed through to
 \code{\link[sf:st_write]{sf::st_write()}}. For sf classes,
 geo_lists and json classes, it is passed through to
-\code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}.}
+\code{\link[jsonlite:fromJSON]{jsonlite::toJSON()}}.}
 }
 \value{
 A \code{topojson_write} class, with two elements:
