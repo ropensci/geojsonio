@@ -56,13 +56,13 @@ This argument will be ignored if \code{convert_wgs84} is \code{FALSE} or
 the object already has a CRS.}
 
 \item{precision}{(integer) desired number of decimal places for coordinates.
-Only used with classes from \pkg{sp}\pkg{rgeos} classes; ignored for other
-classes. Using fewer decimal places decreases object sizes (at the
+Using fewer decimal places decreases object sizes (at the
 cost of precision). This changes the underlying precision stored in the
 data. \verb{options(digits = <some number>)} changes the maximum number of
 digits displayed (to find out what yours is set at see
 \code{getOption("digits")}); the value of this parameter will change what's
-displayed in your console up to the value of \code{getOption("digits")}}
+displayed in your console up to the value of \code{getOption("digits")}.
+See Precision section for more.}
 
 \item{...}{Further args passed on to internal functions. For Spatial*
 classes, it is passed through to
@@ -97,11 +97,21 @@ For sf classes (sf, sfc, sfg), the following conversions are made:
 the geometry as above
 \item sf: \code{FeatureCollection}
 }
-
-Precision, number of digits after the decimal, is hard-coded at 22 using
-the \code{digits} parameter of \code{jsonlite::toJSON} for classes \code{numeric}, \code{list},
-\code{data.frame}, and \code{geo_list} (output of \code{\link[=geojson_list]{geojson_list()}}).
 }
+\section{Precision}{
+
+Precision is handled in different ways depending on the class.
+
+The \code{digits} parameter of \code{jsonlite::toJSON} controls precision for classes
+\code{numeric}, \code{list}, \code{data.frame}, and \code{geo_list}.
+
+For \code{sp} classes, precision is controlled by \code{sf::st_write}, being passed
+down through \code{\link[=geojson_write]{geojson_write()}}, then through internal function
+\code{write_geojson()}, then another internal function \code{write_ogr_sf()}
+
+For \code{sf} classes, precision isn't quite working yet.
+}
+
 \examples{
 \dontrun{
 # From a numeric vector of length 2, making a point type
