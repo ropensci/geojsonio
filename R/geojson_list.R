@@ -13,11 +13,9 @@
 #' (default) or GeometryCollection.
 #' @param group (character) A grouping variable to perform grouping for
 #' polygons - doesn't apply for points
-#' @param precision (integer) desired number of decimal places for the
-#' coordinates in the
-#' geojson file. Only used with classes from \pkg{sp}\pkg{rgeos} classes;
-#' ignored for other classes. Using fewer decimal places can decrease file
-#' sizes (at the
+#' @param precision (integer) desired number of decimal places for coordinates.
+#' Only used with classes from \pkg{sp}\pkg{rgeos} classes; ignored for other
+#' classes. Using fewer decimal places decreases object sizes (at the
 #' cost of precision). This changes the underlying precision stored in the
 #' data. `options(digits = <some number>)` changes the maximum number of
 #' digits displayed (to find out what yours is set at see
@@ -379,8 +377,8 @@ donotnull <- function(x, fun, ...) {
 
 #' @export
 geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
-                            geometry = "point", type = "FeatureCollection",
-                            convert_wgs84 = FALSE, crs = NULL, ...) {
+  geometry = "point", type = "FeatureCollection",
+  convert_wgs84 = FALSE, crs = NULL, ...) {
   if (convert_wgs84) {
     input <- convert_wgs84(input, crs)
   }
@@ -408,9 +406,8 @@ geojson_list.sf <- function(input, lat = NULL, lon = NULL, group = NULL,
 
 #' @export
 geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
-                             geometry = "point", type = "FeatureCollection",
-                             convert_wgs84 = FALSE, crs = NULL, ...) {
-
+  geometry = "point", type = "FeatureCollection", convert_wgs84 = FALSE,
+  crs = NULL, ...) {
   ## Remove names of input otherwise produces invalid geojson
   names(input) <- NULL
 
@@ -422,16 +419,18 @@ geojson_list.sfc <- function(input, lat = NULL, lon = NULL, group = NULL,
   if (length(input) == 1) {
     return(geojson_list(input[[1]]))
   } else {
-    out <- list(type = "GeometryCollection",
-                geometries = lapply(input, function(x) unclass(geojson_list(x))))
+    out <- list(
+      type = "GeometryCollection",
+      geometries = lapply(input, function(x) unclass(geojson_list(x)))
+    )
   }
   as.geo_list(out, from = "sfc")
 }
 
 #' @export
 geojson_list.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
-                             geometry = "point", type = "FeatureCollection",
-                             convert_wgs84 = FALSE, crs = NULL, ...) {
+  geometry = "point", type = "FeatureCollection",
+  convert_wgs84 = FALSE, crs = NULL, ...) {
 
   type <-  switch_geom_type(get_geometry_type(input))
 
