@@ -49,7 +49,7 @@ jobs:
           libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
           libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
           protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
-          libnode-dev
+          libnode-dev libxml2 libxml2-dev
           
       - name: Install dependencies
         run: ${{ matrix.config.rscript }} -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
