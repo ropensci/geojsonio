@@ -432,7 +432,8 @@ geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL,
 # regular R classes --------------------------
 #' @export
 geojson_json.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type='FeatureCollection', precision = NULL, ...) {
+  geometry = "point", type='FeatureCollection',
+  convert_wgs84 = FALSE, crs = NULL, precision = NULL, ...) {
   check_type(type)
   geoclass(to_json(num_to_geo_list(input, geometry, type), precision, ...),
     type)
@@ -440,7 +441,8 @@ geojson_json.numeric <- function(input, lat = NULL, lon = NULL, group = NULL,
 
 #' @export
 geojson_json.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type='FeatureCollection', precision = NULL, ...) {
+  geometry = "point", type='FeatureCollection', 
+  convert_wgs84 = FALSE, crs = NULL, precision = NULL, ...) {
   check_type(type)
   tmp <- guess_latlon(names(input), lat, lon)
   res <- df_to_geo_list(input, tmp$lat, tmp$lon, geometry, type, group)
@@ -449,7 +451,8 @@ geojson_json.data.frame <- function(input, lat = NULL, lon = NULL, group = NULL,
 
 #' @export
 geojson_json.list <- function(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type='FeatureCollection', precision = NULL, ...) {
+  geometry = "point", type='FeatureCollection', 
+  convert_wgs84 = FALSE, crs = NULL, precision = NULL, ...) {
   check_type(type)
   if (geometry == "polygon") lint_polygon_list(input)
   tmp <- if (!is.named(input)) {
@@ -464,7 +467,8 @@ geojson_json.list <- function(input, lat = NULL, lon = NULL, group = NULL,
 
 #' @export
 geojson_json.geo_list <- function(input, lat = NULL, lon = NULL, group = NULL,
-  geometry = "point", type = "FeatureCollection", precision = NULL, ...) {
+  geometry = "point", type = "FeatureCollection", 
+  convert_wgs84 = FALSE, crs = NULL, precision = NULL, ...) {
 
   geoclass(to_json(input, precision, ...), type)
 }
