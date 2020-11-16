@@ -25,3 +25,4 @@ man-roxygen
 inst/ignore/Dockerfile
 inst/ignore/*
 Dockerfile
+^LICENSE\.md$
