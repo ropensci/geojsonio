@@ -75,7 +75,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Check
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '${{ matrix.config.args }}'), error_on = 'warning', check_dir = 'check')"
+        run: Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-build-vignettes', '--no-vignettes', '--as-cran', '${{ matrix.config.args }}'), error_on = 'warning', check_dir = 'check')"
 
       - name: Upload check results
         if: failure()
