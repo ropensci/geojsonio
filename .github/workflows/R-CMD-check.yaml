@@ -68,7 +68,11 @@ jobs:
           ${{ matrix.config.v8 }}
 
       - name: Install dependencies
-        run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
+        run: |
+          install.packages(c('remotes', 'rcmdcheck')) 
+          if (Sys.info()["sysname"] == "Darwin") options(pkgType = "binary")
+          remotes::install_deps(dependencies = TRUE, configure.args = c('sf' = '${{ matrix.config.sf_args }}'))
+        shell: Rscript {0}
 
       - name: Check
         run: Rscript -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '${{ matrix.config.args }}'), error_on = 'warning', check_dir = 'check')"
