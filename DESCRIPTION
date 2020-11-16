@@ -12,7 +12,7 @@ Authors@R: c(
     person("Andy", "Teucher", role = "aut", email = "andy.teucher@gmail.com")
     )
 URL: https://github.com/ropensci/geojsonio (devel),
-    https://docs.ropensci.org/geojsonio (docs)
+    https://docs.ropensci.org/geojsonio/ (docs)
 BugReports: https://github.com/ropensci/geojsonio/issues
 LazyData: true
 VignetteBuilder: knitr
