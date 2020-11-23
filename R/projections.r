@@ -79,7 +79,7 @@ projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NU
     out[i] <- sprintf(".%s(%s)", names(args[i]), args[[i]])
   }
   argstogo <- paste(out, collapse = "")
-  gotgo <- sprintf(got, argstogo)
+  gotgo <- if (nzchar(argstogo)) sprintf(got, argstogo) else got
   if (is.null(gotgo)) {
     "That projection doesn't exist, check your spelling"
   } else {
