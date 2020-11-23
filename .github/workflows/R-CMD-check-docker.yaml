@@ -26,7 +26,6 @@ jobs:
       - name: Set R_LIBS
         run: |
           export R_LIBS="$(${{ matrix.config.rscript }} -e 'cat(.libPaths()[1])')"
-          echo "name=${{ R_LIBS }}" >> $R_LIBS
       
       - name: Cache R packages
         uses: actions/cache@v1
