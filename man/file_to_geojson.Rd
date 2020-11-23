@@ -100,10 +100,6 @@ list.files(dir)
 shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
 file_to_geojson(shpfile, method='local', output='shp_local')
 
-# US National Weather Service Hydrologic service area boundaries
-url <- 'https://www.weather.gov/source/gis/Shapefiles/Misc/hs05jn19.zip'
-out <- file_to_geojson(input=url, method='web', output='hsa')
-
 # geojson with .json extension
 ## this doesn't work anymore, hmmm
 # x <- gsub("\n", "", paste0('https://gist.githubusercontent.com/hunterowens/
