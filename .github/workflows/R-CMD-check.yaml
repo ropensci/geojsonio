@@ -72,6 +72,7 @@ jobs:
           install.packages(c('remotes', 'rcmdcheck')) 
           if (Sys.info()["sysname"] == "Darwin") options(pkgType = "binary")
           remotes::install_deps(dependencies = TRUE, configure.args = c('sf' = '${{ matrix.config.sf_args }}'))
+          remotes::install_cran("geojsonlint")
         shell: Rscript {0}
 
       - name: Check

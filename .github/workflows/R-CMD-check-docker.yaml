@@ -53,7 +53,7 @@ jobs:
           libnode-dev libxml2 libxml2-dev
           
       - name: Install dependencies
-        run: ${{ matrix.config.rscript }} -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
+        run: ${{ matrix.config.rscript }} -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran(c('rcmdcheck', 'geojsonlint'))"
 
       - name: Check
         run: ${{ matrix.config.rscript }} -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'), error_on = 'warning', check_dir = 'check')"
