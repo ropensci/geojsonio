@@ -32,14 +32,14 @@ jobs:
       - name: Cache R packages
         uses: actions/cache@v1
         with:
-          path: ${{ env.R_LIBS }}
+          path: "$R_LIBS"
           key: ${{ runner.os }}-${{ matrix.config.image }}-${{ matrix.config.gcc }}-${{ hashFiles('DESCRIPTION') }}
 
       - name: Install system dependencies
         if: contains(matrix.config.gcc, '10') == true
         run: |
-          apt update
-          apt install -y gcc-10
+          apt-get update
+          apt-get install -y gcc-10
           
       - name: Install system dependencies
         if: contains(matrix.config.image, 'rocker/r-devel') == true
