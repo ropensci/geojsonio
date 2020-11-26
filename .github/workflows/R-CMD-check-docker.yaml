@@ -38,13 +38,13 @@ jobs:
       - name: Install system dependencies
         if: contains(matrix.config.gcc, '10') == true
         run: |
-          apt-get update
+          apt-get update -y
           apt-get install -y gcc-10
           
       - name: Install system dependencies
         if: contains(matrix.config.image, 'rocker/r-devel') == true
         run: |
-          apt-get update
+          apt-get update -y
           apt remove --purge libxml2 libxml2-dev
           apt-get install -y --no-install-recommends \
           qpdf libgdal-dev gdal-bin libgeos-dev \
