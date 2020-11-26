@@ -25,9 +25,10 @@ jobs:
       
       - name: Set R_LIBS
         run: |
-          export R_LIBS="$(${{ matrix.config.rscript }} -e 'cat(.libPaths()[1])')"
-          echo "::set-env name=R_LIBS::$R_LIBS"
-      
+          echo 'R_LIBS<<EOF' >> $GITHUB_ENV
+          echo "$(${{ matrix.config.rscript }} -e 'cat(.libPaths()[1])')" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+
       - name: Cache R packages
         uses: actions/cache@v1
         with:
