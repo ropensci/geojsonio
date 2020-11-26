@@ -45,7 +45,7 @@ jobs:
         if: contains(matrix.config.image, 'rocker/r-devel') == true
         run: |
           apt-get update -y
-          apt remove --purge libxml2 libxml2-dev
+          apt remove -y --purge libxml2 libxml2-dev
           apt-get install -y --no-install-recommends \
           qpdf libgdal-dev gdal-bin libgeos-dev \
           libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
