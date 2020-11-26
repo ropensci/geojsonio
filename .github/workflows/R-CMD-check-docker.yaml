@@ -32,7 +32,7 @@ jobs:
       - name: Cache R packages
         uses: actions/cache@v1
         with:
-          path: "$R_LIBS"
+          path: ${{ env.R_LIBS }}
           key: ${{ runner.os }}-${{ matrix.config.image }}-${{ matrix.config.gcc }}-${{ hashFiles('DESCRIPTION') }}
 
       - name: Install system dependencies
