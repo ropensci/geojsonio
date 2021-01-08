@@ -61,6 +61,29 @@ test_that("as.json works with geojson class inputs", {
   )
 })
 
+test_that("as.json works with topojson list inputs", {
+  skip_on_cran()
+  
+  library('sp')
+  z <- SpatialPolygonsDataFrame(
+    SpatialPolygons(list(
+      Polygons(list(
+        Polygon(cbind(x = c(2,2,3,2), y = c(2,3,2,2))),
+        Polygon(cbind(x = c(1,2,2,1), y = c(4,4,5,4)))
+      ), ID = 1)
+    )),
+    data = data.frame(a = 1)
+  )
+  x <- topojson_list(z)
+  expect_is(x, "list")
+  xjs <- as.json(x)
+  expect_is(xjs, "json")
+  expect_equal(
+    unclass(jqr::jq(unclass(xjs), "del(.name) | del(.crs)")),
+    "{\"type\":\"Topology\",\"objects\":{\"foo\":{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"MultiPolygon\",\"arcs\":[[[0]],[[1]]],\"properties\":{\"a\":1}}]}},\"arcs\":[[[2,2],[2,3],[3,2],[2,2]],[[1,4],[2,5],[2,4],[1,4]]],\"bbox\":[1,2,3,5]}"
+  )
+})
+
 test_that("as.json works with file name inputs", {
   skip_on_cran()
   

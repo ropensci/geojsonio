@@ -142,7 +142,7 @@
 #' ## sfg (a single simple features geometry)
 #'   p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
 #'   poly <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
-#'   poly_sfg <-st_polygon(list(p1))
+#'   poly_sfg <- st_polygon(list(p1))
 #'   topojson_list(poly_sfg)
 #'
 #' ## sfc (a collection of geometries)
