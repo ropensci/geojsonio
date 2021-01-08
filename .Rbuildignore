@@ -12,6 +12,7 @@ README.Rmd
 .V8history
 cran-comments.md
 myfile.geojson
+inst/myfile.geojson
 myfile.topojson
 ^CODE_OF_CONDUCT\.md$
 ^cran-comments\.md$
@@ -21,5 +22,7 @@ man-roxygen
 .github
 ^codemeta\.json$
 .txt
-inst/ignore/Dockerfile
 EW.geojson
+inst/ignore/*
+Dockerfile
+^LICENSE\.md$

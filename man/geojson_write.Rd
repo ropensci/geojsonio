@@ -65,7 +65,7 @@ classes, data.frames,
 regular lists, and numerics, it is passed through to
 \code{\link[sf:st_write]{sf::st_write()}}. For sf classes,
 geo_lists and json classes, it is passed through to
-\code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}.}
+\code{\link[jsonlite:fromJSON]{jsonlite::toJSON()}}.}
 }
 \value{
 A \code{geojson_write} class, with two elements:
@@ -187,13 +187,13 @@ poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 coordinates(us_cities) <- ~long+lat
 dat <- SpatialCollections(points = us_cities, polygons = poly)
 geojson_write(dat)
-}
 
 # From sf classes:
 if (require(sf)) {
   file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
   sf_fc <- st_read(file, quiet = TRUE)
   geojson_write(sf_fc)
+}
 }
 }
 \seealso{

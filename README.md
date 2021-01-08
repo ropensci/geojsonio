@@ -4,7 +4,8 @@ geojsonio
 
 
 [![cran checks](https://cranchecks.info/badges/worst/geojsonio)](https://cranchecks.info/pkgs/geojsonio)
-[![Build Status](https://api.travis-ci.org/ropensci/geojsonio.png)](https://travis-ci.org/ropensci/geojsonio)
+[![R-CMD-check](https://github.com/ropensci/geojsonio/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/geojsonio/actions?query=workflow%3AR-CMD-check)
+[![R-CMD-check-docker](https://github.com/ropensci/geojsonio/workflows/R-CMD-check-docker/badge.svg)](https://github.com/ropensci/geojsonio/actions?query=workflow%3AR-CMD-check-docker)
 [![codecov.io](https://codecov.io/github/ropensci/geojsonio/coverage.svg?branch=master)](https://codecov.io/github/ropensci/geojsonio?branch=master)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/metacran/cranlogs.app)
 [![cran version](https://www.r-pkg.org/badges/version/geojsonio)](https://cran.r-project.org/package=geojsonio)
@@ -32,7 +33,7 @@ Additional functions:
 ## \*json Info
 
 * GeoJSON - [spec](https://tools.ietf.org/html/rfc7946)
-* [GeoJSON lint](http://geojsonlint.com/)
+* [GeoJSON lint](https://geojsonlint.com/)
 * TopoJSON - [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
 
 
@@ -300,17 +301,7 @@ topojson_list(s)
 
 ### Write TopoJSON
 
-
-```r
-library('maps')
-data(us.cities)
-topojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-#> <topojson-file>
-#>   Path:       myfile.topojson
-#>   From class: data.frame
-```
-
-
+> temporarily defunct
 
 ### Read TopoJSON
 
@@ -318,17 +309,16 @@ topojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
 ```r
 file <- system.file("examples", "us_states.topojson", package = "geojsonio")
 out <- topojson_read(file)
-#> Reading layer `states' from data source `/Library/Frameworks/R.framework/Versions/3.6/Resources/library/geojsonio/examples/us_states.topojson' using driver `TopoJSON'
+#> Reading layer `states' from data source `/Library/Frameworks/R.framework/Versions/4.0/Resources/library/geojsonio/examples/us_states.topojson' using driver `TopoJSON'
 #> Simple feature collection with 51 features and 1 field
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
 #> bbox:           xmin: -171.7911 ymin: 18.91619 xmax: -66.96466 ymax: 71.35776
-#> epsg (SRID):    NA
-#> proj4string:    NA
+#> CRS:            NA
 plot(out)
 ```
 
-![plot of chunk unnamed-chunk-22](man/figures/unnamed-chunk-22-1.png)
+![plot of chunk unnamed-chunk-20](man/figures/unnamed-chunk-20-1.png)
 
 ## Use case: Play with US states
 
@@ -360,7 +350,7 @@ ggplot(df, aes(long, lat, group = group)) +
   facet_wrap(~.id, scales = "free")
 ```
 
-![plot of chunk unnamed-chunk-24](man/figures/unnamed-chunk-24-1.png)
+![plot of chunk unnamed-chunk-22](man/figures/unnamed-chunk-22-1.png)
 
 Okay, so the maps are not quite right (stretched to fit each panel), but you get the idea.
 
@@ -386,9 +376,6 @@ topo2geo(topo_json)
 * Please [report any issues or bugs](https://github.com/ropensci/geojsonio/issues).
 * License: MIT
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
-* Please note that this project is released with a [Contributor Code of Conduct][coc].
-By participating in this project you agree to abide by its terms.
+* Please note that this package is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). By contributing to this project, you agree to abide by its terms.
 
 [![rofooter](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
-
-[coc]: https://github.com/ropensci/geojsonio/blob/master/CODE_OF_CONDUCT.md

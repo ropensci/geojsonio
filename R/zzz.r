@@ -5,10 +5,11 @@ json_val_safe <- function(x) {
   if (inherits(tmp, "error")) FALSE else tmp
 }
 
-to_json <- function(x, ...) {
+to_json <- function(x, precision = 7, ...) {
   if (is.character(x) && json_val_safe(x)) return(structure(x, class = "json"))
-  structure(jsonlite::toJSON(x, ..., digits = 7, auto_unbox = TRUE, force = TRUE),
-            class = c('json','geo_json'))
+  if (is.null(precision)) precision <- 7
+  structure(jsonlite::toJSON(x, ..., digits = precision, auto_unbox = TRUE,
+    force = TRUE), class = c('json','geo_json'))
 }
 
 class_json <- function(x, ..., type = "FeatureCollection") {
@@ -315,7 +316,8 @@ write_ogr_sf <- function(input, file, precision = NULL, overwrite,
     message("checking polygons with maptools::checkPolygonsHoles ...")
     input_polys <- slot(input, "polygons")
     input_fix <- lapply(input_polys, suppressWarnings(maptools::checkPolygonsHoles))
-    polys <- sp::SpatialPolygons(input_fix, proj4string = sp::CRS("+init=epsg:4326"))
+    polys <- sp::SpatialPolygons(input_fix)
+    # polys <- sp::SpatialPolygons(input_fix, proj4string = sp::CRS("+init=epsg:4326"))
     input <- sp::SpatialPolygonsDataFrame(polys, data = input@data)
   }
   if (convert_wgs84) {

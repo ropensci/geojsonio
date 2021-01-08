@@ -31,7 +31,7 @@
 #' to the Douglas-Peucker distance. If precision is not specified, returns the projection's current
 #' resampling precision which defaults to Math.SQRT(1/2).
 #' @param parallels Depends on the projection used! See
-#' \url{https://github.com/mbostock/d3/wiki/Geo-Projections#standard-projections} for help
+#' https://github.com/mbostock/d3/wiki/Geo-Projections#standard-projections for help
 #' @param clipExtent If extent is specified, sets the projection's viewport clip extent to the
 #' specified bounds in pixels and returns the projection. The extent bounds are specified as an
 #' array `[[x0, y0], [x1, y1]]`, where x0 is the left-side of the viewport, y0 is the top, x1 is
@@ -51,8 +51,10 @@
 #' projections(proj="albers", clipExtent='[[105 - 87, 40], [105 + 87 + 1e-6, 82 + 1e-6]]')
 #' projections(proj="albers", invert=60)
 #' projections("orthographic")
-projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NULL,
-                        clipAngle=NULL, precision=NULL, parallels=NULL, clipExtent=NULL, invert=NULL){
+projections <- function(proj, rotate=NULL, center=NULL, translate=NULL,
+  scale=NULL, clipAngle=NULL, precision=NULL, parallels=NULL, clipExtent=NULL,
+  invert=NULL) {
+
   if (missing(proj)) stop("You must provide a character string to 'proj'", call. = FALSE)
   vals <- list(
     albers = 'd3.geo.albers()%s',
@@ -71,15 +73,17 @@ projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NU
   )
   got <- vals[[proj]]
   if (is.null(got)) stop("no match for 'proj' parameter input")
-  args <- tg_compact(list(rotate = rotate, center = center, translate = translate, scale = scale,
-                             clipAngle = clipAngle, precision = precision, parallels = parallels,
-                             clipExtent = clipExtent, invert = invert))
+  args <- tg_compact(list(rotate = rotate, center = center,
+    translate = translate, scale = scale,
+    clipAngle = clipAngle, precision = precision, parallels = parallels,
+    clipExtent = clipExtent, invert = invert))
   out <- list()
   for (i in seq_along(args)) {
     out[i] <- sprintf(".%s(%s)", names(args[i]), args[[i]])
   }
   argstogo <- paste(out, collapse = "")
-  gotgo <- sprintf(got, argstogo)
+  gotgo <- if (nzchar(argstogo)) sprintf(got, argstogo) else got
+  gotgo <- gsub("%s", "", gotgo)
   if (is.null(gotgo)) {
     "That projection doesn't exist, check your spelling"
   } else {

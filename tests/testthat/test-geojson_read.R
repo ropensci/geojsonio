@@ -4,6 +4,8 @@ top_names <- sort(c("type", "features", "name"))
 context("geojson_read")
 
 test_that("geojson_read works with file inputs", {
+  skip_on_cran()
+  
   file <- system.file("examples", "california.geojson", package = "geojsonio")
   aa <- geojson_read(file)
   
@@ -18,6 +20,8 @@ test_that("geojson_read works with file inputs", {
 test_that("geojson_read works with url inputs", {
   skip_on_cran()
   
+  skip_on_cran()
+  
   url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
   aa <- geojson_read(url)
    
@@ -29,6 +33,8 @@ test_that("geojson_read works with url inputs", {
 })
 
 test_that("geojson_read works with as.location inputs", {
+  skip_on_cran()
+  
   file <- system.file("examples", "california.geojson", package = "geojsonio")
   aa <- geojson_read(as.location(file))
   
@@ -41,6 +47,8 @@ test_that("geojson_read works with as.location inputs", {
 })
 
 test_that("geojson_read works outputing spatial class object", {
+  skip_on_cran()
+  
   file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
   aa <- geojson_read(as.location(file), what = "sp")
   

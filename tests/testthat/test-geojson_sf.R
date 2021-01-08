@@ -1,6 +1,8 @@
 context("geojson_sf")
 
 test_that("geojson_sf works with geo_list inputs", {
+  skip_on_cran()
+
   # numeric vector of length 2, making a point type
   vec <- c(-99.74,32.45)
   a <- geojson_sf(geojson_list(vec))
@@ -19,12 +21,16 @@ test_that("geojson_sf works with geo_list inputs", {
 })
 
 test_that("geojson_sf works with string inputs", {
+  skip_on_cran()
+
   x <- unclass(geojson_json(c(-99.74,32.45)))
   a <- geojson_sf(x)
   expect_is(a, "sf")
 })
 
 test_that("geojson_sf works with json inputs", {
+  skip_on_cran()
+  
   # numeric vector of length 2, making a point type
   vec <- c(-99.74,32.45)
   a <- geojson_sf(geojson_json(vec))

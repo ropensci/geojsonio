@@ -5,19 +5,63 @@ name: R-CMD-check-docker
 jobs:
   R-CMD-check-docker:
     runs-on: ubuntu-latest
-    container: jakubnowosad/geocompr_proj6
+    
+    name: ${{ matrix.config.image }}-${{ matrix.config.gcc}}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {image: "jakubnowosad/rspatial_proj6", rscript: "Rscript"}
+        - {image: "rocker/r-devel", gcc: "10", rscript: "RDscript"}
+        - {image: "rocker/r-devel", gcc: "default", rscript: "RDscript"}
+        
+    container: ${{ matrix.config.image }}
+    
     steps:
       - uses: actions/checkout@v1
+      
+      - uses: r-lib/actions/setup-pandoc@master
+      
+      - name: Set R_LIBS
+        run: |
+          echo 'R_LIBS<<EOF' >> $GITHUB_ENV
+          echo "$(${{ matrix.config.rscript }} -e 'cat(.libPaths()[1])')" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS }}
+          key: ${{ runner.os }}-${{ matrix.config.image }}-${{ matrix.config.gcc }}-${{ hashFiles('DESCRIPTION') }}
+
+      - name: Install system dependencies
+        if: contains(matrix.config.gcc, '10') == true
+        run: |
+          apt-get update -y
+          apt-get install -y gcc-10
+          
+      - name: Install system dependencies
+        if: contains(matrix.config.image, 'rocker/r-devel') == true
+        run: |
+          apt-get update -y
+          apt remove -y --purge libxml2 libxml2-dev
+          apt-get install -y --no-install-recommends \
+          qpdf libgdal-dev gdal-bin libgeos-dev \
+          libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
+          libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
+          protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
+          libnode-dev libxml2 libxml2-dev
+          
       - name: Install dependencies
-        run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
+        run: ${{ matrix.config.rscript }} -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran(c('rcmdcheck', 'geojsonlint'))"
 
       - name: Check
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'warning', check_dir = 'check')"
+        run: ${{ matrix.config.rscript }} -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'), error_on = 'warning', check_dir = 'check')"
 
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-docker-geocompr-results
+          name: ${{ runner.os }}-${{ matrix.config.gcc }}
           path: check

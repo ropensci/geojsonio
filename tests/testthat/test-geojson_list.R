@@ -1,6 +1,8 @@
 context("geojson_list")
 
 test_that("geojson_list works with numeric inputs", {
+  skip_on_cran()
+
   # From a numeric vector of length 2, making a point type
   a <- geojson_list(c(-99.74,32.45))
   expect_is(a, "geo_list")
@@ -45,6 +47,8 @@ test_that("geojson_list works with numeric inputs", {
 })
 
 test_that("geojson precision arguement works with sp classes", {
+  skip_on_cran()
+
   ## polygon type
   x_coord <- c(-114.345703125, -114.345703125, -106.61132812499999, -106.61132812499999,-114.345703125)
   y_coord <- c(39.436192999314095, 43.45291889355468, 43.45291889355468, 39.436192999314095, 39.436192999314095)
@@ -68,6 +72,8 @@ test_that("geojson precision arguement works with sp classes", {
 })
 
 test_that("geojson_list works with data.frame inputs", {
+  skip_on_cran()
+
   # From a data.frame to points
   expect_equal(
     unclass(geojson_list(us_cities[1:2,], lat='lat', lon='long')),
@@ -93,6 +99,8 @@ test_that("geojson_list works with data.frame inputs", {
 })
 
 test_that("geojson_list works with data.frame inputs", {
+  skip_on_cran()
+
   # from a list
   mylist <- list(list(latitude=30, longitude=120, marker="red"),
                  list(latitude=30, longitude=130, marker="blue"))
@@ -111,6 +119,8 @@ test_that("geojson_list works with data.frame inputs", {
 })
 
 test_that("geojson_list works with data.frame inputs", {
+  skip_on_cran()
+
   # from a SpatialPoints class
   x <- c(1,2,3,4,5)
   y <- c(3,2,5,1,4)
@@ -141,6 +151,8 @@ test_that("geojson_list works with data.frame inputs", {
 })
 
 test_that("geojson_list detects inproper polygons passed as lists inputs", {
+  skip_on_cran()
+  
   vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
   fine <- geojson_list(vecs, geometry = "polygon")
   

@@ -55,7 +55,7 @@ to the Douglas-Peucker distance. If precision is not specified, returns the proj
 resampling precision which defaults to Math.SQRT(1/2).}
 
 \item{parallels}{Depends on the projection used! See
-\url{https://github.com/mbostock/d3/wiki/Geo-Projections#standard-projections} for help}
+https://github.com/mbostock/d3/wiki/Geo-Projections#standard-projections for help}
 
 \item{clipExtent}{If extent is specified, sets the projection's viewport clip extent to the
 specified bounds in pixels and returns the projection. The extent bounds are specified as an

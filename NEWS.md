@@ -1,5 +1,17 @@
+geojsonio 0.9.2
+===============
+
+### BUG FIXES
+
+* fix a test for change in `stringsAsFactors` behavior in R v4 (#166) (#167)
+* temporarily make `topojson_write()` defunct until we can sort out issues with new sf version (#168)
+
 geojsonio 0.9.0
 ===============
+
+### NEW FEATURES
+
+* `geojson_sf()` and `geojson_sp()` now accept strings in addition to `json`, `geoson_list` and `geojson_json` types (#164)
 
 ### MINOR IMPROVEMENTS
 

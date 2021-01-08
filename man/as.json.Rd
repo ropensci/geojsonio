@@ -9,10 +9,16 @@ as.json(x, ...)
 \arguments{
 \item{x}{Input}
 
-\item{...}{Further args passed on to \code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}}
+\item{...}{Further args passed on to \code{\link[jsonlite:fromJSON]{jsonlite::toJSON()}}}
 }
 \description{
 Convert inputs to JSON
+}
+\details{
+when the output of \code{\link[=topojson_list]{topojson_list()}} is given to
+this function we use a special internal fxn \code{astjl()} to
+parse the object - see that fxn and let us know if any
+problems you run in to
 }
 \examples{
 \dontrun{

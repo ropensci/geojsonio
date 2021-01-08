@@ -156,13 +156,13 @@
 #' coordinates(us_cities) <- ~long+lat
 #' dat <- SpatialCollections(points = us_cities, polygons = poly)
 #' geojson_write(dat)
-#' }
 #'
 #' # From sf classes:
 #' if (require(sf)) {
 #'   file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
 #'   sf_fc <- st_read(file, quiet = TRUE)
 #'   geojson_write(sf_fc)
+#' }
 #' }
 
 geojson_write <- function(input, lat = NULL, lon = NULL, geometry = "point",
@@ -419,11 +419,14 @@ geojson_write.geo_list <- function(input, lat = NULL, lon = NULL, geometry = "po
 
 #' @export
 geojson_write.json <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                               group = NULL, file = "myfile.geojson", overwrite = TRUE, ...) {
+                               group = NULL, file = "myfile.geojson", overwrite = TRUE,
+                               precision = NULL, ...) {
   if (!overwrite && file.exists(file)) {
     stop(file, " already exists and overwrite = FALSE", call. = FALSE)
   }
-  cat(toJSON(jsonlite::fromJSON(input), auto_unbox = TRUE, ...), file = file)
+  if (is.null(precision)) precision <- 4
+  cat(toJSON(jsonlite::fromJSON(input), auto_unbox = TRUE, digits = precision, ...),
+    file = file)
   message("Success! File is at ", file)
   return(geo_file(file, "json"))
 }
