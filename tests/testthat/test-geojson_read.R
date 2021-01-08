@@ -1,5 +1,5 @@
 features_names <- sort(c("type", "properties", "geometry"))
-top_names <- sort(c("type", "features", "name"))
+top_names <- sort(c("type", "features"))
 
 context("geojson_read")
 

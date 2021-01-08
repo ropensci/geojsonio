@@ -173,6 +173,8 @@ sf2list <- function(x, parse) {
   on.exit(unlink(x))
   txt <- geojsonsf::sf_geojson(x)
   jsonlite::fromJSON(txt, parse)
-  # tfile <- tempfile(fileext = ".geojson")
-  # sf::st_write(x, tfile, quiet = TRUE)
+}
+
+tosp_list <- function(x, stringsAsFactors = FALSE, parse = FALSE, ...) {
+  sf2list(tosp_base(x, stringsAsFactors, ...), parse)
 }

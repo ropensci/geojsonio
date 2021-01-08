@@ -97,7 +97,3 @@ tosp_base <- function(x, stringsAsFactors, ...) {
 tosp <- function(x, stringsAsFactors, ...) {
   as(tosp_base(x, stringsAsFactors, ...), "Spatial")
 }
-
-tosp_list <- function(x, stringsAsFactors = FALSE, parse = FALSE, ...) {
-  sf2list(tosp_base(x, stringsAsFactors, ...), parse)
-}
