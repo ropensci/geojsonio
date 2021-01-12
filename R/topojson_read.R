@@ -3,7 +3,9 @@
 #' @export
 #'
 #' @param x Path to a local file or a URL.
-#' @param ... Further args passed on to [sf::st_read()]
+#' @param ... Further args passed on to [sf::st_read()]. Can use any args
+#' from `sf::st_read()` except `quiet`, which we have set as `quiet = TRUE`
+#' internally already
 #' 
 #' @return an object of class `sf`/`data.frame`
 #' 
@@ -12,7 +14,6 @@
 #' 
 #' Note that this does not give you Topojson, but gives you a `sf`
 #' class - which you can use then to turn it into geojson as a list or json
-#' 
 #' @seealso [geojson_read()], [topojson_write()]
 #'
 #' @examples \dontrun{
@@ -61,7 +62,7 @@ topojson_read.location_ <- function(x, ...) {
 read_topojson <- function(x, ...) {
   if (is_file(x)) x <- normalizePath(x)
   stopifnot(ftype(x) %in% c("json", "topojson", "url"))
-  sf::st_read(x, ...)
+  sf::st_read(x, quiet = TRUE, ...)
 }
 
 is_file <- function(x) {

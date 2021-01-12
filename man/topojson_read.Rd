@@ -9,7 +9,9 @@ topojson_read(x, ...)
 \arguments{
 \item{x}{Path to a local file or a URL.}
 
-\item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}}
+\item{...}{Further args passed on to \code{\link[sf:st_read]{sf::st_read()}}. Can use any args
+from \code{sf::st_read()} except \code{quiet}, which we have set as \code{quiet = TRUE}
+internally already}
 }
 \value{
 an object of class \code{sf}/\code{data.frame}
