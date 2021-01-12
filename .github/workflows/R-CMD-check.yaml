@@ -12,12 +12,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, r: 'release', args: "--no-manual"}
-        - { os: macOS-latest, r: 'release', args: "--no-manual"}
-        - { os: ubuntu-latest, r: '3.5', v8: "libnode-dev", args: "--no-manual", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+        # - { os: windows-latest, r: 'release', args: "--no-manual"}
+        # - { os: macOS-latest, r: 'release', args: "--no-manual"}
+        # - { os: ubuntu-latest, r: '3.5', v8: "libnode-dev", args: "--no-manual", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
         - { os: ubuntu-latest, r: 'release', v8: "libv8-dev", args: "--no-manual", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-        - { os: ubuntu-latest, r: 'release', v8: "libnode-dev", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-        - { os: ubuntu-latest, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+        # - { os: ubuntu-latest, r: 'release', v8: "libnode-dev", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+        # - { os: ubuntu-latest, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -61,6 +61,7 @@ jobs:
         run: |
           sudo add-apt-repository -y ppa:cran/v8
           sudo apt-get -y update
+          sudo apt-get install libgeos++-dev
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
