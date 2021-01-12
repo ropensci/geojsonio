@@ -60,6 +60,7 @@ jobs:
         if: runner.os == 'Linux' && contains(matrix.config.v8, 'libnode-dev') == true
         run: |
           sudo add-apt-repository -y ppa:cran/v8
+          sudo add-apt-repository -y ppa:cran/jq
           sudo apt-get -y update
           sudo apt-get install libgeos++-dev libjq-dev
 
