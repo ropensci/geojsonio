@@ -41,6 +41,12 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-r-${{ matrix.config.r }}-v8-${{ matrix.config.v8 }}-${{ hashFiles('DESCRIPTION') }}
 
+      - name: Install pak and remotes
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          install.packages(c("remotes", "rcmdcheck", "geojsonlint"))
+        shell: Rscript {0}
+
       - name: install macOS system dependencies
         if: runner.os == 'macOS'
         continue-on-error: true
@@ -65,12 +71,6 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(pak::local_system_requirements("ubuntu", "18.04"))')
-
-      - name: Install pak and remotes
-        run: |
-          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
-          install.packages(c("remotes", "rcmdcheck", "geojsonlint"))
-        shell: Rscript {0}
       
       - name: Install dependencies
         run: |
