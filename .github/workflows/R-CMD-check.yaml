@@ -64,19 +64,18 @@ jobs:
           while read -r cmd
           do
             eval sudo $cmd
-          done < <(Rscript -e 'writeLines(pak::local_system_requirements("ubuntu", "16.04"))')
+          done < <(Rscript -e 'writeLines(pak::local_system_requirements("ubuntu", "18.04"))')
 
       - name: Install pak and remotes
         run: |
           install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
-          install.packages("remotes")
+          install.packages(c("remotes", "rcmdcheck", "geojsonlint"))
         shell: Rscript {0}
       
       - name: Install dependencies
         run: |
           pak::local_install_dev_deps()
           remotes::install_deps(dependencies = TRUE, configure.args = c('sf' = '${{ matrix.config.sf_args }}'))
-          pak::pkg_install("geojsonlint")
         shell: Rscript {0}
 
       - name: Check
