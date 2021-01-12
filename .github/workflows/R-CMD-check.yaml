@@ -58,25 +58,37 @@ jobs:
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-          qpdf libgdal-dev gdal-bin libgeos-dev \
-          libgeos++-dev git-core pandoc pandoc-citeproc libproj-dev libjq-dev \
-          libudunits2-dev libcurl4-openssl-dev libssl-dev libprotobuf-dev \
-          protobuf-compiler libprotoc-dev valgrind libpq-dev netcdf-bin \
-          ${{ matrix.config.v8 }}
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(pak::local_system_requirements("ubuntu", "16.04"))')
 
+      - name: Install pak and remotes
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          install.packages("remotes")
+        shell: Rscript {0}
+      
       - name: Install dependencies
         run: |
-          install.packages(c('remotes', 'rcmdcheck')) 
-          if (Sys.info()["sysname"] == "Darwin") options(pkgType = "binary")
+          pak::local_install_dev_deps()
           remotes::install_deps(dependencies = TRUE, configure.args = c('sf' = '${{ matrix.config.sf_args }}'))
-          remotes::install_cran("geojsonlint")
+          pak::pkg_install("geojsonlint")
         shell: Rscript {0}
 
       - name: Check
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-build-vignettes', '--no-vignettes', '--as-cran', '${{ matrix.config.args }}'), error_on = 'warning', check_dir = 'check')"
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+        run: rcmdcheck::rcmdcheck(args = c('--no-build-vignettes', '--no-vignettes', '--as-cran', '${{ matrix.config.args }}'), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'test-all.Rout*' -exec cat '{}' \; || true
+        shell: bash
 
       - name: Upload check results
         if: failure()
@@ -88,5 +100,5 @@ jobs:
       - name: Test coverage
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
         run: |
-          Rscript -e 'remotes::install_github("r-lib/covr@gh-actions")'
+          Rscript -e 'pak::pkg_install("covr")'
           Rscript -e 'covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")'
