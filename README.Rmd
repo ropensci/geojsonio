@@ -32,13 +32,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.width = 10,
-  fig.path = "man/figures/"
+  eval = FALSE
 )
 ```
 
 [![cran checks](https://cranchecks.info/badges/worst/geojsonio)](https://cranchecks.info/pkgs/geojsonio)
-[![R-CMD-check](https://github.com/ropensci/geojsonio/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/geojsonio/actions?query=workflow%3AR-CMD-check)
+<!-- [![R-CMD-check](https://github.com/ropensci/geojsonio/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/geojsonio/actions?query=workflow%3AR-CMD-check) -->
 [![R-CMD-check-docker](https://github.com/ropensci/geojsonio/workflows/R-CMD-check-docker/badge.svg)](https://github.com/ropensci/geojsonio/actions?query=workflow%3AR-CMD-check-docker)
 [![codecov.io](https://codecov.io/github/ropensci/geojsonio/coverage.svg?branch=master)](https://codecov.io/github/ropensci/geojsonio?branch=master)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/metacran/cranlogs.app)
@@ -85,7 +84,7 @@ brew install gdal
 
 Then install `rgeos`
 
-```{r eval=FALSE}
+```{r}
 install.packages("rgeos", type = "source")
 ```
 
@@ -101,7 +100,7 @@ sudo apt-get install libgdal1-dev libgdal-dev libgeos-c1 libproj-dev
 
 Then install `rgeos`
 
-```{r eval=FALSE}
+```{r}
 install.packages("rgeos", type = "source")
 ```
 
@@ -109,180 +108,20 @@ __Install geojsonio__
 
 Stable version from CRAN
 
-```{r eval=FALSE}
+```{r}
 install.packages("geojsonio")
 ```
 
 Or development version from GitHub
 
-```{r eval=FALSE}
-install.packages("devtools")
-devtools::install_github("ropensci/geojsonio")
+```{r}
+install.packages("remotes")
+remotes::install_github("ropensci/geojsonio")
 ```
 
 ```{r}
 library("geojsonio")
 ```
-
-## GeoJSON
-
-### Convert various formats to GeoJSON
-
-From a `numeric` vector of length 2, as json or list
-
-```{r}
-geojson_json(c(32.45, -99.74))
-```
-
-```{r output.lines=1:10}
-geojson_list(c(32.45, -99.74))
-```
-
-From a `data.frame`
-
-```{r}
-library('maps')
-data(us.cities)
-geojson_json(us.cities[1:2, ], lat = 'lat', lon = 'long')
-```
-
-```{r output.lines=1:10}
-geojson_list(us.cities[1:2, ], lat = 'lat', lon = 'long')
-```
-
-From `SpatialPolygons` class
-
-```{r}
-library('sp')
-poly1 <- Polygons(list(Polygon(cbind(c(-100, -90, -85, -100),
-  c(40, 50, 45, 40)))), "1")
-poly2 <- Polygons(list(Polygon(cbind(c(-90, -80, -75, -90),
-  c(30, 40, 35, 30)))), "2")
-sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
-```
-
-to json
-
-```{r}
-geojson_json(sp_poly)
-```
-
-to list
-
-```{r output.lines=1:10}
-geojson_list(sp_poly)$features[[1]]
-```
-
-### Combine objects
-
-`geo_list` + `geo_list`
-
-> Note: `geo_list` is the output type from `geojson_list()`, it's just a list with a class attached so we know it's geojson :)
-
-```{r output.lines=1:10}
-vec <- c(-99.74, 32.45)
-a <- geojson_list(vec)
-vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(100.0, 0.0))
-b <- geojson_list(vecs, geometry = "polygon")
-a + b
-```
-
-`json` + `json`
-
-```{r}
-c <- geojson_json(c(-99.74, 32.45))
-vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
-d <- geojson_json(vecs, geometry = "polygon")
-c + d
-```
-
-### Write GeoJSON
-
-```{r}
-library('maps')
-data(us.cities)
-geojson_write(us.cities[1:2, ], lat = 'lat', lon = 'long')
-```
-
-### Read GeoJSON
-
-```{r}
-file <- system.file("examples", "california.geojson", package = "geojsonio")
-out <- geojson_read(file)
-names(out)
-names(out$features[[1]])
-```
-
-## TopoJSON
-
-### to JSON
-
-```{r}
-topojson_json(c(-99.74,32.45))
-```
-
-### to list
-
-```{r output.lines=1:20}
-library(sp)
-x <- c(1,2,3,4,5)
-y <- c(3,2,5,1,4)
-s <- SpatialPoints(cbind(x,y))
-topojson_list(s)
-```
-
-### Write TopoJSON
-
-> temporarily defunct
-
-### Read TopoJSON
-
-```{r}
-file <- system.file("examples", "us_states.topojson", package = "geojsonio")
-out <- topojson_read(file)
-plot(out)
-```
-
-## Use case: Play with US states
-
-Using data from [https://github.com/glynnbird/usstatesgeojson](https://github.com/glynnbird/usstatesgeojson)
-
-Get some geojson
-
-```{r}
-library('crul')
-res <- HttpClient$new('https://api.github.com')$get('repos/glynnbird/usstatesgeojson/contents')
-out <- jsonlite::fromJSON(res$parse("UTF-8"), FALSE)
-st_names <- Filter(function(x) grepl("\\.geojson", x), sapply(out, "[[", "name"))
-base <- 'https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/'
-st_files <- paste0(base, st_names)
-```
-
-Make a faceted plot
-
-```{r tidy=FALSE}
-library('ggplot2')
-library('plyr')
-st_use <- st_files[7:13]
-geo <- lapply(st_use, geojson_read, what = "sp")
-df <- ldply(setNames(lapply(geo, fortify), gsub("\\.geojson", "", st_names[7:13])))
-ggplot(df, aes(long, lat, group = group)) +
-  geom_polygon() +
-  facet_wrap(~.id, scales = "free")
-```
-
-Okay, so the maps are not quite right (stretched to fit each panel), but you get the idea.
-
-## GeoJSON <-> TopoJSON
-
-`geo2topo()` and `topo2geo()`
-
-```{r}
-x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
-(topo_json <- geo2topo(x))
-topo2geo(topo_json)
-```
-
 
 ## Meta
 
@@ -290,5 +129,3 @@ topo2geo(topo_json)
 * License: MIT
 * Get citation information for `geojsonio` in R doing `citation(package = 'geojsonio')`
 * Please note that this package is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). By contributing to this project, you agree to abide by its terms.
-
-[![rofooter](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
