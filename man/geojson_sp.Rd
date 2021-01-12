@@ -10,7 +10,7 @@ geojson_sp(x, disambiguateFIDs = FALSE, stringsAsFactors = FALSE, ...)
 \item{x}{Object of class \code{geo_list}, \code{geo_json}, string, or json}
 
 \item{disambiguateFIDs}{Ignored, and will be removed in a future version.
-Previously was passed to \code{\link[rgdal:readOGR]{rgdal::readOGR()}}, which is no longer used.}
+Previously was passed to \code{rgdal::readOGR()}, which is no longer used.}
 
 \item{stringsAsFactors}{Convert strings to Factors? Default \code{FALSE}.}
 
