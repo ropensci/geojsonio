@@ -19,7 +19,7 @@
 #' @param color (character) Valid RGB hex color. Assigned to the variable
 #' `marker-color`
 #' @param symbol (character) An icon ID from the Maki project
-#' http://www.mapbox.com/maki/
+#' https://labs.mapbox.com/maki-icons/
 #' or a single alphanumeric character (a-z or 0-9). Assigned to the variable
 #' `marker-symbol`
 #' @param size (character) One of 'small', 'medium', or 'large'. Assigned

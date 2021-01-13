@@ -47,7 +47,7 @@
 #' @importFrom geojson featurecollection geometrycollection
 #' @importFrom geojsonsf sf_geojson
 #' @name geojsonio
-#' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
+#' @author Scott Chamberlain
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}
 #' @docType package
 NULL

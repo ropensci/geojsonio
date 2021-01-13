@@ -48,7 +48,7 @@ based on the data you give as input.
 }
 
 \author{
-Scott Chamberlain \email{myrmecocystus@gmail.com}
+Scott Chamberlain
 
 Andy Teucher \email{andy.teucher@gmail.com}
 }

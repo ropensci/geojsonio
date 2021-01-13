@@ -11,8 +11,8 @@ that we can at the end query with \code{\link[=geojson_read]{geojson_read()}}
 \details{
 If you don't already have PostgreSQL or PostGIS:
 \itemize{
-\item PostgreSQL installation: http://www.postgresql.org/download/
-\item PostGIS installation: http://postgis.net/install
+\item PostgreSQL installation: https://www.postgresql.org/download/
+\item PostGIS installation: https://postgis.net/install/
 }
 
 Once you have both of those installed, you can proceed below.

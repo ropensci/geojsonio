@@ -6,8 +6,8 @@
 #' 
 #' If you don't already have PostgreSQL or PostGIS:
 #' 
-#' - PostgreSQL installation: http://www.postgresql.org/download/
-#' - PostGIS installation: http://postgis.net/install
+#' - PostgreSQL installation: https://www.postgresql.org/download/
+#' - PostGIS installation: https://postgis.net/install/
 #' 
 #' Once you have both of those installed, you can proceed below.
 #'

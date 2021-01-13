@@ -36,7 +36,7 @@ polygons - doesn't apply for points}
 (default) or GeometryCollection.}
 
 \item{convert_wgs84}{Should the input be converted to the
-\href{https://tools.ietf.org/html/rfc7946}{standard CRS for GeoJSON}
+standard CRS for GeoJSON (https://tools.ietf.org/html/rfc7946)
 (geographic coordinate reference system, using the WGS84 datum, with
 longitude and latitude units of decimal degrees; EPSG: 4326).
 Default is \code{FALSE} though this may change in a future package version.

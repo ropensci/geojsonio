@@ -20,7 +20,7 @@
 #' @param group (character) A grouping variable to perform grouping for
 #' polygons - doesn't apply for points
 #' @param convert_wgs84 Should the input be converted to the
-#' [standard CRS system for GeoJSON](https://tools.ietf.org/html/rfc7946)
+#' standard CRS system for GeoJSON (https://tools.ietf.org/html/rfc7946)
 #' (geographic coordinate reference system, using
 #' the WGS84 datum, with longitude and latitude units of decimal degrees;
 #' EPSG: 4326). Default is `FALSE` though this may change in a future

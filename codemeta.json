@@ -283,12 +283,15 @@
   "contIntegration": "https://codecov.io/github/ropensci/geojsonio?branch=master",
   "releaseNotes": "https://github.com/ropensci/geojsonio/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/geojsonio/blob/master/README.md",
-  "fileSize": "2782.97KB",
+  "fileSize": "2782.949KB",
   "applicationCategory": "Geospatial",
   "isPartOf": "https://ropensci.org",
   "keywords": ["geojson", "topojson", "geospatial", "conversion", "data", "input-output", "io", "rstats", "r", "r-package"],
   "contributor": {},
   "copyrightHolder": {},
   "funder": {},
-  "relatedLink": ["https://docs.ropensci.org/geojsonio", "https://docs.ropensci.org/geojsonio/"]
+  "relatedLink": [
+    "https://docs.ropensci.org/geojsonio",
+    "https://docs.ropensci.org/geojsonio/"
+  ]
 }
