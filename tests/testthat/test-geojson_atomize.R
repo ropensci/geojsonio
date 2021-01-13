@@ -43,6 +43,7 @@ test_that("geojson_atomize works with character inputs", {
 })
 
 test_that("geojson_atomize fails well", {
+  skip_on_cran()
   expect_error(geojson_atomize(), "argument \"x\" is missing")
   expect_error(geojson_atomize(5), "no 'geojson_atomize' method")
   expect_error(geojson_atomize(mtcars), "no 'geojson_atomize' method")

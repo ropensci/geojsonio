@@ -1,3 +1,5 @@
+skip_on_cran()
+
 context("onload")
 
 obj_names <- c('eval', 'assign', 'validate', 'call',

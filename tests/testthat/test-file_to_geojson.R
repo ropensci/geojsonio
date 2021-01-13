@@ -1,3 +1,5 @@
+skip_on_cran()
+
 context("file_to_geojson")
 
 # kml -------------------------------
@@ -13,8 +15,6 @@ ftog6 <- basename(tempfile())
 ftog7 <- basename(tempfile())
 
 test_that("file_to_geojson works w/ kml input, web method, output file", {
-  skip_on_cran()
-  
   aa <- suppressMessages(file_to_geojson(input = file, method = 'web',
                                          output = ftog1))
   aa_in <- jsonlite::fromJSON(aa)

@@ -1,3 +1,5 @@
+skip_on_cran()
+
 context("spatial-methods")
 
 suppressPackageStartupMessages(library("sp"))
