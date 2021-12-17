@@ -57,6 +57,11 @@ jobs:
           sudo apt-get -y update
           sudo apt-get install libgeos++-dev libjq-dev
 
+      - name: Install pak and remotes
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+        shell: Rscript {0}
+
       - name: Install system dependencies
         if: runner.os == 'Linux'
         env:
@@ -67,11 +72,6 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(pak::local_system_requirements("ubuntu", "16.04"))')
       
-      - name: Install pak and remotes
-        run: |
-          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
-        shell: Rscript {0}
-
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck", "geojsonlint"))
