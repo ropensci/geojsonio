@@ -39,7 +39,8 @@ Suggests:
     leaflet,
     maps,
     DBI,
-    RPostgres
+    RPostgres,
+    geojsonlint
 Enhances: RColorBrewer
 RoxygenNote: 7.1.1
 X-schema.org-applicationCategory: Geospatial
