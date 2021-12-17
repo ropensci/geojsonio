@@ -15,7 +15,7 @@ test_that("precision argument works with polygons", {
   a_txt <- gsub("\\s+", " ", paste0(readLines(gwf1), collapse = ""))
   expect_equal(
     unclass(jqr::jq(a_txt, "del(.name) | del(.crs)")),
-    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-114.345703125,39.436192999314095],[-114.345703125,43.45291889355468],[-106.61132812499999,43.45291889355468],[-106.61132812499999,39.436192999314095],[-114.345703125,39.436192999314095]]]}}]}"
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-114.345703125,39.436192999314095],[-114.345703125,43.45291889355468],[-106.611328125,43.45291889355468],[-106.611328125,39.436192999314095],[-114.345703125,39.436192999314095]]]}}]}"
   )
 
   gwf2 <- tempfile(fileext = ".geojson")
