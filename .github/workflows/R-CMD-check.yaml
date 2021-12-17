@@ -57,7 +57,8 @@ jobs:
         # default libv8-dev on Xenial (16) and Bionic (18) is old libv8-3.14.5.
         # To test on new, add the cran/v8 ppa and install current libnode-dev,
         # To test on old, install libv8-dev from existing default ppa
-        if: runner.os == 'Linux' && contains(matrix.config.v8, 'libnode-dev') == true
+        # if: runner.os == 'Linux' && contains(matrix.config.v8, 'libnode-dev') == true
+        if: runner.os == 'Linux'
         run: |
           sudo add-apt-repository -y ppa:cran/v8
           sudo add-apt-repository -y ppa:cran/jq
