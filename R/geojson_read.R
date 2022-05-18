@@ -170,7 +170,6 @@ file_to_sp <- function(input, stringsAsFactors = FALSE, ...) {
 
 sf2list <- function(x, parse) {
   stopifnot(inherits(x, "sf"))
-  on.exit(unlink(x))
   txt <- geojsonsf::sf_geojson(x)
   jsonlite::fromJSON(txt, parse)
 }
