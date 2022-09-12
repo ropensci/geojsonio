@@ -13,7 +13,7 @@ Description: Convert data to 'GeoJSON' or 'TopoJSON' from various R
     'sp', 'rgdal', 'rgeos', but rather aims to be a high level client to
     simplify conversions of data from and to 'GeoJSON' and 'TopoJSON'.
 License: MIT + file LICENSE
-URL: https://github.com/ropensci/geojsonio, https://docs.ropensci.org/geojsonio
+URL: https://github.com/ropensci/geojsonio, https://docs.ropensci.org/geojsonio/
 BugReports: https://github.com/ropensci/geojsonio/issues
 Depends:
     R (>= 3.5)
