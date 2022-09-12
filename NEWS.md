@@ -1,3 +1,5 @@
+# geojsonio 0.9.5
+
 geojsonio 0.9.4
 ===============
 
