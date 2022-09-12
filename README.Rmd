@@ -18,12 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/geojsonio/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/geojsonio/actions?query=workflow%3AR-CMD-check)
 [![cran checks](https://cranchecks.info/badges/worst/geojsonio)](https://cranchecks.info/pkgs/geojsonio)
-[![R-CMD-check-docker](https://github.com/ropensci/geojsonio/workflows/R-CMD-check-docker/badge.svg)](https://github.com/ropensci/geojsonio/actions?query=workflow%3AR-CMD-check-docker)
 [![codecov.io](https://codecov.io/github/ropensci/geojsonio/coverage.svg?branch=main)](https://codecov.io/github/ropensci/geojsonio?branch=main)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/r-hub/cranlogs.app)
 [![cran version](https://www.r-pkg.org/badges/version/geojsonio)](https://cran.r-project.org/package=geojsonio)
-[![Codecov test coverage](https://codecov.io/gh/ropensci/geojsonio/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/geojsonio?branch=main)
-[![R-CMD-check](https://github.com/ropensci/geojsonio/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/geojsonio/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ```{r echo=FALSE}
