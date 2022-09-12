@@ -1,19 +1,23 @@
-rbind_fill <- function (...) {
+rbind_fill <- function(...) {
   dfs <- list(...)
-  if (length(dfs) == 0)
+  if (length(dfs) == 0) {
     return()
+  }
   if (is.list(dfs[[1]]) && !is.data.frame(dfs[[1]])) {
     dfs <- dfs[[1]]
   }
   dfs <- tg_compact(dfs)
-  if (length(dfs) == 0)
+  if (length(dfs) == 0) {
     return()
-  if (length(dfs) == 1)
+  }
+  if (length(dfs) == 1) {
     return(dfs[[1]])
+  }
   is_df <- vapply(dfs, is.data.frame, logical(1))
   if (any(!is_df)) {
     stop("All inputs to rbind_fill must be data.frames",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
   rows <- unlist(lapply(dfs, .row_names_info, 2L))
   nrows <- sum(rows)
@@ -34,7 +38,7 @@ rbind_fill <- function (...) {
   quickdf(lapply(getters, function(x) x()))
 }
 
-output_template <- function (dfs, nrows) {
+output_template <- function(dfs, nrows) {
   vars <- unique(unlist(lapply(dfs, base::names)))
   output <- vector("list", length(vars))
   names(output) <- vars
@@ -43,17 +47,20 @@ output_template <- function (dfs, nrows) {
   for (df in dfs) {
     matching <- intersect(names(df), vars[!seen])
     for (var in matching) {
-      output[[var]] <- allocate_column(df[[var]], nrows,
-                                       dfs, var)
+      output[[var]] <- allocate_column(
+        df[[var]], nrows,
+        dfs, var
+      )
     }
     seen[matching] <- TRUE
-    if (all(seen))
+    if (all(seen)) {
       break
+    }
   }
   list(setters = lapply(output, `[[`, "set"), getters = lapply(output, `[[`, "get"))
 }
 
-allocate_column <- function (example, nrows, dfs, var) {
+allocate_column <- function(example, nrows, dfs, var) {
   a <- attributes(example)
   type <- typeof(example)
   class <- a$class
@@ -67,50 +74,53 @@ allocate_column <- function (example, nrows, dfs, var) {
     if (length(dim(example)) > 1) {
       if ("dimnames" %in% names(a)) {
         a$dimnames[1] <- list(NULL)
-        if (!is.null(names(a$dimnames)))
+        if (!is.null(names(a$dimnames))) {
           names(a$dimnames)[1] <- ""
+        }
       }
-      df_has <- vapply(dfs, function(df) var %in% names(df),
-                       FALSE)
+      df_has <- vapply(
+        dfs, function(df) var %in% names(df),
+        FALSE
+      )
       dims <- unique(lapply(dfs[df_has], function(df) dim(df[[var]])[-1]))
-      if (length(dims) > 1)
+      if (length(dims) > 1) {
         stop("Array variable ", var, " has inconsistent dims")
+      }
       a$dim <- c(nrows, dim(example)[-1])
       length <- prod(a$dim)
-    }
-    else {
+    } else {
       a$dim <- NULL
       a$dimnames <- NULL
       length <- nrows
     }
-  }
-  else {
+  } else {
     length <- nrows
   }
   if (is.factor(example)) {
-    df_has <- vapply(dfs, function(df) var %in% names(df),
-                     FALSE)
-    isfactor <- vapply(dfs[df_has], function(df) is.factor(df[[var]]),
-                       FALSE)
+    df_has <- vapply(
+      dfs, function(df) var %in% names(df),
+      FALSE
+    )
+    isfactor <- vapply(
+      dfs[df_has], function(df) is.factor(df[[var]]),
+      FALSE
+    )
     if (all(isfactor)) {
       levels <- unique(unlist(lapply(dfs[df_has], function(df) levels(df[[var]]))))
       a$levels <- levels
       handler <- "factor"
-    }
-    else {
+    } else {
       type <- "character"
       handler <- "character"
       class <- NULL
       a$levels <- NULL
     }
-  }
-  else if (inherits(example, "POSIXt")) {
+  } else if (inherits(example, "POSIXt")) {
     tzone <- attr(example, "tzone")
     class <- c("POSIXct", "POSIXt")
     type <- "double"
     handler <- "time"
-  }
-  else {
+  } else {
     handler <- type
   }
   column <- vector(type, length)
@@ -119,18 +129,23 @@ allocate_column <- function (example, nrows, dfs, var) {
   }
   attributes(column) <- a
   assignment <- make_assignment_call(length(a$dim))
-  setter <- switch(handler, character = function(rows, what) {
-    what <- as.character(what)
-    eval(assignment)
-  }, factor = function(rows, what) {
-    what <- match(what, levels)
-    eval(assignment)
-  }, time = function(rows, what) {
-    what <- as.POSIXct(what, tz = tzone)
-    eval(assignment)
-  }, function(rows, what) {
-    eval(assignment)
-  })
+  setter <- switch(handler,
+    character = function(rows, what) {
+      what <- as.character(what)
+      eval(assignment)
+    },
+    factor = function(rows, what) {
+      what <- match(what, levels)
+      eval(assignment)
+    },
+    time = function(rows, what) {
+      what <- as.POSIXct(what, tz = tzone)
+      eval(assignment)
+    },
+    function(rows, what) {
+      eval(assignment)
+    }
+  )
   getter <- function() {
     class(column) <<- class
     column
@@ -138,16 +153,18 @@ allocate_column <- function (example, nrows, dfs, var) {
   list(set = setter, get = getter)
 }
 
-make_assignment_call <- function (ndims) {
+make_assignment_call <- function(ndims) {
   assignment <- quote(column[rows] <<- what)
   if (ndims >= 2) {
-    assignment[[2]] <- as.call(c(as.list(assignment[[2]]),
-                                 rep(list(quote(expr = )), ndims - 1)))
+    assignment[[2]] <- as.call(c(
+      as.list(assignment[[2]]),
+      rep(list(quote(expr = )), ndims - 1)
+    ))
   }
   assignment
 }
 
-quickdf <- function (list) {
+quickdf <- function(list) {
   rows <- unique(unlist(lapply(list, NROW)))
   stopifnot(length(rows) == 1)
   names(list) <- make_names(list, "X")
@@ -156,7 +173,7 @@ quickdf <- function (list) {
   list
 }
 
-make_names <- function (x, prefix = "X") {
+make_names <- function(x, prefix = "X") {
   nm <- names(x)
   if (is.null(nm)) {
     nm <- rep.int("", length(x))

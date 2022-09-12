@@ -102,46 +102,62 @@ function.
 ## from data.frames - point data
 library("RColorBrewer")
 smalluscities <-
-   subset(us_cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
+  subset(us_cities, country.etc == "OR" | country.etc == "NY" | country.etc == "CA")
 
 ### Just color
-geojson_style(smalluscities, var = 'country.etc',
-   color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"))
+geojson_style(smalluscities,
+  var = "country.etc",
+  color = brewer.pal(length(unique(smalluscities$country.etc)), "Blues")
+)
 ### Just size
-geojson_style(smalluscities, var = 'country.etc', size=c('small','medium','large'))
+geojson_style(smalluscities, var = "country.etc", size = c("small", "medium", "large"))
 ### Color and size
-geojson_style(smalluscities, var = 'country.etc',
-   color=brewer.pal(length(unique(smalluscities$country.etc)), "Blues"),
-   size=c('small','medium','large'))
+geojson_style(smalluscities,
+  var = "country.etc",
+  color = brewer.pal(length(unique(smalluscities$country.etc)), "Blues"),
+  size = c("small", "medium", "large")
+)
 
 ## from lists - point data
-mylist <- list(list(latitude=30, longitude=120, state="US"),
-               list(latitude=32, longitude=130, state="OR"),
-               list(latitude=38, longitude=125, state="NY"),
-               list(latitude=40, longitude=128, state="VT"))
+mylist <- list(
+  list(latitude = 30, longitude = 120, state = "US"),
+  list(latitude = 32, longitude = 130, state = "OR"),
+  list(latitude = 38, longitude = 125, state = "NY"),
+  list(latitude = 40, longitude = 128, state = "VT")
+)
 # just color
-geojson_style(mylist, var = 'state',
-   color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"))
+geojson_style(mylist,
+  var = "state",
+  color = brewer.pal(length(unique(sapply(mylist, "[[", "state"))), "Blues")
+)
 # color and size
-geojson_style(mylist, var = 'state',
-   color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
-   size=c('small','medium','large','large'))
+geojson_style(mylist,
+  var = "state",
+  color = brewer.pal(length(unique(sapply(mylist, "[[", "state"))), "Blues"),
+  size = c("small", "medium", "large", "large")
+)
 # color, size, and symbol
-geojson_style(mylist, var = 'state',
-   color=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
-   size=c('small','medium','large','large'),
-   symbol="zoo")
+geojson_style(mylist,
+  var = "state",
+  color = brewer.pal(length(unique(sapply(mylist, "[[", "state"))), "Blues"),
+  size = c("small", "medium", "large", "large"),
+  symbol = "zoo"
+)
 # stroke, fill
-geojson_style(mylist, var = 'state',
-   stroke=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Blues"),
-   fill=brewer.pal(length(unique(sapply(mylist, '[[', 'state'))), "Greens"))
+geojson_style(mylist,
+  var = "state",
+  stroke = brewer.pal(length(unique(sapply(mylist, "[[", "state"))), "Blues"),
+  fill = brewer.pal(length(unique(sapply(mylist, "[[", "state"))), "Greens")
+)
 
 # from data.frame - polygon data
 smallstates <- states[states$group \%in\% 1:3, ]
 head(smallstates)
-geojson_style(smallstates, var = 'group',
-   stroke = brewer.pal(length(unique(smallstates$group)), "Blues"),
-   stroke_width = c(1, 2, 3),
-   fill = brewer.pal(length(unique(smallstates$group)), "Greens"))
+geojson_style(smallstates,
+  var = "group",
+  stroke = brewer.pal(length(unique(smallstates$group)), "Blues"),
+  stroke_width = c(1, 2, 3),
+  fill = brewer.pal(length(unique(smallstates$group)), "Greens")
+)
 }
 }

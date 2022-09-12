@@ -19,17 +19,19 @@ Get centroid for a geo_list
 }
 \examples{
 # numeric
-vec <- c(-99.74,32.45)
+vec <- c(-99.74, 32.45)
 x <- geojson_list(vec)
 centroid(x)
 
 # list
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-               list(latitude=30, longitude=130, marker="blue"))
+mylist <- list(
+  list(latitude = 30, longitude = 120, marker = "red"),
+  list(latitude = 30, longitude = 130, marker = "blue")
+)
 x <- geojson_list(mylist)
 centroid(x)
 
 # data.frame
-x <- geojson_list(states[1:20,])
+x <- geojson_list(states[1:20, ])
 centroid(x)
 }

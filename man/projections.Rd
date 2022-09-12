@@ -71,14 +71,14 @@ clipping is independent of small-circle clipping via clipAngle.}
 topojson projections and extensions
 }
 \examples{
-projections(proj="albers")
-projections(proj="albers", rotate='[98 + 00 / 60, -35 - 00 / 60]', scale=5700)
-projections(proj="albers", scale=5700)
-projections(proj="albers", translate='[55 * width / 100, 52 * height / 100]')
-projections(proj="albers", clipAngle=90)
-projections(proj="albers", precision=0.1)
-projections(proj="albers", parallels='[30, 62]')
-projections(proj="albers", clipExtent='[[105 - 87, 40], [105 + 87 + 1e-6, 82 + 1e-6]]')
-projections(proj="albers", invert=60)
+projections(proj = "albers")
+projections(proj = "albers", rotate = "[98 + 00 / 60, -35 - 00 / 60]", scale = 5700)
+projections(proj = "albers", scale = 5700)
+projections(proj = "albers", translate = "[55 * width / 100, 52 * height / 100]")
+projections(proj = "albers", clipAngle = 90)
+projections(proj = "albers", precision = 0.1)
+projections(proj = "albers", parallels = "[30, 62]")
+projections(proj = "albers", clipExtent = "[[105 - 87, 40], [105 + 87 + 1e-6, 82 + 1e-6]]")
+projections(proj = "albers", invert = 60)
 projections("orthographic")
 }

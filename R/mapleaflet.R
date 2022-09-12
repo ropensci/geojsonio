@@ -15,27 +15,31 @@
 #'
 #' # From file
 #' file <- "myfile.geojson"
-#' geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file)
+#' geojson_write(us_cities[1:20, ], lat = "lat", lon = "long", file = file)
 #' map_leaf(as.location(file))
 #'
 #' # From SpatialPoints class
 #' library("sp")
-#' x <- c(1,2,3,4,20)
-#' y <- c(3,2,5,3,4)
-#' s <- SpatialPoints(cbind(x,y))
+#' x <- c(1, 2, 3, 4, 20)
+#' y <- c(3, 2, 5, 3, 4)
+#' s <- SpatialPoints(cbind(x, y))
 #' map_leaf(s)
 #'
 #' # from SpatialPointsDataFrame class
-#' x <- c(1,2,3,4,5)
-#' y <- c(3,2,5,1,4)
-#' s <- SpatialPointsDataFrame(cbind(x,y), mtcars[1:5,])
+#' x <- c(1, 2, 3, 4, 5)
+#' y <- c(3, 2, 5, 1, 4)
+#' s <- SpatialPointsDataFrame(cbind(x, y), mtcars[1:5, ])
 #' map_leaf(s)
 #'
 #' # from SpatialPolygons class
-#' poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-#'    c(40,50,45,40)))), "1")
-#' poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
-#'    c(30,40,35,30)))), "2")
+#' poly1 <- Polygons(list(Polygon(cbind(
+#'   c(-100, -90, -85, -100),
+#'   c(40, 50, 45, 40)
+#' ))), "1")
+#' poly2 <- Polygons(list(Polygon(cbind(
+#'   c(-90, -80, -75, -90),
+#'   c(30, 40, 35, 30)
+#' ))), "2")
 #' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 #' map_leaf(sp_poly)
 #'
@@ -44,9 +48,9 @@
 #' map_leaf(sp_poly)
 #'
 #' # From SpatialLines class
-#' c1 <- cbind(c(1,2,3), c(3,2,2))
-#' c2 <- cbind(c1[,1]+.05,c1[,2]+.05)
-#' c3 <- cbind(c(1,2,3),c(1,1.5,1))
+#' c1 <- cbind(c(1, 2, 3), c(3, 2, 2))
+#' c2 <- cbind(c1[, 1] + .05, c1[, 2] + .05)
+#' c3 <- cbind(c(1, 2, 3), c(1, 1.5, 1))
 #' L1 <- Line(c1)
 #' L2 <- Line(c2)
 #' L3 <- Line(c3)
@@ -58,20 +62,22 @@
 #' map_leaf(sl12)
 #'
 #' # From SpatialLinesDataFrame class
-#' dat <- data.frame(X = c("Blue", "Green"),
-#'                  Y = c("Train", "Plane"),
-#'                  Z = c("Road", "River"), row.names = c("a", "b"))
+#' dat <- data.frame(
+#'   X = c("Blue", "Green"),
+#'   Y = c("Train", "Plane"),
+#'   Z = c("Road", "River"), row.names = c("a", "b")
+#' )
 #' sldf <- SpatialLinesDataFrame(sl12, dat)
 #' map_leaf(sldf)
 #'
 #' # From SpatialGrid
-#' x <- GridTopology(c(0,0), c(1,1), c(5,5))
+#' x <- GridTopology(c(0, 0), c(1, 1), c(5, 5))
 #' y <- SpatialGrid(x)
 #' map_leaf(y)
 #'
 #' # From SpatialGridDataFrame
-#' sgdim <- c(3,4)
-#' sg <- SpatialGrid(GridTopology(rep(0,2), rep(10,2), sgdim))
+#' sgdim <- c(3, 4)
+#' sg <- SpatialGrid(GridTopology(rep(0, 2), rep(10, 2), sgdim))
 #' sgdf <- SpatialGridDataFrame(sg, data.frame(val = 1:12))
 #' map_leaf(sgdf)
 #'
@@ -83,16 +89,20 @@
 #' map_leaf(states[1:351, ])
 #'
 #' ## From a named list
-#' mylist <- list(list(lat=30, long=120, marker="red"),
-#'                list(lat=30, long=130, marker="blue"))
-#' map_leaf(mylist, lat="lat", lon="long")
-#' 
+#' mylist <- list(
+#'   list(lat = 30, long = 120, marker = "red"),
+#'   list(lat = 30, long = 130, marker = "blue")
+#' )
+#' map_leaf(mylist, lat = "lat", lon = "long")
+#'
 #' ## From an unnamed list
-#' poly <- list(c(-114.345703125,39.436192999314095),
-#'              c(-114.345703125,43.45291889355468),
-#'              c(-106.61132812499999,43.45291889355468),
-#'              c(-106.61132812499999,39.436192999314095),
-#'              c(-114.345703125,39.436192999314095))
+#' poly <- list(
+#'   c(-114.345703125, 39.436192999314095),
+#'   c(-114.345703125, 43.45291889355468),
+#'   c(-106.61132812499999, 43.45291889355468),
+#'   c(-106.61132812499999, 39.436192999314095),
+#'   c(-114.345703125, 39.436192999314095)
+#' )
 #' map_leaf(poly)
 #' ## NOTE: Polygons from lists aren't supported yet
 #'
@@ -101,10 +111,10 @@
 #' map_leaf(geojson_json(c(-119, 45)))
 #' map_leaf(geojson_json(c(-99.74, 32.45)))
 #' ## another example
-#' map_leaf(geojson_json(us_cities[1:10,], lat='lat', lon='long'))
+#' map_leaf(geojson_json(us_cities[1:10, ], lat = "lat", lon = "long"))
 #'
 #' # From a geo_list object
-#' (res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
+#' (res <- geojson_list(us_cities[1:2, ], lat = "lat", lon = "long"))
 #' map_leaf(res)
 #'
 #' # From SpatialPixels
@@ -114,19 +124,19 @@
 #'
 #' # From SpatialPixelsDataFrame
 #' pixelsdf <- suppressWarnings(
-#'  SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
+#'   SpatialPixelsDataFrame(points = canada_cities[c("long", "lat")], data = canada_cities)
 #' )
 #' map_leaf(pixelsdf)
 #'
 #' # From SpatialRings
 #' library("rgeos")
-#' r1 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="1")
-#' r2 <- Ring(cbind(x=c(1,1,2,2,1), y=c(1,2,2,1,1)), ID="2")
+#' r1 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "1")
+#' r2 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "2")
 #' r1r2 <- SpatialRings(list(r1, r2))
 #' map_leaf(r1r2)
 #'
 #' # From SpatialRingsDataFrame
-#' dat <- data.frame(id = c(1,2), value = 3:4)
+#' dat <- data.frame(id = c(1, 2), value = 3:4)
 #' r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
 #' map_leaf(r1r2df)
 #'
@@ -137,7 +147,7 @@
 #'
 #' # leaflet options ------------------------
 #' map_leaf(us_cities) %>%
-#'    addPopups(-122.327298, 47.597131, "foo bar", options = popupOptions(closeButton = FALSE))
+#'   addPopups(-122.327298, 47.597131, "foo bar", options = popupOptions(closeButton = FALSE))
 #'
 #' ####### not working yet
 #' # From a numeric vector
@@ -145,7 +155,6 @@
 #' ## vec <- c(-99.74,32.45)
 #' ## map_leaf(vec)
 #' }
-
 map_leaf <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
   UseMethod("map_leaf")
 }
@@ -176,7 +185,7 @@ map_leaf.SpatialPolygonsDataFrame <- function(input, lat = NULL, lon = NULL, bas
 }
 
 #' @export
-map_leaf.SpatialLines <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner",  ...){
+map_leaf.SpatialLines <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
   check_4_leaflet()
   petiole(input, bounds = sp_bounds(input), basemap, ...)
 }
@@ -243,7 +252,7 @@ map_leaf.list <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner
     input <- rbind_fill(lapply(input, data.frame, stringsAsFactors = FALSE))
   } else {
     input <- rbind_fill(lapply(input, function(z) {
-      data.frame(as.list(stats::setNames(z, c('lng', 'lat'))), stringsAsFactors = FALSE) 
+      data.frame(as.list(stats::setNames(z, c("lng", "lat"))), stringsAsFactors = FALSE)
     }))
   }
   petiole(input, bounds = df_bounds(input, lat, lon), basemap, ...)
@@ -280,8 +289,10 @@ map_leaf.geo_list <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.T
 petiole <- function(x, bounds = NULL, basemap, ...) {
   ll <- leaflet::leaflet()
   ll <- leaflet::addProviderTiles(ll, basemap)
-  ll <- leaflet::fitBounds(ll, lng1 = bounds[1], lat1 = bounds[2],
-                  lng2 = bounds[3], lat2 = bounds[4])
+  ll <- leaflet::fitBounds(ll,
+    lng1 = bounds[1], lat1 = bounds[2],
+    lng2 = bounds[3], lat2 = bounds[4]
+  )
   rachis(x, ll, ...)
 }
 
@@ -368,8 +379,10 @@ check_4_leaflet <- function() {
 # get bounds ------------------
 sp_bounds <- function(x) {
   box <- x@bbox
-  c(as.numeric(box[, "min"]),
-    as.numeric(box[, "max"]))
+  c(
+    as.numeric(box[, "min"]),
+    as.numeric(box[, "max"])
+  )
 }
 
 df_bounds <- function(x, lat = NULL, lon = NULL) {

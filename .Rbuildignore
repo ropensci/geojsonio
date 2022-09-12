@@ -27,3 +27,6 @@ EW.geojson
 inst/ignore/*
 Dockerfile
 ^LICENSE\.md$
+^README\.Rmd$
+^codecov\.yml$
+^\.github$

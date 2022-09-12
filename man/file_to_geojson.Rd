@@ -80,17 +80,17 @@ shouldn't be sensitive to file sizes.
 file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
 
 # KML type file - using the web method
-file_to_geojson(input=file, method='web', output='kml_web')
+file_to_geojson(input = file, method = "web", output = "kml_web")
 ## read into memory
-file_to_geojson(input=file, method='web', output = ":memory:")
-file_to_geojson(input=file, method='local', output = ":memory:")
+file_to_geojson(input = file, method = "web", output = ":memory:")
+file_to_geojson(input = file, method = "local", output = ":memory:")
 
 # KML type file - using the local method
-file_to_geojson(input=file, method='local', output='kml_local')
+file_to_geojson(input = file, method = "local", output = "kml_local")
 
 # Shp type file - using the web method - input is a zipped shp bundle
 file <- system.file("examples", "bison.zip", package = "geojsonio")
-file_to_geojson(file, method='web', output='shp_web')
+file_to_geojson(file, method = "web", output = "shp_web")
 
 # Shp type file - using the local method - input is the actual .shp file
 file <- system.file("examples", "bison.zip", package = "geojsonio")
@@ -98,7 +98,7 @@ dir <- tempdir()
 unzip(file, exdir = dir)
 list.files(dir)
 shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
-file_to_geojson(shpfile, method='local', output='shp_local')
+file_to_geojson(shpfile, method = "local", output = "shp_local")
 
 # geojson with .json extension
 ## this doesn't work anymore, hmmm

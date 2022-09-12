@@ -4,11 +4,13 @@ test_that("precision argument works with polygons", {
   skip_on_travis()
   skip_on_cran()
 
-  poly <- c(c(-114.345703125,39.436192999314095),
-    c(-114.345703125,43.45291889355468),
-    c(-106.61132812499999,43.45291889355468),
-    c(-106.61132812499999,39.436192999314095),
-    c(-114.345703125,39.436192999314095))
+  poly <- c(
+    c(-114.345703125, 39.436192999314095),
+    c(-114.345703125, 43.45291889355468),
+    c(-106.61132812499999, 43.45291889355468),
+    c(-106.61132812499999, 39.436192999314095),
+    c(-114.345703125, 39.436192999314095)
+  )
   gwf1 <- tempfile(fileext = ".geojson")
   a <- supw(suppressMessages(geojson_write(poly, geometry = "polygon", file = gwf1)))
   expect_is(a, "geojson_file")
@@ -30,7 +32,7 @@ test_that("precision argument works with points", {
   skip_on_cran()
 
   gwf3 <- tempfile(fileext = ".geojson")
-  cc <- suppressMessages(geojson_write(us_cities[1:2,], lat = 'lat', lon = 'long', precision = 2, file = gwf3))
+  cc <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", precision = 2, file = gwf3))
   expect_is(cc, "geojson_file")
   cc_txt <- gsub("\\s+", " ", paste0(readLines(gwf3), collapse = ""))
   expect_equal(
@@ -39,7 +41,7 @@ test_that("precision argument works with points", {
   )
 
   gwf4 <- tempfile(fileext = ".geojson")
-  d <- suppressMessages(geojson_write(us_cities[1:2,], lat = 'lat', lon = 'long', precision = 1, file = gwf4))
+  d <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", precision = 1, file = gwf4))
   expect_is(d, "geojson_file")
   d_txt <- gsub("\\s+", " ", paste0(readLines(gwf4), collapse = ""))
   expect_equal(
@@ -52,11 +54,15 @@ test_that("precision argument works with sp objects", {
   skip_on_travis()
   skip_on_cran()
 
-  library('sp')
-  poly1 <- Polygons(list(Polygon(cbind(c(-100.111,-90.111,-85.111,-100.111),
-                                       c(40.111,50.111,45.111,40.111)))), "1")
-  poly2 <- Polygons(list(Polygon(cbind(c(-90.111,-80.111,-75.111,-90.111),
-                                       c(30.111,40.111,35.111,30.111)))), "2")
+  library("sp")
+  poly1 <- Polygons(list(Polygon(cbind(
+    c(-100.111, -90.111, -85.111, -100.111),
+    c(40.111, 50.111, 45.111, 40.111)
+  ))), "1")
+  poly2 <- Polygons(list(Polygon(cbind(
+    c(-90.111, -80.111, -75.111, -90.111),
+    c(30.111, 40.111, 35.111, 30.111)
+  ))), "2")
   sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 
   gwf5 <- tempfile(fileext = ".geojson")
@@ -81,8 +87,8 @@ test_that("precision argument works with sp objects", {
 test_that("geojson_write detects inproper polygons passed as lists inputs", {
   skip_on_cran()
 
-  good <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
-  bad <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,1))
+  good <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
+  bad <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 1))
 
   # fine
   gwf7 <- tempfile(fileext = ".geojson")
@@ -91,8 +97,10 @@ test_that("geojson_write detects inproper polygons passed as lists inputs", {
   expect_is(fine[[1]], "character")
 
   # bad
-  expect_error(geojson_write(bad, geometry = "polygon"),
-               "First and last point in a polygon must be identical")
+  expect_error(
+    geojson_write(bad, geometry = "polygon"),
+    "First and last point in a polygon must be identical"
+  )
 
   # doesn't matter if geometry != polygon
   expect_is(suppressMessages(geojson_write(bad)), "geojson_file")
@@ -100,14 +108,20 @@ test_that("geojson_write detects inproper polygons passed as lists inputs", {
 
 test_that("geojson_write unclasses columns with special classes so writeOGR works", {
   skip_on_cran()
-  library('sp')
-  library('sf')
+  library("sp")
+  library("sf")
 
-  poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-                                       c(40,50,45,40)))), "1")
-  spdf <- SpatialPolygonsDataFrame(SpatialPolygons(list(poly1), 1L),
-                                   data.frame(a = structure(1.5, class = "units"),
-                                              b = ordered("z")))
+  poly1 <- Polygons(list(Polygon(cbind(
+    c(-100, -90, -85, -100),
+    c(40, 50, 45, 40)
+  ))), "1")
+  spdf <- SpatialPolygonsDataFrame(
+    SpatialPolygons(list(poly1), 1L),
+    data.frame(
+      a = structure(1.5, class = "units"),
+      b = ordered("z")
+    )
+  )
   gwf8 <- tempfile(fileext = ".geojson")
   expect_s3_class(geojson_write(spdf, file = gwf8), "geojson_file")
   spdf2 <- as(sf::st_read(gwf8, quiet = TRUE, stringsAsFactors = FALSE), "Spatial")
@@ -118,20 +132,22 @@ test_that("geojson_write unclasses columns with special classes so writeOGR work
 test_that("geojson_write passes toJSON args", {
   skip_on_cran()
   expected_na_no_pretty <- "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"x\":1.1},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.2,4]}},{\"type\":\"Feature\",\"properties\":{\"x\":2.2},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3,4.6]}},{\"type\":\"Feature\",\"properties\":{\"x\":\"NA\"},\"geometry\":{\"type\":\"Point\",\"coordinates\":[3.8,4.4]}}]}"
-  expected_null_pretty <- c("{", "  \"type\": \"FeatureCollection\",", "  \"features\": [",
-                            "    {", "      \"type\": \"Feature\",", "      \"properties\": {",
-                            "        \"x\": 1.1", "      },", "      \"geometry\": {", "        \"type\": \"Point\",",
-                            "        \"coordinates\": [3.2, 4]", "      }", "    },", "    {",
-                            "      \"type\": \"Feature\",", "      \"properties\": {", "        \"x\": 2.2",
-                            "      },", "      \"geometry\": {", "        \"type\": \"Point\",",
-                            "        \"coordinates\": [3, 4.6]", "      }", "    },", "    {",
-                            "      \"type\": \"Feature\",", "      \"properties\": {", "        \"x\": null",
-                            "      },", "      \"geometry\": {", "        \"type\": \"Point\",",
-                            "        \"coordinates\": [3.8, 4.4]", "      }", "    }", "  ]",
-                            "}")
+  expected_null_pretty <- c(
+    "{", "  \"type\": \"FeatureCollection\",", "  \"features\": [",
+    "    {", "      \"type\": \"Feature\",", "      \"properties\": {",
+    "        \"x\": 1.1", "      },", "      \"geometry\": {", "        \"type\": \"Point\",",
+    "        \"coordinates\": [3.2, 4]", "      }", "    },", "    {",
+    "      \"type\": \"Feature\",", "      \"properties\": {", "        \"x\": 2.2",
+    "      },", "      \"geometry\": {", "        \"type\": \"Point\",",
+    "        \"coordinates\": [3, 4.6]", "      }", "    },", "    {",
+    "      \"type\": \"Feature\",", "      \"properties\": {", "        \"x\": null",
+    "      },", "      \"geometry\": {", "        \"type\": \"Point\",",
+    "        \"coordinates\": [3.8, 4.4]", "      }", "    }", "  ]",
+    "}"
+  )
 
   if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
-    p_list <- lapply(list(c(3.2,4), c(3,4.6), c(3.8,4.4)), st_point)
+    p_list <- lapply(list(c(3.2, 4), c(3, 4.6), c(3.8, 4.4)), st_point)
     pt_sfc <- st_sfc(p_list)
     pt_sf <- st_sf(x = c(1.1, 2.2, NA_real_), pt_sfc)
 
@@ -150,21 +166,21 @@ test_that("geojson_write passes toJSON args", {
       list(
         type = "FeatureCollection",
         features = list(
-            list(
-              type = "Feature",
-              properties = list(x = 1.1),
-              geometry = list(type = "Point", coordinates = c(3.2,4))
-            ),
-            list(
-              type = "Feature",
-              properties = list(x = 2.2),
-              geometry = list(type = "Point", coordinates = c(3, 4.6))
-            ),
-            list(
-              type = "Feature",
-              properties = list(x = NA_real_),
-              geometry = list(type = "Point", coordinates = c(3.8, 4.4))
-            )
+          list(
+            type = "Feature",
+            properties = list(x = 1.1),
+            geometry = list(type = "Point", coordinates = c(3.2, 4))
+          ),
+          list(
+            type = "Feature",
+            properties = list(x = 2.2),
+            geometry = list(type = "Point", coordinates = c(3, 4.6))
+          ),
+          list(
+            type = "Feature",
+            properties = list(x = NA_real_),
+            geometry = list(type = "Point", coordinates = c(3.8, 4.4))
+          )
         )
       ),
       class = "geo_list"

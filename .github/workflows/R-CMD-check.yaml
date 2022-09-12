@@ -1,4 +1,10 @@
-on: [push, pull_request]
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 name: R-CMD-check
 
@@ -6,99 +12,40 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }} ${{ matrix.config.v8 }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-        # - { os: windows-latest, r: 'release', args: "--no-manual"}
-        # - { os: macOS-latest, r: 'release', args: "--no-manual"}
-        # - { os: ubuntu-latest, r: '3.5', v8: "libnode-dev", args: "--no-manual", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-        - { os: ubuntu-20.04, r: 'release', v8: "libv8-dev", args: "--no-manual"}
-        # - { os: ubuntu-latest, r: 'release', v8: "libnode-dev", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
-        # - { os: ubuntu-latest, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: macOS-latest,   r: 'release'}
+
+          - {os: windows-latest, r: 'release'}
+
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest,   r: 'oldrel-1'}
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
 
     steps:
       - uses: actions/checkout@v2
 
+      - uses: r-lib/actions/setup-pandoc@v2
+
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
 
-      - uses: r-lib/actions/setup-pandoc@v2
-
-      - uses: r-lib/actions/setup-tinytex@v2
-        if: contains(matrix.config.args, 'no-manual') == false
-
-      - name: Cache R packages
-        uses: actions/cache@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-v8-${{ matrix.config.v8 }}-${{ hashFiles('DESCRIPTION') }}
+          extra-packages: any::rcmdcheck
+          needs: check
 
-      - name: install macOS system dependencies
-        if: runner.os == 'macOS'
-        continue-on-error: true
-        run: |
-          brew install pkg-config gdal openssl udunits v8 protobuf jq
-
-      - name: system dependencies
-        # default libv8-dev on Xenial (16) and Bionic (18) is old libv8-3.14.5.
-        # To test on new, add the cran/v8 ppa and install current libnode-dev,
-        # To test on old, install libv8-dev from existing default ppa
-        # if: runner.os == 'Linux' && contains(matrix.config.v8, 'libnode-dev') == true
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get -y update
-          sudo apt-get install libgeos++-dev libjq-dev
-
-      - name: Install pak and remotes
-        run: |
-          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
-        shell: Rscript {0}
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(pak::local_system_requirements("ubuntu", "16.04"))')
-      
-      - name: Install dependencies
-        run: |
-          install.packages(c("remotes", "rcmdcheck", "geojsonlint"))
-          pak::local_install_dev_deps()
-          remotes::install_deps(dependencies = TRUE, configure.args = c('sf' = '${{ matrix.config.sf_args }}'))
-        shell: Rscript {0}
-
-      - name: Check
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-        run: rcmdcheck::rcmdcheck(args = c('--no-build-vignettes', '--no-vignettes', '--as-cran', '${{ matrix.config.args }}'), error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
-
-      - name: Show testthat output
-        if: always()
-        run: find check -name 'test-all.Rout*' -exec cat '{}' \; || true
-        shell: bash
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@v2
+      - uses: r-lib/actions/check-r-package@v2
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check
-
-      - name: Test coverage
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
-        run: |
-          Rscript -e 'pak::pkg_install("covr")'
-          Rscript -e 'covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")'
+          upload-snapshots: true

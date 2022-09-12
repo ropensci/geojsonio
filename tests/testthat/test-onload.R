@@ -2,8 +2,10 @@ skip_on_cran()
 
 context("onload")
 
-obj_names <- c('eval', 'assign', 'validate', 'call',
-               'reset', 'source', 'console', 'get')
+obj_names <- c(
+  "eval", "assign", "validate", "call",
+  "reset", "source", "console", "get"
+)
 
 test_that("onload for turf-extent worked", {
   expect_is(ext, "V8")

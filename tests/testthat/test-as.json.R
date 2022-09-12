@@ -2,7 +2,7 @@ context("as.json")
 
 test_that("as.json works with geo_list class inputs", {
   skip_on_cran()
-  
+
   # From a numeric vector of length 2, making a point type
   a <- geojson_list(c(-99.74, 32.45))
   expect_is(as.json(a), "json")
@@ -21,9 +21,9 @@ test_that("as.json works with geo_list class inputs", {
 
 test_that("as.json works with data.frame class inputs", {
   skip_on_cran()
-  
+
   tf1 <- tempfile(fileext = ".geojson")
-  cc <- suppressMessages(geojson_write(us_cities[1:2,], lat='lat', lon='long', file = tf1))
+  cc <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", file = tf1))
   expect_is(cc, "geojson_file")
   expect_is(unclass(cc), "list")
   expect_is(as.json(cc), "json")
@@ -33,8 +33,10 @@ test_that("as.json works with data.frame class inputs", {
   )
 
   tf11 <- tempfile(fileext = ".geojson")
-  d <- supw(suppressMessages(geojson_write(input=states, lat='lat', lon='long',
-    geometry='polygon', group="group", file = tf11)))
+  d <- supw(suppressMessages(geojson_write(
+    input = states, lat = "lat", lon = "long",
+    geometry = "polygon", group = "group", file = tf11
+  )))
   expect_is(d, "geojson_file")
   expect_is(unclass(d), "list")
   expect_is(supw(as.json(d)), "json")
@@ -43,12 +45,16 @@ test_that("as.json works with data.frame class inputs", {
 
 test_that("as.json works with geojson class inputs", {
   skip_on_cran()
-  
-  library('sp')
-  poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-     c(40,50,45,40)))), "1")
-  poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
-     c(30,40,35,30)))), "2")
+
+  library("sp")
+  poly1 <- Polygons(list(Polygon(cbind(
+    c(-100, -90, -85, -100),
+    c(40, 50, 45, 40)
+  ))), "1")
+  poly2 <- Polygons(list(Polygon(cbind(
+    c(-90, -80, -75, -90),
+    c(30, 40, 35, 30)
+  ))), "2")
   sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
   tf2 <- tempfile(fileext = ".geojson")
   e <- suppressMessages(geojson_write(sp_poly, file = tf2))
@@ -63,13 +69,13 @@ test_that("as.json works with geojson class inputs", {
 
 test_that("as.json works with topojson list inputs", {
   skip_on_cran()
-  
-  library('sp')
+
+  library("sp")
   z <- SpatialPolygonsDataFrame(
     SpatialPolygons(list(
       Polygons(list(
-        Polygon(cbind(x = c(2,2,3,2), y = c(2,3,2,2))),
-        Polygon(cbind(x = c(1,2,2,1), y = c(4,4,5,4)))
+        Polygon(cbind(x = c(2, 2, 3, 2), y = c(2, 3, 2, 2))),
+        Polygon(cbind(x = c(1, 2, 2, 1), y = c(4, 4, 5, 4)))
       ), ID = 1)
     )),
     data = data.frame(a = 1)
@@ -86,9 +92,9 @@ test_that("as.json works with topojson list inputs", {
 
 test_that("as.json works with file name inputs", {
   skip_on_cran()
-  
+
   tf3 <- tempfile(fileext = ".geojson")
-  ee <- suppressMessages(geojson_write(us_cities[1:2,], lat = 'lat', lon = 'long', file = tf3))
+  ee <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", file = tf3))
   expect_is(ee, "geojson_file")
   expect_is(unclass(ee), "list")
   expect_is(ee$path, "character")
