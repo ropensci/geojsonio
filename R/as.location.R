@@ -13,7 +13,6 @@
 #' url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
 #' as.location(url)
 #' }
-
 as.location <- function(x, ...) UseMethod("as.location")
 
 #' @export
@@ -22,7 +21,7 @@ as.location.character <- function(x, ...) check_location(x, ...)
 #' @export
 as.location.location_ <- function(x, ...) x
 
-check_location <- function(x, ...){
+check_location <- function(x, ...) {
   if (is.url(x)) {
     as_location(x, "url")
   } else {
@@ -31,17 +30,17 @@ check_location <- function(x, ...){
   }
 }
 
-as_location <- function(x, type){
+as_location <- function(x, type) {
   structure(x, class = "location_", type = type)
 }
 
 #' @export
-print.location_ <- function(x, ...){
+print.location_ <- function(x, ...) {
   cat("<location>", "\n")
   cat("   Type: ", attr(x, "type"), "\n")
   cat("   Location: ", x[[1]], "\n")
 }
 
-is.url <- function(x, ...){
+is.url <- function(x, ...) {
   grepl("^(ftp|http)s?://", x)
 }

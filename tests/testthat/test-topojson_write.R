@@ -136,4 +136,3 @@ test_that("topojson_write temporarily removed", {
 #   expect_true(grepl("scale", readLines(gwf9)))
 #   expect_true(grepl("translate", readLines(gwf9)))
 # })
-

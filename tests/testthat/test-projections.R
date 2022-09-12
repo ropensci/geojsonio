@@ -3,7 +3,6 @@ skip_on_cran()
 context("projections")
 
 test_that("projections works with different projection names", {
-  
   expect_is(projections("albers"), "character")
   expect_is(projections("orthographic"), "character")
   expect_is(projections("conicEqualArea"), "character")
@@ -15,7 +14,7 @@ test_that("projections works with different projection names", {
 })
 
 test_that("projections works with rotate parameter", {
-  aa <- projections(proj="albers", rotate='[98 + 00 / 60, -35 - 00 / 60]', scale=5700)
+  aa <- projections(proj = "albers", rotate = "[98 + 00 / 60, -35 - 00 / 60]", scale = 5700)
 
   expect_is(aa, "character")
   expect_match(aa, "geo.albers")
@@ -24,14 +23,14 @@ test_that("projections works with rotate parameter", {
 })
 
 test_that("projections works with scale parameter", {
-  aa <- projections(proj="albers", scale=5700)
+  aa <- projections(proj = "albers", scale = 5700)
 
   expect_is(aa, "character")
   expect_match(aa, "scale\\(5700\\)")
 })
 
 test_that("projections works with translate parameter", {
-  aa <- projections(proj="albers", translate='[55 * width / 100, 52 * height / 100]')
+  aa <- projections(proj = "albers", translate = "[55 * width / 100, 52 * height / 100]")
 
   expect_is(aa, "character")
   expect_match(aa, "translate")
@@ -39,7 +38,7 @@ test_that("projections works with translate parameter", {
 })
 
 test_that("projections works with clipAngle parameter", {
-  aa <- projections(proj="albers", clipAngle=90)
+  aa <- projections(proj = "albers", clipAngle = 90)
 
   expect_is(aa, "character")
   expect_match(aa, "clipAngle")
@@ -49,6 +48,8 @@ test_that("projections fails well", {
   expect_error(projections(), "You must provide a character string to 'proj'")
   ## FIXME - add tests for, and make changes to fxn, for forcing inputs to be of correct type
 
-  expect_error(projections("alber"),
-    "no match for 'proj' parameter input")
+  expect_error(
+    projections("alber"),
+    "no match for 'proj' parameter input"
+  )
 })

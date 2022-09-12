@@ -14,8 +14,8 @@
 #' @template read
 #' @section File size:
 #' When using `method="web"`, be aware of file sizes.
-#' https://ogre.adc4gis.com that we use for this option does not document 
-#' what file size is too large, but you should get an error message like 
+#' https://ogre.adc4gis.com that we use for this option does not document
+#' what file size is too large, but you should get an error message like
 #' "maximum file length exceeded" when that happens. `method="local"`
 #' shouldn't be sensitive to file sizes.
 #' @return path for the geojson file
@@ -23,17 +23,17 @@
 #' file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
 #'
 #' # KML type file - using the web method
-#' file_to_geojson(input=file, method='web', output='kml_web')
+#' file_to_geojson(input = file, method = "web", output = "kml_web")
 #' ## read into memory
-#' file_to_geojson(input=file, method='web', output = ":memory:")
-#' file_to_geojson(input=file, method='local', output = ":memory:")
+#' file_to_geojson(input = file, method = "web", output = ":memory:")
+#' file_to_geojson(input = file, method = "local", output = ":memory:")
 #'
 #' # KML type file - using the local method
-#' file_to_geojson(input=file, method='local', output='kml_local')
+#' file_to_geojson(input = file, method = "local", output = "kml_local")
 #'
 #' # Shp type file - using the web method - input is a zipped shp bundle
 #' file <- system.file("examples", "bison.zip", package = "geojsonio")
-#' file_to_geojson(file, method='web', output='shp_web')
+#' file_to_geojson(file, method = "web", output = "shp_web")
 #'
 #' # Shp type file - using the local method - input is the actual .shp file
 #' file <- system.file("examples", "bison.zip", package = "geojsonio")
@@ -41,7 +41,7 @@
 #' unzip(file, exdir = dir)
 #' list.files(dir)
 #' shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
-#' file_to_geojson(shpfile, method='local', output='shp_local')
+#' file_to_geojson(shpfile, method = "local", output = "shp_local")
 #'
 #' # geojson with .json extension
 #' ## this doesn't work anymore, hmmm
@@ -53,10 +53,8 @@
 #' # res <- file_to_geojson(x, method = "local")
 #' # jsonlite::fromJSON(res)
 #' }
-
 file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
                             encoding = "CP1250", verbose = FALSE, ...) {
-
   method <- match.arg(method, choices = c("web", "local"))
   if (!inherits(parse, "logical")) stop("parse must be logical", call. = FALSE)
 
@@ -77,12 +75,14 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
         error = function(e) e
       )
       if (inherits(res2, "error")) tt$raise_for_status()
-      if ("msg" %in% names(res2))
+      if ("msg" %in% names(res2)) {
         stop(paste0(res2$msg, collapse = "\n"), call. = FALSE)
-      else 
+      } else {
         stop("something went wrong, ",
           "open an issue at https://github.com/ropensci/geojsonio",
-          call. = FALSE)
+          call. = FALSE
+        )
+      }
     }
     out <- tt$parse("UTF-8")
     if (mem) {
@@ -115,8 +115,10 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
 
     output <- path.expand(output)
     if (fileext == "kml") {
-      x <- tosf(input, stringsAsFactors = FALSE,
-        options = paste0("ENCODING=", encoding), ...)
+      x <- tosf(input,
+        stringsAsFactors = FALSE,
+        options = paste0("ENCODING=", encoding), ...
+      )
       x <- sf::st_transform(x, 4326)
       write_ogr2sf(x, output)
       if (mem) {
@@ -126,8 +128,10 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
         file_ret(output)
       }
     } else if (fileext == "shp") {
-      x <- tosf(input, stringsAsFactors = FALSE,
-        options = paste0("ENCODING=", encoding), ...)
+      x <- tosf(input,
+        stringsAsFactors = FALSE,
+        options = paste0("ENCODING=", encoding), ...
+      )
       x <- sf::st_transform(x, 4326)
       write_ogr2sf(x, output)
       if (mem) {
@@ -148,7 +152,8 @@ file_to_geojson <- function(input, method = "web", output = ".", parse = FALSE,
       }
     } else {
       stop("only .shp, .kml, .topojson, and url's are supported",
-           call. = FALSE)
+        call. = FALSE
+      )
     }
   }
 }
@@ -181,7 +186,7 @@ ftype <- function(z) {
 
 # If given a url for a zip file, download it give back a path to the
 # temporary file
-handle_remote <- function(x){
+handle_remote <- function(x) {
   if (!is.url(x)) {
     return(x)
   } else {

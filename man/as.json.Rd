@@ -22,11 +22,11 @@ problems you run in to
 }
 \examples{
 \dontrun{
-(res <- geojson_list(us_cities[1:2,], lat='lat', lon='long'))
+(res <- geojson_list(us_cities[1:2, ], lat = "lat", lon = "long"))
 as.json(res)
 as.json(res, pretty = TRUE)
 
-vec <- c(-99.74,32.45)
+vec <- c(-99.74, 32.45)
 as.json(geojson_list(vec))
 as.json(geojson_list(vec), pretty = TRUE)
 }

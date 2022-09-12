@@ -8,8 +8,10 @@ as.SpatialPointsDataFrame.SpatialPoints <- function(from) {
   SpatialPointsDataFrame(from, df)
 }
 
-setAs("SpatialPoints", "SpatialPointsDataFrame",
-      as.SpatialPointsDataFrame.SpatialPoints)
+setAs(
+  "SpatialPoints", "SpatialPointsDataFrame",
+  as.SpatialPointsDataFrame.SpatialPoints
+)
 
 
 ## SpatialLines to SpatialLinesDataFrame
@@ -19,8 +21,10 @@ as.SpatialLinesDataFrame.SpatialLines <- function(from) {
   SpatialLinesDataFrame(from, df)
 }
 
-setAs("SpatialLines", "SpatialLinesDataFrame",
-      as.SpatialLinesDataFrame.SpatialLines)
+setAs(
+  "SpatialLines", "SpatialLinesDataFrame",
+  as.SpatialLinesDataFrame.SpatialLines
+)
 
 
 ## SpatialRings to SpatialPolygonsDataFrame
@@ -34,8 +38,10 @@ as.SpatialPolygonsDataFrame.SpatialRings <- function(from) {
   SpatialPolygonsDataFrame(SpatialPolygons(res), df)
 }
 
-setAs("SpatialRings", "SpatialPolygonsDataFrame",
-      as.SpatialPolygonsDataFrame.SpatialRings)
+setAs(
+  "SpatialRings", "SpatialPolygonsDataFrame",
+  as.SpatialPolygonsDataFrame.SpatialRings
+)
 
 
 ## SpatialRingsDataFrame to SpatialPolygonsDataFrame
@@ -48,8 +54,10 @@ as.SpatialPolygonsDataFrame.SpatialRingsDataFrame <- function(from) {
   SpatialPolygonsDataFrame(SpatialPolygons(res), from@data)
 }
 
-setAs("SpatialRingsDataFrame", "SpatialPolygonsDataFrame",
-      as.SpatialPolygonsDataFrame.SpatialRingsDataFrame)
+setAs(
+  "SpatialRingsDataFrame", "SpatialPolygonsDataFrame",
+  as.SpatialPolygonsDataFrame.SpatialRingsDataFrame
+)
 
 
 ## SpatialPixels to SpatialPointsDataFrame
@@ -58,8 +66,10 @@ as.SpatialPointsDataFrame.SpatialPixels <- function(from) {
   SpatialPointsDataFrame(from, data = df)
 }
 
-setAs("SpatialPixels", "SpatialPointsDataFrame",
-      as.SpatialPointsDataFrame.SpatialPixels)
+setAs(
+  "SpatialPixels", "SpatialPointsDataFrame",
+  as.SpatialPointsDataFrame.SpatialPixels
+)
 
 # Convert to various sp classes from geojson files
 as.SpatialPolygonsDataFrame <- function(x, ...) {

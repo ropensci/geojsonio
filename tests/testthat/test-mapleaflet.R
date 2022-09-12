@@ -6,7 +6,7 @@ supp_invis <- function(x) suppressMessages(invisible(x))
 test_that("map_leaf works with file inputs", {
   skip_on_cran()
   file <- "myfile.geojson"
-  supp_invis(geojson_write(us_cities[1:20, ], lat='lat', lon='long', file = file))
+  supp_invis(geojson_write(us_cities[1:20, ], lat = "lat", lon = "long", file = file))
   a_map <- map_leaf(as.location(file))
   expect_is(as.location(file), "location_")
   expect_is(a_map, "leaflet")
@@ -17,16 +17,22 @@ test_that("map_leaf works with file inputs", {
 
 test_that("map_leaf works with character inputs", {
   skip_on_cran()
-  b_map <- geojson_json(c(-99.74, 32.45)) %>% as.character %>% map_leaf
+  b_map <- geojson_json(c(-99.74, 32.45)) %>%
+    as.character() %>%
+    map_leaf()
   expect_is(b_map, "leaflet")
-  expect_equal(b_map$x$calls[[2]]$args[[1]],
-               "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}")
+  expect_equal(
+    b_map$x$calls[[2]]$args[[1]],
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}"
+  )
 })
 
 test_that("map_leaf works with geo_list inputs", {
   skip_on_cran()
-  mylist <- list(list(latitude=30, longitude=120, marker="red"),
-                 list(latitude=30, longitude=130, marker="blue"))
+  mylist <- list(
+    list(latitude = 30, longitude = 120, marker = "red"),
+    list(latitude = 30, longitude = 130, marker = "blue")
+  )
   x <- suppressMessages(geojson_list(mylist))
   c_map <- map_leaf(x)
   expect_is(x, "geo_list")
@@ -63,11 +69,13 @@ test_that("map_leaf works with numeric vector inputs - error - not working yet",
 
 test_that("map_leaf works with list inputs", {
   skip_on_cran()
-  poly <- list(c(-114.345703125,39.436192999314095),
-               c(-114.345703125,43.45291889355468),
-               c(-106.61132812499999,43.45291889355468),
-               c(-106.61132812499999,39.436192999314095),
-               c(-114.345703125,39.436192999314095))
+  poly <- list(
+    c(-114.345703125, 39.436192999314095),
+    c(-114.345703125, 43.45291889355468),
+    c(-106.61132812499999, 43.45291889355468),
+    c(-106.61132812499999, 39.436192999314095),
+    c(-114.345703125, 39.436192999314095)
+  )
   ii_map <- supp_invis(map_leaf(poly))
   expect_is(ii_map, "leaflet")
 })
@@ -76,24 +84,28 @@ test_that("map_leaf works with list inputs", {
 
 ## spatial classes --------------
 sp_poly <- local({
-  library('sp')
-  poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
-                                       c(40,50,45,40)))), "1")
-  poly2 <- Polygons(list(Polygon(cbind(c(-90,-80,-75,-90),
-                                       c(30,40,35,30)))), "2")
+  library("sp")
+  poly1 <- Polygons(list(Polygon(cbind(
+    c(-100, -90, -85, -100),
+    c(40, 50, 45, 40)
+  ))), "1")
+  poly2 <- Polygons(list(Polygon(cbind(
+    c(-90, -80, -75, -90),
+    c(30, 40, 35, 30)
+  ))), "2")
   SpatialPolygons(list(poly1, poly2), 1:2)
 })
 
 sp_pts <- local({
   library("sp")
-  a <- c(1,2,3,4,5)
-  b <- c(3,2,5,1,4)
-  SpatialPoints(cbind(a,b))
+  a <- c(1, 2, 3, 4, 5)
+  b <- c(3, 2, 5, 1, 4)
+  SpatialPoints(cbind(a, b))
 })
 
 sp_lines <- local({
   library("sp")
-  c1 <- cbind(c(1,2,3), c(3,2,2))
+  c1 <- cbind(c(1, 2, 3), c(3, 2, 2))
   L1 <- Line(c1)
   Ls1 <- Lines(list(L1), ID = "a")
   SpatialLines(list(Ls1))
@@ -101,7 +113,7 @@ sp_lines <- local({
 
 sp_grid <- local({
   library("sp")
-  x <- GridTopology(c(0,0), c(1,1), c(5,5))
+  x <- GridTopology(c(0, 0), c(1, 1), c(5, 5))
   SpatialGrid(x)
 })
 

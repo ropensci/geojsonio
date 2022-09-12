@@ -12,10 +12,10 @@ convert_wgs84.sfc <- function(x, crs = NULL) {
 
 convert_wgs84.Spatial <- function(x, crs = NULL) {
   is_it <- is_wgs84(x, warn = FALSE)
-  
+
   if (is.na(is_it)) {
     if (!is.null(crs)) {
-      if (is.numeric(crs)) crs <- paste0("+init=epsg:",crs)
+      if (is.numeric(crs)) crs <- paste0("+init=epsg:", crs)
       sp::proj4string(x) <- sp::CRS(crs)
     }
   } else if (is_it) {
@@ -27,7 +27,7 @@ convert_wgs84.Spatial <- function(x, crs = NULL) {
 
 convert_wgs84_sf_sfc <- function(x, crs) {
   is_it <- is_wgs84(x, warn = FALSE)
-  
+
   if (is.na(is_it)) {
     if (!is.null(crs)) {
       sf::st_crs(x) <- crs
@@ -74,8 +74,14 @@ is_wgs84.Spatial <- function(x, warn = TRUE) {
 }
 
 is_wgs84_proj4 <- function(prj4) {
-  if (is.na(prj4)) return(NA)
-  if (grepl("init=epsg:4326", prj4)) return(TRUE)
-  if (grepl("datum=WGS84", prj4) && grepl("proj=longlat", prj4)) return(TRUE)
+  if (is.na(prj4)) {
+    return(NA)
+  }
+  if (grepl("init=epsg:4326", prj4)) {
+    return(TRUE)
+  }
+  if (grepl("datum=WGS84", prj4) && grepl("proj=longlat", prj4)) {
+    return(TRUE)
+  }
   return(FALSE)
 }

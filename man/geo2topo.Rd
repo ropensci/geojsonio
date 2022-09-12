@@ -46,9 +46,9 @@ leaflet() \%>\%
 
 # geojson to topojson as a list
 x <- list(
- '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
- '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
- '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
+  '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
+  '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
+  '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
 )
 geo2topo(x)
 
@@ -58,9 +58,9 @@ geo2topo(x, object_name = "HelloWorld")
 geo2topo(x, object_name = "4")
 
 x <- list(
- '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
- '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
- '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
+  '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
+  '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
+  '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
 )
 geo2topo(x, "HelloWorld")
 geo2topo(x, c("A", "B", "C"))

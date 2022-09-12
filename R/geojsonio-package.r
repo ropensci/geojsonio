@@ -10,7 +10,7 @@
 #' The core functions in this package are organized first around what you're
 #' working with or want to get, GeoJSON or TopoJSON, then convert to or read
 #' from various formats:
-#' 
+#'
 #' - [geojson_list()] / [topojson_list()] - convert
 #' 	to GeoJSON or TopoJSON as R list format
 #' - [geojson_json()] / [topojson_json()] - convert
@@ -25,7 +25,7 @@
 #'  a GeoJSON file locally (TopoJSON coming later)
 #'
 #' Other interesting functions:
-#' 
+#'
 #' - [map_gist()] - Create a GitHub gist (renders as an
 #'  interactive map)
 #' - [map_leaf()] - Create a local interactive map using the

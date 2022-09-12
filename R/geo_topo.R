@@ -1,12 +1,12 @@
 #' GeoJSON to TopoJSON and back
 #'
 #' @export
-#' @param x GeoJSON or TopoJSON as a character string, json, a file path, or 
+#' @param x GeoJSON or TopoJSON as a character string, json, a file path, or
 #' url
-#' @param object_name (character) name to give to the TopoJSON object created. 
+#' @param object_name (character) name to give to the TopoJSON object created.
 #' Default: "foo"
 #' @param quantization (numeric) quantization parameter, use this to
-#' quantize geometry prior to computing topology. Typical values are powers of 
+#' quantize geometry prior to computing topology. Typical values are powers of
 #' ten (`1e4`, `1e5`, ...), default is `0` to not perform quantization.
 #' For more information about quantization, see this by Mike Bostock
 #' https://stackoverflow.com/questions/18900022/topojson-quantization-vs-simplification/18921214#18921214
@@ -26,28 +26,28 @@
 #'   addProviderTiles(provider = "Stamen.Terrain") %>%
 #'   addTopoJSON(z)
 #' }
-#' 
+#'
 #' # geojson to topojson as a list
 #' x <- list(
-#'  '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
-#'  '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
-#'  '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
+#'   '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
+#'   '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
+#'   '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
 #' )
 #' geo2topo(x)
-#' 
+#'
 #' # change the object name created
 #' x <- '{"type": "LineString", "coordinates": [ [100.0, 0.0], [101.0, 1.0] ]}'
 #' geo2topo(x, object_name = "HelloWorld")
 #' geo2topo(x, object_name = "4")
-#' 
+#'
 #' x <- list(
-#'  '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
-#'  '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
-#'  '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
+#'   '{"type": "LineString", "coordinates": [ [100, 0], [101, 1] ]}',
+#'   '{"type": "LineString", "coordinates": [ [110, 0], [110, 1] ]}',
+#'   '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
 #' )
 #' geo2topo(x, "HelloWorld")
 #' geo2topo(x, c("A", "B", "C"))
-#' 
+#'
 #'
 #' # topojson to geojson
 #' w <- topo2geo(z)
@@ -80,8 +80,9 @@ geo2topo.character <- function(x, object_name = "foo", quantization = 0, ...) {
 
 #' @export
 geo2topo.json <- function(x, object_name = "foo", quantization = 0, ...) {
-  if (!inherits(object_name, "character")) 
+  if (!inherits(object_name, "character")) {
     stop("'object_name' must be of class character")
+  }
   geo_to_topo(unclass(x), object_name, quantization, ...)
 }
 
@@ -115,8 +116,11 @@ topo2geo.json <- function(x, ...) {
 # helpers  --------------------------
 geo_to_topo <- function(x, object_name, quantization = 0, ...) {
   topo$eval(
-    sprintf("var output = JSON.stringify(topojson.topology({%s: %s}, %s))", 
-      object_name, x, quantization))
+    sprintf(
+      "var output = JSON.stringify(topojson.topology({%s: %s}, %s))",
+      object_name, x, quantization
+    )
+  )
   structure(topo$get("output"), class = "json")
 }
 
