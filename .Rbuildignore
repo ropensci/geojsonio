@@ -30,3 +30,4 @@ Dockerfile
 ^README\.Rmd$
 ^codecov\.yml$
 ^\.github$
+^CRAN-SUBMISSION$
