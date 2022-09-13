@@ -29,7 +29,7 @@ rbind_fill <- function(...) {
   }
   pos <- matrix(c(cumsum(rows) - rows + 1, rows), ncol = 2)
   for (i in seq_along(rows)) {
-    rng <- seq(pos[i, 1], length = pos[i, 2])
+    rng <- seq(pos[i, 1], length.out = pos[i, 2])
     df <- dfs[[i]]
     for (var in names(df)) {
       setters[[var]](rng, df[[var]])
