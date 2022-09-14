@@ -38,7 +38,7 @@
 #' `SpatialPoints`, and many more - which will try to do the right thing
 #' based on the data you give as input.
 #'
-#' @import methods sp rgeos
+#' @import methods sp
 #' @importFrom sf st_crs st_transform st_read st_write
 #' @importFrom crul HttpClient upload url_parse
 #' @importFrom maptools readShapeSpatial
@@ -49,6 +49,7 @@
 #' @name geojsonio
 #' @author Scott Chamberlain
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}
+#' @author Michael Mahoney \email{mike.mahoney.218@@gmail.com}
 #' @docType package
 NULL
 
@@ -90,13 +91,4 @@ NULL
 #' @name states
 #' @docType data
 #' @keywords data
-NULL
-
-
-#' Defunct functions in geojsonio
-#'
-#' - [lint()]: See `geojsonlint::geojson_hint`
-#' - [validate()]: See `geojsonlint::geojson_lint`
-#'
-#' @name geojsonio-defunct
 NULL

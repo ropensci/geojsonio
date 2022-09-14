@@ -23,11 +23,13 @@ Imports:
     geojsonsf,
     jqr,
     jsonlite (>= 0.9.21),
+    lifecycle,
     magrittr,
     maptools,
     methods,
     readr (>= 0.2.2),
     rgeos,
+    rlang,
     sf (>= 0.6),
     sp,
     V8

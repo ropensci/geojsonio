@@ -3,7 +3,6 @@ skip_on_cran()
 context("spatial-methods")
 
 suppressPackageStartupMessages(library("sp"))
-suppressPackageStartupMessages(library("rgeos"))
 
 sp_poly <- local({
   poly1 <- Polygons(list(Polygon(cbind(
@@ -35,12 +34,6 @@ sp_grid <- local({
   SpatialGrid(x)
 })
 
-sp_rings <- local({
-  r1 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "1")
-  r2 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "2")
-  SpatialRings(list(r1, r2))
-})
-
 sp_pixels <- local({
   suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
 })
@@ -58,22 +51,6 @@ test_that("SpatialLines to SpatialLinesDataFrame", {
 
   expect_is(sp_lines, "SpatialLines")
   expect_is(a, "SpatialLinesDataFrame")
-})
-
-test_that("SpatialRings to SpatialPolygonsDataFrame", {
-  a <- as(sp_rings, "SpatialPolygonsDataFrame")
-
-  expect_is(sp_rings, "SpatialRings")
-  expect_is(a, "SpatialPolygonsDataFrame")
-})
-
-test_that("SpatialRingsDataFrame to SpatialPolygonsDataFrame", {
-  dat <- data.frame(id = c(1, 2), value = 3:4)
-  r1r2df <- SpatialRingsDataFrame(sp_rings, data = dat)
-  a <- as(r1r2df, "SpatialPolygonsDataFrame")
-
-  expect_is(r1r2df, "SpatialRingsDataFrame")
-  expect_is(a, "SpatialPolygonsDataFrame")
 })
 
 test_that("SpatialPixels to SpatialPointsDataFrame", {
