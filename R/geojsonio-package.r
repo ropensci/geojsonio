@@ -39,6 +39,7 @@
 #' based on the data you give as input.
 #'
 #' @import methods sp
+#' @importFrom rgeos Ring
 #' @importFrom sf st_crs st_transform st_read st_write
 #' @importFrom crul HttpClient upload url_parse
 #' @importFrom maptools readShapeSpatial

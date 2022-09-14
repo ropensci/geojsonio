@@ -10,6 +10,8 @@
 #' newer geos package (or any alternative for maptools). If you'd be interested
 #' in contributing replacements, please feel free to contribute a pull request!
 #' 
+#' @inheritParams geojson_write
+#' 
 #' @examples \dontrun{
 #' # From SpatialRings
 #' library(rgeos)
