@@ -116,9 +116,15 @@ test_that("geojson_list works with data.frame inputs", {
   )
 
   # from data.frame to polygons
-  expect_equal_to_reference(
-    object = unclass(geojson_list(states[1:351, ], lat = "lat", lon = "long", geometry = "polygon", group = "group")),
-    file = "numericstates_list.rds"
+  expect_snapshot_value(
+    unclass(geojson_list(
+      states[1:351, ],
+      lat = "lat",
+      lon = "long",
+      geometry = "polygon",
+      group = "group"
+    )),
+    style = "json2"
   )
 })
 

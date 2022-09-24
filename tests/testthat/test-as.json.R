@@ -61,7 +61,7 @@ test_that("as.json works with geojson class inputs", {
   expect_s3_class(as.json(e), "json")
   expect_equal(
     unclass(jqr::jq(unclass(as.json(e)), "del(.name) | del(.crs)")),
-    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-100,40],[-90,50],[-85,45],[-100,40]]]}},{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-90,30],[-80,40],[-75,35],[-90,30]]]}}]}",
+    "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-100,40],[-90,50],[-85,45],[-100,40]]]}},{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-90,30],[-80,40],[-75,35],[-90,30]]]}}]}"
   )
 })
 

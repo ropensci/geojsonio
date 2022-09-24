@@ -56,7 +56,7 @@ test_that("geojson_json works with data.frame inputs", {
   # from data.frame to polygons
   aa <- unclass(geojson_json(states[1:351, ], lat = "lat", lon = "long", geometry = "polygon", group = "group"))
   attributes(aa) <- NULL
-  expect_equal_to_reference(object = aa, file = "numericstates.rds")
+  expect_snapshot_value(aa, style = "json2")
 })
 
 test_that("geojson_json works with data.frame inputs", {
