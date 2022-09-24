@@ -1,5 +1,3 @@
-context("as.json")
-
 test_that("as.json works with geo_list class inputs", {
   skip_on_cran()
 

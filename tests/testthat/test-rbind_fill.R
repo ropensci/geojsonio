@@ -1,5 +1,3 @@
-context("rbind_fill")
-
 test_that("rbind_fill works with built in datasets", {
   skip_on_cran()
 

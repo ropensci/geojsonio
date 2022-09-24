@@ -1,5 +1,3 @@
-context("construction")
-
 test_that("construction for geo_list + geo_list works as expected", {
   skip_on_cran()
 

@@ -1,5 +1,3 @@
-context("pretty")
-
 test_that("pretty works with json inputs", {
   skip_on_cran()
 

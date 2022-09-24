@@ -1,5 +1,3 @@
-context("centroid")
-
 test_that("centroid works with geo_list input", {
   skip_on_cran()
 

@@ -1,7 +1,5 @@
 skip_on_cran()
 
-context("file_to_geojson")
-
 # kml -------------------------------
 file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
 

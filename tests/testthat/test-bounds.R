@@ -1,5 +1,3 @@
-context("bounds")
-
 test_that("bounds works with geo_list input", {
   skip_on_cran()
 

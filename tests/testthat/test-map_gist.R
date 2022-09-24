@@ -1,5 +1,3 @@
-context("map_gist")
-
 skip_if_not(Sys.getenv("GITHUB_PAT") != "")
 skip_on_ci()
 skip_on_cran()

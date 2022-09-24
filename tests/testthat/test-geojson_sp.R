@@ -1,5 +1,3 @@
-context("geojson_sp")
-
 test_that("geojson_sp works with geo_list inputs", {
   skip_on_cran()
 

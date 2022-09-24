@@ -1,7 +1,5 @@
 skip_on_cran()
 
-context("projections")
-
 test_that("projections works with different projection names", {
   expect_is(projections("albers"), "character")
   expect_is(projections("orthographic"), "character")

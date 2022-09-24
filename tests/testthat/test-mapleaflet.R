@@ -1,5 +1,3 @@
-context("map_leaf")
-
 library("leaflet")
 supp_invis <- function(x) suppressMessages(invisible(x))
 

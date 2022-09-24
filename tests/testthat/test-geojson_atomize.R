@@ -1,5 +1,3 @@
-context("geojson_atomize")
-
 test_that("geojson_atomize works with list inputs", {
   skip_on_cran()
 

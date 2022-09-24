@@ -1,5 +1,3 @@
-context("geojson_json")
-
 test_that("geojson_json works with numeric inputs", {
   skip_on_cran()
 
@@ -127,7 +125,7 @@ test_that("geojson_json - acceptable type values for numeric/data.frame/list", {
   )
 })
 
-test_that("skipping geoclass works with type = skip", {
+test_that("skipping geoclass in geojson_json works with type = skip", {
   skip_on_cran()
 
   x <- geojson_sp(geojson_json(c(-99.74, 32.45)))
@@ -135,10 +133,9 @@ test_that("skipping geoclass works with type = skip", {
   expect_null(attr(geojson_json(x, type = "skip"), "type"))
 })
 
-context("geojson_json precision")
 def_digits <- getOption("digits")
 options(digits = 15)
-test_that("precision", {
+test_that("geojson_json precision", {
   skip_on_cran()
 
   # numeric

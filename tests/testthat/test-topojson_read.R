@@ -1,5 +1,3 @@
-context("topojson_read")
-
 test_that("topojson_read works with file inputs", {
   skip_on_cran()
 

@@ -1,5 +1,3 @@
-context("sf classes")
-
 skip_on_cran()
 
 un_class <- function(x) {

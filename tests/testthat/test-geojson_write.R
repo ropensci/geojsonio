@@ -1,6 +1,4 @@
-context("geojson_write")
-
-test_that("precision argument works with polygons", {
+test_that("precision argument works with polygons in geojson_write", {
   skip_on_travis()
   skip_on_cran()
 
@@ -27,7 +25,7 @@ test_that("precision argument works with polygons", {
   )
 })
 
-test_that("precision argument works with points", {
+test_that("precision argument works with points in geojson_write", {
   skip_on_travis()
   skip_on_cran()
 
@@ -50,7 +48,7 @@ test_that("precision argument works with points", {
   )
 })
 
-test_that("precision argument works with sp objects", {
+test_that("precision argument works with sp objects in geojson_write", {
   skip_on_travis()
   skip_on_cran()
 

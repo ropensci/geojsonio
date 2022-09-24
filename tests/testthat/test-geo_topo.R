@@ -1,5 +1,3 @@
-context("test-geo_topo.R")
-
 test_that("geo2topo works", {
   skip_on_cran()
 

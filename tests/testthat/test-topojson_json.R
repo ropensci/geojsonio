@@ -1,5 +1,3 @@
-context("topojson_json")
-
 test_that("topojson_json works with numeric inputs", {
   skip_on_cran()
 

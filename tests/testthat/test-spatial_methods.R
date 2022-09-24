@@ -1,7 +1,5 @@
 skip_on_cran()
 
-context("spatial-methods")
-
 suppressPackageStartupMessages(library("sp"))
 
 sp_poly <- local({

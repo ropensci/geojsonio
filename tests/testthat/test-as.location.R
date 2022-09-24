@@ -1,5 +1,3 @@
-context("as.location")
-
 test_that("as.location returns correct class", {
   skip_on_cran()
 

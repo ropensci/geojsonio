@@ -1,8 +1,6 @@
 features_names <- sort(c("type", "properties", "geometry"))
 top_names <- sort(c("type", "features"))
 
-context("geojson_read")
-
 test_that("geojson_read works with file inputs", {
   skip_on_cran()
 

@@ -1,5 +1,3 @@
-context("detect and convert crs")
-
 # sm <- function(x) suppressMessages(x)
 
 # compare_things <- function(a, b) {

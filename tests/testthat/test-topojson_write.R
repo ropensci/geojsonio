@@ -1,5 +1,3 @@
-context("topojson_write")
-
 test_that("topojson_write temporarily removed", {
   skip_on_cran()
   expect_error(topojson_write(), class = "error")

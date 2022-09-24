@@ -1,5 +1,3 @@
-context("geojson_list")
-
 test_that("geojson_list works with numeric inputs", {
   skip_on_cran()
 

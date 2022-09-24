@@ -1,5 +1,3 @@
-context("topojson_list")
-
 test_that("topojson_list works with numeric inputs", {
   skip_on_cran()
 
