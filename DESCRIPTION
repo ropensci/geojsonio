@@ -51,3 +51,4 @@ X-schema.org-applicationCategory: Geospatial
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: geojson, topojson, geospatial, conversion, data,
     input-output
+Config/testthat/edition: 3
