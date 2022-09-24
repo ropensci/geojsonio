@@ -8,8 +8,8 @@ test_that("map_gist works with file inputs", {
   tfile <- tempfile(fileext = ".geojson")
   geojson_write(us_cities[1:20, ], lat = "lat", lon = "long", file = tfile)
   a <- map_gist(file = as.location(tfile), browse = FALSE)
-  expect_is(a, "gist")
-  expect_is(a$url, "character")
+  expect_s3_class(a, "gist")
+  expect_type(a$url, "character")
   expect_named(a$files, basename(tfile))
 
   gdel(a)
@@ -20,8 +20,8 @@ test_that("map_gist works with geo_list inputs", {
 
   res <- geojson_list(us_cities[1:2, ], lat = "lat", lon = "long")
   b <- map_gist(res, browse = FALSE)
-  expect_is(res, "geo_list")
-  expect_is(b, "gist")
+  expect_s3_class(res, "geo_list")
+  expect_s3_class(b, "gist")
 
   gdel(b)
 })
@@ -31,9 +31,9 @@ test_that("map_gist works with json inputs", {
 
   x <- geojson_json(c(-99.74, 32.45))
   f <- map_gist(x, browse = FALSE)
-  expect_is(x, "json")
-  expect_is(f, "gist")
-  expect_is(f$git_pull_url, "character")
+  expect_s3_class(x, "json")
+  expect_s3_class(f, "gist")
+  expect_type(f$git_pull_url, "character")
 
   gdel(f)
 })
@@ -46,8 +46,8 @@ test_that("map_gist works with SpatialPoints inputs", {
   b <- c(3, 2, 5, 1, 4)
   x <- SpatialPoints(cbind(a, b))
   g <- map_gist(x, browse = FALSE)
-  expect_is(g, "gist")
-  expect_is(g$url, "character")
+  expect_s3_class(g, "gist")
+  expect_type(g$url, "character")
   expect_named(g$files, "myfile.geojson")
 
   gdel(g)
@@ -61,8 +61,8 @@ test_that("map_gist works with SpatialPointsDataFrame inputs", {
   b <- c(3, 2, 5, 1, 4)
   s <- SpatialPointsDataFrame(cbind(a, b), mtcars[1:5, ])
   h <- supw(map_gist(s, browse = FALSE))
-  expect_is(h, "gist")
-  expect_is(h$url, "character")
+  expect_s3_class(h, "gist")
+  expect_type(h$url, "character")
   expect_named(h$files, "myfile.geojson")
 
   gdel(h)
@@ -81,8 +81,8 @@ test_that("map_gist works with SpatialPolygons inputs", {
   ))), "2")
   sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
   i <- map_gist(sp_poly, browse = FALSE)
-  expect_is(i, "gist")
-  expect_is(i$url, "character")
+  expect_s3_class(i, "gist")
+  expect_type(i$url, "character")
   expect_named(i$files, "myfile.geojson")
 
   gdel(i)
@@ -92,7 +92,7 @@ test_that("map_gist works with data.frame inputs", {
   skip_on_cran()
 
   j <- map_gist(us_cities[1:50, ], browse = FALSE)
-  expect_is(j, "gist")
+  expect_s3_class(j, "gist")
 
   gdel(j)
 })
@@ -101,7 +101,7 @@ test_that("map_gist works with data.frame inputs", {
   skip_on_cran()
 
   k <- map_gist(c(32.45, -99.74), browse = FALSE)
-  expect_is(k, "gist")
+  expect_s3_class(k, "gist")
 
   gdel(k)
 })

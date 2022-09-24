@@ -3,7 +3,7 @@ test_that("geojson_json works with numeric inputs", {
 
   # From a numeric vector of length 2, making a point type
   a <- geojson_json(c(-99.74, 32.45))
-  expect_is(a, "json")
+  expect_s3_class(a, "json")
   expect_equal(attr(a, "type"), "FeatureCollection")
   expect_equal(attr(a, "no_features"), "1")
   expect_equal(attr(a, "five_feats"), "Point")
@@ -13,7 +13,7 @@ test_that("geojson_json works with numeric inputs", {
     a,
     "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}"
   )
-  expect_is(unclass(a), "character")
+  expect_type(unclass(a), "character")
   expect_equal(jsonlite::fromJSON(a)$type, "FeatureCollection")
 
   aa <- unclass(geojson_json(c(-99.74, 32.45), type = "GeometryCollection"))
@@ -93,7 +93,7 @@ test_that("geojson_json detects inproper polygons passed as lists inputs", {
 
   # fine
   fine <- geojson_json(good, geometry = "polygon")
-  expect_is(fine, "json")
+  expect_s3_class(fine, "json")
 
   # bad
   expect_error(
@@ -102,7 +102,7 @@ test_that("geojson_json detects inproper polygons passed as lists inputs", {
   )
 
   # doesn't matter if geometry != polygon
-  expect_is(geojson_json(bad), "json")
+  expect_s3_class(geojson_json(bad), "json")
 })
 
 test_that("geojson_json - acceptable type values for numeric/data.frame/list", {

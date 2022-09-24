@@ -3,7 +3,7 @@ test_that("geojson_list works with numeric inputs", {
 
   # From a numeric vector of length 2, making a point type
   a <- geojson_list(c(-99.74, 32.45))
-  expect_is(a, "geo_list")
+  expect_s3_class(a, "geo_list")
   expect_equal(
     unclass(a),
     structure(list(type = "FeatureCollection", features = list(structure(list(
@@ -13,7 +13,7 @@ test_that("geojson_list works with numeric inputs", {
       ), .Names = c("type", "coordinates")), properties = NULL
     ), .Names = c("type", "geometry", "properties")))), .Names = c("type", "features"), from = "numeric")
   )
-  expect_is(unclass(a), "list")
+  expect_type(unclass(a), "list")
   expect_equal(a$type, "FeatureCollection")
   expect_equal(a$features[[1]]$type, "Feature")
   expect_equal(attr(a, "from"), "numeric")
@@ -68,7 +68,7 @@ test_that("geojson precision arguement works with sp classes", {
   sp_poly <- SpatialPolygons(list(polys))
   tmp <- unclass(geojson_list(sp_poly, geometry = "polygon", precision = 4))
   tmp$name <- NULL
-  expect_is(tmp, "list")
+  expect_type(tmp, "list")
   expect_equal(attr(tmp, "from"), "SpatialPolygons")
   # expect_equal(
   # tmp,
@@ -164,10 +164,10 @@ test_that("geojson_list works with data.frame inputs", {
   s <- SpatialPoints(cbind(x, y))
   aa <- geojson_list(s)
 
-  expect_is(aa, "geo_list")
+  expect_s3_class(aa, "geo_list")
   expect_equal(attr(aa, "from"), "SpatialPoints")
   expect_equal(aa$type, "FeatureCollection")
-  expect_is(aa$features, "list")
+  expect_type(aa$features, "list")
   tmp <- unclass(geojson_list(s))
   tmp$name <- NULL
   expect_equal(
@@ -206,7 +206,7 @@ test_that("geojson_list detects inproper polygons passed as lists inputs", {
   vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
   fine <- geojson_list(vecs, geometry = "polygon")
 
-  expect_is(fine, "geo_list")
+  expect_s3_class(fine, "geo_list")
 
   vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 1))
   expect_error(
@@ -216,5 +216,5 @@ test_that("geojson_list detects inproper polygons passed as lists inputs", {
 
   # doesn't matter if geometry != polygon
   vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 1))
-  expect_is(geojson_list(vecs), "geo_list")
+  expect_s3_class(geojson_list(vecs), "geo_list")
 })

@@ -6,7 +6,7 @@ obj_names <- c(
 )
 
 test_that("onload for turf-extent worked", {
-  expect_is(ext, "V8")
+  expect_s3_class(ext, "V8")
   expect_true(all(obj_names %in% ls(ext)))
   expect_true(any(grepl("extent", ext$get(JS("Object.keys(global)")))))
 })

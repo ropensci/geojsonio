@@ -5,12 +5,12 @@ test_that("topojson_read works with file inputs", {
   aa <- topojson_read(file, stringsAsFactors = TRUE)
   df <- as.data.frame(aa)
 
-  expect_is(aa, "sf")
-  expect_is(df, "data.frame")
+  expect_s3_class(aa, "sf")
+  expect_s3_class(df, "data.frame")
   expect_named(df, c("id", "geometry"))
-  expect_is(df$id, "factor")
-  expect_is(df$geometry, "sfc")
-  expect_is(df$geometry[[1]], "sfg")
+  expect_s3_class(df$id, "factor")
+  expect_s3_class(df$geometry, "sfc")
+  expect_s3_class(df$geometry[[1]], "sfg")
 })
 
 test_that("topojson_read works with file inputs: stringsAsFactors works", {
@@ -19,7 +19,7 @@ test_that("topojson_read works with file inputs: stringsAsFactors works", {
   file <- system.file("examples", "us_states.topojson", package = "geojsonio")
   aa <- topojson_read(file, stringsAsFactors = FALSE)
   df <- as.data.frame(aa)
-  expect_is(df$id, "character")
+  expect_type(df$id, "character")
 })
 
 test_that("topojson_read works with url inputs", {
@@ -29,8 +29,8 @@ test_that("topojson_read works with url inputs", {
   aa <- topojson_read(url)
   df <- as.data.frame(aa)
 
-  expect_is(aa, "sf")
-  expect_is(df, "data.frame")
+  expect_s3_class(aa, "sf")
+  expect_s3_class(df, "data.frame")
   expect_named(df, c("id", "geometry"))
 })
 
@@ -41,8 +41,8 @@ test_that("topojson_read works with as.location inputs", {
   aa <- topojson_read(as.location(file))
   df <- as.data.frame(aa)
 
-  expect_is(aa, "sf")
-  expect_is(df, "data.frame")
+  expect_s3_class(aa, "sf")
+  expect_s3_class(df, "data.frame")
 })
 
 test_that("topojson_read works with .json extension", {
@@ -54,5 +54,5 @@ test_that("topojson_read works with .json extension", {
   )
   aa <- topojson_read(file)
 
-  expect_is(aa, "sf")
+  expect_s3_class(aa, "sf")
 })

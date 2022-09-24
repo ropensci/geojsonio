@@ -2,7 +2,7 @@ test_that("topojson_json works with numeric inputs", {
   skip_on_cran()
 
   aa <- topojson_json(c(-99.74, 32.45), quiet = TRUE)
-  expect_is(aa, "json")
+  expect_s3_class(aa, "json")
 })
 
 test_that("topojson_json works with numeric inputs for polygons", {
@@ -16,7 +16,7 @@ test_that("topojson_json works with numeric inputs for polygons", {
     c(-114.345703125, 39.436192999314095)
   )
   aa <- topojson_json(poly, type = "GeometryCollection", quiet = TRUE)
-  expect_is(aa, "json")
+  expect_s3_class(aa, "json")
 })
 
 test_that("topojson_json works with list inputs", {
@@ -27,14 +27,14 @@ test_that("topojson_json works with list inputs", {
     c(100.0, 0.0)
   )
   aa <- topojson_json(vecs, geometry = "polygon")
-  expect_is(aa, "json")
+  expect_s3_class(aa, "json")
 })
 
 test_that("topojson_json works with data.frame inputs", {
   skip_on_cran()
 
   aa <- topojson_json(us_cities[1:2, ], lat = "lat", lon = "long")
-  expect_is(aa, "json")
+  expect_s3_class(aa, "json")
 })
 
 test_that("topojson_json object_name param works", {

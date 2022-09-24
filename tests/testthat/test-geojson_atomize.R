@@ -8,7 +8,7 @@ test_that("geojson_atomize works with list inputs", {
   lst <- geojson_list(mylist)
   aa <- geojson_atomize(lst)
 
-  expect_is(aa, "list")
+  expect_type(aa, "list")
   # outputs are features
   expect_equal(vapply(aa, "[[", "", "type"), rep("Feature", 2))
 })
@@ -24,7 +24,7 @@ test_that("geojson_atomize works with geo_json inputs", {
   aa <- geojson_atomize(js)
   aajs <- jsonlite::fromJSON(aa, FALSE)
 
-  expect_is(aa, "json")
+  expect_s3_class(aa, "json")
   # outputs are features
   expect_equal(vapply(aajs, "[[", "", "type"), rep("Feature", 2))
 })
@@ -41,7 +41,7 @@ test_that("geojson_atomize works with character inputs", {
   aa <- geojson_atomize(jsc)
   aajs <- jsonlite::fromJSON(aa, FALSE)
 
-  expect_is(aa, "json")
+  expect_s3_class(aa, "json")
   # outputs are features
   expect_equal(vapply(aajs, "[[", "", "type"), rep("Feature", 2))
 })

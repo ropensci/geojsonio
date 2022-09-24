@@ -2,7 +2,7 @@ test_that("topojson_list works with numeric inputs", {
   skip_on_cran()
 
   aa <- topojson_list(c(-99.74, 32.45), quiet = TRUE)
-  expect_is(aa, "list")
+  expect_type(aa, "list")
 })
 
 test_that("topojson_list works with numeric inputs for polygons", {
@@ -16,7 +16,7 @@ test_that("topojson_list works with numeric inputs for polygons", {
     c(-114.345703125, 39.436192999314095)
   )
   aa <- topojson_list(poly, type = "GeometryCollection", quiet = TRUE)
-  expect_is(aa, "list")
+  expect_type(aa, "list")
 })
 
 test_that("topojson_list works with list inputs", {
@@ -27,14 +27,14 @@ test_that("topojson_list works with list inputs", {
     c(100.0, 0.0)
   )
   aa <- topojson_list(vecs, geometry = "polygon")
-  expect_is(aa, "list")
+  expect_type(aa, "list")
 })
 
 test_that("topojson_list works with data.frame inputs", {
   skip_on_cran()
 
   aa <- topojson_list(us_cities[1:2, ], lat = "lat", lon = "long")
-  expect_is(aa, "list")
+  expect_type(aa, "list")
 })
 
 test_that("topojson_list object_name param works", {
