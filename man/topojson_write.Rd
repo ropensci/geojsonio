@@ -49,7 +49,7 @@ geojson file. Using fewer decimal places can decrease file sizes (at the
 cost of precision).}
 
 \item{convert_wgs84}{Should the input be converted to the
-\href{https://tools.ietf.org/html/rfc7946}{standard CRS for GeoJSON}
+standard CRS for GeoJSON (https://tools.ietf.org/html/rfc7946)
 (geographic coordinate reference
 system, using the WGS84 datum, with longitude and latitude units of decimal
 degrees; EPSG: 4326). Default is \code{FALSE} though this may change in a
@@ -76,7 +76,7 @@ classes, data.frames,
 regular lists, and numerics, it is passed through to
 \code{\link[sf:st_write]{sf::st_write()}}. For sf classes,
 geo_lists and json classes, it is passed through to
-\code{\link[jsonlite:toJSON]{jsonlite::toJSON()}}.}
+\code{\link[jsonlite:fromJSON]{jsonlite::toJSON()}}.}
 }
 \value{
 A \code{topojson_write} class, with two elements:

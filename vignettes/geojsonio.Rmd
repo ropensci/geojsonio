@@ -16,8 +16,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   warning = FALSE,
   message = FALSE,
-  purl = FALSE,
-  eval = FALSE
+  fig.width = 10,
+  fig.path = "../man/figures/"
 )
 library("knitr")
 hook_output <- knitr::knit_hooks$get("output")
@@ -43,7 +43,7 @@ knitr::knit_hooks$set(output = function(x, options) {
    x <- paste(c(x, ""), collapse = "\n")
    hook_output(x, options)
  })
- ```
+```
 
 `geojsonio` converts geographic data to geojson and topojson formats. Nothing else. We hope to do this one job very well, and handle all reasonable use cases.
 
@@ -67,20 +67,20 @@ Additional functions:
 
 Install rgdal - in case you can't get it installed from binary , here's what works on a Mac (change to the version of `rgdal` and `GDAL` you have).
 
-```{r eval=FALSE}
+```r
 install.packages("http://cran.r-project.org/src/contrib/rgdal_1.1-3.tar.gz", repos = NULL, type="source", configure.args = "--with-gdal-config=/Library/Frameworks/GDAL.framework/Versions/1.11/unix/bin/gdal-config --with-proj-include=/Library/Frameworks/PROJ.framework/unix/include --with-proj-lib=/Library/Frameworks/PROJ.framework/unix/lib")
 ```
 
 Stable version from CRAN
 
-```{r eval=FALSE}
+```r
 install.packages("geojsonio")
 ```
 
 Development version from GitHub
 
-```{r eval=FALSE}
-devtools::install_github("ropensci/geojsonio")
+```r
+remotes::install_github("ropensci/geojsonio")
 ```
 
 ```{r}
@@ -203,7 +203,7 @@ Read from a file
 
 ```{r}
 file <- system.file("examples", "us_states.topojson", package = "geojsonio")
-out <- topojson_read(file, verbose = FALSE)
+out <- topojson_read(file)
 summary(out)
 ```
 
@@ -211,12 +211,12 @@ Read from a URL
 
 ```{r}
 url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
-out <- topojson_read(url, verbose = FALSE)
+out <- topojson_read(url)
 ```
 
 Or use `as.location()` first
 
 ```{r}
 (loc <- as.location(file))
-out <- topojson_read(loc, verbose = FALSE)
+out <- topojson_read(loc)
 ```

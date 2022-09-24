@@ -1,23 +1,31 @@
-## Test environments
-
-* local OS X install, R 3.6.3 Patched
-* ubuntu 16.04 (on travis-ci), R 3.6.2
-* win-builder (devel and release)
-
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 notes
 
-## Reverse dependencies
+  Maintainer: ‘Michael Mahoney <mike.mahoney.218@gmail.com>’
+  
+  New maintainer:
+    Michael Mahoney <mike.mahoney.218@gmail.com>
+  Old maintainer(s):
+    Scott Chamberlain <myrmecocystus@gmail.com>
 
-I have run R CMD check on the 10 reverse dependencies. Summary at <https://github.com/ropensci/geojsonio/blob/master/revdep/README.md>. No problems were found related to this package.
+
+This package is part of the rOpenSci project, which has a defined process for
+finding new maintainers for otherwise abandoned projects
+(https://devguide.ropensci.org/changing-maintainers.html). 
+On May 20 rOpenSci put out a call for new maintainers for geojsonio, and 
+on May 31 I agreed to take over maintenance of the package 
+(see https://github.com/ropensci/geojsonio/issues/178). My attempts to 
+contact Scott on GitHub have been unsuccessful.
+
+## revdepcheck results
+
+We checked 14 reverse dependencies (12 from CRAN + 2 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
 
 -------
 
-This is a resubmission of v0.9.2 of this package fixing a problem with gcc-10.
-This version fixes stringsAsFactors behavior for the upcoming R ver 4.
-There were failing tests in the test-crs_convert.R file. These have been commented out for now as per recommendation fof Roger Bivand, suggesting that we skip these for now until sf stabilizes
-I've fixed some other tests.
-
-Thanks!
-Scott Chamberlain
+Thanks,
+Mike Mahoney

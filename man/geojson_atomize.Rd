@@ -28,53 +28,63 @@ a GeometryCollection is split into many geometries
 Internally we use \pkg{jqr} for JSON parsing
 }
 \examples{
-################# lists 
+################# lists
 # featurecollection -> features
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-          list(latitude=30, longitude=130, marker="blue"))
+mylist <- list(
+  list(latitude = 30, longitude = 120, marker = "red"),
+  list(latitude = 30, longitude = 130, marker = "blue")
+)
 (x <- geojson_list(mylist))
 geojson_atomize(x)
 
 # geometrycollection -> geometries
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-          list(latitude=30, longitude=130, marker="blue"))
+mylist <- list(
+  list(latitude = 30, longitude = 120, marker = "red"),
+  list(latitude = 30, longitude = 130, marker = "blue")
+)
 (x <- geojson_list(mylist, type = "GeometryCollection"))
 geojson_atomize(x)
 
 # sf class
 library(sf)
-p1 <- rbind(c(0,0), c(1,0), c(3,2), c(2,4), c(1,4), c(0,0))
-poly <- rbind(c(1,1), c(1,2), c(2,2), c(1,1))
+p1 <- rbind(c(0, 0), c(1, 0), c(3, 2), c(2, 4), c(1, 4), c(0, 0))
+poly <- rbind(c(1, 1), c(1, 2), c(2, 2), c(1, 1))
 poly_sfg <- st_polygon(list(p1))
 (x <- geojson_list(poly_sfg))
 geojson_atomize(x)
 
-################# json 
+################# json
 # featurecollection -> features
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-               list(latitude=30, longitude=130, marker="blue"))
+mylist <- list(
+  list(latitude = 30, longitude = 120, marker = "red"),
+  list(latitude = 30, longitude = 130, marker = "blue")
+)
 (x <- geojson_json(mylist))
 geojson_atomize(x)
 geojson_atomize(x, FALSE)
 
 # geometrycollection -> geometries
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-               list(latitude=30, longitude=130, marker="blue"))
+mylist <- list(
+  list(latitude = 30, longitude = 120, marker = "red"),
+  list(latitude = 30, longitude = 130, marker = "blue")
+)
 (x <- geojson_json(mylist, type = "GeometryCollection"))
 geojson_atomize(x)
 geojson_atomize(x, FALSE)
 
 # sf class
 library(sf)
-nc <- st_read(system.file("shape/nc.shp", package="sf"), quiet = TRUE)
+nc <- st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
 (x <- geojson_json(nc))
 geojson_atomize(x)
 geojson_atomize(x, FALSE)
 
 ################# character
 # featurecollection -> features
-mylist <- list(list(latitude=30, longitude=120, marker="red"),
-               list(latitude=30, longitude=130, marker="blue"))
+mylist <- list(
+  list(latitude = 30, longitude = 120, marker = "red"),
+  list(latitude = 30, longitude = 130, marker = "blue")
+)
 (x <- geojson_json(mylist))
 geojson_atomize(unclass(x))
 }

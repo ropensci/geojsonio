@@ -31,7 +31,7 @@
 #' to the Douglas-Peucker distance. If precision is not specified, returns the projection's current
 #' resampling precision which defaults to Math.SQRT(1/2).
 #' @param parallels Depends on the projection used! See
-#' \url{https://github.com/mbostock/d3/wiki/Geo-Projections#standard-projections} for help
+#' https://github.com/mbostock/d3/wiki/Geo-Projections#standard-projections for help
 #' @param clipExtent If extent is specified, sets the projection's viewport clip extent to the
 #' specified bounds in pixels and returns the projection. The extent bounds are specified as an
 #' array `[[x0, y0], [x1, y1]]`, where x0 is the left-side of the viewport, y0 is the top, x1 is
@@ -41,45 +41,50 @@
 #' @param invert Projects backward from Cartesian coordinates (in pixels) to spherical coordinates
 #' (in degrees). Returns an array `[longitude, latitude]` given the input array `[x, y]`.
 #' @examples
-#' projections(proj="albers")
-#' projections(proj="albers", rotate='[98 + 00 / 60, -35 - 00 / 60]', scale=5700)
-#' projections(proj="albers", scale=5700)
-#' projections(proj="albers", translate='[55 * width / 100, 52 * height / 100]')
-#' projections(proj="albers", clipAngle=90)
-#' projections(proj="albers", precision=0.1)
-#' projections(proj="albers", parallels='[30, 62]')
-#' projections(proj="albers", clipExtent='[[105 - 87, 40], [105 + 87 + 1e-6, 82 + 1e-6]]')
-#' projections(proj="albers", invert=60)
+#' projections(proj = "albers")
+#' projections(proj = "albers", rotate = "[98 + 00 / 60, -35 - 00 / 60]", scale = 5700)
+#' projections(proj = "albers", scale = 5700)
+#' projections(proj = "albers", translate = "[55 * width / 100, 52 * height / 100]")
+#' projections(proj = "albers", clipAngle = 90)
+#' projections(proj = "albers", precision = 0.1)
+#' projections(proj = "albers", parallels = "[30, 62]")
+#' projections(proj = "albers", clipExtent = "[[105 - 87, 40], [105 + 87 + 1e-6, 82 + 1e-6]]")
+#' projections(proj = "albers", invert = 60)
 #' projections("orthographic")
-projections <- function(proj, rotate=NULL, center=NULL, translate=NULL, scale=NULL,
-                        clipAngle=NULL, precision=NULL, parallels=NULL, clipExtent=NULL, invert=NULL){
+projections <- function(proj, rotate = NULL, center = NULL, translate = NULL,
+                        scale = NULL, clipAngle = NULL, precision = NULL, parallels = NULL, clipExtent = NULL,
+                        invert = NULL) {
   if (missing(proj)) stop("You must provide a character string to 'proj'", call. = FALSE)
   vals <- list(
-    albers = 'd3.geo.albers()%s',
-    albersUsa = 'd3.geo.albersUsa()',
-    azimuthalEqualArea = 'd3.geo.azimuthalEqualArea()',
-    azimuthalEquidistant = 'd3.geo.azimuthalEquidistant()',
-    conicEqualArea = 'd3.geo.conicEqualArea()',
-    conicConformal = 'd3.geo.conicConformal()',
-    conicEquidistant = 'd3.geo.conicEquidistant()',
-    equirectangular = 'd3.geo.equirectangular()',
-    gnomonic = 'd3.geo.gnomonic()',
-    mercator = 'd3.geo.mercator()',
-    orthographic = 'd3.geo.orthographic()',
-    stereographic = 'd3.geo.stereographic()',
-    transverseMercator = 'd3.geo.transverseMercator()'
+    albers = "d3.geo.albers()%s",
+    albersUsa = "d3.geo.albersUsa()",
+    azimuthalEqualArea = "d3.geo.azimuthalEqualArea()",
+    azimuthalEquidistant = "d3.geo.azimuthalEquidistant()",
+    conicEqualArea = "d3.geo.conicEqualArea()",
+    conicConformal = "d3.geo.conicConformal()",
+    conicEquidistant = "d3.geo.conicEquidistant()",
+    equirectangular = "d3.geo.equirectangular()",
+    gnomonic = "d3.geo.gnomonic()",
+    mercator = "d3.geo.mercator()",
+    orthographic = "d3.geo.orthographic()",
+    stereographic = "d3.geo.stereographic()",
+    transverseMercator = "d3.geo.transverseMercator()"
   )
   got <- vals[[proj]]
   if (is.null(got)) stop("no match for 'proj' parameter input")
-  args <- tg_compact(list(rotate = rotate, center = center, translate = translate, scale = scale,
-                             clipAngle = clipAngle, precision = precision, parallels = parallels,
-                             clipExtent = clipExtent, invert = invert))
+  args <- tg_compact(list(
+    rotate = rotate, center = center,
+    translate = translate, scale = scale,
+    clipAngle = clipAngle, precision = precision, parallels = parallels,
+    clipExtent = clipExtent, invert = invert
+  ))
   out <- list()
   for (i in seq_along(args)) {
     out[i] <- sprintf(".%s(%s)", names(args[i]), args[[i]])
   }
   argstogo <- paste(out, collapse = "")
-  gotgo <- sprintf(got, argstogo)
+  gotgo <- if (nzchar(argstogo)) sprintf(got, argstogo) else got
+  gotgo <- gsub("%s", "", gotgo)
   if (is.null(gotgo)) {
     "That projection doesn't exist, check your spelling"
   } else {

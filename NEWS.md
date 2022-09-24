@@ -1,3 +1,18 @@
+# geojsonio (development version)
+
+* Deprecated (with a warning) functions relying on rgeos. These will stop working in 2023.
+
+# geojsonio 0.9.5
+
+geojsonio 0.9.4
+===============
+
+### BUG FIXES
+
+* fix for `sprintf()` usage within the `projections()` function; only run sprintf on a particular string if it has length > 0 (#172)
+* fix for `as.json()` when the input is the output of `topojson_list()` - we weren't constructing the TopoJSON arcs correctly (#160)
+* fix to `geojson_read()`: now using package `geojsonsf` to read geojson (#163)
+
 geojsonio 0.9.2
 ===============
 

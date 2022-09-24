@@ -3,8 +3,8 @@
 #' @export
 #'
 #' @inheritParams geojson_sf
-#' @param disambiguateFIDs Ignored, and will be removed in a future version. 
-#' Previously was passed to [rgdal::readOGR()], which is no longer used.
+#' @param disambiguateFIDs Ignored, and will be removed in a future version.
+#' Previously was passed to `rgdal::readOGR()`, which is no longer used.
 #'
 #' @return A spatial class object, see Details.
 #' @details The spatial class object returned will depend on the input GeoJSON.
@@ -21,40 +21,50 @@
 #'
 #' # geo_list ------------------
 #' ## From a numeric vector of length 2 to a point
-#' vec <- c(-99.74,32.45)
-#' geojson_list(vec) %>% geojson_sp
+#' vec <- c(-99.74, 32.45)
+#' geojson_list(vec) %>% geojson_sp()
 #'
 #' ## Lists
 #' ## From a list
-#' mylist <- list(list(latitude=30, longitude=120, marker="red"),
-#'                list(latitude=30, longitude=130, marker="blue"))
-#' geojson_list(mylist) %>% geojson_sp
-#' geojson_list(mylist) %>% geojson_sp %>% plot
+#' mylist <- list(
+#'   list(latitude = 30, longitude = 120, marker = "red"),
+#'   list(latitude = 30, longitude = 130, marker = "blue")
+#' )
+#' geojson_list(mylist) %>% geojson_sp()
+#' geojson_list(mylist) %>%
+#'   geojson_sp() %>%
+#'   plot()
 #'
 #' ## From a list of numeric vectors to a polygon
-#' vecs <- list(c(100.0,0.0), c(101.0,0.0), c(101.0,1.0), c(100.0,1.0), c(100.0,0.0))
-#' geojson_list(vecs, geometry="polygon") %>% geojson_sp
-#' geojson_list(vecs, geometry="polygon") %>% geojson_sp %>% plot
+#' vecs <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 0.0))
+#' geojson_list(vecs, geometry = "polygon") %>% geojson_sp()
+#' geojson_list(vecs, geometry = "polygon") %>%
+#'   geojson_sp() %>%
+#'   plot()
 #'
 #' # geo_json ------------------
 #' ## from point
-#' geojson_json(c(-99.74,32.45)) %>% geojson_sp
-#' geojson_json(c(-99.74,32.45)) %>% geojson_sp %>% plot
+#' geojson_json(c(-99.74, 32.45)) %>% geojson_sp()
+#' geojson_json(c(-99.74, 32.45)) %>%
+#'   geojson_sp() %>%
+#'   plot()
 #'
 #' # from featurecollectino of points
-#' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp
-#' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>% geojson_sp %>% plot
+#' geojson_json(us_cities[1:2, ], lat = "lat", lon = "long") %>% geojson_sp()
+#' geojson_json(us_cities[1:2, ], lat = "lat", lon = "long") %>%
+#'   geojson_sp() %>%
+#'   plot()
 #'
 #' # Set the CRS via the crs argument
-#' geojson_json(us_cities[1:2,], lat='lat', lon='long') %>%
+#' geojson_json(us_cities[1:2, ], lat = "lat", lon = "long") %>%
 #'   geojson_sp(crs = "+init=epsg:4326")
 #'
 #' # json ----------------------
-#' x <- geojson_json(us_cities[1:2,], lat='lat', lon='long')
+#' x <- geojson_json(us_cities[1:2, ], lat = "lat", lon = "long")
 #' geojson_sp(x)
-#' 
+#'
 #' # character string ----------------------
-#' x <- unclass(geojson_json(c(-99.74,32.45)))
+#' x <- unclass(geojson_json(c(-99.74, 32.45)))
 #' geojson_sp(x)
 #' }
 geojson_sp <- function(x, disambiguateFIDs = FALSE, stringsAsFactors = FALSE, ...) {
@@ -96,8 +106,4 @@ tosp_base <- function(x, stringsAsFactors, ...) {
 
 tosp <- function(x, stringsAsFactors, ...) {
   as(tosp_base(x, stringsAsFactors, ...), "Spatial")
-}
-
-tosp_list <- function(x, stringsAsFactors = FALSE, parse = FALSE, ...) {
-  sf2list(tosp_base(x, stringsAsFactors, ...), parse)
 }

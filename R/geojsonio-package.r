@@ -10,7 +10,7 @@
 #' The core functions in this package are organized first around what you're
 #' working with or want to get, GeoJSON or TopoJSON, then convert to or read
 #' from various formats:
-#' 
+#'
 #' - [geojson_list()] / [topojson_list()] - convert
 #' 	to GeoJSON or TopoJSON as R list format
 #' - [geojson_json()] / [topojson_json()] - convert
@@ -25,7 +25,7 @@
 #'  a GeoJSON file locally (TopoJSON coming later)
 #'
 #' Other interesting functions:
-#' 
+#'
 #' - [map_gist()] - Create a GitHub gist (renders as an
 #'  interactive map)
 #' - [map_leaf()] - Create a local interactive map using the
@@ -38,16 +38,19 @@
 #' `SpatialPoints`, and many more - which will try to do the right thing
 #' based on the data you give as input.
 #'
-#' @import methods sp rgeos
+#' @import methods sp
+#' @importFrom rgeos Ring
 #' @importFrom sf st_crs st_transform st_read st_write
 #' @importFrom crul HttpClient upload url_parse
 #' @importFrom maptools readShapeSpatial
 #' @importFrom magrittr %>%
 #' @importFrom jsonlite toJSON fromJSON unbox
 #' @importFrom geojson featurecollection geometrycollection
+#' @importFrom geojsonsf sf_geojson
 #' @name geojsonio
-#' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
+#' @author Scott Chamberlain
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}
+#' @author Michael Mahoney \email{mike.mahoney.218@@gmail.com}
 #' @docType package
 NULL
 
@@ -89,13 +92,4 @@ NULL
 #' @name states
 #' @docType data
 #' @keywords data
-NULL
-
-
-#' Defunct functions in geojsonio
-#'
-#' - [lint()]: See `geojsonlint::geojson_hint`
-#' - [validate()]: See `geojsonlint::geojson_lint`
-#'
-#' @name geojsonio-defunct
 NULL

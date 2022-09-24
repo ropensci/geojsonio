@@ -1,6 +1,7 @@
 context("topojson_write")
 
 test_that("topojson_write temporarily removed", {
+  skip_on_cran()
   expect_error(topojson_write(), class = "error")
 })
 
@@ -135,4 +136,3 @@ test_that("topojson_write temporarily removed", {
 #   expect_true(grepl("scale", readLines(gwf9)))
 #   expect_true(grepl("translate", readLines(gwf9)))
 # })
-

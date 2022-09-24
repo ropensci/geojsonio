@@ -68,49 +68,49 @@
 #' # from a Postgres database - your Postgres instance must be running
 #' ## MAKE SURE to run the setup in the postgis manual file first!
 #' if (requireNamespace("DBI") && requireNamespace("RPostgres")) {
-#' library(DBI)
-#' conn <- tryCatch(dbConnect(RPostgres::Postgres(), dbname = 'postgistest'), 
-#'  error = function(e) e)
-#' if (inherits(conn, "PqConnection")) {
-#'   state <- "SELECT row_to_json(fc)
+#'   library(DBI)
+#'   conn <- tryCatch(dbConnect(RPostgres::Postgres(), dbname = "postgistest"),
+#'     error = function(e) e
+#'   )
+#'   if (inherits(conn, "PqConnection")) {
+#'     state <- "SELECT row_to_json(fc)
 #'    FROM (SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
 #'    FROM (SELECT 'Feature' As type
 #'      , ST_AsGeoJSON(lg.geog)::json As geometry
 #'      , row_to_json((SELECT l FROM (SELECT loc_id, loc_name) As l
 #'        )) As properties
 #'     FROM locations As lg   ) As f )  As fc;"
-#'   json <- geojson_read(conn, query = state, what = "json")
-#'   map_leaf(json)
-#'  }
+#'     json <- geojson_read(conn, query = state, what = "json")
+#'     map_leaf(json)
+#'   }
 #' }
 #' }
 geojson_read <- function(x, parse = FALSE, what = "list",
-  stringsAsFactors = FALSE, query = NULL, ...) {
+                         stringsAsFactors = FALSE, query = NULL, ...) {
   UseMethod("geojson_read")
 }
 
 #' @export
 geojson_read.default <- function(x, parse = FALSE, what = "list",
-  stringsAsFactors = FALSE, query = NULL, ...) {
+                                 stringsAsFactors = FALSE, query = NULL, ...) {
   stop("no 'geojson_read' method for ", class(x), call. = FALSE)
 }
 
 #' @export
 geojson_read.character <- function(x, parse = FALSE, what = "list",
-  stringsAsFactors = FALSE, query = NULL, ...) {
+                                   stringsAsFactors = FALSE, query = NULL, ...) {
   read_json(as.location(x), parse, what, stringsAsFactors, ...)
 }
 
 #' @export
 geojson_read.location_ <- function(x, parse = FALSE, what = "list",
-  stringsAsFactors = FALSE, query = NULL, ...) {
+                                   stringsAsFactors = FALSE, query = NULL, ...) {
   read_json(x, parse, what, stringsAsFactors, ...)
 }
 
 #' @export
 geojson_read.PqConnection <- function(x, parse = FALSE,
-  what = "list", stringsAsFactors = FALSE, query = NULL, ...) {
-
+                                      what = "list", stringsAsFactors = FALSE, query = NULL, ...) {
   check4pkg("DBI")
   check4pkg("RPostgres")
   tmp <- DBI::dbGetQuery(x, query)
@@ -141,21 +141,24 @@ file_to_list <- function(input, stringsAsFactors = FALSE, parse = FALSE, ...) {
   fileext <- ftype(input)
   fileext <- match.arg(fileext, c("shp", "kml", "geojson", "json"))
   input <- handle_remote(input)
-  switch(
-    fileext,
+  switch(fileext,
     kml = tosp_list(input, stringsAsFactors, parse, ...),
     shp = tosp_list(input, stringsAsFactors, parse, ...),
     geojson = tosp_list(input, stringsAsFactors, parse, ...),
+    # geojson = geo2list(input, parse, ...),
     json = tosp_list(input, stringsAsFactors, parse, ...)
   )
+}
+
+geo2list <- function(x, parse = FALSE, ...) {
+  jsonlite::fromJSON(x, parse, ...)
 }
 
 file_to_sp <- function(input, stringsAsFactors = FALSE, ...) {
   fileext <- ftype(input)
   fileext <- match.arg(fileext, c("shp", "kml", "geojson", "json"))
   input <- handle_remote(input)
-  switch(
-    fileext,
+  switch(fileext,
     kml = tosp(input, stringsAsFactors, ...),
     shp = tosp(input, stringsAsFactors, ...),
     geojson = tosp(input, stringsAsFactors, ...),
@@ -165,8 +168,10 @@ file_to_sp <- function(input, stringsAsFactors = FALSE, ...) {
 
 sf2list <- function(x, parse) {
   stopifnot(inherits(x, "sf"))
-  tfile <- tempfile(fileext = ".geojson")
-  sf::st_write(x, tfile, quiet = TRUE)
-  on.exit(unlink(x))
-  jsonlite::fromJSON(tfile, parse)
+  txt <- geojsonsf::sf_geojson(x)
+  jsonlite::fromJSON(txt, parse)
+}
+
+tosp_list <- function(x, stringsAsFactors = FALSE, parse = FALSE, ...) {
+  sf2list(tosp_base(x, stringsAsFactors, ...), parse)
 }
