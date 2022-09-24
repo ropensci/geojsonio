@@ -10,7 +10,7 @@ test_that("bounds works with geo_list input", {
   expect_equal(length(a), 4)
 
   # geo_list with data.frame data
-  x <- geojson_list(states[1:20, ])
+  x <- geojson_list(states[1:20, ], lon = "long", lat = "lat")
   b <- suppressMessages(bounds(x))
   expect_type(b, "double")
   expect_type(b[1], "double")
@@ -24,7 +24,7 @@ test_that("bounds works with list input", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  x <- geojson_list(mylist)
+  x <- geojson_list(mylist, lon = "longitude", lat = "latitude")
   c <- suppressMessages(bounds(x))
   expect_type(c, "double")
   expect_type(c[1], "double")

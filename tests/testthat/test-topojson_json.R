@@ -41,9 +41,15 @@ test_that("topojson_json object_name param works", {
   skip_on_cran()
 
   # default
-  aa <- topojson_json(us_cities[1:2, ], quiet = TRUE)
+  aa <- topojson_json(us_cities[1:2, ], quiet = TRUE, lat = "lat", lon = "long")
   expect_named(jsonlite::fromJSON(aa)$objects, "foo")
   # custom object name
-  bb <- topojson_json(us_cities[1:2, ], object_name = "stuff", quiet = TRUE)
+  bb <- topojson_json(
+    us_cities[1:2, ],
+    object_name = "stuff",
+    quiet = TRUE,
+    lat = "lat",
+    lon = "long"
+  )
   expect_named(jsonlite::fromJSON(bb)$objects, "stuff")
 })

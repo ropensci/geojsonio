@@ -158,7 +158,7 @@ test_that("geojson_json precision", {
   expect_equal(num_digits(x), c(0, 3, 7, 2))
 
   # from geojson_list output
-  a <- geojson_list(df, precision = 5)
+  a <- geojson_list(df, precision = 5, lat = "lat", lon = "lon")
   x <- geojson_json(a, precision = 5)
   expect_equal(num_digits(x), c(0, 3, 5, 2))
 

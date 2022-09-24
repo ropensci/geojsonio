@@ -5,7 +5,7 @@ test_that("geojson_atomize works with list inputs", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  lst <- geojson_list(mylist)
+  lst <- geojson_list(mylist, lon = "longitude", lat = "latitude")
   aa <- geojson_atomize(lst)
 
   expect_type(aa, "list")
@@ -20,7 +20,7 @@ test_that("geojson_atomize works with geo_json inputs", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  js <- geojson_json(mylist)
+  js <- geojson_json(mylist, lon = "longitude", lat = "latitude")
   aa <- geojson_atomize(js)
   aajs <- jsonlite::fromJSON(aa, FALSE)
 
@@ -36,7 +36,7 @@ test_that("geojson_atomize works with character inputs", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  js <- geojson_json(mylist)
+  js <- geojson_json(mylist, lon = "longitude", lat = "latitude")
   jsc <- unclass(js)
   aa <- geojson_atomize(jsc)
   aajs <- jsonlite::fromJSON(aa, FALSE)
