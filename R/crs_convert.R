@@ -16,12 +16,12 @@ convert_wgs84.Spatial <- function(x, crs = NULL) {
   if (is.na(is_it)) {
     if (!is.null(crs)) {
       if (is.numeric(crs)) crs <- paste0("+init=epsg:", crs)
-      sp::proj4string(x) <- sp::CRS(crs)
+      slot(x, "proj4string") <- sp::CRS(crs)
     }
   } else if (is_it) {
     return(x)
   }
-  message("Converting CRS from '", proj4string(x), "' to WGS84.")
+  message("Converting CRS from '", slot(slot(x, "proj4string"), "projargs"), "' to WGS84.")
   as(sf::st_transform(sf::st_as_sf(x), 4326), "Spatial")
 }
 
@@ -65,7 +65,7 @@ is_wgs84.sfc <- function(x, warn = TRUE) {
 }
 
 is_wgs84.Spatial <- function(x, warn = TRUE) {
-  prj4 <- proj4string(x)
+  prj4 <- slot(slot(x, "proj4string"), "projargs")
   is_it <- is_wgs84_proj4(prj4)
   if (!is.na(is_it) && !is_it && warn) {
     warning("Input CRS is not WGS84 (epsg:4326), the standard for GeoJSON")

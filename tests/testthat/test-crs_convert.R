@@ -41,15 +41,15 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   })
 
   test_that("works with spatial", {
-    expect_is(proj4string(convert_wgs84(spdf_4326)),
+    expect_is(slot(slot(spdf_4326, "proj4string"), "projargs"),
                  "character")
 
-    expect_is(proj4string(convert_wgs84(spdf_3005)),
+    expect_is(slot(slot(spdf_3005, "proj4string"), "projargs"),
                  "character")
   })
 
   test_that("allows supplying a CRS with Spatial", {
-    expect_is(proj4string(convert_wgs84(spdf, crs = "+init=epsg:3005")),
+    expect_is(slot(slot(convert_wgs84(spdf, crs = "+init=epsg:3005"), "proj4string"), "projargs"),
                  "character")
   })
 
