@@ -40,7 +40,8 @@ Suggests:
     leaflet,
     maps,
     RPostgres,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 Enhances: 
     RColorBrewer
 Encoding: UTF-8

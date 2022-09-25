@@ -2,7 +2,7 @@ supp_invis <- function(x) suppressMessages(invisible(x))
 
 test_that("map_leaf works with file inputs", {
   skip_on_cran()
-  file <- "myfile.geojson"
+  file <- withr::local_file(tempfile(fileext = ".geojson"))
   supp_invis(geojson_write(us_cities[1:20, ], lat = "lat", lon = "long", file = file))
   a_map <- map_leaf(as.location(file))
   expect_s3_class(as.location(file), "location_")

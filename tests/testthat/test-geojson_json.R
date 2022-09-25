@@ -133,10 +133,10 @@ test_that("skipping geoclass in geojson_json works with type = skip", {
   expect_null(attr(geojson_json(x, type = "skip"), "type"))
 })
 
-def_digits <- getOption("digits")
-options(digits = 15)
 test_that("geojson_json precision", {
   skip_on_cran()
+
+  withr::local_options(digits = 15)
 
   # numeric
   x <- geojson_json(c(-99.123456789, 32.12345678), precision = 10)
@@ -195,6 +195,3 @@ test_that("geojson_json precision", {
     c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 3, 0, 0, 3, 1, 0, 0, 1)
   )
 })
-
-# reset digits to default value
-options(digits = def_digits)
