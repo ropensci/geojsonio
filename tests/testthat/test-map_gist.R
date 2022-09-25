@@ -41,7 +41,6 @@ test_that("map_gist works with json inputs", {
 test_that("map_gist works with SpatialPoints inputs", {
   skip_on_cran()
 
-  library("sp")
   a <- c(1, 2, 3, 4, 5)
   b <- c(3, 2, 5, 1, 4)
   x <- SpatialPoints(cbind(a, b))
@@ -56,7 +55,6 @@ test_that("map_gist works with SpatialPoints inputs", {
 test_that("map_gist works with SpatialPointsDataFrame inputs", {
   skip_on_cran()
 
-  library("sp")
   a <- c(1, 2, 3, 4, 5)
   b <- c(3, 2, 5, 1, 4)
   s <- SpatialPointsDataFrame(cbind(a, b), mtcars[1:5, ])

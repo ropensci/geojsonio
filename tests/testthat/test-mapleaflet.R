@@ -1,4 +1,3 @@
-library("leaflet")
 supp_invis <- function(x) suppressMessages(invisible(x))
 
 test_that("map_leaf works with file inputs", {
@@ -82,7 +81,6 @@ test_that("map_leaf works with list inputs", {
 
 ## spatial classes --------------
 sp_poly <- local({
-  library("sp")
   poly1 <- Polygons(list(Polygon(cbind(
     c(-100, -90, -85, -100),
     c(40, 50, 45, 40)
@@ -95,14 +93,12 @@ sp_poly <- local({
 })
 
 sp_pts <- local({
-  library("sp")
   a <- c(1, 2, 3, 4, 5)
   b <- c(3, 2, 5, 1, 4)
   SpatialPoints(cbind(a, b))
 })
 
 sp_lines <- local({
-  library("sp")
   c1 <- cbind(c(1, 2, 3), c(3, 2, 2))
   L1 <- Line(c1)
   Ls1 <- Lines(list(L1), ID = "a")
@@ -110,7 +106,6 @@ sp_lines <- local({
 })
 
 sp_grid <- local({
-  library("sp")
   x <- GridTopology(c(0, 0), c(1, 1), c(5, 5))
   SpatialGrid(x)
 })

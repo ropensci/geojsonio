@@ -44,7 +44,6 @@ test_that("as.json works with data.frame class inputs", {
 test_that("as.json works with geojson class inputs", {
   skip_on_cran()
 
-  library("sp")
   poly1 <- Polygons(list(Polygon(cbind(
     c(-100, -90, -85, -100),
     c(40, 50, 45, 40)
@@ -68,7 +67,6 @@ test_that("as.json works with geojson class inputs", {
 test_that("as.json works with topojson list inputs", {
   skip_on_cran()
 
-  library("sp")
   z <- SpatialPolygonsDataFrame(
     SpatialPolygons(list(
       Polygons(list(

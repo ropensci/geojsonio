@@ -163,7 +163,6 @@ test_that("geojson_json precision", {
   expect_equal(num_digits(x), c(0, 3, 5, 2))
 
   # sp classes: SpatialPolygons
-  library("sp")
   poly1 <- Polygons(list(Polygon(cbind(
     c(-100.1, -90.12, -85.123, -100.1234),
     c(40, 50, 45, 40)
@@ -183,7 +182,6 @@ test_that("geojson_json precision", {
   )
 
   # sf classes
-  library("sf")
   p1 <- rbind(c(0, 0), c(1, 0), c(3, 2), c(2, 4), c(1, 4.1234567), c(0, 0))
   p2 <- rbind(c(5.123, 5.1), c(5, 6), c(4, 5), c(5.123, 5.1))
   poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))

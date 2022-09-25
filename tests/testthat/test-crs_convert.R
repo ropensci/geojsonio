@@ -7,8 +7,6 @@
 
 # if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
 
-#   suppressPackageStartupMessages(library(sp))
-
 #   sfc <-  st_sfc(st_point(c(0,0)), st_point(c(1,1)))
 #   sf <-  st_sf(a = 1:2, geom = sfc)
 #   sf_4326 <- st_set_crs(sf, 4326)

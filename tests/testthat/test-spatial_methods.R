@@ -1,7 +1,5 @@
 skip_on_cran()
 
-suppressPackageStartupMessages(library("sp"))
-
 sp_poly <- local({
   poly1 <- Polygons(list(Polygon(cbind(
     c(-100, -90, -85, -100),

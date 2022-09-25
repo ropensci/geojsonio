@@ -58,7 +58,6 @@ test_that("topojson_write temporarily removed", {
 #   skip_on_travis()
 #   skip_on_cran()
 
-#   library('sp')
 #   poly1 <- Polygons(list(Polygon(cbind(c(-100.111,-90.111,-85.111,-100.111),
 #                                        c(40.111,50.111,45.111,40.111)))), "1")
 #   poly2 <- Polygons(list(Polygon(cbind(c(-90.111,-80.111,-75.111,-90.111),
@@ -97,8 +96,6 @@ test_that("topojson_write temporarily removed", {
 # })
 
 # test_that("topojson_write unclasses columns with special classes so writeOGR works", {
-#   library('sp')
-#   library('sf')
 
 #   poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
 #                                        c(40,50,45,40)))), "1")

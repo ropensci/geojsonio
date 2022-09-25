@@ -52,7 +52,6 @@ test_that("precision argument works with sp objects in geojson_write", {
   skip_on_travis()
   skip_on_cran()
 
-  library("sp")
   poly1 <- Polygons(list(Polygon(cbind(
     c(-100.111, -90.111, -85.111, -100.111),
     c(40.111, 50.111, 45.111, 40.111)
@@ -106,8 +105,6 @@ test_that("geojson_write detects inproper polygons passed as lists inputs", {
 
 test_that("geojson_write unclasses columns with special classes so writeOGR works", {
   skip_on_cran()
-  library("sp")
-  library("sf")
 
   poly1 <- Polygons(list(Polygon(cbind(
     c(-100, -90, -85, -100),
