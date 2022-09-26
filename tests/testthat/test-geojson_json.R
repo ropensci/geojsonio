@@ -1,11 +1,9 @@
-context("geojson_json")
-
 test_that("geojson_json works with numeric inputs", {
   skip_on_cran()
 
   # From a numeric vector of length 2, making a point type
   a <- geojson_json(c(-99.74, 32.45))
-  expect_is(a, "json")
+  expect_s3_class(a, "json")
   expect_equal(attr(a, "type"), "FeatureCollection")
   expect_equal(attr(a, "no_features"), "1")
   expect_equal(attr(a, "five_feats"), "Point")
@@ -15,7 +13,7 @@ test_that("geojson_json works with numeric inputs", {
     a,
     "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]},\"properties\":{}}]}"
   )
-  expect_is(unclass(a), "character")
+  expect_type(unclass(a), "character")
   expect_equal(jsonlite::fromJSON(a)$type, "FeatureCollection")
 
   aa <- unclass(geojson_json(c(-99.74, 32.45), type = "GeometryCollection"))
@@ -58,7 +56,7 @@ test_that("geojson_json works with data.frame inputs", {
   # from data.frame to polygons
   aa <- unclass(geojson_json(states[1:351, ], lat = "lat", lon = "long", geometry = "polygon", group = "group"))
   attributes(aa) <- NULL
-  expect_equal_to_reference(object = aa, file = "numericstates.rds")
+  expect_snapshot_value(aa, style = "json2")
 })
 
 test_that("geojson_json works with data.frame inputs", {
@@ -95,7 +93,7 @@ test_that("geojson_json detects inproper polygons passed as lists inputs", {
 
   # fine
   fine <- geojson_json(good, geometry = "polygon")
-  expect_is(fine, "json")
+  expect_s3_class(fine, "json")
 
   # bad
   expect_error(
@@ -104,7 +102,7 @@ test_that("geojson_json detects inproper polygons passed as lists inputs", {
   )
 
   # doesn't matter if geometry != polygon
-  expect_is(geojson_json(bad), "json")
+  expect_s3_class(geojson_json(bad), "json")
 })
 
 test_that("geojson_json - acceptable type values for numeric/data.frame/list", {
@@ -127,7 +125,7 @@ test_that("geojson_json - acceptable type values for numeric/data.frame/list", {
   )
 })
 
-test_that("skipping geoclass works with type = skip", {
+test_that("skipping geoclass in geojson_json works with type = skip", {
   skip_on_cran()
 
   x <- geojson_sp(geojson_json(c(-99.74, 32.45)))
@@ -135,10 +133,9 @@ test_that("skipping geoclass works with type = skip", {
   expect_null(attr(geojson_json(x, type = "skip"), "type"))
 })
 
-context("geojson_json precision")
 def_digits <- getOption("digits")
 options(digits = 15)
-test_that("precision", {
+test_that("geojson_json precision", {
   skip_on_cran()
 
   # numeric
@@ -161,7 +158,7 @@ test_that("precision", {
   expect_equal(num_digits(x), c(0, 3, 7, 2))
 
   # from geojson_list output
-  a <- geojson_list(df, precision = 5)
+  a <- geojson_list(df, precision = 5, lat = "lat", lon = "lon")
   x <- geojson_json(a, precision = 5)
   expect_equal(num_digits(x), c(0, 3, 5, 2))
 

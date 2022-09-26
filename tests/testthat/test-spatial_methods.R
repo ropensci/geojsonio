@@ -1,7 +1,5 @@
 skip_on_cran()
 
-context("spatial-methods")
-
 suppressPackageStartupMessages(library("sp"))
 
 sp_poly <- local({
@@ -42,20 +40,20 @@ sp_pixels <- local({
 test_that("SpatialPoints to SpatialPointsDataFrame", {
   a <- as(sp_pts, "SpatialPointsDataFrame")
 
-  expect_is(sp_pts, "SpatialPoints")
-  expect_is(a, "SpatialPointsDataFrame")
+  expect_s4_class(sp_pts, "SpatialPoints")
+  expect_s4_class(a, "SpatialPointsDataFrame")
 })
 
 test_that("SpatialLines to SpatialLinesDataFrame", {
   a <- as(sp_lines, "SpatialLinesDataFrame")
 
-  expect_is(sp_lines, "SpatialLines")
-  expect_is(a, "SpatialLinesDataFrame")
+  expect_s4_class(sp_lines, "SpatialLines")
+  expect_s4_class(a, "SpatialLinesDataFrame")
 })
 
 test_that("SpatialPixels to SpatialPointsDataFrame", {
   a <- as(sp_pixels, "SpatialPointsDataFrame")
 
-  expect_is(sp_pixels, "SpatialPixels")
-  expect_is(a, "SpatialPointsDataFrame")
+  expect_s4_class(sp_pixels, "SpatialPixels")
+  expect_s4_class(a, "SpatialPointsDataFrame")
 })

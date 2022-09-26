@@ -1,5 +1,3 @@
-context("sf classes")
-
 skip_on_cran()
 
 un_class <- function(x) {
@@ -374,9 +372,10 @@ test_that("geojson is valid with named sfc input", {
 
   x_json <- geojson_json(x)
 
-  expect_equivalent(
+  expect_equal(
     unclass(x_json),
-    "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[0,1]},{\"type\":\"Point\",\"coordinates\":[1,2]}]}"
+    "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[0,1]},{\"type\":\"Point\",\"coordinates\":[1,2]}]}",
+    ignore_attr = TRUE
   )
 })
 

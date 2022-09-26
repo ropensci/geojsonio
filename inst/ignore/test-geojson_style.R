@@ -1,5 +1,3 @@
-context("geojson_style")
-
 test_that("geojson_style works with data.frame inputs", {
   require("RColorBrewer")
   smalluscities <- subset(us_cities, country.etc == 'OR' | country.etc == 'NY' | country.etc == 'CA')
@@ -14,9 +12,9 @@ test_that("geojson_style works with data.frame inputs", {
      color=RColorBrewer::brewer.pal(length(unique(smalluscities$country.etc)), "Blues"),
      size=c('small','medium','large'))
   
-  expect_is(a, "data.frame")
-  expect_is(b, "data.frame")
-  expect_is(c, "data.frame")
+  expect_s3_class(a, "data.frame")
+  expect_s3_class(b, "data.frame")
+  expect_s3_class(c, "data.frame")
   expect_match(names(a)[length(names(a))], "marker-color")
   expect_match(names(b)[length(names(b))], "marker-size")
   expect_equal(names(c)[ c(length(names(c)) - 1, length(names(c))) ], c("marker-color", "marker-size"))
@@ -41,9 +39,9 @@ test_that("geojson_style works with list inputs", {
                 size=c('small','medium','large','large'),
                 symbol="zoo")
   
-  expect_is(d, "list")
-  expect_is(e, "list")
-  expect_is(f, "list")
+  expect_type(d, "list")
+  expect_type(e, "list")
+  expect_type(f, "list")
   expect_match(sapply(d, names)[4, 1], "marker-color")
   expect_match(sapply(e, names)[5, 1], "marker-size")
   expect_equal(sapply(f, names)[4:6, 1], c("marker-color", "marker-symbol", "marker-size"))

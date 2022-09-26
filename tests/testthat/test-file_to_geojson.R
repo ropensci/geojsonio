@@ -1,7 +1,5 @@
 skip_on_cran()
 
-context("file_to_geojson")
-
 # kml -------------------------------
 file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
 
@@ -21,14 +19,14 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
-  expect_is(aa, "character")
+  expect_type(aa, "character")
   expect_true(file.exists(aa))
   expect_match(aa, paste0(ftog1, ".geojson"))
 
-  expect_is(aa_in, "list")
+  expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
-  expect_is(aa_in$crs, "list")
-  expect_is(aa_in$features, "data.frame")
+  expect_type(aa_in$crs, "list")
+  expect_s3_class(aa_in$features, "data.frame")
 
   # cleanup
   unlink(paste0(ftog1, ".geojson"))
@@ -42,13 +40,13 @@ test_that("file_to_geojson works w/ kml input, web method, output memory", {
     output = ":memory:"
   ))
 
-  expect_is(aa, "list")
+  expect_type(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
-  expect_is(aa$crs, "list")
-  expect_is(aa$features, "list")
+  expect_type(aa$crs, "list")
+  expect_type(aa$features, "list")
   expect_named(aa$features[[1]], c("type", "properties", "geometry"))
 
-  expect_is(as.json(aa), "json")
+  expect_s3_class(as.json(aa), "json")
 })
 
 test_that("file_to_geojson works w/ kml input, local method, output file", {
@@ -58,14 +56,14 @@ test_that("file_to_geojson works w/ kml input, local method, output file", {
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
-  expect_is(aa, "character")
+  expect_type(aa, "character")
   expect_true(file.exists(aa))
   expect_match(aa, ftog2)
 
   expect_equal(aa_in$type, "FeatureCollection")
-  expect_is(aa_in$features, "data.frame")
+  expect_s3_class(aa_in$features, "data.frame")
 
-  expect_is(as.json(aa_in), "json")
+  expect_s3_class(as.json(aa_in), "json")
 
   # cleanup
   unlink(paste0(ftog2, ".geojson"))
@@ -77,12 +75,12 @@ test_that("file_to_geojson works w/ kml input, local method, output memory", {
     output = ":memory:"
   ))
 
-  expect_is(aa, "list")
+  expect_type(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
-  expect_is(aa$features, "list")
+  expect_type(aa$features, "list")
   expect_named(aa$features[[1]], c("type", "properties", "geometry"))
 
-  expect_is(as.json(aa), "json")
+  expect_s3_class(as.json(aa), "json")
 })
 
 
@@ -98,15 +96,15 @@ test_that("file_to_geojson works w/ shp zip file input, web method, output file"
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
-  expect_is(aa, "character")
+  expect_type(aa, "character")
   expect_true(file.exists(aa))
   expect_match(aa, paste0(ftog3, ".geojson"))
 
-  expect_is(aa_in, "list")
+  expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
-  expect_is(aa_in$crs, "list")
+  expect_type(aa_in$crs, "list")
 
-  expect_is(as.json(aa_in), "json")
+  expect_s3_class(as.json(aa_in), "json")
 
   # cleanup
   unlink(paste0(ftog3, ".geojson"))
@@ -124,15 +122,15 @@ test_that("file_to_geojson works w/ shp file input, local method, output file", 
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
-  expect_is(aa, "character")
+  expect_type(aa, "character")
   expect_true(file.exists(aa))
   expect_match(aa, ftog4)
 
-  expect_is(aa_in, "list")
+  expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
-  expect_is(aa_in$features, "data.frame")
+  expect_s3_class(aa_in$features, "data.frame")
 
-  expect_is(as.json(aa_in), "json")
+  expect_s3_class(as.json(aa_in), "json")
 
   # cleanup
   unlink(paste0(ftog4, ".geojson"))
@@ -148,15 +146,15 @@ test_that("file_to_geojson works w/ url kml input, web method, local output", {
 
   aa_in <- jsonlite::fromJSON(aa)
 
-  expect_is(aa, "character")
+  expect_type(aa, "character")
   expect_true(file.exists(aa))
   expect_match(aa, paste0(ftog5, ".geojson"))
 
-  expect_is(aa_in, "list")
+  expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
-  expect_is(aa_in$features, "data.frame")
+  expect_s3_class(aa_in$features, "data.frame")
 
-  expect_is(as.json(aa_in), "json")
+  expect_s3_class(as.json(aa_in), "json")
 
   # cleanup
   unlink(paste0(ftog5, ".geojson"))
@@ -168,15 +166,15 @@ test_that("file_to_geojson works w/ url kml input, local method, local output", 
 
   aa_in <- jsonlite::fromJSON(aa)
 
-  expect_is(aa, "character")
+  expect_type(aa, "character")
   expect_true(file.exists(aa))
   expect_match(aa, ftog6)
 
-  expect_is(aa_in, "list")
+  expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
-  expect_is(aa_in$features, "data.frame")
+  expect_s3_class(aa_in$features, "data.frame")
 
-  expect_is(as.json(aa_in), "json")
+  expect_s3_class(as.json(aa_in), "json")
 
   # cleanup
   unlink(paste0(ftog6, ".geojson"))
@@ -186,24 +184,24 @@ test_that("file_to_geojson works w/ url kml input, web method, memory output", {
   skip_on_cran()
   aa <- suppressMessages(file_to_geojson(kml_url, method = "web", output = ":memory:"))
 
-  expect_is(aa, "list")
+  expect_type(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
-  expect_is(aa$features, "list")
+  expect_type(aa$features, "list")
   expect_named(aa$features[[1]], c("type", "properties", "geometry"))
 
-  expect_is(as.json(aa), "json")
+  expect_s3_class(as.json(aa), "json")
 })
 
 test_that("file_to_geojson works w/ url kml input, local method, memory output", {
   skip_on_cran()
   aa <- suppressMessages(file_to_geojson(kml_url, method = "local", output = ":memory:"))
 
-  expect_is(aa, "list")
+  expect_type(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
-  expect_is(aa$features, "list")
+  expect_type(aa$features, "list")
   expect_named(aa$features[[1]], c("type", "properties", "geometry"))
 
-  expect_is(as.json(aa), "json")
+  expect_s3_class(as.json(aa), "json")
 })
 
 # shp
@@ -218,15 +216,15 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, output f
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
-  expect_is(aa, "character")
+  expect_type(aa, "character")
   expect_true(file.exists(aa))
   expect_match(aa, paste0(ftog7, ".geojson"))
 
-  expect_is(aa_in, "list")
+  expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
-  expect_is(aa_in$crs, "list")
+  expect_type(aa_in$crs, "list")
 
-  expect_is(as.json(aa_in), "json")
+  expect_s3_class(as.json(aa_in), "json")
 
   # cleanup
   unlink(paste0(ftog7, ".geojson"))
@@ -240,12 +238,12 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, memory o
     output = ":memory:"
   ))
 
-  expect_is(aa, "list")
+  expect_type(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
-  expect_is(aa$features, "list")
+  expect_type(aa$features, "list")
   expect_named(aa$features[[1]], c("type", "properties", "geometry"))
 
-  expect_is(as.json(aa), "json")
+  expect_s3_class(as.json(aa), "json")
 })
 
 test_that("file_to_geojson fails well", {

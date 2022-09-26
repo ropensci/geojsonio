@@ -1,5 +1,3 @@
-context("centroid")
-
 test_that("centroid works with geo_list input", {
   skip_on_cran()
 
@@ -7,8 +5,8 @@ test_that("centroid works with geo_list input", {
   vec <- c(-99.74, 32.45)
   x <- geojson_list(vec)
   a <- centroid(x)
-  expect_is(a, "numeric")
-  expect_is(a[1], "numeric")
+  expect_type(a, "double")
+  expect_type(a[1], "double")
   expect_equal(length(a), 2)
 
   # list input
@@ -18,14 +16,14 @@ test_that("centroid works with geo_list input", {
   )
   x <- suppressMessages(geojson_list(mylist))
   b <- centroid(x)
-  expect_is(b, "numeric")
-  expect_is(b[1], "numeric")
+  expect_type(b, "double")
+  expect_type(b[1], "double")
   expect_equal(length(b), 2)
 
   # data.frame input
   x <- suppressMessages(geojson_list(states[1:20, ]))
   c <- centroid(x)
-  expect_is(c, "numeric")
-  expect_is(c[1], "numeric")
+  expect_type(c, "double")
+  expect_type(c[1], "double")
   expect_equal(length(c), 2)
 })

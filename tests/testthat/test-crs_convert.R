@@ -1,5 +1,3 @@
-context("detect and convert crs")
-
 # sm <- function(x) suppressMessages(x)
 
 # compare_things <- function(a, b) {
@@ -23,43 +21,43 @@ context("detect and convert crs")
 #   spdf_3005 <- supw(as(sf::st_transform(sf::st_as_sf(spdf_4326), 3005), 'Spatial'))
 
 #   test_that("works with sf", {
-#     expect_is(st_crs(convert_wgs84(sf_4326))[["proj4string"]],
+#     expect_type(st_crs(convert_wgs84(sf_4326))[["proj4string"]],
 #               "character")
 
-#     expect_is(st_crs(sm(convert_wgs84(sf_3005)))[["proj4string"]],
+#     expect_type(st_crs(sm(convert_wgs84(sf_3005)))[["proj4string"]],
 #                  "character")
 #   })
 
 #   test_that("works with sfc", {
 #     suppressWarnings(st_crs(sfc) <-  4326)
-#     expect_is(st_crs(sm(convert_wgs84(sfc)))[["proj4string"]],
+#     expect_type(st_crs(sm(convert_wgs84(sfc)))[["proj4string"]],
 #                  "character")
 
 #     suppressWarnings(st_crs(sfc) <- 3005)
-#     expect_is(st_crs(sm(convert_wgs84(sfc)))[["proj4string"]],
+#     expect_type(st_crs(sm(convert_wgs84(sfc)))[["proj4string"]],
 #                  "character")
 #   })
 
 #   test_that("works with spatial", {
-#     expect_is(proj4string(convert_wgs84(spdf_4326)),
+#     expect_type(proj4string(convert_wgs84(spdf_4326)),
 #                  "character")
 
-#     expect_is(proj4string(convert_wgs84(spdf_3005)),
+#     expect_type(proj4string(convert_wgs84(spdf_3005)),
 #                  "character")
 #   })
 
 #   test_that("allows supplying a CRS with Spatial", {
-#     expect_is(proj4string(convert_wgs84(spdf, crs = "+init=epsg:3005")),
+#     expect_type(proj4string(convert_wgs84(spdf, crs = "+init=epsg:3005")),
 #                  "character")
 #   })
 
 #   test_that("allows supplying a CRS with sf", {
-#     expect_is(st_crs(convert_wgs84(sf, crs = 3005))[["proj4string"]],
+#     expect_type(st_crs(convert_wgs84(sf, crs = 3005))[["proj4string"]],
 #                  "character")
 #   })
 
 #   test_that("allows supplying a CRS with sfc", {
-#     expect_is(st_crs(convert_wgs84(sfc, crs = 3005))[["proj4string"]],
+#     expect_type(st_crs(convert_wgs84(sfc, crs = 3005))[["proj4string"]],
 #                  "character")
 #   })
 
