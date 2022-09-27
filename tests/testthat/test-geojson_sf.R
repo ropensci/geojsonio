@@ -45,22 +45,17 @@ test_that("geojson_sf works with json inputs", {
   expect_s3_class(b, "sf")
 
   # from a polygon
-  poly <- structure('{"type":"FeatureCollection","features":[{
-"type": "Feature",
-"properties": {},
-"geometry": {
-"type": "Polygon",
-"coordinates": [
-[
-[53, -42],
-[57, -42],
-[57, -47],
-[53, -47],
-[53, -42]
-]
-]
-}}]
-}', class = c("json", "geo_json"))
+  poly <- structure('{
+    "type":"FeatureCollection",
+    "features":[{
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[53, -42],[57, -42],[57, -47],[53, -47],[53, -42]]]
+      }
+    }]
+  }', class = c("json", "geo_json"))
   d <- geojson_sf(poly)
   expect_s3_class(d, "sf")
 })

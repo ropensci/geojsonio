@@ -1,6 +1,3 @@
-features_names <- sort(c("type", "properties", "geometry"))
-top_names <- sort(c("type", "features"))
-
 test_that("geojson_read works with file inputs", {
   skip_on_cran()
 
@@ -11,13 +8,14 @@ test_that("geojson_read works with file inputs", {
   expect_equal(aa$type, "FeatureCollection")
   expect_type(aa$features, "list")
   expect_equal(aa$features[[1]]$type, "Feature")
-  expect_equal(sort(names(aa$features[[1]])), features_names)
-  expect_true(all(top_names %in% names(aa)))
+  expect_setequal(
+    names(aa$features[[1]]),
+    c("type", "properties", "geometry")
+  )
+  expect_true(all(c("type", "features") %in% names(aa)))
 })
 
 test_that("geojson_read works with url inputs", {
-  skip_on_cran()
-
   skip_on_cran()
 
   url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
@@ -27,7 +25,10 @@ test_that("geojson_read works with url inputs", {
   expect_equal(aa$type, "FeatureCollection")
   expect_type(aa$features, "list")
   expect_equal(aa$features[[1]]$type, "Feature")
-  expect_equal(sort(names(aa$features[[1]])), features_names)
+  expect_setequal(
+    names(aa$features[[1]]),
+    c("type", "properties", "geometry")
+  )
 })
 
 test_that("geojson_read works with as.location inputs", {
@@ -40,8 +41,11 @@ test_that("geojson_read works with as.location inputs", {
   expect_equal(aa$type, "FeatureCollection")
   expect_type(aa$features, "list")
   expect_equal(aa$features[[1]]$type, "Feature")
-  expect_equal(sort(names(aa$features[[1]])), features_names)
-  expect_true(all(top_names %in% names(aa)))
+  expect_setequal(
+    names(aa$features[[1]]),
+    c("type", "properties", "geometry")
+  )
+  expect_true(all(c("type", "features") %in% names(aa)))
 })
 
 test_that("geojson_read works outputing spatial class object", {

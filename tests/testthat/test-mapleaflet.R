@@ -1,3 +1,5 @@
+skip_on_cran()
+
 supp_invis <- function(x) suppressMessages(invisible(x))
 
 test_that("map_leaf works with file inputs", {
@@ -78,7 +80,6 @@ test_that("map_leaf works with list inputs", {
 })
 
 
-
 ## spatial classes --------------
 sp_poly <- local({
   poly1 <- Polygons(list(Polygon(cbind(
@@ -154,7 +155,6 @@ test_that("map_leaf works with SpatialLinesDataFrame inputs", {
   expect_s4_class(sp_linesdf, "SpatialLinesDataFrame")
   expect_s3_class(nn, "leaflet")
 })
-
 
 test_that("map_leaf works with SpatialGrid inputs", {
   skip_on_cran()
