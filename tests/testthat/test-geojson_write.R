@@ -100,7 +100,13 @@ test_that("geojson_write detects inproper polygons passed as lists inputs", {
   )
 
   # doesn't matter if geometry != polygon
-  expect_s3_class(suppressMessages(geojson_write(bad)), "geojson_file")
+  expect_s3_class(
+    suppressMessages(geojson_write(
+      bad,
+      file = withr::local_tempfile(fileext = ".geojson")
+    )),
+    "geojson_file"
+  )
 })
 
 test_that("geojson_write unclasses columns with special classes so writeOGR works", {
