@@ -20,7 +20,7 @@ test_that("as.json works with geo_list class inputs", {
 test_that("as.json works with data.frame class inputs", {
   skip_on_cran()
 
-  tf1 <- tempfile(fileext = ".geojson")
+  tf1 <- withr::local_tempfile(fileext = ".geojson")
   cc <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", file = tf1))
   expect_s3_class(cc, "geojson_file")
   expect_type(unclass(cc), "list")
@@ -30,7 +30,7 @@ test_that("as.json works with data.frame class inputs", {
     "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":113888,\"lat\":32.45,\"long\":-99.74,\"capital\":0},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]}},{\"type\":\"Feature\",\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":206634,\"lat\":41.08,\"long\":-81.52,\"capital\":0},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-81.52,41.08]}}]}"
   )
 
-  tf11 <- tempfile(fileext = ".geojson")
+  tf11 <- withr::local_tempfile(fileext = ".geojson")
   d <- supw(suppressMessages(geojson_write(
     input = states, lat = "lat", lon = "long",
     geometry = "polygon", group = "group", file = tf11
@@ -53,7 +53,7 @@ test_that("as.json works with geojson class inputs", {
     c(30, 40, 35, 30)
   ))), "2")
   sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
-  tf2 <- tempfile(fileext = ".geojson")
+  tf2 <- withr::local_tempfile(fileext = ".geojson")
   e <- suppressMessages(geojson_write(sp_poly, file = tf2))
   expect_s3_class(e, "geojson_file")
   expect_type(unclass(e), "list")
@@ -89,7 +89,7 @@ test_that("as.json works with topojson list inputs", {
 test_that("as.json works with file name inputs", {
   skip_on_cran()
 
-  tf3 <- tempfile(fileext = ".geojson")
+  tf3 <- withr::local_tempfile(fileext = ".geojson")
   ee <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", file = tf3))
   expect_s3_class(ee, "geojson_file")
   expect_type(unclass(ee), "list")

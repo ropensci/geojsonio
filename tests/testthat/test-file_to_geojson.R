@@ -1,35 +1,23 @@
-skip_on_cran()
-
-# temp files
-ftog1 <- basename(tempfile())
-ftog2 <- basename(tempfile())
-ftog3 <- basename(tempfile())
-ftog4 <- basename(tempfile())
-ftog5 <- basename(tempfile())
-ftog6 <- basename(tempfile())
-ftog7 <- basename(tempfile())
-
 test_that("file_to_geojson works w/ kml input, web method, output file", {
   skip_on_cran()
+
+  file <- withr::local_tempfile(fileext = ".geojson")
 
   aa <- suppressMessages(file_to_geojson(
     input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
     method = "web",
-    output = ftog1
+    output = file
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, paste0(ftog1, ".geojson"))
+  expect_match(aa, file)
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
   expect_type(aa_in$crs, "list")
   expect_s3_class(aa_in$features, "data.frame")
-
-  # cleanup
-  unlink(paste0(ftog1, ".geojson"))
 })
 
 test_that("file_to_geojson works w/ kml input, web method, output memory", {
@@ -53,24 +41,23 @@ test_that("file_to_geojson works w/ kml input, web method, output memory", {
 test_that("file_to_geojson works w/ kml input, local method, output file", {
   skip_on_cran()
 
+  file <- withr::local_tempfile(fileext = ".geojson")
+
   aa <- suppressMessages(file_to_geojson(
     input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
     method = "local",
-    output = ftog2
+    output = file
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, ftog2)
+  expect_match(aa, file)
 
   expect_equal(aa_in$type, "FeatureCollection")
   expect_s3_class(aa_in$features, "data.frame")
 
   expect_s3_class(as.json(aa_in), "json")
-
-  # cleanup
-  unlink(paste0(ftog2, ".geojson"))
 })
 
 test_that("file_to_geojson works w/ kml input, local method, output memory", {
@@ -96,54 +83,50 @@ test_that("file_to_geojson works w/ shp zip file input, web method, output file"
   skip_on_cran()
 
   file <- system.file("examples", "bison.zip", package = "geojsonio")
+  output_file <- withr::local_tempfile(fileext = ".geojson")
 
   aa <- suppressMessages(file_to_geojson(
     input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
     method = "web",
-    output = ftog3
+    output = output_file
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, paste0(ftog3, ".geojson"))
+  expect_match(aa, output_file)
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
   expect_type(aa_in$crs, "list")
 
   expect_s3_class(as.json(aa_in), "json")
-
-  # cleanup
-  unlink(paste0(ftog3, ".geojson"))
 })
 
 test_that("file_to_geojson works w/ shp file input, local method, output file", {
   skip_on_cran()
 
   file <- system.file("examples", "bison.zip", package = "geojsonio")
-  dir <- tempdir()
+  output_file <- withr::local_tempfile(fileext = ".geojson")
+  dir <- withr::local_tempdir()
   unzip(file, exdir = dir)
   shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
 
   aa <- suppressMessages(file_to_geojson(
     input = shpfile, method = "local",
-    output = ftog4
+    output = output_file
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, ftog4)
+  expect_match(aa, output_file)
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
   expect_s3_class(aa_in$features, "data.frame")
 
   expect_s3_class(as.json(aa_in), "json")
-
-  # cleanup
-  unlink(paste0(ftog4, ".geojson"))
 })
 
 ## Testing with url
@@ -153,43 +136,40 @@ kml_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 test_that("file_to_geojson works w/ url kml input, web method, local output", {
   skip_on_cran()
 
-  aa <- suppressMessages(file_to_geojson(input = kml_url, method = "web", output = ftog5))
+  file <- withr::local_tempfile(fileext = ".geojson")
+
+  aa <- suppressMessages(file_to_geojson(input = kml_url, method = "web", output = file))
 
   aa_in <- jsonlite::fromJSON(aa)
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, paste0(ftog5, ".geojson"))
+  expect_match(aa, file)
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
   expect_s3_class(aa_in$features, "data.frame")
 
   expect_s3_class(as.json(aa_in), "json")
-
-  # cleanup
-  unlink(paste0(ftog5, ".geojson"))
 })
 
 test_that("file_to_geojson works w/ url kml input, local method, local output", {
   skip_on_cran()
 
-  aa <- suppressMessages(file_to_geojson(kml_url, method = "local", output = ftog6))
+  file <- withr::local_tempfile(fileext = ".geojson")
+  aa <- suppressMessages(file_to_geojson(kml_url, method = "local", output = file))
 
   aa_in <- jsonlite::fromJSON(aa)
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, ftog6)
+  expect_match(aa, file)
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
   expect_s3_class(aa_in$features, "data.frame")
 
   expect_s3_class(as.json(aa_in), "json")
-
-  # cleanup
-  unlink(paste0(ftog6, ".geojson"))
 })
 
 test_that("file_to_geojson works w/ url kml input, web method, memory output", {
@@ -224,24 +204,23 @@ shp_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 test_that("file_to_geojson works w/ url shp zip file input, web method, output file", {
   skip_on_cran()
 
+  file <- withr::local_tempfile(fileext = ".geojson")
+
   aa <- suppressMessages(file_to_geojson(
     input = shp_url, method = "web",
-    output = ftog7
+    output = file
   ))
   aa_in <- jsonlite::fromJSON(aa)
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, paste0(ftog7, ".geojson"))
+  expect_match(aa, file)
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
   expect_type(aa_in$crs, "list")
 
   expect_s3_class(as.json(aa_in), "json")
-
-  # cleanup
-  unlink(paste0(ftog7, ".geojson"))
 })
 
 test_that("file_to_geojson works w/ url shp zip file input, web method, memory output", {
@@ -269,6 +248,3 @@ test_that("file_to_geojson fails well", {
   expect_error(file_to_geojson(file, method = "adfadf"), "'arg' should be one of")
   expect_error(file_to_geojson(file, parse = "foobar"), "parse must be logical")
 })
-
-# cleanup any files that weren't cleaned up with above cleanups
-unlink(list.files(pattern = "file[0-9]+", full.names = TRUE))

@@ -1,1 +1,0 @@
-suppressWarnings(unlink("myfile.geojson"))

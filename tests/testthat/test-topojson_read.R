@@ -48,7 +48,7 @@ test_that("topojson_read works with as.location inputs", {
 test_that("topojson_read works with .json extension", {
   skip_on_cran()
 
-  file <- tempfile(fileext = ".json")
+  file <- withr::local_tempfile(fileext = ".json")
   cat('{"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}',
     file = file
   )
