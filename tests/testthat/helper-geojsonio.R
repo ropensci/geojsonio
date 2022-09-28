@@ -26,3 +26,5 @@ num_digits <- function(x) {
   if ("geometries" %in% names(z)) w <- unlist(z$geometries$coordinates)
   decimalnumcount(as.character(w))
 }
+
+supp_invis <- function(x) suppressMessages(invisible(x))
