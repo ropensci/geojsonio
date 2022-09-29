@@ -147,10 +147,10 @@ test_that("geojson_write passes toJSON args", {
     "}"
   )
 
-  if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
-    p_list <- lapply(list(c(3.2, 4), c(3, 4.6), c(3.8, 4.4)), st_point)
-    pt_sfc <- st_sfc(p_list)
-    pt_sf <- st_sf(x = c(1.1, 2.2, NA_real_), pt_sfc)
+  if (requireNamespace("sf", quietly = TRUE)) {
+    p_list <- lapply(list(c(3.2, 4), c(3, 4.6), c(3.8, 4.4)), sf::st_point)
+    pt_sfc <- sf::st_sfc(p_list)
+    pt_sf <- sf::st_sf(x = c(1.1, 2.2, NA_real_), pt_sfc)
 
     gwf9 <- withr::local_tempfile(fileext = ".geojson")
 

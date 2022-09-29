@@ -75,7 +75,7 @@ test_that("map_leaf works with list inputs", {
   expect_s3_class(ii_map, "leaflet")
 })
 
-## spatial classes --------------
+## spatial classes
 
 test_that("map_leaf works with SpatialPolygons inputs", {
   skip_on_cran()

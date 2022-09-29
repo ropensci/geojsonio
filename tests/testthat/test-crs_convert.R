@@ -5,12 +5,12 @@
 #   expect_equal(a, b)
 # }
 
-# if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
+# if (requireNamespace("sf", quietly = TRUE)) {
 
-#   sfc <-  st_sfc(st_point(c(0,0)), st_point(c(1,1)))
-#   sf <-  st_sf(a = 1:2, geom = sfc)
-#   sf_4326 <- st_set_crs(sf, 4326)
-#   sf_3005 <- st_transform(sf_4326, 3005)
+#   sfc <-  sf::st_sfc(sf::st_point(c(0,0)), sf::st_point(c(1,1)))
+#   sf <-  sf::st_sf(a = 1:2, geom = sfc)
+#   sf_4326 <- sf::st_set_crs(sf, 4326)
+#   sf_3005 <- sf::st_transform(sf_4326, 3005)
 
 #   pts = cbind(1:5, 1:5)
 #   df = data.frame(a = 1:5)
@@ -68,7 +68,7 @@
 #   test_that("is_wgs84 works with sfc", {
 #     st_crs(sfc) <- 4326
 #     expect_true(is_wgs84(sfc))
-#     sfc_3005 <- st_transform(sfc, 3005)
+#     sfc_3005 <- sf::st_transform(sfc, 3005)
 #     expect_false(suppressWarnings(is_wgs84(sfc_3005)))
 #     expect_warning(is_wgs84(sfc_3005), "WGS84")
 #   })

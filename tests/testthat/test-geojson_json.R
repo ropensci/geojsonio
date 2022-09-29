@@ -184,7 +184,7 @@ test_that("geojson_json precision", {
   # sf classes
   p1 <- rbind(c(0, 0), c(1, 0), c(3, 2), c(2, 4), c(1, 4.1234567), c(0, 0))
   p2 <- rbind(c(5.123, 5.1), c(5, 6), c(4, 5), c(5.123, 5.1))
-  poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
+  poly_sfc <- sf::st_sfc(sf::st_polygon(list(p1)), sf::st_polygon(list(p2)))
   expect_equal(
     num_digits(geojson_json(poly_sfc)),
     c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 3, 0, 0, 3, 1, 0, 0, 1)

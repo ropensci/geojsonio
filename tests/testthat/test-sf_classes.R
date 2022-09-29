@@ -1,6 +1,6 @@
 skip_on_cran()
 
-if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
+if (requireNamespace("sf", quietly = TRUE)) {
 
   test_that("fc utility functions work", {
     file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
@@ -12,9 +12,9 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   })
 
   ## POINT
-  p_list <- lapply(list(c(3.2, 4), c(3, 4.6), c(3.8, 4.4)), st_point)
-  pt_sfc <- st_sfc(p_list)
-  pt_sf <- st_sf(x = c("a", "b", "c"), pt_sfc)
+  p_list <- lapply(list(c(3.2, 4), c(3, 4.6), c(3.8, 4.4)), sf::st_point)
+  pt_sfc <- sf::st_sfc(p_list)
+  pt_sf <- sf::st_sf(x = c("a", "b", "c"), pt_sfc)
 
   test_that("geojson_list works with points", {
     point_sfg_list <- geojson_list(pt_sfc[[1]])
@@ -72,9 +72,9 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
 
   # ## MULTIPOINT
   p <- rbind(c(3.2, 4), c(3, 4.6), c(3.8, 4.4), c(3.5, 3.8), c(3.4, 3.6), c(3.9, 4.5))
-  mp_sfg <- st_multipoint(p)
-  mp_sfc <- st_sfc(mp_sfg)
-  mp_sf <- st_sf(x = "a", mp_sfc)
+  mp_sfg <- sf::st_multipoint(p)
+  mp_sfc <- sf::st_sfc(mp_sfg)
+  mp_sf <- sf::st_sf(x = "a", mp_sfc)
 
   test_that("geojson_list works with multipoints", {
     mp_sfg_list <- geojson_list(mp_sfg)
@@ -117,9 +117,9 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   ## POLYGON
   p1 <- rbind(c(0, 0), c(1, 0), c(3, 2), c(2, 4), c(1, 4), c(0, 0))
   p2 <- rbind(c(1, 1), c(1, 2), c(2, 2), c(1, 1))
-  pol_sfg <- st_polygon(list(p1, p2))
-  pol_sfc <- st_sfc(pol_sfg)
-  pol_sf <- st_sf(x = "a", pol_sfc)
+  pol_sfg <- sf::st_polygon(list(p1, p2))
+  pol_sfc <- sf::st_sfc(pol_sfg)
+  pol_sf <- sf::st_sf(x = "a", pol_sfc)
 
   test_that("geojson_list works with polygons", {
     pol_sfg_list <- geojson_list(pol_sfg)
@@ -163,9 +163,9 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   p3 <- rbind(c(3, 0), c(4, 0), c(4, 1), c(3, 1), c(3, 0))
   p4 <- rbind(c(3.3, 0.3), c(3.8, 0.3), c(3.8, 0.8), c(3.3, 0.8), c(3.3, 0.3))[5:1, ]
   p5 <- rbind(c(3, 3), c(4, 2), c(4, 3), c(3, 3))
-  mpol_sfg <- st_multipolygon(list(list(p1, p2), list(p3, p4), list(p5)))
-  mpol_sfc <- st_sfc(mpol_sfg)
-  mpol_sf <- st_sf(x = "a", mpol_sfc)
+  mpol_sfg <- sf::st_multipolygon(list(list(p1, p2), list(p3, p4), list(p5)))
+  mpol_sfc <- sf::st_sfc(mpol_sfg)
+  mpol_sf <- sf::st_sf(x = "a", mpol_sfc)
 
   test_that("geojson_list works with multipolygons", {
     mpol_sfg_list <- geojson_list(mpol_sfg)
@@ -209,9 +209,9 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
 
   ## LINESTRING
   s1 <- rbind(c(0, 3), c(0, 4), c(1, 5), c(2, 5))
-  ls_sfg <- st_linestring(s1)
-  ls_sfc <- st_sfc(ls_sfg)
-  ls_sf <- st_sf(x = "a", ls_sfc)
+  ls_sfg <- sf::st_linestring(s1)
+  ls_sfc <- sf::st_sfc(ls_sfg)
+  ls_sf <- sf::st_sf(x = "a", ls_sfc)
 
   test_that("geojson_list works with linestrings", {
     ls_sfg_list <- geojson_list(ls_sfg)
@@ -254,9 +254,9 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   ## MULTILINESTRING
   s2 <- rbind(c(0.2, 3), c(0.2, 4), c(1, 4.8), c(2, 4.8))
   s3 <- rbind(c(0, 4.4), c(0.6, 5))
-  mls_sfg <- st_multilinestring(list(s1, s2, s3))
-  mls_sfc <- st_sfc(mls_sfg)
-  mls_sf <- st_sf(x = "a", mls_sfc)
+  mls_sfg <- sf::st_multilinestring(list(s1, s2, s3))
+  mls_sfc <- sf::st_sfc(mls_sfg)
+  mls_sf <- sf::st_sf(x = "a", mls_sfc)
 
   test_that("geojson_list works with multilinestrings", {
     mls_sfg_list <- geojson_list(ls_sfg)
@@ -297,9 +297,9 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   })
 
   # ## GEOMETRYCOLLECTION
-  gc_sfg <- st_geometrycollection(list(mp_sfg, mpol_sfg, ls_sfg))
-  gc_sfc <- st_sfc(gc_sfg)
-  gc_sf <- st_sf(x = "a", gc_sfc)
+  gc_sfg <- sf::st_geometrycollection(list(mp_sfg, mpol_sfg, ls_sfg))
+  gc_sfc <- sf::st_sfc(gc_sfg)
+  gc_sf <- sf::st_sf(x = "a", gc_sfc)
 
   test_that("geojson_list works with geometry collections", {
     gc_sfg_list <- geojson_list(gc_sfg)
@@ -340,20 +340,20 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
   })
 
   test_that("Deals with Z and M dimensions: points", {
-    pt_xyz <- st_point(c(3, 4, 5), dim = "XYZ")
-    pt_xym <- st_point(c(3, 4, 5), dim = "XYM")
-    pt_xyzm <- st_point(c(3, 4, 5, 6), dim = "XYZM")
+    pt_xyz <- sf::st_point(c(3, 4, 5), dim = "XYZ")
+    pt_xym <- sf::st_point(c(3, 4, 5), dim = "XYM")
+    pt_xyzm <- sf::st_point(c(3, 4, 5, 6), dim = "XYZM")
 
     expect_equal(geojson_list(pt_xyz)$coordinates, c(3, 4, 5))
     expect_equal(geojson_list(pt_xym)$coordinates, c(3, 4))
     expect_equal(geojson_list(pt_xyzm)$coordinates, c(3, 4, 5))
 
     p_list_xyzm <- lapply(list(c(3.2, 4, 5, 6), c(3, 4.6, 6, 7), c(3.8, 4.4, 7, 8)),
-      st_point,
+      sf::st_point,
       dim = "XYZM"
     )
-    pt_sfc_xyzm <- st_sfc(p_list_xyzm)
-    pt_sf_xyzm <- st_sf(x = c("a", "b", "c"), pt_sfc_xyzm)
+    pt_sfc_xyzm <- sf::st_sfc(p_list_xyzm)
+    pt_sf_xyzm <- sf::st_sf(x = c("a", "b", "c"), pt_sfc_xyzm)
   })
 
   test_that("Deal with M dimensions: multipoint", {
@@ -361,9 +361,9 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
       c(3.2, 4, 5, 6), c(3, 4.6, 7, 8), c(3.8, 4.4, 9, 10),
       c(3.5, 3.8, 11, 12), c(3.4, 3.6, 13, 14), c(3.9, 4.5, 15, 16)
     )
-    mp_sfg <- st_multipoint(p, dim = "XYZM")
-    mp_sfc <- st_sfc(mp_sfg)
-    mp_sf <- st_sf(x = "a", mp_sfc)
+    mp_sfg <- sf::st_multipoint(p, dim = "XYZM")
+    mp_sfc <- sf::st_sfc(mp_sfg)
+    mp_sf <- sf::st_sf(x = "a", mp_sfc)
 
     out <- geojson_list(mp_sf)
     expect_equal(dim(out$features[[1]]$geometry$coordinates), c(6, 3))
@@ -373,12 +373,12 @@ if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
     pol_sf$area <- structure(rep(1, nrow(pol_sf)), class = "units")
 
     expect_s3_class(geojson_json(pol_sf), "geojson")
-    expect_equal(read_sf(geojson_json(pol_sf))[["area"]], as.numeric(pol_sf$area))
+    expect_equal(sf::read_sf(geojson_json(pol_sf))[["area"]], as.numeric(pol_sf$area))
   })
 }
 
 test_that("geojson is valid with named sfc input", {
-  x <- st_sfc(st_point(0:1), st_point(1:2))
+  x <- sf::st_sfc(sf::st_point(0:1), sf::st_point(1:2))
 
   names(x) <- 1:2
 
@@ -394,7 +394,7 @@ test_that("geojson is valid with named sfc input", {
 ## Big test ------------------------------------------------------
 ## devtools::install_github("bcgov/bcmaps")
 # library(bcmaps)
-# eco_sf <- st_as_sf(ecoprovinces)
-# eco_sf <- st_transform(eco_sf, 4326)
+# eco_sf <- sf::st_as_sf(ecoprovinces)
+# eco_sf <- sf::st_transform(eco_sf, 4326)
 # eco_geojson <- geojson_json(eco_sf)
 # map_gist(eco_geojson)
