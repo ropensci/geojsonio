@@ -96,7 +96,7 @@ test_that("topojson_write temporarily removed", {
 # })
 
 # test_that("topojson_write unclasses columns with special classes so writeOGR works", {
-
+#   skip_if_not_installed("sf")
 #   poly1 <- Polygons(list(Polygon(cbind(c(-100,-90,-85,-100),
 #                                        c(40,50,45,40)))), "1")
 #   spdf <- SpatialPolygonsDataFrame(SpatialPolygons(list(poly1), 1L),

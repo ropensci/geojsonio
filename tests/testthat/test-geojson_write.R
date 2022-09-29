@@ -125,9 +125,11 @@ test_that("geojson_write unclasses columns with special classes so writeOGR work
   )
   gwf8 <- withr::local_tempfile(fileext = ".geojson")
   expect_s3_class(geojson_write(spdf, file = gwf8), "geojson_file")
-  spdf2 <- as(sf::st_read(gwf8, quiet = TRUE, stringsAsFactors = FALSE), "Spatial")
-  expect_type(spdf2@data$a, "double")
-  expect_type(spdf2@data$b, "character")
+  if (requireNamespace("sf", quietly = TRUE)) {
+    spdf2 <- as(sf::st_read(gwf8, quiet = TRUE, stringsAsFactors = FALSE), "Spatial")
+    expect_type(spdf2@data$a, "double")
+    expect_type(spdf2@data$b, "character")
+  }
 })
 
 test_that("geojson_write passes toJSON args", {

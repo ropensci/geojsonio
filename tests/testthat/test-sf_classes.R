@@ -375,21 +375,21 @@ if (requireNamespace("sf", quietly = TRUE)) {
     expect_s3_class(geojson_json(pol_sf), "geojson")
     expect_equal(sf::read_sf(geojson_json(pol_sf))[["area"]], as.numeric(pol_sf$area))
   })
+  
+  test_that("geojson is valid with named sfc input", {
+    x <- sf::st_sfc(sf::st_point(0:1), sf::st_point(1:2))
+
+    names(x) <- 1:2
+
+    x_json <- geojson_json(x)
+
+    expect_equal(
+      unclass(x_json),
+      "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[0,1]},{\"type\":\"Point\",\"coordinates\":[1,2]}]}",
+      ignore_attr = TRUE
+    )
+  })
 }
-
-test_that("geojson is valid with named sfc input", {
-  x <- sf::st_sfc(sf::st_point(0:1), sf::st_point(1:2))
-
-  names(x) <- 1:2
-
-  x_json <- geojson_json(x)
-
-  expect_equal(
-    unclass(x_json),
-    "{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Point\",\"coordinates\":[0,1]},{\"type\":\"Point\",\"coordinates\":[1,2]}]}",
-    ignore_attr = TRUE
-  )
-})
 
 ## Big test ------------------------------------------------------
 ## devtools::install_github("bcgov/bcmaps")
