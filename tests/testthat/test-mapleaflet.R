@@ -79,17 +79,16 @@ test_that("map_leaf works with list inputs", {
 
 test_that("map_leaf works with SpatialPolygons inputs", {
   skip_on_cran()
-  sp_poly <- local({
-    poly1 <- Polygons(list(Polygon(cbind(
-      c(-100, -90, -85, -100),
-      c(40, 50, 45, 40)
-    ))), "1")
-    poly2 <- Polygons(list(Polygon(cbind(
-      c(-90, -80, -75, -90),
-      c(30, 40, 35, 30)
-    ))), "2")
-    SpatialPolygons(list(poly1, poly2), 1:2)
-  })
+
+  poly1 <- Polygons(list(Polygon(cbind(
+    c(-100, -90, -85, -100),
+    c(40, 50, 45, 40)
+  ))), "1")
+  poly2 <- Polygons(list(Polygon(cbind(
+    c(-90, -80, -75, -90),
+    c(30, 40, 35, 30)
+  ))), "2")
+  sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
   jj <- map_leaf(sp_poly)
 
   expect_s3_class(jj, "leaflet")
@@ -97,17 +96,16 @@ test_that("map_leaf works with SpatialPolygons inputs", {
 
 test_that("map_leaf works with SpatialPolygonsDataFrame inputs", {
   skip_on_cran()
-  sp_poly <- local({
-    poly1 <- Polygons(list(Polygon(cbind(
-      c(-100, -90, -85, -100),
-      c(40, 50, 45, 40)
-    ))), "1")
-    poly2 <- Polygons(list(Polygon(cbind(
-      c(-90, -80, -75, -90),
-      c(30, 40, 35, 30)
-    ))), "2")
-    SpatialPolygons(list(poly1, poly2), 1:2)
-  })
+
+  poly1 <- Polygons(list(Polygon(cbind(
+    c(-100, -90, -85, -100),
+    c(40, 50, 45, 40)
+  ))), "1")
+  poly2 <- Polygons(list(Polygon(cbind(
+    c(-90, -80, -75, -90),
+    c(30, 40, 35, 30)
+  ))), "2")
+  sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
   sp_polydf <- as(sp_poly, "SpatialPolygonsDataFrame")
   jj <- map_leaf(sp_polydf)
 
@@ -116,11 +114,11 @@ test_that("map_leaf works with SpatialPolygonsDataFrame inputs", {
 
 test_that("map_leaf works with SpatialPoints inputs", {
   skip_on_cran()
-  sp_pts <- local({
-    a <- c(1, 2, 3, 4, 5)
-    b <- c(3, 2, 5, 1, 4)
-    SpatialPoints(cbind(a, b))
-  })
+
+  sp_pts <- SpatialPoints(cbind(
+    c(1, 2, 3, 4, 5),
+    c(3, 2, 5, 1, 4)
+  ))
   kk <- map_leaf(sp_pts)
   expect_s4_class(sp_pts, "SpatialPoints")
   expect_s3_class(kk, "leaflet")
@@ -128,11 +126,10 @@ test_that("map_leaf works with SpatialPoints inputs", {
 
 test_that("map_leaf works with SpatialPointsDataFrame inputs", {
   skip_on_cran()
-  sp_pts <- local({
-    a <- c(1, 2, 3, 4, 5)
-    b <- c(3, 2, 5, 1, 4)
-    SpatialPoints(cbind(a, b))
-  })
+  sp_pts <- SpatialPoints(cbind(
+    c(1, 2, 3, 4, 5),
+    c(3, 2, 5, 1, 4)
+  ))
   sp_ptsdf <- as(sp_pts, "SpatialPointsDataFrame")
   ll <- map_leaf(sp_ptsdf)
   expect_s4_class(sp_ptsdf, "SpatialPointsDataFrame")
@@ -141,12 +138,11 @@ test_that("map_leaf works with SpatialPointsDataFrame inputs", {
 
 test_that("map_leaf works with SpatialLines inputs", {
   skip_on_cran()
-  sp_lines <- local({
-    c1 <- cbind(c(1, 2, 3), c(3, 2, 2))
-    L1 <- Line(c1)
-    Ls1 <- Lines(list(L1), ID = "a")
-    SpatialLines(list(Ls1))
-  })
+
+  c1 <- cbind(c(1, 2, 3), c(3, 2, 2))
+  L1 <- Line(c1)
+  Ls1 <- Lines(list(L1), ID = "a")
+  sp_lines <- SpatialLines(list(Ls1))
 
   mm <- map_leaf(sp_lines)
   expect_s4_class(sp_lines, "SpatialLines")
@@ -155,12 +151,11 @@ test_that("map_leaf works with SpatialLines inputs", {
 
 test_that("map_leaf works with SpatialLinesDataFrame inputs", {
   skip_on_cran()
-  sp_lines <- local({
-    c1 <- cbind(c(1, 2, 3), c(3, 2, 2))
-    L1 <- Line(c1)
-    Ls1 <- Lines(list(L1), ID = "a")
-    SpatialLines(list(Ls1))
-  })
+
+  c1 <- cbind(c(1, 2, 3), c(3, 2, 2))
+  L1 <- Line(c1)
+  Ls1 <- Lines(list(L1), ID = "a")
+  sp_lines <- SpatialLines(list(Ls1))
 
   sp_linesdf <- as(sp_lines, "SpatialLinesDataFrame")
   nn <- map_leaf(sp_linesdf)
@@ -171,10 +166,7 @@ test_that("map_leaf works with SpatialLinesDataFrame inputs", {
 test_that("map_leaf works with SpatialGrid inputs", {
   skip_on_cran()
 
-  sp_grid <- local({
-    x <- GridTopology(c(0, 0), c(1, 1), c(5, 5))
-    SpatialGrid(x)
-  })
+  sp_grid <- SpatialGrid(GridTopology(c(0, 0), c(1, 1), c(5, 5)))
   mm <- map_leaf(sp_grid)
   expect_s4_class(sp_grid, "SpatialGrid")
   expect_s3_class(mm, "leaflet")
@@ -183,10 +175,7 @@ test_that("map_leaf works with SpatialGrid inputs", {
 test_that("map_leaf works with SpatialGridDataFrame inputs", {
   skip_on_cran()
 
-  sp_grid <- local({
-    x <- GridTopology(c(0, 0), c(1, 1), c(5, 5))
-    SpatialGrid(x)
-  })
+  sp_grid <- SpatialGrid(GridTopology(c(0, 0), c(1, 1), c(5, 5)))
   sp_griddf <- SpatialGridDataFrame(sp_grid, data.frame(val = 1:25))
   nn <- map_leaf(sp_griddf)
   expect_s4_class(sp_griddf, "SpatialGridDataFrame")
