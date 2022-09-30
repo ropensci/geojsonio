@@ -25,7 +25,7 @@ test_that("SpatialLines to SpatialLinesDataFrame", {
 
 test_that("SpatialPixels to SpatialPointsDataFrame", {
   skip_on_cran()
-  sp_pixels <- suppressWarnings(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
+  sp_pixels <- supw(SpatialPixels(SpatialPoints(us_cities[c("long", "lat")])))
   a <- as(sp_pixels, "SpatialPointsDataFrame")
 
   expect_s4_class(sp_pixels, "SpatialPixels")

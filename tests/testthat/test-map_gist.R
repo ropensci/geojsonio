@@ -6,13 +6,13 @@ test_that("map_gist works with file inputs", {
   skip_on_cran()
 
   file <- withr::local_tempfile(fileext = ".geojson")
-  geojson_write(us_cities[1:20, ], lat = "lat", lon = "long", file = file)
+  supm(geojson_write(us_cities[1:20, ], lat = "lat", lon = "long", file = file))
   a <- map_gist(file = as.location(file), browse = FALSE)
   expect_s3_class(a, "gist")
   expect_type(a$url, "character")
   expect_named(a$files, basename(file))
 
-  gdel(a)
+  supm(gistr::delete(a))
 })
 
 test_that("map_gist works with geo_list inputs", {
@@ -21,11 +21,11 @@ test_that("map_gist works with geo_list inputs", {
   file <- withr::local_tempfile(fileext = ".geojson")
 
   res <- geojson_list(us_cities[1:2, ], lat = "lat", lon = "long")
-  b <- map_gist(res, browse = FALSE, file = file)
+  b <- supm(map_gist(res, browse = FALSE, file = file))
   expect_s3_class(res, "geo_list")
   expect_s3_class(b, "gist")
 
-  gdel(b)
+  supm(gistr::delete(b))
 })
 
 test_that("map_gist works with json inputs", {
@@ -34,12 +34,12 @@ test_that("map_gist works with json inputs", {
   file <- withr::local_tempfile(fileext = ".geojson")
 
   x <- geojson_json(c(-99.74, 32.45))
-  f <- map_gist(x, browse = FALSE, file = file)
+  f <- supm(map_gist(x, browse = FALSE, file = file))
   expect_s3_class(x, "json")
   expect_s3_class(f, "gist")
   expect_type(f$git_pull_url, "character")
 
-  gdel(f)
+  supm(gistr::delete(f))
 })
 
 test_that("map_gist works with SpatialPoints inputs", {
@@ -50,12 +50,12 @@ test_that("map_gist works with SpatialPoints inputs", {
   a <- c(1, 2, 3, 4, 5)
   b <- c(3, 2, 5, 1, 4)
   x <- SpatialPoints(cbind(a, b))
-  g <- map_gist(x, browse = FALSE, file = file)
+  g <- supm(map_gist(x, browse = FALSE, file = file))
   expect_s3_class(g, "gist")
   expect_type(g$url, "character")
   expect_named(g$files, basename(file))
 
-  gdel(g)
+  supm(gistr::delete(g))
 })
 
 test_that("map_gist works with SpatialPointsDataFrame inputs", {
@@ -66,12 +66,12 @@ test_that("map_gist works with SpatialPointsDataFrame inputs", {
   a <- c(1, 2, 3, 4, 5)
   b <- c(3, 2, 5, 1, 4)
   s <- SpatialPointsDataFrame(cbind(a, b), mtcars[1:5, ])
-  h <- supw(map_gist(s, browse = FALSE, file = file))
+  h <- supm(map_gist(s, browse = FALSE, file = file))
   expect_s3_class(h, "gist")
   expect_type(h$url, "character")
   expect_named(h$files, basename(file))
 
-  gdel(h)
+  supm(gistr::delete(h))
 })
 
 test_that("map_gist works with SpatialPolygons inputs", {
@@ -88,12 +88,12 @@ test_that("map_gist works with SpatialPolygons inputs", {
     c(30, 40, 35, 30)
   ))), "2")
   sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
-  i <- map_gist(sp_poly, browse = FALSE, file = file)
+  i <- supm(map_gist(sp_poly, browse = FALSE, file = file))
   expect_s3_class(i, "gist")
   expect_type(i$url, "character")
   expect_named(i$files, basename(file))
 
-  gdel(i)
+  supm(gistr::delete(i))
 })
 
 test_that("map_gist works with data.frame inputs", {
@@ -101,10 +101,10 @@ test_that("map_gist works with data.frame inputs", {
 
   file <- withr::local_tempfile(fileext = ".geojson")
 
-  j <- map_gist(us_cities[1:50, ], browse = FALSE, file = file)
+  j <- supm(map_gist(us_cities[1:50, ], browse = FALSE, file = file))
   expect_s3_class(j, "gist")
 
-  gdel(j)
+  supm(gistr::delete(j))
 })
 
 test_that("map_gist works with data.frame inputs", {
@@ -112,8 +112,8 @@ test_that("map_gist works with data.frame inputs", {
 
   file <- withr::local_tempfile(fileext = ".geojson")
 
-  k <- map_gist(c(32.45, -99.74), browse = FALSE, file = file)
+  k <- supm(map_gist(c(32.45, -99.74), browse = FALSE, file = file))
   expect_s3_class(k, "gist")
 
-  gdel(k)
+  supm(gistr::delete(k))
 })

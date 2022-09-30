@@ -3,7 +3,7 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
 
   file <- withr::local_tempfile(fileext = ".geojson")
 
-  aa <- suppressMessages(file_to_geojson(
+  aa <- supm(file_to_geojson(
     input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
     method = "web",
     output = file
@@ -23,7 +23,7 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
 test_that("file_to_geojson works w/ kml input, web method, output memory", {
   skip_on_cran()
 
-  aa <- suppressMessages(file_to_geojson(
+  aa <- supm(file_to_geojson(
     input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
     method = "web",
     output = ":memory:"
@@ -43,7 +43,7 @@ test_that("file_to_geojson works w/ kml input, local method, output file", {
 
   file <- withr::local_tempfile(fileext = ".geojson")
 
-  aa <- suppressMessages(file_to_geojson(
+  aa <- supm(file_to_geojson(
     input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
     method = "local",
     output = file
@@ -63,7 +63,7 @@ test_that("file_to_geojson works w/ kml input, local method, output file", {
 test_that("file_to_geojson works w/ kml input, local method, output memory", {
   skip_on_cran()
 
-  aa <- suppressMessages(file_to_geojson(
+  aa <- supm(file_to_geojson(
     input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
     method = "local",
     output = ":memory:"
@@ -85,7 +85,7 @@ test_that("file_to_geojson works w/ shp zip file input, web method, output file"
   file <- system.file("examples", "bison.zip", package = "geojsonio")
   output_file <- withr::local_tempfile(fileext = ".geojson")
 
-  aa <- suppressMessages(file_to_geojson(
+  aa <- supm(file_to_geojson(
     input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
     method = "web",
     output = output_file
@@ -112,7 +112,7 @@ test_that("file_to_geojson works w/ shp file input, local method, output file", 
   unzip(file, exdir = dir)
   shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
 
-  aa <- suppressMessages(file_to_geojson(
+  aa <- supm(file_to_geojson(
     input = shpfile, method = "local",
     output = output_file
   ))
@@ -138,7 +138,7 @@ test_that("file_to_geojson works w/ url kml input, web method, local output", {
 
   file <- withr::local_tempfile(fileext = ".geojson")
 
-  aa <- suppressMessages(file_to_geojson(input = kml_url, method = "web", output = file))
+  aa <- supm(file_to_geojson(input = kml_url, method = "web", output = file))
 
   aa_in <- jsonlite::fromJSON(aa)
 
@@ -157,7 +157,7 @@ test_that("file_to_geojson works w/ url kml input, local method, local output", 
   skip_on_cran()
 
   file <- withr::local_tempfile(fileext = ".geojson")
-  aa <- suppressMessages(file_to_geojson(kml_url, method = "local", output = file))
+  aa <- supm(file_to_geojson(kml_url, method = "local", output = file))
 
   aa_in <- jsonlite::fromJSON(aa)
 
@@ -175,7 +175,7 @@ test_that("file_to_geojson works w/ url kml input, local method, local output", 
 test_that("file_to_geojson works w/ url kml input, web method, memory output", {
   skip_on_cran()
 
-  aa <- suppressMessages(file_to_geojson(kml_url, method = "web", output = ":memory:"))
+  aa <- supm(file_to_geojson(kml_url, method = "web", output = ":memory:"))
 
   expect_type(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
@@ -188,7 +188,7 @@ test_that("file_to_geojson works w/ url kml input, web method, memory output", {
 test_that("file_to_geojson works w/ url kml input, local method, memory output", {
   skip_on_cran()
 
-  aa <- suppressMessages(file_to_geojson(kml_url, method = "local", output = ":memory:"))
+  aa <- supm(file_to_geojson(kml_url, method = "local", output = ":memory:"))
 
   expect_type(aa, "list")
   expect_equal(aa$type, "FeatureCollection")
@@ -206,7 +206,7 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, output f
 
   file <- withr::local_tempfile(fileext = ".geojson")
 
-  aa <- suppressMessages(file_to_geojson(
+  aa <- supm(file_to_geojson(
     input = shp_url, method = "web",
     output = file
   ))
@@ -226,7 +226,7 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, output f
 test_that("file_to_geojson works w/ url shp zip file input, web method, memory output", {
   skip_on_cran()
 
-  aa <- suppressMessages(file_to_geojson(
+  aa <- supm(file_to_geojson(
     input = shp_url, method = "web",
     output = ":memory:"
   ))

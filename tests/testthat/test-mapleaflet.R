@@ -1,7 +1,7 @@
 test_that("map_leaf works with file inputs", {
   skip_on_cran()
   file <- withr::local_file(tempfile(fileext = ".geojson"))
-  supp_invis(geojson_write(us_cities[1:20, ], lat = "lat", lon = "long", file = file))
+  supm(geojson_write(us_cities[1:20, ], lat = "lat", lon = "long", file = file))
   a_map <- map_leaf(as.location(file))
   expect_s3_class(as.location(file), "location_")
   expect_s3_class(a_map, "leaflet")
@@ -28,7 +28,7 @@ test_that("map_leaf works with geo_list inputs", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  x <- suppressMessages(geojson_list(mylist))
+  x <- supm(geojson_list(mylist))
   c_map <- map_leaf(x)
   expect_s3_class(x, "geo_list")
   expect_s3_class(c_map, "leaflet")
@@ -53,7 +53,7 @@ test_that("map_leaf works with json inputs", {
 
 test_that("map_leaf works with data.frame inputs", {
   skip_on_cran()
-  h_map <- supp_invis(map_leaf(us_cities, basemap = "CartoDB.Positron"))
+  h_map <- supm(map_leaf(us_cities, basemap = "CartoDB.Positron"))
   expect_s3_class(h_map, "leaflet")
 })
 
@@ -71,7 +71,7 @@ test_that("map_leaf works with list inputs", {
     c(-106.61132812499999, 39.436192999314095),
     c(-114.345703125, 39.436192999314095)
   )
-  ii_map <- supp_invis(map_leaf(poly))
+  ii_map <- supm(map_leaf(poly))
   expect_s3_class(ii_map, "leaflet")
 })
 

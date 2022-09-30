@@ -11,7 +11,7 @@ test_that("geojson_sp works with geo_list inputs", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  b <- geojson_sp(suppressMessages(geojson_list(mylist)))
+  b <- geojson_sp(supm(geojson_list(mylist)))
   expect_s4_class(b, "SpatialPointsDataFrame")
 
   # from a list of numeric vectors to a polygon
@@ -41,7 +41,7 @@ test_that("geojson_sp works with json inputs", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  b <- geojson_sp(suppressMessages(geojson_json(mylist)))
+  b <- geojson_sp(supm(geojson_json(mylist)))
   expect_s4_class(b, "SpatialPointsDataFrame")
 
   # from a polygon

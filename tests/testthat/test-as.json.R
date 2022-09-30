@@ -21,7 +21,9 @@ test_that("as.json works with data.frame class inputs", {
   skip_on_cran()
 
   tf1 <- withr::local_tempfile(fileext = ".geojson")
-  cc <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", file = tf1))
+  cc <- supm(
+    geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", file = tf1)
+  )
   expect_s3_class(cc, "geojson_file")
   expect_type(unclass(cc), "list")
   expect_s3_class(as.json(cc), "json")
@@ -31,7 +33,7 @@ test_that("as.json works with data.frame class inputs", {
   )
 
   tf11 <- withr::local_tempfile(fileext = ".geojson")
-  d <- supw(suppressMessages(geojson_write(
+  d <- supw(supm(geojson_write(
     input = states, lat = "lat", lon = "long",
     geometry = "polygon", group = "group", file = tf11
   )))
@@ -54,7 +56,7 @@ test_that("as.json works with geojson class inputs", {
   ))), "2")
   sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
   tf2 <- withr::local_tempfile(fileext = ".geojson")
-  e <- suppressMessages(geojson_write(sp_poly, file = tf2))
+  e <- supm(geojson_write(sp_poly, file = tf2))
   expect_s3_class(e, "geojson_file")
   expect_type(unclass(e), "list")
   expect_s3_class(as.json(e), "json")
@@ -90,7 +92,9 @@ test_that("as.json works with file name inputs", {
   skip_on_cran()
 
   tf3 <- withr::local_tempfile(fileext = ".geojson")
-  ee <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", file = tf3))
+  ee <- supm(
+    geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", file = tf3)
+  )
   expect_s3_class(ee, "geojson_file")
   expect_type(unclass(ee), "list")
   expect_type(ee$path, "character")

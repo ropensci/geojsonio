@@ -345,8 +345,17 @@ if (requireNamespace("sf", quietly = TRUE)) {
     pt_xyzm <- sf::st_point(c(3, 4, 5, 6), dim = "XYZM")
 
     expect_equal(geojson_list(pt_xyz)$coordinates, c(3, 4, 5))
-    expect_equal(geojson_list(pt_xym)$coordinates, c(3, 4))
-    expect_equal(geojson_list(pt_xyzm)$coordinates, c(3, 4, 5))
+    expect_message(
+      expect_equal(
+        geojson_list(pt_xym)$coordinates,
+        c(3, 4)
+      ),
+      "removing M dimension as not supported in GeoJSON format"
+    )
+    expect_message(
+      expect_equal(geojson_list(pt_xyzm)$coordinates, c(3, 4, 5)),
+      "removing M dimension as not supported in GeoJSON format"
+    )
 
     p_list_xyzm <- lapply(list(c(3.2, 4, 5, 6), c(3, 4.6, 6, 7), c(3.8, 4.4, 7, 8)),
       sf::st_point,
@@ -365,7 +374,7 @@ if (requireNamespace("sf", quietly = TRUE)) {
     mp_sfc <- sf::st_sfc(mp_sfg)
     mp_sf <- sf::st_sf(x = "a", mp_sfc)
 
-    out <- geojson_list(mp_sf)
+    out <- supm(geojson_list(mp_sf))
     expect_equal(dim(out$features[[1]]$geometry$coordinates), c(6, 3))
   })
 
