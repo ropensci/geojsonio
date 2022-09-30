@@ -24,3 +24,22 @@ num_digits <- function(x) {
   if ("geometries" %in% names(z)) w <- unlist(z$geometries$coordinates)
   decimalnumcount(as.character(w))
 }
+
+## temporary gist helpers
+
+local_gist_temp_file <- function(envir = parent.frame()) {
+  withr::local_tempfile(
+    pattern = "geojsonio_test_",
+    fileext = ".geojson",
+    .local_envir = envir
+  )
+}
+
+temp_map_gist <- function(..., envir = parent.frame()) {
+  g <- supm(map_gist(...))
+  withr::defer(
+    supm(gistr::delete(g)),
+    envir = envir
+  )
+  g
+}
