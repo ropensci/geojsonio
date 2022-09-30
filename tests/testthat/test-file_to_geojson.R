@@ -1,7 +1,7 @@
 test_that("file_to_geojson works w/ kml input, web method, output file", {
   skip_on_cran()
 
-  file <- withr::local_tempfile(fileext = ".geojson")
+  file <- withr::local_tempfile()
 
   aa <- supm(file_to_geojson(
     input = example_sys_file("norway_maple.kml"),
@@ -12,7 +12,7 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, file)
+  expect_match(aa, basename(file))
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -41,7 +41,7 @@ test_that("file_to_geojson works w/ kml input, web method, output memory", {
 test_that("file_to_geojson works w/ kml input, local method, output file", {
   skip_on_cran()
 
-  file <- withr::local_tempfile(fileext = ".geojson")
+  file <- withr::local_tempfile()
 
   aa <- supm(file_to_geojson(
     input = example_sys_file("norway_maple.kml"),
@@ -52,7 +52,7 @@ test_that("file_to_geojson works w/ kml input, local method, output file", {
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, file)
+  expect_match(aa, basename(file))
 
   expect_equal(aa_in$type, "FeatureCollection")
   expect_s3_class(aa_in$features, "data.frame")
@@ -83,7 +83,7 @@ test_that("file_to_geojson works w/ shp zip file input, web method, output file"
   skip_on_cran()
 
   file <- example_sys_file("bison.zip")
-  output_file <- withr::local_tempfile(fileext = ".geojson")
+  output_file <- withr::local_tempfile()
 
   aa <- supm(file_to_geojson(
     input = example_sys_file("norway_maple.kml"),
@@ -94,7 +94,7 @@ test_that("file_to_geojson works w/ shp zip file input, web method, output file"
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, output_file)
+  expect_match(aa, basename(output_file))
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -107,7 +107,7 @@ test_that("file_to_geojson works w/ shp file input, local method, output file", 
   skip_on_cran()
 
   file <- example_sys_file("bison.zip")
-  output_file <- withr::local_tempfile(fileext = ".geojson")
+  output_file <- withr::local_tempfile()
   dir <- withr::local_tempdir()
   unzip(file, exdir = dir)
   shpfile <- file.path(dir, "bison-Bison_bison-20130704-120856.shp")
@@ -120,7 +120,7 @@ test_that("file_to_geojson works w/ shp file input, local method, output file", 
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, output_file)
+  expect_match(aa, basename(output_file))
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -136,7 +136,7 @@ kml_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 test_that("file_to_geojson works w/ url kml input, web method, local output", {
   skip_on_cran()
 
-  file <- withr::local_tempfile(fileext = ".geojson")
+  file <- withr::local_tempfile()
 
   aa <- supm(file_to_geojson(input = kml_url, method = "web", output = file))
 
@@ -144,7 +144,7 @@ test_that("file_to_geojson works w/ url kml input, web method, local output", {
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, file)
+  expect_match(aa, basename(file))
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -156,14 +156,14 @@ test_that("file_to_geojson works w/ url kml input, web method, local output", {
 test_that("file_to_geojson works w/ url kml input, local method, local output", {
   skip_on_cran()
 
-  file <- withr::local_tempfile(fileext = ".geojson")
+  file <- withr::local_tempfile()
   aa <- supm(file_to_geojson(kml_url, method = "local", output = file))
 
   aa_in <- jsonlite::fromJSON(aa)
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, file)
+  expect_match(aa, basename(file))
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
@@ -204,7 +204,7 @@ shp_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 test_that("file_to_geojson works w/ url shp zip file input, web method, output file", {
   skip_on_cran()
 
-  file <- withr::local_tempfile(fileext = ".geojson")
+  file <- withr::local_tempfile()
 
   aa <- supm(file_to_geojson(
     input = shp_url, method = "web",
@@ -214,7 +214,7 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, output f
 
   expect_type(aa, "character")
   expect_true(file.exists(aa))
-  expect_match(aa, file)
+  expect_match(aa, basename(file))
 
   expect_type(aa_in, "list")
   expect_equal(aa_in$type, "FeatureCollection")
