@@ -3,7 +3,7 @@ skip_on_cran()
 if (requireNamespace("sf", quietly = TRUE)) {
 
   test_that("fc utility functions work", {
-    file <- system.file("examples", "feature_collection.geojson", package = "geojsonio")
+    file <- example_sys_file("feature_collection.geojson")
     testfc <- st_read(file, quiet = TRUE)
     expect_equal(get_sf_column_name(testfc), "geometry")
 

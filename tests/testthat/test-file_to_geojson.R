@@ -4,7 +4,7 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
   file <- withr::local_tempfile(fileext = ".geojson")
 
   aa <- supm(file_to_geojson(
-    input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
+    input = example_sys_file("norway_maple.kml"),
     method = "web",
     output = file
   ))
@@ -24,7 +24,7 @@ test_that("file_to_geojson works w/ kml input, web method, output memory", {
   skip_on_cran()
 
   aa <- supm(file_to_geojson(
-    input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
+    input = example_sys_file("norway_maple.kml"),
     method = "web",
     output = ":memory:"
   ))
@@ -44,7 +44,7 @@ test_that("file_to_geojson works w/ kml input, local method, output file", {
   file <- withr::local_tempfile(fileext = ".geojson")
 
   aa <- supm(file_to_geojson(
-    input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
+    input = example_sys_file("norway_maple.kml"),
     method = "local",
     output = file
   ))
@@ -64,7 +64,7 @@ test_that("file_to_geojson works w/ kml input, local method, output memory", {
   skip_on_cran()
 
   aa <- supm(file_to_geojson(
-    input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
+    input = example_sys_file("norway_maple.kml"),
     method = "local",
     output = ":memory:"
   ))
@@ -82,11 +82,11 @@ test_that("file_to_geojson works w/ kml input, local method, output memory", {
 test_that("file_to_geojson works w/ shp zip file input, web method, output file", {
   skip_on_cran()
 
-  file <- system.file("examples", "bison.zip", package = "geojsonio")
+  file <- example_sys_file("bison.zip")
   output_file <- withr::local_tempfile(fileext = ".geojson")
 
   aa <- supm(file_to_geojson(
-    input = system.file("examples", "norway_maple.kml", package = "geojsonio"),
+    input = example_sys_file("norway_maple.kml"),
     method = "web",
     output = output_file
   ))
@@ -106,7 +106,7 @@ test_that("file_to_geojson works w/ shp zip file input, web method, output file"
 test_that("file_to_geojson works w/ shp file input, local method, output file", {
   skip_on_cran()
 
-  file <- system.file("examples", "bison.zip", package = "geojsonio")
+  file <- example_sys_file("bison.zip")
   output_file <- withr::local_tempfile(fileext = ".geojson")
   dir <- withr::local_tempdir()
   unzip(file, exdir = dir)
@@ -242,7 +242,7 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, memory o
 test_that("file_to_geojson fails well", {
   skip_on_cran()
 
-  file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
+  file <- example_sys_file("norway_maple.kml")
 
   expect_error(file_to_geojson(), "argument \"input\" is missing")
   expect_error(file_to_geojson(file, method = "adfadf"), "'arg' should be one of")

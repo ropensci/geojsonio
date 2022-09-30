@@ -43,3 +43,7 @@ temp_map_gist <- function(..., envir = parent.frame()) {
   )
   g
 }
+
+example_sys_file <- function(...) {
+  system.file("examples", ..., package = "geojsonio", mustWork = TRUE)
+}

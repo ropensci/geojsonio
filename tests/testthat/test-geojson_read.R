@@ -1,7 +1,7 @@
 test_that("geojson_read works with file inputs", {
   skip_on_cran()
 
-  file <- system.file("examples", "california.geojson", package = "geojsonio")
+  file <- example_sys_file("california.geojson")
   aa <- geojson_read(file)
 
   expect_type(aa, "list")
@@ -34,7 +34,7 @@ test_that("geojson_read works with url inputs", {
 test_that("geojson_read works with as.location inputs", {
   skip_on_cran()
 
-  file <- system.file("examples", "california.geojson", package = "geojsonio")
+  file <- example_sys_file("california.geojson")
   aa <- geojson_read(as.location(file))
 
   expect_type(aa, "list")
@@ -51,7 +51,7 @@ test_that("geojson_read works with as.location inputs", {
 test_that("geojson_read works outputing spatial class object", {
   skip_on_cran()
 
-  file <- system.file("examples", "norway_maple.kml", package = "geojsonio")
+  file <- example_sys_file("norway_maple.kml")
   aa <- geojson_read(as.location(file), what = "sp")
 
   expect_s4_class(aa, "SpatialPointsDataFrame")
