@@ -1,4 +1,4 @@
-# geojsonio (development version)
+# geojsonio 0.10.0
 
 * Deprecated (with a warning) functions relying on rgeos. These will stop working in 2023.
 * Tests have been updated to use testthat 3e, plus a number of other improvements around isolating tests and improving test quality. HUGE thanks to @czeildi for tackling this in two massive PRs (#187, #186, #183).
