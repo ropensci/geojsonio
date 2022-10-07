@@ -1,3 +1,5 @@
+# geojsonio (development version)
+
 # geojsonio 0.10.0
 
 * Deprecated (with a warning) functions relying on rgeos. These will stop working in 2023.
