@@ -1,18 +1,14 @@
-# sm <- function(x) suppressMessages(x)
-
 # compare_things <- function(a, b) {
 #   a$name <- b$name <- NULL
 #   expect_equal(a, b)
 # }
 
-# if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
+# if (requireNamespace("sf", quietly = TRUE)) {
 
-#   suppressPackageStartupMessages(library(sp))
-
-#   sfc <-  st_sfc(st_point(c(0,0)), st_point(c(1,1)))
-#   sf <-  st_sf(a = 1:2, geom = sfc)
-#   sf_4326 <- st_set_crs(sf, 4326)
-#   sf_3005 <- st_transform(sf_4326, 3005)
+#   sfc <-  sf::st_sfc(sf::st_point(c(0,0)), sf::st_point(c(1,1)))
+#   sf <-  sf::st_sf(a = 1:2, geom = sfc)
+#   sf_4326 <- sf::st_set_crs(sf, 4326)
+#   sf_3005 <- sf::st_transform(sf_4326, 3005)
 
 #   pts = cbind(1:5, 1:5)
 #   df = data.frame(a = 1:5)
@@ -24,17 +20,17 @@
 #     expect_type(st_crs(convert_wgs84(sf_4326))[["proj4string"]],
 #               "character")
 
-#     expect_type(st_crs(sm(convert_wgs84(sf_3005)))[["proj4string"]],
+#     expect_type(st_crs(supm(convert_wgs84(sf_3005)))[["proj4string"]],
 #                  "character")
 #   })
 
 #   test_that("works with sfc", {
-#     suppressWarnings(st_crs(sfc) <-  4326)
-#     expect_type(st_crs(sm(convert_wgs84(sfc)))[["proj4string"]],
+#     supw(st_crs(sfc) <-  4326)
+#     expect_type(st_crs(supm(convert_wgs84(sfc)))[["proj4string"]],
 #                  "character")
 
-#     suppressWarnings(st_crs(sfc) <- 3005)
-#     expect_type(st_crs(sm(convert_wgs84(sfc)))[["proj4string"]],
+#     supw(st_crs(sfc) <- 3005)
+#     expect_type(st_crs(supm(convert_wgs84(sfc)))[["proj4string"]],
 #                  "character")
 #   })
 
@@ -63,15 +59,15 @@
 
 #   test_that("is_wgs84 works with sf", {
 #     expect_true(is_wgs84(sf_4326))
-#     expect_false(suppressWarnings(is_wgs84(sf_3005)))
+#     expect_false(supw(is_wgs84(sf_3005)))
 #     expect_warning(is_wgs84(sf_3005), "WGS84")
 #   })
 
 #   test_that("is_wgs84 works with sfc", {
 #     st_crs(sfc) <- 4326
 #     expect_true(is_wgs84(sfc))
-#     sfc_3005 <- st_transform(sfc, 3005)
-#     expect_false(suppressWarnings(is_wgs84(sfc_3005)))
+#     sfc_3005 <- sf::st_transform(sfc, 3005)
+#     expect_false(supw(is_wgs84(sfc_3005)))
 #     expect_warning(is_wgs84(sfc_3005), "WGS84")
 #   })
 
@@ -79,7 +75,7 @@
 #     proj4string(spdf) <- "+init=epsg:4326"
 #     expect_true(is_wgs84(spdf))
 #     spdf_3005 <- supw(as(sf::st_transform(sf::st_as_sf(spdf), 3005), 'Spatial'))
-#     expect_false(suppressWarnings(is_wgs84(spdf_3005)))
+#     expect_false(supw(is_wgs84(spdf_3005)))
 #     expect_warning(is_wgs84(spdf_3005), "WGS84")
 #   })
 

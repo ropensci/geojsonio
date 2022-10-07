@@ -11,7 +11,7 @@ test_that("geojson_sf works with geo_list inputs", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  b <- geojson_sf(suppressMessages(geojson_list(mylist)))
+  b <- geojson_sf(supm(geojson_list(mylist)))
   expect_s3_class(b, "sf")
 
   # from a list of numeric vectors to a polygon
@@ -41,26 +41,21 @@ test_that("geojson_sf works with json inputs", {
     list(latitude = 30, longitude = 120, marker = "red"),
     list(latitude = 30, longitude = 130, marker = "blue")
   )
-  b <- geojson_sf(suppressMessages(geojson_json(mylist)))
+  b <- geojson_sf(supm(geojson_json(mylist)))
   expect_s3_class(b, "sf")
 
   # from a polygon
-  poly <- structure('{"type":"FeatureCollection","features":[{
-"type": "Feature",
-"properties": {},
-"geometry": {
-"type": "Polygon",
-"coordinates": [
-[
-[53, -42],
-[57, -42],
-[57, -47],
-[53, -47],
-[53, -42]
-]
-]
-}}]
-}', class = c("json", "geo_json"))
+  poly <- structure('{
+    "type":"FeatureCollection",
+    "features":[{
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[53, -42],[57, -42],[57, -47],[53, -47],[53, -42]]]
+      }
+    }]
+  }', class = c("json", "geo_json"))
   d <- geojson_sf(poly)
   expect_s3_class(d, "sf")
 })

@@ -58,10 +58,6 @@ test_that("topo2geo works", {
   expect_s3_class(w, "geofeaturecollection")
 })
 
-
-
-
-
 test_that("quantization > 0 in geo2topo", {
   skip_on_cran()
 

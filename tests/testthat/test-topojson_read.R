@@ -1,7 +1,7 @@
 test_that("topojson_read works with file inputs", {
   skip_on_cran()
 
-  file <- system.file("examples", "us_states.topojson", package = "geojsonio")
+  file <- example_sys_file("us_states.topojson")
   aa <- topojson_read(file, stringsAsFactors = TRUE)
   df <- as.data.frame(aa)
 
@@ -16,7 +16,7 @@ test_that("topojson_read works with file inputs", {
 test_that("topojson_read works with file inputs: stringsAsFactors works", {
   skip_on_cran()
 
-  file <- system.file("examples", "us_states.topojson", package = "geojsonio")
+  file <- example_sys_file("us_states.topojson")
   aa <- topojson_read(file, stringsAsFactors = FALSE)
   df <- as.data.frame(aa)
   expect_type(df$id, "character")
@@ -37,7 +37,7 @@ test_that("topojson_read works with url inputs", {
 test_that("topojson_read works with as.location inputs", {
   skip_on_cran()
 
-  file <- system.file("examples", "us_states.topojson", package = "geojsonio")
+  file <- example_sys_file("us_states.topojson")
   aa <- topojson_read(as.location(file))
   df <- as.data.frame(aa)
 
@@ -48,7 +48,7 @@ test_that("topojson_read works with as.location inputs", {
 test_that("topojson_read works with .json extension", {
   skip_on_cran()
 
-  file <- tempfile(fileext = ".json")
+  file <- withr::local_tempfile(fileext = ".json")
   cat('{"type":"Topology","objects":{"foo":{"type":"LineString","arcs":[0]}},"arcs":[[[100,0],[101,1]]],"bbox":[100,0,101,1]}',
     file = file
   )
