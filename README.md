@@ -55,7 +55,7 @@ Additional functions:
 
 ## \*json Info
 
--   GeoJSON - [spec](https://tools.ietf.org/html/rfc7946)
+-   GeoJSON - [spec](https://www.rfc-editor.org/rfc/rfc7946)
 -   [GeoJSON lint](https://geojsonlint.com/)
 -   TopoJSON -
     [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
