@@ -36,6 +36,7 @@ test_that("map_leaf works with geo_list inputs", {
 
 test_that("map_leaf works with url inputs", {
   skip_on_cran()
+  skip_if_offline()
 
   url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
   e_map <- map_leaf(as.location(url))

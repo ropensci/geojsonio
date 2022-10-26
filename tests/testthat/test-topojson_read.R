@@ -24,6 +24,7 @@ test_that("topojson_read works with file inputs: stringsAsFactors works", {
 
 test_that("topojson_read works with url inputs", {
   skip_on_cran()
+  skip_if_offline()
 
   url <- "https://raw.githubusercontent.com/shawnbot/d3-cartogram/master/data/us-states.topojson"
   aa <- topojson_read(url)

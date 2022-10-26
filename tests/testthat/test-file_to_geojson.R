@@ -1,5 +1,6 @@
 test_that("file_to_geojson works w/ kml input, web method, output file", {
   skip_on_cran()
+  skip_if_offline()
 
   file <- withr::local_tempfile()
 
@@ -22,6 +23,7 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
 
 test_that("file_to_geojson works w/ kml input, web method, output memory", {
   skip_on_cran()
+  skip_if_offline()
 
   aa <- supm(file_to_geojson(
     input = example_sys_file("norway_maple.kml"),
@@ -81,6 +83,7 @@ test_that("file_to_geojson works w/ kml input, local method, output memory", {
 # shp -------------------------------
 test_that("file_to_geojson works w/ shp zip file input, web method, output file", {
   skip_on_cran()
+  skip_if_offline()
 
   file <- example_sys_file("bison.zip")
   output_file <- withr::local_tempfile()
@@ -135,7 +138,7 @@ kml_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 
 test_that("file_to_geojson works w/ url kml input, web method, local output", {
   skip_on_cran()
-
+  skip_if_offline()
   file <- withr::local_tempfile()
 
   aa <- supm(file_to_geojson(input = kml_url, method = "web", output = file))
@@ -155,7 +158,7 @@ test_that("file_to_geojson works w/ url kml input, web method, local output", {
 
 test_that("file_to_geojson works w/ url kml input, local method, local output", {
   skip_on_cran()
-
+  skip_if_offline()
   file <- withr::local_tempfile()
   aa <- supm(file_to_geojson(kml_url, method = "local", output = file))
 
@@ -174,6 +177,7 @@ test_that("file_to_geojson works w/ url kml input, local method, local output", 
 
 test_that("file_to_geojson works w/ url kml input, web method, memory output", {
   skip_on_cran()
+  skip_if_offline()
 
   aa <- supm(file_to_geojson(kml_url, method = "web", output = ":memory:"))
 
@@ -187,6 +191,7 @@ test_that("file_to_geojson works w/ url kml input, web method, memory output", {
 
 test_that("file_to_geojson works w/ url kml input, local method, memory output", {
   skip_on_cran()
+  skip_if_offline()
 
   aa <- supm(file_to_geojson(kml_url, method = "local", output = ":memory:"))
 
@@ -203,6 +208,7 @@ shp_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 
 test_that("file_to_geojson works w/ url shp zip file input, web method, output file", {
   skip_on_cran()
+  skip_if_offline()
 
   file <- withr::local_tempfile()
 
@@ -225,6 +231,7 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, output f
 
 test_that("file_to_geojson works w/ url shp zip file input, web method, memory output", {
   skip_on_cran()
+  skip_if_offline()
 
   aa <- supm(file_to_geojson(
     input = shp_url, method = "web",
