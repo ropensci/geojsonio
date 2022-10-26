@@ -13,6 +13,10 @@ checks](https://cranchecks.info/badges/worst/geojsonio)](https://cranchecks.info
 downloads](https://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/r-hub/cranlogs.app)
 [![cran
 version](https://www.r-pkg.org/badges/version/geojsonio)](https://cran.r-project.org/package=geojsonio)
+[![Project Status: Inactive – The project has reached a stable, usable
+state but is no longer being actively developed; support/maintenance
+will be provided as time
+allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 <!-- badges: end -->
 
 **Convert various data formats to GeoJSON or TopoJSON**
@@ -51,7 +55,7 @@ Additional functions:
 
 ## \*json Info
 
--   GeoJSON - [spec](https://tools.ietf.org/html/rfc7946)
+-   GeoJSON - [spec](https://www.rfc-editor.org/rfc/rfc7946)
 -   [GeoJSON lint](https://geojsonlint.com/)
 -   TopoJSON -
     [spec](https://github.com/topojson/topojson-specification/blob/master/README.md)
@@ -109,6 +113,26 @@ remotes::install_github("ropensci/geojsonio")
 ``` r
 library("geojsonio")
 ```
+
+## What’s the future of geojsonio?
+
+geojsonio is stable and we expect it to stay on CRAN. The package is a
+dependency for a number of other packages and is downloaded tens of
+thousands of times per month; moving forward the priority with this
+package is to make sure that those packages and users are able to keep
+using the package.
+
+That said, we do not anticipate much further development; there will not
+likely be many major new features added or new interfaces developed.
+We’ll avoid making breaking changes as much as possible (though we do
+anticipate deprecating rgeos-based features and removing rgeos and
+maptools code, in line with those packages’ deprecation).
+
+If you find bugs in geojsonio or want to contribute new features: please
+feel free to submit PRs! So long as the existing interface stays intact,
+we’d be more than happy to make the package more useful for you. That
+said, we don’t anticipate being particularly responsive to feature
+requests (without a matching PR) moving forward.
 
 ## Meta
 

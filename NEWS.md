@@ -1,5 +1,10 @@
 # geojsonio (development version)
 
+# geojsonio 0.10.0
+
+* Deprecated (with a warning) functions relying on rgeos. These will stop working in 2023.
+* Tests have been updated to use testthat 3e, plus a number of other improvements around isolating tests and improving test quality. HUGE thanks to @czeildi for tackling this in two massive PRs (#187, #186, #183).
+
 # geojsonio 0.9.5
 
 geojsonio 0.9.4
@@ -141,7 +146,7 @@ now import `geojson` package (#24) (#100)
 ### MINOR IMPROVEMENTS
 
 * Updated vignette with details on the GeoJSON specification to the new
-specification at <https://tools.ietf.org/html/rfc7946> (#114)
+specification at <https://www.rfc-editor.org/rfc/rfc7946> (#114)
 
 
 

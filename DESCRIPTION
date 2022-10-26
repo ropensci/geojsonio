@@ -1,6 +1,6 @@
 Package: geojsonio
 Title: Convert Data from and to 'GeoJSON' or 'TopoJSON'
-Version: 0.9.5.9000
+Version: 0.10.0.9000
 Authors@R: c(
     person("Scott", "Chamberlain", , "myrmecocystus@gmail.com", role = c("aut")),
     person("Andy", "Teucher", , "andy.teucher@gmail.com", role = "aut"),
@@ -23,6 +23,7 @@ Imports:
     geojsonsf,
     jqr,
     jsonlite (>= 0.9.21),
+    lifecycle,
     magrittr,
     maptools,
     methods,
@@ -39,7 +40,8 @@ Suggests:
     leaflet,
     maps,
     RPostgres,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 Enhances: 
     RColorBrewer
 Encoding: UTF-8
@@ -50,3 +52,4 @@ X-schema.org-applicationCategory: Geospatial
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: geojson, topojson, geospatial, conversion, data,
     input-output
+Config/testthat/edition: 3

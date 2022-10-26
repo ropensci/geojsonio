@@ -1,6 +1,4 @@
-context("geojson_write")
-
-test_that("precision argument works with polygons", {
+test_that("precision argument works with polygons in geojson_write", {
   skip_on_travis()
   skip_on_cran()
 
@@ -11,15 +9,15 @@ test_that("precision argument works with polygons", {
     c(-106.61132812499999, 39.436192999314095),
     c(-114.345703125, 39.436192999314095)
   )
-  gwf1 <- tempfile(fileext = ".geojson")
-  a <- supw(suppressMessages(geojson_write(poly, geometry = "polygon", file = gwf1)))
-  expect_is(a, "geojson_file")
+  gwf1 <- withr::local_tempfile(fileext = ".geojson")
+  a <- supw(supm(geojson_write(poly, geometry = "polygon", file = gwf1)))
+  expect_s3_class(a, "geojson_file")
   a_txt <- gsub("\\s+", " ", paste0(readLines(gwf1), collapse = ""))
   expect_equal(as.numeric(jqr::jq(a_txt, ".features[] | length")), 3)
 
-  gwf2 <- tempfile(fileext = ".geojson")
-  b <- supw(suppressMessages(geojson_write(poly, geometry = "polygon", precision = 2, file = gwf2)))
-  expect_is(b, "geojson_file")
+  gwf2 <- withr::local_tempfile(fileext = ".geojson")
+  b <- supw(supm(geojson_write(poly, geometry = "polygon", precision = 2, file = gwf2)))
+  expect_s3_class(b, "geojson_file")
   b_txt <- gsub("\\s+", " ", paste0(readLines(gwf2), collapse = ""))
   expect_equal(
     unclass(jqr::jq(b_txt, "del(.name) | del(.crs)")),
@@ -27,22 +25,22 @@ test_that("precision argument works with polygons", {
   )
 })
 
-test_that("precision argument works with points", {
+test_that("precision argument works with points in geojson_write", {
   skip_on_travis()
   skip_on_cran()
 
-  gwf3 <- tempfile(fileext = ".geojson")
-  cc <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", precision = 2, file = gwf3))
-  expect_is(cc, "geojson_file")
+  gwf3 <- withr::local_tempfile(fileext = ".geojson")
+  cc <- supm(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", precision = 2, file = gwf3))
+  expect_s3_class(cc, "geojson_file")
   cc_txt <- gsub("\\s+", " ", paste0(readLines(gwf3), collapse = ""))
   expect_equal(
     unclass(jqr::jq(cc_txt, "del(.name) | del(.crs)")),
     "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"name\":\"Abilene TX\",\"country.etc\":\"TX\",\"pop\":113888,\"lat\":32.45,\"long\":-99.74,\"capital\":0},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-99.74,32.45]}},{\"type\":\"Feature\",\"properties\":{\"name\":\"Akron OH\",\"country.etc\":\"OH\",\"pop\":206634,\"lat\":41.08,\"long\":-81.52,\"capital\":0},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-81.52,41.08]}}]}"
   )
 
-  gwf4 <- tempfile(fileext = ".geojson")
-  d <- suppressMessages(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", precision = 1, file = gwf4))
-  expect_is(d, "geojson_file")
+  gwf4 <- withr::local_tempfile(fileext = ".geojson")
+  d <- supm(geojson_write(us_cities[1:2, ], lat = "lat", lon = "long", precision = 1, file = gwf4))
+  expect_s3_class(d, "geojson_file")
   d_txt <- gsub("\\s+", " ", paste0(readLines(gwf4), collapse = ""))
   expect_equal(
     unclass(jqr::jq(d_txt, "del(.name) | del(.crs)")),
@@ -50,11 +48,10 @@ test_that("precision argument works with points", {
   )
 })
 
-test_that("precision argument works with sp objects", {
+test_that("precision argument works with sp objects in geojson_write", {
   skip_on_travis()
   skip_on_cran()
 
-  library("sp")
   poly1 <- Polygons(list(Polygon(cbind(
     c(-100.111, -90.111, -85.111, -100.111),
     c(40.111, 50.111, 45.111, 40.111)
@@ -65,18 +62,18 @@ test_that("precision argument works with sp objects", {
   ))), "2")
   sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 
-  gwf5 <- tempfile(fileext = ".geojson")
-  e <- suppressMessages(geojson_write(sp_poly, file = gwf5))
-  expect_is(e, "geojson_file")
+  gwf5 <- withr::local_tempfile(fileext = ".geojson")
+  e <- supm(geojson_write(sp_poly, file = gwf5))
+  expect_s3_class(e, "geojson_file")
   e_txt <- gsub("\\s+", " ", paste0(readLines(gwf5), collapse = ""))
   expect_equal(
     unclass(jqr::jq(e_txt, "del(.name) | del(.crs)")),
     "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-100.111,40.111],[-90.111,50.111],[-85.111,45.111],[-100.111,40.111]]]}},{\"type\":\"Feature\",\"properties\":{\"dummy\":0},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-90.111,30.111],[-80.111,40.111],[-75.111,35.111],[-90.111,30.111]]]}}]}"
   )
 
-  gwf6 <- tempfile(fileext = ".geojson")
-  f <- suppressMessages(geojson_write(sp_poly, precision = 2, file = gwf6))
-  expect_is(f, "geojson_file")
+  gwf6 <- withr::local_tempfile(fileext = ".geojson")
+  f <- supm(geojson_write(sp_poly, precision = 2, file = gwf6))
+  expect_s3_class(f, "geojson_file")
   f_txt <- gsub("\\s+", " ", paste0(readLines(gwf6), collapse = ""))
   expect_equal(
     unclass(jqr::jq(f_txt, "del(.name) | del(.crs)")),
@@ -91,10 +88,10 @@ test_that("geojson_write detects inproper polygons passed as lists inputs", {
   bad <- list(c(100.0, 0.0), c(101.0, 0.0), c(101.0, 1.0), c(100.0, 1.0), c(100.0, 1))
 
   # fine
-  gwf7 <- tempfile(fileext = ".geojson")
-  fine <- supw(suppressMessages(geojson_write(good, geometry = "polygon", file = gwf7)))
-  expect_is(fine, "geojson_file")
-  expect_is(fine[[1]], "character")
+  gwf7 <- withr::local_tempfile(fileext = ".geojson")
+  fine <- supw(supm(geojson_write(good, geometry = "polygon", file = gwf7)))
+  expect_s3_class(fine, "geojson_file")
+  expect_type(fine[[1]], "character")
 
   # bad
   expect_error(
@@ -103,13 +100,17 @@ test_that("geojson_write detects inproper polygons passed as lists inputs", {
   )
 
   # doesn't matter if geometry != polygon
-  expect_is(suppressMessages(geojson_write(bad)), "geojson_file")
+  expect_s3_class(
+    supm(geojson_write(
+      bad,
+      file = withr::local_tempfile(fileext = ".geojson")
+    )),
+    "geojson_file"
+  )
 })
 
 test_that("geojson_write unclasses columns with special classes so writeOGR works", {
   skip_on_cran()
-  library("sp")
-  library("sf")
 
   poly1 <- Polygons(list(Polygon(cbind(
     c(-100, -90, -85, -100),
@@ -122,11 +123,16 @@ test_that("geojson_write unclasses columns with special classes so writeOGR work
       b = ordered("z")
     )
   )
-  gwf8 <- tempfile(fileext = ".geojson")
-  expect_s3_class(geojson_write(spdf, file = gwf8), "geojson_file")
-  spdf2 <- as(sf::st_read(gwf8, quiet = TRUE, stringsAsFactors = FALSE), "Spatial")
-  expect_is(spdf2@data$a, "numeric")
-  expect_is(spdf2@data$b, "character")
+  gwf8 <- withr::local_tempfile(fileext = ".geojson")
+  expect_s3_class(
+    supm(geojson_write(spdf, file = gwf8)), 
+    "geojson_file"
+  )
+  if (requireNamespace("sf", quietly = TRUE)) {
+    spdf2 <- as(sf::st_read(gwf8, quiet = TRUE, stringsAsFactors = FALSE), "Spatial")
+    expect_type(spdf2@data$a, "double")
+    expect_type(spdf2@data$b, "character")
+  }
 })
 
 test_that("geojson_write passes toJSON args", {
@@ -146,18 +152,18 @@ test_that("geojson_write passes toJSON args", {
     "}"
   )
 
-  if (suppressPackageStartupMessages(require("sf", quietly = TRUE))) {
-    p_list <- lapply(list(c(3.2, 4), c(3, 4.6), c(3.8, 4.4)), st_point)
-    pt_sfc <- st_sfc(p_list)
-    pt_sf <- st_sf(x = c(1.1, 2.2, NA_real_), pt_sfc)
+  if (requireNamespace("sf", quietly = TRUE)) {
+    p_list <- lapply(list(c(3.2, 4), c(3, 4.6), c(3.8, 4.4)), sf::st_point)
+    pt_sfc <- sf::st_sfc(p_list)
+    pt_sf <- sf::st_sf(x = c(1.1, 2.2, NA_real_), pt_sfc)
 
-    gwf9 <- tempfile(fileext = ".geojson")
+    gwf9 <- withr::local_tempfile(fileext = ".geojson")
 
-    geojson_write(pt_sf, file = gwf9)
+    supm(geojson_write(pt_sf, file = gwf9))
     expect_equal(readLines(gwf9, warn = FALSE), expected_na_no_pretty)
 
-    gwf10 <- tempfile(fileext = ".geojson")
-    geojson_write(pt_sf, file = gwf10, na = "null", pretty = TRUE)
+    gwf10 <- withr::local_tempfile(fileext = ".geojson")
+    supm(geojson_write(pt_sf, file = gwf10, na = "null", pretty = TRUE))
     expect_equal(readLines(gwf10, warn = FALSE), expected_null_pretty)
   }
 
@@ -186,12 +192,12 @@ test_that("geojson_write passes toJSON args", {
       class = "geo_list"
     )
 
-  gwf11 <- tempfile(fileext = ".geojson")
+  gwf11 <- withr::local_tempfile(fileext = ".geojson")
 
-  geojson_write(pt_geo_list, file = gwf11)
+  supm(geojson_write(pt_geo_list, file = gwf11))
   expect_equal(readLines(gwf11, warn = FALSE), expected_na_no_pretty)
 
-  gwf12 <- tempfile(fileext = ".geojson")
-  geojson_write(pt_geo_list, file = gwf12, na = "null", pretty = TRUE)
+  gwf12 <- withr::local_tempfile(fileext = ".geojson")
+  supm(geojson_write(pt_geo_list, file = gwf12, na = "null", pretty = TRUE))
   expect_equal(readLines(gwf12, warn = FALSE), expected_null_pretty)
 })

@@ -1,5 +1,3 @@
-context("test-geo_topo.R")
-
 test_that("geo2topo works", {
   skip_on_cran()
 
@@ -21,7 +19,7 @@ test_that("geo2topo works on a list", {
     '{"type": "LineString", "coordinates": [ [120, 0], [121, 1] ]}'
   )
   z <- geo2topo(x)
-  expect_is(z, "list")
+  expect_type(z, "list")
   lapply(z, expect_s3_class, "json")
 })
 
@@ -59,10 +57,6 @@ test_that("topo2geo works", {
   w <- topo2geo(z)
   expect_s3_class(w, "geofeaturecollection")
 })
-
-
-
-
 
 test_that("quantization > 0 in geo2topo", {
   skip_on_cran()

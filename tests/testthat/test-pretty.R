@@ -1,11 +1,9 @@
-context("pretty")
-
 test_that("pretty works with json inputs", {
   skip_on_cran()
 
   a <- geojson_json(c(-99.74, 32.45)) %>% pretty()
-  expect_is(a, "json")
-  expect_is(unclass(a), "character")
+  expect_s3_class(a, "json")
+  expect_type(unclass(a), "character")
   expect_false(identical(a, geojson_json(c(-99.74, 32.45), pretty = TRUE)))
 })
 
