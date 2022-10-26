@@ -15,6 +15,7 @@ ftog6 <- basename(tempfile())
 ftog7 <- basename(tempfile())
 
 test_that("file_to_geojson works w/ kml input, web method, output file", {
+  skip_if_offline()
   aa <- suppressMessages(file_to_geojson(
     input = file, method = "web",
     output = ftog1
@@ -36,6 +37,7 @@ test_that("file_to_geojson works w/ kml input, web method, output file", {
 
 test_that("file_to_geojson works w/ kml input, web method, output memory", {
   skip_on_cran()
+  skip_if_offline()
 
   aa <- suppressMessages(file_to_geojson(
     input = file, method = "web",
@@ -89,6 +91,7 @@ test_that("file_to_geojson works w/ kml input, local method, output memory", {
 # shp -------------------------------
 test_that("file_to_geojson works w/ shp zip file input, web method, output file", {
   skip_on_cran()
+  skip_if_offline()
 
   file <- system.file("examples", "bison.zip", package = "geojsonio")
 
@@ -144,6 +147,7 @@ kml_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 
 test_that("file_to_geojson works w/ url kml input, web method, local output", {
   skip_on_cran()
+  skip_if_offline()
   aa <- suppressMessages(file_to_geojson(input = kml_url, method = "web", output = ftog5))
 
   aa_in <- jsonlite::fromJSON(aa)
@@ -164,6 +168,7 @@ test_that("file_to_geojson works w/ url kml input, web method, local output", {
 
 test_that("file_to_geojson works w/ url kml input, local method, local output", {
   skip_on_cran()
+  skip_if_offline()
   aa <- suppressMessages(file_to_geojson(kml_url, method = "local", output = ftog6))
 
   aa_in <- jsonlite::fromJSON(aa)
@@ -184,6 +189,7 @@ test_that("file_to_geojson works w/ url kml input, local method, local output", 
 
 test_that("file_to_geojson works w/ url kml input, web method, memory output", {
   skip_on_cran()
+  skip_if_offline()
   aa <- suppressMessages(file_to_geojson(kml_url, method = "web", output = ":memory:"))
 
   expect_is(aa, "list")
@@ -196,6 +202,7 @@ test_that("file_to_geojson works w/ url kml input, web method, memory output", {
 
 test_that("file_to_geojson works w/ url kml input, local method, memory output", {
   skip_on_cran()
+  skip_if_offline()
   aa <- suppressMessages(file_to_geojson(kml_url, method = "local", output = ":memory:"))
 
   expect_is(aa, "list")
@@ -211,6 +218,7 @@ shp_url <- "https://raw.githubusercontent.com/ropensci/geojsonio/master/inst/exa
 
 test_that("file_to_geojson works w/ url shp zip file input, web method, output file", {
   skip_on_cran()
+  skip_if_offline()
 
   aa <- suppressMessages(file_to_geojson(
     input = shp_url, method = "web",
@@ -234,6 +242,7 @@ test_that("file_to_geojson works w/ url shp zip file input, web method, output f
 
 test_that("file_to_geojson works w/ url shp zip file input, web method, memory output", {
   skip_on_cran()
+  skip_if_offline()
 
   aa <- suppressMessages(file_to_geojson(
     input = shp_url, method = "web",

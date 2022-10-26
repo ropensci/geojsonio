@@ -19,8 +19,8 @@ test_that("geojson_read works with file inputs", {
 
 test_that("geojson_read works with url inputs", {
   skip_on_cran()
-
-  skip_on_cran()
+  
+  skip_if_offline()
 
   url <- "https://raw.githubusercontent.com/glynnbird/usstatesgeojson/master/california.geojson"
   aa <- geojson_read(url)
