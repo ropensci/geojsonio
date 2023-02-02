@@ -35,7 +35,6 @@
 #' geojson_write(dat)
 #' }
 #' 
-#' @rdname deprecated
 
 #' @rdname deprecated
 #' @export

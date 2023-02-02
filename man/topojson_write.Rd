@@ -86,7 +86,7 @@ A \code{topojson_write} class, with two elements:
 }
 }
 \description{
-\code{topojson_write()} is temporarily defunct; check back later
+Write TopoJSON from various inputs
 }
 \details{
 Under the hood we simply wrap \code{\link[=geojson_write]{geojson_write()}}, then
