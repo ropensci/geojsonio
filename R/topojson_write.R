@@ -317,7 +317,6 @@ topojson_write.sfg <- function(input, lat = NULL, lon = NULL, geometry = "point"
   )
 }
 
-#' @export
 topo_write_sf <- function(input, convert_wgs84, crs, file, overwrite,
                           class, object_name, quantization, ...) {
   tmp <- suppressMessages(
