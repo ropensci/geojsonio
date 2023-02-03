@@ -352,12 +352,7 @@ write_geojson <- function(input, file = "myfile.geojson", precision = NULL,
 write_ogr_sf <- function(input, file, precision = NULL, overwrite,
                          convert_wgs84 = FALSE, crs = NULL, ...) {
   if (inherits(input, c("SpatialPolygonsDataFrame"))) {
-    message("checking polygons with maptools::checkPolygonsHoles ...")
-    input_polys <- slot(input, "polygons")
-    input_fix <- lapply(input_polys, suppressWarnings(maptools::checkPolygonsHoles))
-    polys <- sp::SpatialPolygons(input_fix)
-    # polys <- sp::SpatialPolygons(input_fix, proj4string = sp::CRS("+init=epsg:4326"))
-    input <- sp::SpatialPolygonsDataFrame(polys, data = input@data)
+    input <- as(sf::st_as_sf(input), "Spatial")
   }
   if (convert_wgs84) {
     input <- convert_wgs84(input, crs = crs)
