@@ -25,7 +25,6 @@ Imports:
     jsonlite (>= 0.9.21),
     lifecycle,
     magrittr,
-    maptools,
     methods,
     readr (>= 0.2.2),
     rgeos,

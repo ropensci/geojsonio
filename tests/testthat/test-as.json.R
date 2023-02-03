@@ -84,7 +84,7 @@ test_that("as.json works with topojson list inputs", {
   expect_s3_class(xjs, "json")
   expect_equal(
     unclass(jqr::jq(unclass(xjs), "del(.name) | del(.crs)")),
-    "{\"type\":\"Topology\",\"objects\":{\"foo\":{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"MultiPolygon\",\"arcs\":[[[0]],[[1]]],\"properties\":{\"a\":1}}]}},\"arcs\":[[[2,2],[2,3],[3,2],[2,2]],[[1,4],[2,5],[2,4],[1,4]]],\"bbox\":[1,2,3,5]}"
+    "{\"type\":\"Topology\",\"objects\":{\"foo\":{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Polygon\",\"arcs\":[[0],[1]],\"properties\":{\"a\":1}}]}},\"arcs\":[[[2,2],[2,3],[3,2],[2,2]],[[1,4],[2,4],[2,5],[1,4]]],\"bbox\":[1,2,3,5]}"
   )
 })
 
