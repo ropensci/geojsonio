@@ -1,4 +1,4 @@
-# geojsonio (development version)
+# geojsonio 0.11.0
 
 ## Breaking changes
 
