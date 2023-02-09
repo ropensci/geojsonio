@@ -1,6 +1,5 @@
-This version of geojsonio moves to deprecate some rgeos-specific features,
-ahead of rgeos itself being deprecated in 2023. Tests were also refactored,
-but none of those changes should impact users.
+This version of geojsonio moves off rgeos and maptools as part of the R-spatial
+retirement project. Additionally, functions for writing topojson were restored.
 
 ## R CMD check results
 
@@ -8,7 +7,7 @@ but none of those changes should impact users.
 
 ## revdepcheck results
 
-We checked 14 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 16 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
  * We failed to check 0 packages
