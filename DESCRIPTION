@@ -27,7 +27,6 @@ Imports:
     magrittr,
     methods,
     readr (>= 0.2.2),
-    rgeos,
     sf (>= 0.6),
     sp,
     V8

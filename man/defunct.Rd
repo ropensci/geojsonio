@@ -108,3 +108,28 @@ At the moment, there is no replacement for these functions that uses the
 newer geos package (or any alternative for maptools). If you'd be interested
 in contributing replacements, please feel free to contribute a pull request!
 }
+\examples{
+\dontrun{
+# From SpatialRings
+library(rgeos)
+r1 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "1")
+r2 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "2")
+r1r2 <- SpatialRings(list(r1, r2))
+geojson_write(r1r2)
+
+# From SpatialRingsDataFrame
+dat <- data.frame(id = c(1, 2), value = 3:4)
+r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
+geojson_write(r1r2df)
+
+# From SpatialCollections
+library("sp")
+poly1 <- Polygons(list(Polygon(cbind(c(-100, -90, -85, -100), c(40, 50, 45, 40)))), "1")
+poly2 <- Polygons(list(Polygon(cbind(c(-90, -80, -75, -90), c(30, 40, 35, 30)))), "2")
+poly <- SpatialPolygons(list(poly1, poly2), 1:2)
+coordinates(us_cities) <- ~ long + lat
+dat <- SpatialCollections(points = us_cities, polygons = poly)
+geojson_write(dat)
+}
+
+}

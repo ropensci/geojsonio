@@ -1,6 +1,24 @@
 # geojsonio (development version)
 
-* Functions relying on rgeos are now defunct.
+## Breaking changes
+
+* SpatialPolygonsDataFrame inputs are now cast to sf before being written out to
+  fix ring ordering. This was previously handled by maptools, which is being 
+  retired. Outputs are visually identical, but underlying representations may
+  have changed.
+* Functions relying on rgeos (such as those writing rgeos objects to file) are 
+  defunct. PRs to replace these using the newer geos package are welcomed.
+  
+## New features
+
+* `topojson_write()` has been restored, and now supports conversion to topoJSON
+  formats. User reports indicate output files might be larger than anticipated;
+  PRs to address this are welcomed. Huge thanks to @Shaunson26 for this PR!
+
+## Other changes
+
+* The rgeos and maptools packages have been removed from Imports. (Thanks to 
+  Roger Bivand and Mike Sumner on Mastodon!)
 
 # geojsonio 0.10.0
 
