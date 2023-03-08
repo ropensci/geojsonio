@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/geojsonio/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/geojsonio/actions?query=workflow%3AR-CMD-check)
 [![cran checks](https://badges.cranchecks.info/worst/geojsonio.svg)](https://cran.r-project.org/web/checks/check_results_geojsonio.html)
-[![codecov.io](https://codecov.io/github/ropensci/geojsonio/coverage.svg?branch=main)](https://codecov.io/github/ropensci/geojsonio?branch=main)
+[![codecov.io](https://codecov.io/github/ropensci/geojsonio/coverage.svg)](https://app.codecov.io/github/ropensci/geojsonio?branch=main)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/geojsonio)](https://github.com/r-hub/cranlogs.app)
 [![cran version](https://www.r-pkg.org/badges/version/geojsonio)](https://cran.r-project.org/package=geojsonio)
 [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
