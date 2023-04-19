@@ -29,7 +29,7 @@ as.json.list <- function(x, ...) {
 }
 
 #' @export
-as.json.geo_list <- function(x, ...) to_json(unclass(x), ...)
+as.json.geo_list <- function(x, ...) to_json(unclass(x), null = "null", ...)
 
 #' @export
 as.json.geojson_file <- function(x, ...) {
