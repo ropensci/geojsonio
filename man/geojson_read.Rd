@@ -44,13 +44,6 @@ Read geojson or other formats from a local file or a URL
 This function supports various geospatial file formats from a URL,
 as well as local kml, shp, and geojson file formats.
 }
-\section{Linting GeoJSON}{
-
-If you're having trouble rendering GeoJSON files, ensure you have a valid
-GeoJSON file by running it through the package \code{geojsonlint}, which
-has a variety of different GeoJSON linters.
-}
-
 \section{File size}{
 
 We previously used \code{\link[=file_to_geojson]{file_to_geojson()}} in this function, leading to
