@@ -13,7 +13,6 @@ setAs(
   as.SpatialPointsDataFrame.SpatialPoints
 )
 
-
 ## SpatialLines to SpatialLinesDataFrame
 as.SpatialLinesDataFrame.SpatialLines <- function(from) {
   IDs <- sapply(slot(from, "lines"), function(x) slot(x, "ID"))

@@ -75,7 +75,7 @@ geojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL,
 }
 
 ## SpatialRings to SpatialPolygonsDataFrame
-as.SpatialPolygonsDataFrame.SpatialRings <- function(from) {
+as_SpatialPolygonsDataFrame.SpatialRings <- function(from) {
   
   lifecycle::deprecate_stop(
     "0.10.0",
@@ -86,12 +86,12 @@ as.SpatialPolygonsDataFrame.SpatialRings <- function(from) {
 
 setAs(
   "SpatialRings", "SpatialPolygonsDataFrame",
-  as.SpatialPolygonsDataFrame.SpatialRings
+  as_SpatialPolygonsDataFrame.SpatialRings
 )
 
 
 ## SpatialRingsDataFrame to SpatialPolygonsDataFrame
-as.SpatialPolygonsDataFrame.SpatialRingsDataFrame <- function(from) {
+as_SpatialPolygonsDataFrame.SpatialRingsDataFrame <- function(from) {
   
   lifecycle::deprecate_stop(
     "0.10.0",
@@ -102,5 +102,5 @@ as.SpatialPolygonsDataFrame.SpatialRingsDataFrame <- function(from) {
 
 setAs(
   "SpatialRingsDataFrame", "SpatialPolygonsDataFrame",
-  as.SpatialPolygonsDataFrame.SpatialRingsDataFrame
+  as_SpatialPolygonsDataFrame.SpatialRingsDataFrame
 )

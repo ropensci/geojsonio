@@ -1,14 +1,5 @@
-This version of geojsonio moves off rgeos and maptools as part of the R-spatial
-retirement project. Additionally, functions for writing topojson were restored.
-
-## Resubmission
-
-This is a resubmission. The previous submission broke rmapzen, as functions
-in maptools behaved differently depending on if rgeos was installed. As this
-release removed the dependency on rgeos for geojsonio and rmapzen only depended
-upon maptools, not rgeos, rmapzen tests produced new errors with this version
-of geojsonio. The author of rmapzen has fixed their package, and I believe this
-version impacts no reverse dependencies.
+This version of geojsonio removes the geojsonlint package from Suggests,
+as that package is expected to be archived in the near future.
 
 ## R CMD check results
 
@@ -16,11 +7,10 @@ version impacts no reverse dependencies.
 
 ## revdepcheck results
 
-We checked 16 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 15 reverse dependencies (14 from CRAN + 1 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
  * We failed to check 0 packages
-
 
 -------
 
