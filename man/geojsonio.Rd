@@ -3,6 +3,7 @@
 \docType{package}
 \name{geojsonio}
 \alias{geojsonio}
+\alias{geojsonio-package}
 \title{\strong{I/O for GeoJSON}}
 \description{
 Convert various data formats to/from GeoJSON or TopoJSON. This
@@ -47,6 +48,15 @@ All of the above functions have methods for various classes, including
 based on the data you give as input.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/ropensci/geojsonio}
+  \item \url{https://docs.ropensci.org/geojsonio/}
+  \item Report bugs at \url{https://github.com/ropensci/geojsonio/issues}
+}
+
+}
 \author{
 Scott Chamberlain
 

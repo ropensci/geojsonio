@@ -49,8 +49,7 @@
 #' @author Scott Chamberlain
 #' @author Andy Teucher \email{andy.teucher@@gmail.com}
 #' @author Michael Mahoney \email{mike.mahoney.218@@gmail.com}
-#' @docType package
-NULL
+"_PACKAGE"
 
 #' This is the same data set from the maps library, named differently
 #'
