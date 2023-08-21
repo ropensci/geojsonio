@@ -1,3 +1,5 @@
+# geojsonio (development version)
+
 # geojsonio 0.11.2
 
 * This is a tiny patch release with no user-facing changes.
