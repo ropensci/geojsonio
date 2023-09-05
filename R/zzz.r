@@ -11,8 +11,8 @@ to_json <- function(x, precision = 7, ...) {
   }
   if (is.null(precision)) precision <- 7
   structure(jsonlite::toJSON(x, ...,
-    digits = precision, auto_unbox = TRUE,
-    force = TRUE
+                             digits = precision, auto_unbox = TRUE,
+                             force = TRUE
   ), class = c("json", "geo_json"))
 }
 
@@ -22,17 +22,17 @@ class_json <- function(x, ..., type = "FeatureCollection") {
 
 geoclass <- function(x, type = "FeatureCollection") {
   res <- switch(type,
-    "auto" = geojson::to_geojson(unclass(x)),
-    "Point" = geojson::point(unclass(x)),
-    "LineString" = geojson::linestring(unclass(x)),
-    "Polygon" = geojson::polygon(unclass(x)),
-    "MultiPoint" = geojson::multipoint(unclass(x)),
-    "MultiLineString" = geojson::multilinestring(unclass(x)),
-    "MultiPolygon" = geojson::multipolygon(unclass(x)),
-    "Feature" = geojson::feature(unclass(x)),
-    "FeatureCollection" = geojson::featurecollection(unclass(x)),
-    "GeometryCollection" = geojson::geometrycollection(unclass(x)),
-    "skip" = unclass(x)
+                "auto" = geojson::to_geojson(unclass(x)),
+                "Point" = geojson::point(unclass(x)),
+                "LineString" = geojson::linestring(unclass(x)),
+                "Polygon" = geojson::polygon(unclass(x)),
+                "MultiPoint" = geojson::multipoint(unclass(x)),
+                "MultiLineString" = geojson::multilinestring(unclass(x)),
+                "MultiPolygon" = geojson::multipolygon(unclass(x)),
+                "Feature" = geojson::feature(unclass(x)),
+                "FeatureCollection" = geojson::featurecollection(unclass(x)),
+                "GeometryCollection" = geojson::geometrycollection(unclass(x)),
+                "skip" = unclass(x)
   )
   class(res) <- c(class(res), c("geo_json", "json"))
   return(res)
@@ -40,8 +40,8 @@ geoclass <- function(x, type = "FeatureCollection") {
 
 list_to_geo_list <- function(x, lat, lon, geometry = "point", type = "FeatureCollection", unnamed = FALSE, group = NULL) {
   nn <- switch(type,
-    FeatureCollection = "features",
-    GeometryCollection = "geometries"
+               FeatureCollection = "features",
+               GeometryCollection = "geometries"
   )
   geom <- capwords(match.arg(geometry, c("point", "polygon")))
   if (geom == "Point") {
@@ -136,34 +136,34 @@ num_to_geo_list <- function(x, geometry = "point", type = "FeatureCollection") {
     stop("Coordinates are not numeric", call. = FALSE)
   } else {
     switch(type,
-      FeatureCollection = {
-        list(
-          type = "FeatureCollection",
-          features = list(
-            list(
-              type = "Feature",
-              geometry = list(type = geom, coordinates = makecoords(x, geom)),
-              properties = NULL
-            )
-          )
-        )
-      },
-      GeometryCollection = {
-        list(
-          type = "GeometryCollection",
-          geometries = list(
-            list(type = geom, coordinates = makecoords(x, geom))
-          )
-        )
-      }
+           FeatureCollection = {
+             list(
+               type = "FeatureCollection",
+               features = list(
+                 list(
+                   type = "Feature",
+                   geometry = list(type = geom, coordinates = makecoords(x, geom)),
+                   properties = NULL
+                 )
+               )
+             )
+           },
+           GeometryCollection = {
+             list(
+               type = "GeometryCollection",
+               geometries = list(
+                 list(type = geom, coordinates = makecoords(x, geom))
+               )
+             )
+           }
     )
   }
 }
 
 makecoords <- function(x, y) {
   switch(y,
-    Point = x,
-    Polygon = list(unname(split(x, ceiling(seq_along(x) / 2))))
+         Point = x,
+         Polygon = list(unname(split(x, ceiling(seq_along(x) / 2))))
   )
 }
 
@@ -237,8 +237,8 @@ sppolytogeolist <- function(x) {
 
 lines_to_geo_list <- function(x, object = "FeatureCollection") {
   nn <- switch(object,
-    FeatureCollection = "features",
-    GeometryCollection = "geometries"
+               FeatureCollection = "features",
+               GeometryCollection = "geometries"
   )
   if (length(x@lines) == 1) {
     list(
@@ -345,7 +345,7 @@ write_geojson <- function(input, file = "myfile.geojson", precision = NULL,
   temp <- tempfile()
   on.exit(unlink(temp))
   write_ogr_sf(input, file, precision, overwrite,
-    convert_wgs84 = convert_wgs84, crs = crs, ...
+               convert_wgs84 = convert_wgs84, crs = crs, ...
   )
 }
 
@@ -363,8 +363,8 @@ write_ogr_sf <- function(input, file, precision = NULL, overwrite,
     layer_options <- paste0("COORDINATE_PRECISION=", precision)
   }
   sf::st_write(input_sf, file,
-    layer_options = layer_options, quiet = TRUE,
-    delete_dsn = overwrite, ...
+               layer_options = layer_options, quiet = TRUE,
+               delete_dsn = overwrite, ...
   )
   message("Success! File is at ", file)
 }
@@ -385,28 +385,17 @@ geojson_rw <- function(input, target = c("char", "list"),
                        convert_wgs84 = FALSE, crs = NULL,
                        precision = NULL, ...) {
   read_fun <- switch(target,
-    char = geojson_file_to_char,
-    list = geojson_file_to_list
+                     char = geojson_file_to_char,
+                     list = geojson_file_to_list
   )
-
-  if (inherits(input, "SpatialCollections")) {
-    tmp <- tempfile(fileext = ".geojson")
-    on.exit(unlink(tmp))
-    tmp2 <- suppressMessages(geojson_write(input,
-      file = tmp, precision = precision,
-      convert_wgs84 = convert_wgs84, crs = crs
-    ))
-    paths <- vapply(tg_compact(tmp2), "[[", "", "path")
-    lapply(paths, read_fun, ...)
-  } else {
-    tmp <- tempfile(fileext = ".geojson")
-    on.exit(unlink(tmp))
-    suppressMessages(geojson_write(input,
-      file = tmp, precision = precision,
-      convert_wgs84 = convert_wgs84, crs = crs
-    ))
-    read_fun(tmp, ...)
-  }
+  
+  tmp <- tempfile(fileext = ".geojson")
+  on.exit(unlink(tmp))
+  suppressMessages(geojson_write(input,
+                                 file = tmp, precision = precision,
+                                 convert_wgs84 = convert_wgs84, crs = crs
+  ))
+  read_fun(tmp, ...)
 }
 
 geojson_file_to_char <- function(file, ...) {
@@ -420,12 +409,12 @@ geojson_file_to_list <- function(file, ...) {
 capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
   cap <- function(s) {
     paste(toupper(substring(s, 1, 1)),
-      {
-        s <- substring(s, 2)
-        if (strict) tolower(s) else s
-      },
-      sep = "",
-      collapse = " "
+          {
+            s <- substring(s, 2)
+            if (strict) tolower(s) else s
+          },
+          sep = "",
+          collapse = " "
     )
   }
   if (!onlyfirst) {
@@ -433,8 +422,8 @@ capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
   } else {
     sapply(s, function(x) {
       paste(toupper(substring(x, 1, 1)),
-        tolower(substring(x, 2)),
-        sep = "", collapse = " "
+            tolower(substring(x, 2)),
+            sep = "", collapse = " "
       )
     }, USE.NAMES = FALSE)
   }
@@ -454,7 +443,7 @@ guess_latlon <- function(x, lat = NULL, lon = NULL) {
   if (is.null(lat) && is.null(lon)) {
     lats <- x[grep("^(lat|latitude)$", x, ignore.case = TRUE)]
     lngs <- x[grep("^(lon|lng|long|longitude)$", x, ignore.case = TRUE)]
-
+    
     if (length(lats) == 1 && length(lngs) == 1) {
       if (length(x) > 2) {
         message(

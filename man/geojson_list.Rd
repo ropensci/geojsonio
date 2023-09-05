@@ -50,7 +50,7 @@ This argument will be ignored if \code{convert_wgs84} is \code{FALSE}
 or the object already has a CRS.}
 
 \item{precision}{(integer) desired number of decimal places for coordinates.
-Only used with classes from \pkg{sp}\pkg{rgeos} classes; ignored for other
+Only used with classes from \pkg{sp} classes; ignored for other
 classes. Using fewer decimal places decreases object sizes (at the
 cost of precision). This changes the underlying precision stored in the
 data. \verb{options(digits = <some number>)} changes the maximum number of
@@ -238,22 +238,6 @@ pixelsdf <- suppressWarnings(
 )
 geojson_list(pixelsdf)
 
-# From SpatialCollections
-library("sp")
-poly1 <- Polygons(
-  list(Polygon(cbind(c(-100, -90, -85, -100), c(40, 50, 45, 40)))), "1"
-)
-poly2 <- Polygons(
-  list(Polygon(cbind(c(-90, -80, -75, -90), c(30, 40, 35, 30)))), "2"
-)
-poly <- SpatialPolygons(list(poly1, poly2), 1:2)
-coordinates(us_cities) <- ~ long + lat
-dat <- SpatialCollections(points = us_cities, polygons = poly)
-out <- geojson_list(dat)
-out$SpatialPoints
-out$SpatialPolygons
-}
-
 # From sf classes:
 if (require(sf)) {
   ## sfg (a single simple features geometry)
@@ -274,6 +258,7 @@ if (require(sf)) {
   poly_sfc <- st_sfc(st_polygon(list(p1)), st_polygon(list(p2)))
   poly_sf <- st_sf(foo = c("a", "b"), bar = 1:2, poly_sfc)
   geojson_list(poly_sf)
+}
 }
 
 }
