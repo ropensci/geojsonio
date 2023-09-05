@@ -147,25 +147,6 @@
 #' sp_poly <- SpatialPolygons(list(poly1, poly2), 1:2)
 #' geojson_json(sp_poly)
 #'
-#' ## Another SpatialPolygons
-#' library("sp")
-#' library("rgeos")
-#' pt <- SpatialPoints(
-#'   coordinates(list(x = 0, y = 0)),
-#'   CRS("+proj=longlat +datum=WGS84")
-#' )
-#' ## transfrom to web mercator becuase geos needs project coords
-#' crs <- gsub(
-#'   "\n", "",
-#'   paste0("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0
-#'   +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs", collapse = "")
-#' )
-#' pt <- spTransform(pt, CRS(crs))
-#' ## buffer
-#' pt <- gBuffer(pt, width = 100)
-#' pt <- spTransform(pt, CRS("+proj=longlat +datum=WGS84"))
-#' geojson_json(pt)
-#'
 #' ## data.frame to geojson
 #' geojson_write(us_cities[1:2, ], lat = "lat", lon = "long") %>% as.json()
 #'
@@ -232,20 +213,6 @@
 #'   )
 #' )
 #' geojson_json(pixelsdf)
-#'
-#' # From SpatialCollections
-#' library("sp")
-#' library("rgeos")
-#' pts <- SpatialPoints(cbind(c(1, 2, 3, 4, 5), c(3, 2, 5, 1, 4)))
-#' poly1 <- Polygons(
-#'   list(Polygon(cbind(c(-100, -90, -85, -100), c(40, 50, 45, 40)))), "1"
-#' )
-#' poly2 <- Polygons(
-#'   list(Polygon(cbind(c(-90, -80, -75, -90), c(30, 40, 35, 30)))), "2"
-#' )
-#' poly <- SpatialPolygons(list(poly1, poly2), 1:2)
-#' dat <- SpatialCollections(pts, polygons = poly)
-#' geojson_json(dat)
 #'
 #' # From sf classes:
 #' if (require(sf)) {
@@ -434,21 +401,6 @@ geojson_json.sfg <- function(input, lat = NULL, lon = NULL, group = NULL,
                              geometry = "point", type = "auto",
                              convert_wgs84 = FALSE, crs = NULL, precision = NULL, ...) {
   geoclass(as.json(geojson_list(input, precision = precision), ...), type)
-}
-
-#' @export
-geojson_json.SpatialCollections <- function(input, lat = NULL, lon = NULL,
-                                            group = NULL, geometry = "point", type = "FeatureCollection",
-                                            convert_wgs84 = FALSE, crs = NULL, precision = NULL, ...) {
-  check_type_sp(type)
-  lapply(
-    geojson_rw(input,
-      target = "char", convert_wgs84 = convert_wgs84, crs = crs,
-      precision = precision, ...
-    ),
-    geoclass,
-    type = type
-  )
 }
 
 # regular R classes --------------------------
