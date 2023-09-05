@@ -178,6 +178,31 @@ topojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL,
   )
 }
 
+#' @export
+topojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL,
+                                              geometry = "point", group = NULL, file = "myfile.topojson", overwrite = TRUE,
+                                              precision = NULL, convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
+  tmp <- suppressMessages(
+    geojson_write(
+      input, lat, lon, geometry, group,
+      sub("\\.topojson|\\.json", "\\.geojson", file),
+      overwrite, precision, convert_wgs84, crs, ...
+    )
+  )
+  structure(lapply(tmp, function(z) {
+    on.exit(unlink(z$path), add = TRUE)
+    if (!is.null(z)) {
+      topo_file(
+        write_topojson(
+          geo2topo(paste0(readLines(z$path), collapse = ""), object_name, quantization),
+          sub("\\.geojson|\\.json", "\\.topojson", z$path)
+        ),
+        z$type
+      )
+    }
+  }), class = "spatialcoll")
+}
+
 ## normal R classes -----------------
 #' @export
 topojson_write.numeric <- function(input, lat = NULL, lon = NULL, geometry = "point",
