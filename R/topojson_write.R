@@ -178,31 +178,6 @@ topojson_write.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL,
   )
 }
 
-## spatial classes from rgeos -----------------
-#' @export
-topojson_write.SpatialRings <- function(input, lat = NULL, lon = NULL, geometry = "point",
-                                        group = NULL, file = "myfile.topojson",
-                                        overwrite = TRUE, precision = NULL,
-                                        convert_wgs84 = FALSE, crs = NULL,
-                                        object_name = "foo", quantization = 0, ...) {
-  sp_helper(input,
-    file = file, precision = precision,
-    convert_wgs84 = convert_wgs84, crs = crs,
-    class = "SpatialRings", object_name = object_name, quantization = quantization, ...
-  )
-}
-
-#' @export
-topojson_write.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL,
-                                                 geometry = "point", group = NULL, file = "myfile.topojson", overwrite = TRUE,
-                                                 precision = NULL, convert_wgs84 = FALSE, crs = NULL, object_name = "foo", quantization = 0, ...) {
-  sp_helper(input,
-    file = file, precision = precision,
-    convert_wgs84 = convert_wgs84, crs = crs,
-    class = "SpatialRingsDataFrame", object_name = object_name, quantization = quantization, ...
-  )
-}
-
 #' @export
 topojson_write.SpatialCollections <- function(input, lat = NULL, lon = NULL,
                                               geometry = "point", group = NULL, file = "myfile.topojson", overwrite = TRUE,

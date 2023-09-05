@@ -183,17 +183,6 @@ if (!identical(Sys.getenv("GITHUB_PAT"), "")) {
   )
   map_gist(pixelsdf)
 
-  # From SpatialRings
-  library("rgeos")
-  r1 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "1")
-  r2 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "2")
-  r1r2 <- SpatialRings(list(r1, r2))
-  map_gist(r1r2)
-
-  # From SpatialRingsDataFrame
-  dat <- data.frame(id = c(1, 2), value = 3:4)
-  r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
-  map_gist(r1r2df)
 }
 }
 }

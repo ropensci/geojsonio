@@ -128,18 +128,6 @@
 #' )
 #' map_leaf(pixelsdf)
 #'
-#' # From SpatialRings
-#' library("rgeos")
-#' r1 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "1")
-#' r2 <- Ring(cbind(x = c(1, 1, 2, 2, 1), y = c(1, 2, 2, 1, 1)), ID = "2")
-#' r1r2 <- SpatialRings(list(r1, r2))
-#' map_leaf(r1r2)
-#'
-#' # From SpatialRingsDataFrame
-#' dat <- data.frame(id = c(1, 2), value = 3:4)
-#' r1r2df <- SpatialRingsDataFrame(r1r2, data = dat)
-#' map_leaf(r1r2df)
-#'
 #' # basemap toggling ------------------------
 #' map_leaf(us_cities, basemap = "Acetate.terrain")
 #' map_leaf(us_cities, basemap = "CartoDB.Positron")
@@ -220,24 +208,8 @@ map_leaf.SpatialPixelsDataFrame <- function(input, lat = NULL, lon = NULL, basem
   petiole(input, bounds = sp_bounds(input), basemap, ...)
 }
 
-# spatial classes methods from rgeos package --------------------------
-#' @export
-map_leaf.SpatialRings <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
-  check_4_leaflet()
-  petiole(input, bounds = sp_bounds(input), basemap, ...)
-}
-
-#' @export
-map_leaf.SpatialRingsDataFrame <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
-  check_4_leaflet()
-  petiole(input, bounds = sp_bounds(input), basemap, ...)
-}
 
 # R classes: numeric, data.frame, list ------------------------
-# map_leaf.numeric <- function(input, basemap = "Stamen.Toner", ...) {
-#   check_4_leaflet()
-#   petiole(input, basemap, ...)
-# }
 
 #' @export
 map_leaf.data.frame <- function(input, lat = NULL, lon = NULL, basemap = "Stamen.Toner", ...) {
@@ -339,14 +311,6 @@ rachis.SpatialPixels <- function(x, leaflet_obj, ...) {
 
 rachis.SpatialPixelsDataFrame <- function(x, leaflet_obj, ...) {
   leaflet::addMarkers(leaflet_obj, data = as(x, "SpatialPoints"), ...)
-}
-
-rachis.SpatialRings <- function(x, leaflet_obj, ...) {
-  leaflet::addPolygons(leaflet_obj, data = as(x, "SpatialPolygonsDataFrame"), ...)
-}
-
-rachis.SpatialRingsDataFrame <- function(x, leaflet_obj, ...) {
-  leaflet::addPolygons(leaflet_obj, data = as(x, "SpatialPolygonsDataFrame"), ...)
 }
 
 rachis.data.frame <- function(x, leaflet_obj, ...) {
