@@ -1,4 +1,5 @@
-This version of geojsonio updates the package documentation to include the proper alias for interactive help().
+This version of geojsonio removes the final references to rgeos ahead of that
+package's retirement.
 
 ## R CMD check results
 
@@ -6,10 +7,11 @@ This version of geojsonio updates the package documentation to include the prope
 
 ## revdepcheck results
 
-We checked 16 reverse dependencies (15 from CRAN + 1 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 16 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
  * We failed to check 0 packages
+
 
 -------
 
