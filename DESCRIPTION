@@ -1,6 +1,6 @@
 Package: geojsonio
 Title: Convert Data from and to 'GeoJSON' or 'TopoJSON'
-Version: 0.11.2.9000
+Version: 0.11.3
 Authors@R: c(
     person("Scott", "Chamberlain", , "myrmecocystus@gmail.com", role = c("aut")),
     person("Andy", "Teucher", , "andy.teucher@gmail.com", role = "aut"),

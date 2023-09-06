@@ -1,4 +1,4 @@
-# geojsonio (development version)
+# geojsonio 0.11.3
 
 * Removed an unused V8 call to geojsonhint
 
