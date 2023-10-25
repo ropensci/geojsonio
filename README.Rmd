@@ -89,8 +89,6 @@ Additional functions:
 
 ## Install
 
-A note about installing `rgeos` - built on top of C libraries, and installation often causes trouble for Linux users because no binaries are provided on CRAN for those platforms. Other dependencies in `geojsonio` should install easily automatically when you install `geojsonio`.
-
 _Mac_
 
 Install `GDAL` on the command line first, e.g., using `homebrew`
@@ -99,27 +97,16 @@ Install `GDAL` on the command line first, e.g., using `homebrew`
 brew install gdal
 ```
 
-Then install `rgeos`
-
-```{r}
-install.packages("rgeos", type = "source")
-```
-
 _Linux_
 
 Get deps first
 
-```
-sudo apt-get install libgdal1-dev libgdal-dev libgeos-c1 libproj-dev
-```
-
-> Note: if you have trouble installing rgeos, try installing `libgeos++-dev`
-
-Then install `rgeos`
-
 ```{r}
-install.packages("rgeos", type = "source")
+#| echo: true
+#| eval: true
+remotes::system_requirements("ubuntu", "20.04", package = "geojsonio")
 ```
+
 
 __Install geojsonio__
 
@@ -149,9 +136,7 @@ sure that those packages and users are able to keep using the package.
 
 That said, we do not anticipate much further development; there will not likely
 be many major new features added or new interfaces developed. We'll avoid 
-making breaking changes as much as possible (though we do anticipate deprecating
-rgeos-based features and removing rgeos and maptools code, in line with those 
-packages' deprecation).
+making breaking changes as much as possible.
 
 If you find bugs in geojsonio or want to contribute new features: please feel
 free to submit PRs! So long as the existing interface stays intact, we'd be

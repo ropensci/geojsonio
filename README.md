@@ -62,37 +62,31 @@ Additional functions:
 
 ## Install
 
-A note about installing `rgeos` - built on top of C libraries, and
-installation often causes trouble for Linux users because no binaries
-are provided on CRAN for those platforms. Other dependencies in
-`geojsonio` should install easily automatically when you install
-`geojsonio`.
-
 *Mac*
 
 Install `GDAL` on the command line first, e.g., using `homebrew`
 
     brew install gdal
 
-Then install `rgeos`
-
-``` r
-install.packages("rgeos", type = "source")
-```
-
 *Linux*
 
 Get deps first
 
-    sudo apt-get install libgdal1-dev libgdal-dev libgeos-c1 libproj-dev
-
-> Note: if you have trouble installing rgeos, try installing
-> `libgeos++-dev`
-
-Then install `rgeos`
-
 ``` r
-install.packages("rgeos", type = "source")
+remotes::system_requirements("ubuntu", "20.04", package = "geojsonio")
+#>  [1] "apt-get install -y make"                
+#>  [2] "apt-get install -y libssl-dev"          
+#>  [3] "apt-get install -y libgdal-dev"         
+#>  [4] "apt-get install -y gdal-bin"            
+#>  [5] "apt-get install -y libgeos-dev"         
+#>  [6] "apt-get install -y libproj-dev"         
+#>  [7] "apt-get install -y libsqlite3-dev"      
+#>  [8] "apt-get install -y libudunits2-dev"     
+#>  [9] "apt-get install -y libprotobuf-dev"     
+#> [10] "apt-get install -y protobuf-compiler"   
+#> [11] "apt-get install -y libcurl4-openssl-dev"
+#> [12] "apt-get install -y libnode-dev"         
+#> [13] "apt-get install -y libjq-dev"
 ```
 
 **Install geojsonio**
@@ -124,9 +118,7 @@ using the package.
 
 That said, we do not anticipate much further development; there will not
 likely be many major new features added or new interfaces developed.
-We’ll avoid making breaking changes as much as possible (though we do
-anticipate deprecating rgeos-based features and removing rgeos and
-maptools code, in line with those packages’ deprecation).
+We’ll avoid making breaking changes as much as possible.
 
 If you find bugs in geojsonio or want to contribute new features: please
 feel free to submit PRs! So long as the existing interface stays intact,
